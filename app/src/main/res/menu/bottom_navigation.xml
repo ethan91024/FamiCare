@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_health"
+        android:icon="@drawable/ic_baseline_monitor_heart_24"
+        android:title="健康" />
+
+    <item
+        android:id="@+id/navigation_group"
+        android:icon="@drawable/ic_baseline_groups_24"
+        android:title="群組" />
+
+    <item
+        android:id="@+id/navigation_mood"
+        android:icon="@drawable/ic_baseline_mood_24"
+        android:title="心情" />
+    <item
+        android:id="@+id/navigation_diary"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:title="日記" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="設定" />
+
+</menu>
