@@ -1,4 +1,4 @@
-package com.example.seniorprojectapp;
+package com.ethan.FamiCare;
 
 import org.junit.Test;
 

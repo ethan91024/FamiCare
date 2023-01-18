@@ -1,4 +1,4 @@
-package com.example.seniorprojectapp;
+package com.ethan.FamiCare;
 
 import android.os.Bundle;
 
@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HealthFragment#newInstance} factory method to
+ * Use the {@link GroupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HealthFragment extends Fragment {
+public class GroupFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +25,7 @@ public class HealthFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HealthFragment() {
+    public GroupFragment() {
         // Required empty public constructor
     }
 
@@ -35,11 +35,11 @@ public class HealthFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HealthFragment.
+     * @return A new instance of fragment GroupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HealthFragment newInstance(String param1, String param2) {
-        HealthFragment fragment = new HealthFragment();
+    public static GroupFragment newInstance(String param1, String param2) {
+        GroupFragment fragment = new GroupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,9 +60,9 @@ public class HealthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_health, container, false);
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
         TextView Hello = view.findViewById(R.id.hello);
-        Hello.setText("點選健康");
+        Hello.setText("點選群組");
         return view;
     }
 }

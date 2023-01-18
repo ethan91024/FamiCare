@@ -1,4 +1,4 @@
-package com.example.seniorprojectapp;
+package com.ethan.FamiCare;
 
 import android.os.Bundle;
 

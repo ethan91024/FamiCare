@@ -1,4 +1,4 @@
-package com.example.seniorprojectapp;
+package com.ethan.FamiCare;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
