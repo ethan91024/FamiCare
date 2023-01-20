@@ -61,8 +61,7 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mood, container, false);
-        TextView Hello = view.findViewById(R.id.hello);
-        Hello.setText("點選心情");
+
         return view;
     }
 }
