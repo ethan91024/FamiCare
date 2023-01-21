@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.service.FitnessSensorServiceRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    private FitnessOptions fitnessOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

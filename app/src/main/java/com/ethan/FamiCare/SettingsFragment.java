@@ -65,4 +65,6 @@ public class SettingsFragment extends Fragment {
         Hello.setText("點選設定");
         return view;
     }
+
+
 }
