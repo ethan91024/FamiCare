@@ -15,7 +15,7 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 public class DiaryFragment extends Fragment {
-
+//1
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
