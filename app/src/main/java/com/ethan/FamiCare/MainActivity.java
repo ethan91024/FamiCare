@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,42 +22,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//test//test2//test3//test4
 
+
+        //建bottomNav
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-    }
+        //bottomNav選擇監聽器
+        bottomNav.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    TextView hello=findViewById(R.id.homehello);
-                    hello.setText("");
-                    //用switch分析被按下的item
-                    switch(item.getItemId()){
-                        case R.id.navigation_health:
-                            selectedFragment = new HealthFragment();
-                            break;
-                        case R.id.navigation_group:
-                            selectedFragment = new GroupFragment();
-                            break;
-                        case R.id.navigation_mood:
-                            selectedFragment = new MoodFragment();
-                            break;
-                        case R.id.navigation_diary:
-                            selectedFragment = new DiaryFragment();
-                            break;
-                        case R.id.navigation_settings:
-                            selectedFragment = new SettingsFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
-
+            switch(item.getItemId())
+            {
+                case R.id.navigation_group:
+                    startActivity(new Intent(getApplicationContext(),GroupActivity.class));
+                    overridePendingTransition(0,0);
                     return true;
-                }
-            };
-}
+                case R.id.navigation_health:
+                    startActivity(new Intent(getApplicationContext(),HealthActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.navigation_mood:
+                    startActivity(new Intent(getApplicationContext(),MoodActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.navigation_diary:
+                    startActivity(new Intent(getApplicationContext(),DiaryActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.navigation_settings:
+                    startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+            }
+            return false;
+        }
+    });
+}}

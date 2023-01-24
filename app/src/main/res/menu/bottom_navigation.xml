@@ -8,8 +8,6 @@
         android:id="@+id/navigation_health"
         android:icon="@drawable/ic_baseline_monitor_heart_24"
         android:title="健康" />
-
-
     <item
         android:id="@+id/navigation_mood"
         android:icon="@drawable/ic_baseline_mood_24"
