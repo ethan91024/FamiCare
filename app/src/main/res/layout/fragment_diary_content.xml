@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Diary_content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DiaryContentFragment">
+
+
+    <!--命名標題  比例2-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <!--留白  比例2-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <!--日記標題與按鈕  比例4-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="horizontal">
+
+            <!--日記標題  比例8-->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center|left"
+                android:text="日記標題"
+                android:textSize="20sp" />
+
+            <!--儲存日記按鈕  比例2  id="@+id/save_diary"-->
+            <Button
+                android:id="@+id/save_diary"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="儲存日記" />
+
+        </LinearLayout>
+
+        <!--編輯標題  比例4  id="@+id/Title"-->
+        <EditText
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:hint="命名日記標題" />
+
+    </LinearLayout>
+
+    <!--編輯日記內容  比例8-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="vertical">
+
+        <!--日記內容  比例1-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:text="日記內容"
+            android:textSize="20sp" />
+
+        <!--一條槓槓-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#000000" />
+
+        <!--編輯日記內容  比例9  id="@+id/Content"-->
+        <MultiAutoCompleteTextView
+            android:id="@+id/Content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:gravity="top"
+            android:hint="寫些東西吧" />
+
+    </LinearLayout>
+
+</LinearLayout>
