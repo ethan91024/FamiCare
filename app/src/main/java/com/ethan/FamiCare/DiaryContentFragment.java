@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
 public class DiaryContentFragment extends Fragment {
-//1
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
