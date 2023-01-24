@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Diary_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DiaryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <!-- Format快捷鍵: Ctrl + Alt + L -->
 
     <!--生活點滴 比例1-->
     <TextView
@@ -29,8 +27,9 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <!--行事曆  比例5-->
+    <!--行事曆  比例5  id="@+id/calender-->
     <CalendarView
+        android:id="@+id/calender"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5" />
@@ -51,26 +50,27 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <!--日期  比例2-->
+        <!--日期  比例2  id="@+id/date-->
         <TextView
-            android:id="@+id/日期"
+            android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="1/1"
+            android:text="日期"
             android:textSize="20sp" />
 
-        <!--日記標題  比例8 id="@+id/Title"-->
+        <!--日記標題  比例6 id="@+id/title"-->
         <Button
-            android:id="@+id/Title"
+            android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
             android:clickable="true"
             android:gravity="center_vertical|left"
-            android:text="日記標題"
+            android:text="尚未命名標題"
             android:textSize="20sp" />
+
 
     </LinearLayout>
 
@@ -82,5 +82,4 @@
         android:orientation="vertical">
 
     </LinearLayout>
-
 </LinearLayout>
