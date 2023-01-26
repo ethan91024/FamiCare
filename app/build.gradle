@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.ethan.FamiCare'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.ethan.FamiCare"
@@ -32,6 +32,8 @@ android {
 
 }
 
+
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -41,7 +43,8 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
+    //linechart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Google Fit
     implementation 'com.google.android.gms:play-services-fitness:21.1.0'
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
@@ -55,5 +58,7 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
-
 }
+
+
+
