@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.Scanner;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MoodFragment#newInstance} factory method to
@@ -62,35 +64,76 @@ public class MoodFragment extends Fragment {
 
     private int StressNumber = 0;
     private CheckBox ckb;
+    private boolean run = true;
     private View mainview;
+    private double HeartRrte = -1;
+    private double Sleep = -1;
+    private double BloodOxygen = -1;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Scanner cin = new Scanner(System.in);
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
         Button update = mainview.findViewById(R.id.update);
+        HeartRrte = 82;
+        BloodOxygen = 96;
+        Sleep=5;
+        if (Sleep == -1 || HeartRrte == -1 || BloodOxygen == -1) {
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            stressnumber.setText("缺少資料無法分析");
+            run = false;
+        } else {
+            if (HeartRrte > 79 && HeartRrte < 89) {
+                StressNumber += 2;
+            }
+            if (BloodOxygen < 98 && BloodOxygen > 95) {
+                StressNumber++;
+            } else if (BloodOxygen <= 95) {
+                StressNumber += 2;
+            }
+            if (Sleep < 8) {
+                StressNumber++;
+            } else if (Sleep < 6) {
+                StressNumber += 2;
+            }
+            String sn = StressNumber + "";
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            stressnumber.setText(sn);
+
+        }
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int number = updateStress(mainview);
-                number += StressNumber;
-                String s = "" + number;
-                TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-                stressnumber.setText(s);
+                int number = updataStress(mainview, run);
+                if (number < 0) {
+                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+                    stressnumber.setText("缺少資料無法分析");
+                } else {
+                    number += StressNumber;
+                    String sn = "" + number;
+                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+                    stressnumber.setText(sn);
+                }
             }
         });
+
         return mainview;
     }
 
-    public int updateStress(View view) {
+    public int updataStress(View view, boolean run) {
         int cnt = 0;
-        for (int i : id) {
-            ckb = (CheckBox) view.findViewById(i);
-            if (ckb.isChecked()) {
-                cnt++;
+        if (run) {
+            for (int i : id) {
+                ckb = (CheckBox) view.findViewById(i);
+                if (ckb.isChecked()) {
+                    cnt++;
+                }
             }
+        } else {
+            cnt = -1;
         }
         return cnt;
     }
