@@ -1,18 +1,16 @@
 package com.ethan.FamiCare;
 
-import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class DiaryFragment extends Fragment {
 
@@ -44,16 +42,11 @@ public class DiaryFragment extends Fragment {
         }
     }
 
+    private int selected_date;
+    //Layout 元素
     private CalendarView calender;
     private TextView date;
     private Button title;
-
-    //連接資料庫用
-    private final static String DATE = "date";
-    private final static String TITLE = "title";
-    private final static String CONTENT = "content";
-    private DiaryDB diaryDB;
-    private Cursor cursor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,27 +58,38 @@ public class DiaryFragment extends Fragment {
         date = view.findViewById(R.id.date);
         title = view.findViewById(R.id.title);
 
-//        diaryDB = new DiaryDB(this.getContext());
-//        diaryDB.open();//開啟資料庫
-
         //監聽選擇到的日期，改變date，抓取資料庫對應日期的資料，顯示資料庫標題到title
         calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
                 //變更日期
                 date.setText((month + 1) + "/" + dayOfMonth);
+                selected_date = getSelected_date(year, month, dayOfMonth);
             }
         });
 
-        //點擊日記標題，跳轉到DiaryContent
+        //點擊日記標題，紀錄選擇的日期(20230101)，跳轉到DiaryContent
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Diary_layout, new DiaryContentFragment()).commit();
+                if (!date.getText().equals("日期")) {
+
+                    DiaryContentFragment diaryContentFragment = new DiaryContentFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", selected_date);
+                    diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                    fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_layout, diaryContentFragment).commit();
+                }
             }
         });
 
         return view;
+    }
+
+    public int getSelected_date(int year, int month, int dayOfMonth) {
+        String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
+        return Integer.parseInt(s);
     }
 }

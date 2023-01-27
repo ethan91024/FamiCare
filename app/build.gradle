@@ -37,6 +37,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.room:room-common:2.4.2'
+    implementation 'androidx.room:room-runtime:2.4.2'
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
@@ -55,5 +57,6 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
+    annotationProcessor 'androidx.room:room-compiler:2.4.2'
 
 }

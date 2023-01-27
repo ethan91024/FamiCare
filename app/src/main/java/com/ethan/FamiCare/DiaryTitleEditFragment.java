@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class DiaryEditFragment extends Fragment {
+public class DiaryTitleEditFragment extends Fragment {
 //1
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -18,13 +18,13 @@ public class DiaryEditFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DiaryEditFragment() {
+    public DiaryTitleEditFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static DiaryEditFragment newInstance(String param1, String param2) {
-        DiaryEditFragment fragment = new DiaryEditFragment();
+    public static DiaryTitleEditFragment newInstance(String param1, String param2) {
+        DiaryTitleEditFragment fragment = new DiaryTitleEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +48,7 @@ public class DiaryEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_diary_edit, container, false);
+        View view =  inflater.inflate(R.layout.fragment_diary_title_edit, container, false);
 
         editText =  (EditText) view.findViewById(R.id.editText);
         name = view.findViewById(R.id.name);
