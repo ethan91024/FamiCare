@@ -1,16 +1,15 @@
 package com.ethan.FamiCare;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class DiaryContentFragment extends Fragment {
 
@@ -41,9 +40,16 @@ public class DiaryContentFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    private int date;
+    //Layout 元素
     Button save_diary;
     EditText title;
     MultiAutoCompleteTextView content;
+
+    //資料庫
+    private DiaryDoa diaryDoa;
+    private Diary diary;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,16 +57,21 @@ public class DiaryContentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary_content, container, false);
 
-        save_diary = view.findViewById(R.id.save_diary);
+        Bundle arguments = getArguments();
+        date = arguments.getInt("id");
         title = view.findViewById(R.id.Title);
         content = view.findViewById(R.id.Content);
+
+        save_diary = view.findViewById(R.id.save_diary);
+        diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
+        title.setHint(date + "");
 
         //按下按鈕後，將標題跟內容處存到資料庫，並跳轉回DiaryFragment
         save_diary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
+                fm.beginTransaction().addToBackStack(null).add(R.id.Diary_content_layout, new DiaryFragment()).hide(DiaryContentFragment.this).commit();
             }
         });
 
