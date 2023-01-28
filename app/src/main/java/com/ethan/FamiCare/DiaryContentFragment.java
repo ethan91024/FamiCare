@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,6 +43,10 @@ public class DiaryContentFragment extends Fragment {
     }
 
     private int date;
+    private Diary temp;
+    public static final String NOTE_EXTRA_key = "note_id";
+    private boolean status;
+
     //Layout 元素
     Button save_diary;
     EditText title;
@@ -64,17 +69,46 @@ public class DiaryContentFragment extends Fragment {
 
         save_diary = view.findViewById(R.id.save_diary);
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
-        title.setHint(date + "");
+
+        if (arguments != null) {
+            status = arguments.getBoolean("edited", false);
+        }
+        if (status) {
+            temp = diaryDoa.getDiaryById(date);
+            title.setText(temp.getTitle());
+            content.setText(temp.getContent());
+        } else {
+            temp = new Diary();
+        }
 
         //按下按鈕後，將標題跟內容處存到資料庫，並跳轉回DiaryFragment
         save_diary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onSaveNote();
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().addToBackStack(null).add(R.id.Diary_content_layout, new DiaryFragment()).hide(DiaryContentFragment.this).commit();
+                fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
             }
         });
 
         return view;
+    }
+
+    private void onSaveNote() {
+        String title_text = title.getText().toString();
+        String content_text = content.getText().toString();
+
+        if (!title_text.isEmpty() && !content_text.isEmpty()) {
+            temp.setId(date);
+            temp.setTitle(title_text);
+            temp.setContent(content_text);
+            if (status) {//更新或創建
+                diaryDoa.updateDiary(temp);
+            } else {
+                DiaryDB.getInstance(getContext()).diaryDoa().insertDiary(temp);
+            }
+        } else {
+            Toast.makeText(getContext(), "先寫下標題跟內容吧", Toast.LENGTH_SHORT).show();
+        }
     }
 }
