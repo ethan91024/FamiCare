@@ -24,7 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="23"
+        android:layout_weight="20"
         android:orientation="vertical">
 
         <TextView
@@ -39,7 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="50"
+            android:layout_weight="43"
             android:gravity="center"
             android:orientation="horizontal"
 
@@ -86,7 +86,7 @@
             android:id="@+id/update"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30"
+            android:layout_weight="32"
             android:background="#CC3300"
             android:gravity="center"
             android:onClick="update"
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginHorizontal="7dp"
-            android:layout_weight="10"
+            android:layout_weight="15"
             android:gravity="center">
 
             <TextView
@@ -140,7 +140,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="50">
+            android:layout_weight="75">
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
@@ -159,7 +159,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_weight="23"
         android:orientation="vertical">
 
         <TextView
