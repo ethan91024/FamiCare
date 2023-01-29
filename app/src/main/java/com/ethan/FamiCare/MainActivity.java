@@ -1,14 +1,15 @@
 package com.ethan.FamiCare;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.service.FitnessSensorServiceRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-                    TextView hello = findViewById(R.id.homehello);
+                    TextView hello=findViewById(R.id.homehello);
                     hello.setText("");
                     //用switch分析被按下的item
-                    switch (item.getItemId()) {
+                    switch(item.getItemId()){
                         case R.id.navigation_health:
                             selectedFragment = new HealthFragment();
                             break;
