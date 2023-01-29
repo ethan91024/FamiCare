@@ -84,11 +84,11 @@ public class MoodFragment extends Fragment {
 
     private double StressNumber = 0;
     private CheckBox ckb;
-    private boolean run = true; //是否能run分析壓力指數
+    private boolean run = true; //可否分析壓力指數
     private View mainview;
-     int HeartRrte = 0;
-     int Sleep = 0;
-     int BloodOxygen = 0;
+    int HeartRrte = 0;
+    int Sleep = 0;
+    int BloodOxygen = 0;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
 
 
@@ -108,54 +108,13 @@ public class MoodFragment extends Fragment {
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
-        int HeartRateStressN=0; //心率的壓力指數
-        int SleepStressN=0; //睡眠的壓力指數
-        int BloodCxygenN=0;//血氧的壓力指數
-        double [] daily =new double[7];
-        double WeekStressN=0;
-
 
         if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
             run = false;
         } else {
-
-            for(int i=0;i<daily.length;i++){
-                String hearts=HeartRateList.get(i);
-                String sleeps=SleepList.get(i);
-                String bloods=BloodOxygenList.get(i);
-                HeartRrte =Integer.parseInt(hearts);
-                Sleep=Integer.parseInt(sleeps);
-                BloodOxygen =Integer.parseInt(bloods);
-
-                //心率
-                if(HeartRrte>79&&HeartRrte<89){
-                    HeartRateStressN=6;
-                } else if (HeartRrte>89) {
-                    HeartRateStressN=8;
-                }
-                //血氧
-                if (BloodOxygen < 98 && BloodOxygen > 95) {
-                    BloodCxygenN=7;
-                } else if (BloodOxygen <= 95) {
-                    BloodCxygenN=8;
-                }
-                //睡眠
-                if (Sleep < 8&& Sleep>6) {
-                    SleepStressN=4;
-                } else if (Sleep < 6&&Sleep>4) {
-                    SleepStressN=6;
-                } else if (Sleep<4) {
-                    SleepStressN=8;
-                }
-                //壓力數日平均
-                daily[i]=(HeartRateStressN+BloodCxygenN+SleepStressN)/3;
-                WeekStressN+=daily[i];
-                System.out.println("壓力指數(日)" + daily[i]);
-            }
-            StressNumber=(int)WeekStressN/7;
-            String sn = StressNumber + "";
+            String sn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText(sn);
 
@@ -163,7 +122,7 @@ public class MoodFragment extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {//checkbox 更新壓力指數分析
             @Override
             public void onClick(View view) {
-                double plusnumber = updataStress(mainview, run);//勾選症狀的加分
+                double plusnumber = SymptomCheckBox(mainview, run);//勾選症狀的加分
                 if (plusnumber < 0) {//如果沒有心率、睡眠、血氧資料，顯示無法分析
                     TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                     stressnumber.setText("缺少資料無法分析");
@@ -185,7 +144,7 @@ public class MoodFragment extends Fragment {
         lineChartData.initX(HeartRrtexData);
         lineChartData.initY(0F, 10F);
 
-        //醜程式從這邊開
+        //醜程式從這邊開使
         ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
         ArrayList<Entry> HeartRatepoints = new ArrayList<>();
         for (int i = 0; i < EntryHeartRatepoints.size(); i++) {//把隨機變數存進Entry陣列
@@ -221,7 +180,56 @@ public class MoodFragment extends Fragment {
         return mainview;
     }
 
-    public double updataStress(View view, boolean run) { //症狀checkbox 加分計算
+    public String getStressNumber(ArrayList<String> HeartRateList, ArrayList<String> SleepList, ArrayList<String> BloodOxygenList) {//計算壓力指數
+        int HeartRateStressN = 0; //心率的壓力指數
+        int SleepStressN = 0; //睡眠的壓力指數
+        int BloodCxygenN = 0;//血氧的壓力指數
+        double[] daily = new double[7];
+        double WeekStressN = 0;
+
+        for (int i = 0; i < daily.length; i++) {
+            String hearts = HeartRateList.get(i);
+            String sleeps = SleepList.get(i);
+            String bloods = BloodOxygenList.get(i);
+            HeartRrte = Integer.parseInt(hearts);
+            Sleep = Integer.parseInt(sleeps);
+            BloodOxygen = Integer.parseInt(bloods);
+            //心率
+            if (HeartRrte > 79 && HeartRrte < 89) {
+                HeartRateStressN = 6;
+            } else if (HeartRrte > 89) {
+                HeartRateStressN = 8;
+            }
+            //血氧
+            if (BloodOxygen < 98 && BloodOxygen > 95) {
+                BloodCxygenN = 7;
+            } else if (BloodOxygen <= 95) {
+                BloodCxygenN = 8;
+            }
+            //睡眠
+            if (Sleep < 8 && Sleep > 6) {
+                SleepStressN = 4;
+            } else if (Sleep < 6 && Sleep > 4) {
+                SleepStressN = 6;
+            } else if (Sleep < 4) {
+                SleepStressN = 8;
+            }
+            //壓力數日平均
+            daily[i] = (HeartRateStressN + BloodCxygenN + SleepStressN) / 3;
+            System.out.println("壓力指數(日)" + daily[i]);
+            WeekStressN += daily[i];
+        }
+        int n1 = (int) WeekStressN / 7, n2 = (int) (WeekStressN / 7) + 1;//四捨五入
+        if (WeekStressN / 7 > (n1 + n2) / 2) {
+            StressNumber = n1 + 0.5;
+        } else {
+            StressNumber = n1;
+        }
+        String sn = StressNumber + "";
+        return sn;
+    }
+
+    public double SymptomCheckBox(View view, boolean run) { //症狀checkbox 加分計算
         double plusnumber = 0;
         if (run) {
             for (int i : id) {
