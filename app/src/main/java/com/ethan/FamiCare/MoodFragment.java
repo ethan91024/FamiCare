@@ -31,11 +31,20 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link MoodFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class MoodFragment extends Fragment {
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -43,6 +52,15 @@ public class MoodFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment MoodFragment.
+     */
+    // TODO: Rename and change types and number of parameters
     public static MoodFragment newInstance(String param1, String param2) {
         MoodFragment fragment = new MoodFragment();
         Bundle args = new Bundle();
@@ -64,6 +82,8 @@ public class MoodFragment extends Fragment {
     }
 
 
+
+
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //是否能run分析壓力指數
@@ -81,6 +101,9 @@ public class MoodFragment extends Fragment {
     LineChart lineChart;
     ArrayList<String> HeartRrtexData = new ArrayList<>();
 
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,10 +111,6 @@ public class MoodFragment extends Fragment {
         Scanner cin = new Scanner(System.in);
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
         Button update = mainview.findViewById(R.id.update);
-
-        HeartRrte = 82;
-        BloodOxygen = 96;
-        Sleep = 5;
         ArrayList<Entry> copy = new ArrayList<>();
         HeartRateList=getHeaetRatepoints();
 
@@ -135,18 +154,16 @@ public class MoodFragment extends Fragment {
         });
 
         //載入心律、睡眠等資料
-        lineChart = mainview.findViewById(R.id.lineChart);
-        lineChartData = new LineChartData(lineChart, this.getContext());
-        for (int i = 1; i <= 7; i++) {
+        lineChart=mainview.findViewById(R.id.lineChart);
+        lineChartData=new LineChartData(lineChart,this.getContext());
+        for(int i = 1;i<=7;i++) {
             HeartRrtexData.add("第" + i + "天");
         }
         lineChartData.initX(HeartRrtexData);
-        lineChartData.initY(0F, 10F);
         lineChartData.initY(0F,10F);
 
-            lineChartData.initDataSet(getHeaetRatepoints(),getSleeppoints(),getBloodOxygenpoints());
+        lineChartData.initDataSet(getHeaetRatepoints(),getSleeppoints(),getBloodOxygenpoints());
 
-        lineChartData.initDataSet(getpoints(), getpoints(), getpoints());
 
 
         return mainview;
@@ -187,11 +204,6 @@ public class MoodFragment extends Fragment {
     }
     private ArrayList<Entry> getSleeppoints() {//製造睡眠假資料
         ArrayList<Entry> points = new ArrayList<>();
-        Random r = new Random();
-        for (int i = 0; i < 7; i++) {
-            int num = r.nextInt(11);
-            String s = "" + num;
-            Float f = Float.parseFloat(s);
         Random r=new Random();
         for(int i = 0;i<7;i++){
             int num=r.nextInt(20);
@@ -222,7 +234,6 @@ public class MoodFragment extends Fragment {
 
         }
 
-    public class LineChartData {
         return points;
     }
 
@@ -230,17 +241,17 @@ public class MoodFragment extends Fragment {
         Context context;
         LineChart lineChart;
 
-        public LineChartData(LineChart lineChart, Context context) {
-            this.context = context;
-            this.lineChart = lineChart;
+        public LineChartData(LineChart lineChart,Context context){
+            this.context=context;
+            this.lineChart=lineChart;
         }
 
-        public void initDataSet(ArrayList<Entry> valuesY1, ArrayList<Entry> valuesY2, ArrayList<Entry> valuesY3) {
-            if (valuesY1.size() > 0) {
-                LineDataSet set1, set2, set3;
-                set1 = new LineDataSet(valuesY1, "heartrate");
-                set2 = new LineDataSet(valuesY2, "sleep");
-                set3 = new LineDataSet(valuesY3, "blood");
+        public void initDataSet(ArrayList<Entry> valuesY1,ArrayList<Entry> valuesY2,ArrayList<Entry> valuesY3) {
+            if(valuesY1.size()>0){
+                LineDataSet set1,set2,set3;
+                set1=new LineDataSet(valuesY1,"heartrate");
+                set2=new LineDataSet(valuesY2,"sleep");
+                set3=new LineDataSet(valuesY3,"blood");
 
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set1.setColor(context.getResources().getColor(R.color.colorPrimary));//線的顏
@@ -277,14 +288,14 @@ public class MoodFragment extends Fragment {
                 description.setEnabled(false);//不顯示Description Label (預設顯示)
 
 
-                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                ArrayList<ILineDataSet> dataSets=new ArrayList<>();
                 dataSets.add(set1);
                 dataSets.add(set2);
                 dataSets.add(set3);
 
                 LineData data = new LineData(dataSets);
                 lineChart.setData(data);//一定要放在最後
-            } else {
+            }else{
                 lineChart.setNoDataText("暫時沒有數據");
                 lineChart.setNoDataTextColor(Color.BLUE);//文字顏色
             }
@@ -292,8 +303,8 @@ public class MoodFragment extends Fragment {
         }
 
 
-        public void initX(ArrayList datalist) {
-            XAxis xAxis = lineChart.getXAxis();
+        public void  initX(ArrayList datalist){
+            XAxis xAxis=lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//X軸標籤顯示位置(預設顯示在上方，分為上方內/外側、下方內/外側及上下同時顯示)
             xAxis.setTextColor(Color.GRAY);//X軸標籤顏色
             xAxis.setTextSize(12);//X軸標籤大小
@@ -315,8 +326,8 @@ public class MoodFragment extends Fragment {
             leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
             leftAxis.setTextSize(12);//Y軸標籤大小
 
-            leftAxis.setAxisMinimum(min - 10);//Y軸標籤最小值
-            leftAxis.setAxisMaximum(max + 10);//Y軸標籤最大值
+            leftAxis.setAxisMinimum(min-10);//Y軸標籤最小值
+            leftAxis.setAxisMaximum(max+10);//Y軸標籤最大值
 
             leftAxis.setValueFormatter(new MyYAxisValueFormatter());
         }
@@ -338,5 +349,8 @@ public class MoodFragment extends Fragment {
         }
     }
 }
+
+
+
 
 
