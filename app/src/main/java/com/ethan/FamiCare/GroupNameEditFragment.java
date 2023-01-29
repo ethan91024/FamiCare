@@ -9,40 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.EditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GroupFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class GroupFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class GroupNameEditFragment extends Fragment {
+    //1
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public GroupFragment() {
+    public GroupNameEditFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GroupFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static GroupFragment newInstance(String param1, String param2) {
-        GroupFragment fragment = new GroupFragment();
+    public static GroupNameEditFragment newInstance(String param1, String param2) {
+        GroupNameEditFragment fragment = new GroupNameEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -50,7 +33,6 @@ public class GroupFragment extends Fragment {
         return fragment;
     }
 
-    private Button create;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,24 +41,21 @@ public class GroupFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    private Button editcreate;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_group, container, false);
-        GroupNameEditFragment groupNameEditFragment=new GroupNameEditFragment();
+        View view =  inflater.inflate(R.layout.fragment_groupname_edit, container, false);
+        GroupChatroom groupChatroom=new GroupChatroom();
         FragmentManager fm = getActivity().getSupportFragmentManager();
-
-        create=view.findViewById(R.id.創建群組);
-        create.setOnClickListener(new View.OnClickListener(){
+        editcreate=view.findViewById(R.id.name);
+        editcreate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
-                
+                fm.beginTransaction().addToBackStack(null).replace(R.id.edit, groupChatroom).commit();
             }
         });
         return view;
     }
-
 }
