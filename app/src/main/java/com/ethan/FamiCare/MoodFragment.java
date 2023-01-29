@@ -3,16 +3,14 @@ package com.ethan.FamiCare;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -29,14 +27,10 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.logging.Formatter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,19 +84,23 @@ public class MoodFragment extends Fragment {
     
 
 
-    private int StressNumber = 0;
+    private double StressNumber = 0;
     private CheckBox ckb;
-    private boolean run = true;
+    private boolean run = true; //是否能run分析壓力指數
     private View mainview;
-    private double HeartRrte = -1;
+    private double HeartRrte =-1;
     private double Sleep = -1;
     private double BloodOxygen = -1;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
+    private ArrayList<Entry> HeartRateList =new ArrayList<>();
+    private ArrayList<Entry> SleepList =new ArrayList<>();
+    private ArrayList<Entry> BloodOxygenList =new ArrayList<>();
 
     //set linechart
     LineChartData lineChartData;
     LineChart lineChart;
     ArrayList<String> HeartRrtexData = new ArrayList<>();
+
 
 
 
@@ -113,9 +111,9 @@ public class MoodFragment extends Fragment {
         Scanner cin = new Scanner(System.in);
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
         Button update = mainview.findViewById(R.id.update);
-        HeartRrte = 82;
-        BloodOxygen = 96;
-        Sleep=5;
+        ArrayList<Entry> copy = new ArrayList<>();
+        HeartRateList=getHeaetRatepoints();
+
         if (Sleep == -1 || HeartRrte == -1 || BloodOxygen == -1) {
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
@@ -139,16 +137,16 @@ public class MoodFragment extends Fragment {
             stressnumber.setText(sn);
 
         }
-        update.setOnClickListener(new View.OnClickListener() {
+        update.setOnClickListener(new View.OnClickListener() {//checkbox 更新壓力指數分析
             @Override
             public void onClick(View view) {
-                int number = updataStress(mainview, run);
-                if (number < 0) {
+                double plusnumber = updataStress(mainview, run);//勾選症狀的加分
+                if (plusnumber < 0) {//如果沒有心率、睡眠、血氧資料，顯示無法分析
                     TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                     stressnumber.setText("缺少資料無法分析");
-                } else {
-                    number += StressNumber;
-                    String sn = "" + number;
+                } else {//把症狀勾選的資料加上壓力指數
+                    plusnumber += StressNumber;
+                    String sn = "" + plusnumber;
                     TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                     stressnumber.setText(sn);
                 }
@@ -164,33 +162,34 @@ public class MoodFragment extends Fragment {
         lineChartData.initX(HeartRrtexData);
         lineChartData.initY(0F,10F);
 
-            lineChartData.initDataSet(getpoints(),getpoints(),getpoints());
+            lineChartData.initDataSet(getHeaetRatepoints(),getSleeppoints(),getBloodOxygenpoints());
 
 
 
         return mainview;
     }
 
-    public int updataStress(View view, boolean run) {
-        int cnt = 0;
+    public double updataStress(View view, boolean run) { //症狀checkbox 加分計算
+        double plusnumber = 0;
         if (run) {
             for (int i : id) {
                 ckb = (CheckBox) view.findViewById(i);
                 if (ckb.isChecked()) {
-                    cnt++;
+                    plusnumber+=0.5;
                 }
             }
         } else {
-            cnt = -1;
+            plusnumber = -1;//如果缺乏心率睡眠血氧資料，直接無法分析，回傳-1表示無法run
         }
-        return cnt;
+        return plusnumber;
     }
 
-    private ArrayList<Entry> getpoints() {//製造假資料
+
+    private ArrayList<Entry> getHeaetRatepoints() {//製造心率假資料
         ArrayList<Entry> points = new ArrayList<>();
         Random r=new Random();
         for(int i = 0;i<7;i++){
-            int num=r.nextInt(11);
+            int num=60+r.nextInt(100-60+1);
             String s=""+num;
             Float f=Float.parseFloat(s);
             //HeartRrtexData.add("第" + i + "天");
@@ -203,8 +202,40 @@ public class MoodFragment extends Fragment {
 
         return points;
     }
+    private ArrayList<Entry> getSleeppoints() {//製造睡眠假資料
+        ArrayList<Entry> points = new ArrayList<>();
+        Random r=new Random();
+        for(int i = 0;i<7;i++){
+            int num=r.nextInt(20);
+            String s=""+num;
+            Float f=Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+
+            points.add(new Entry(i, f));
 
 
+        }
+
+        return points;
+    }
+    private ArrayList<Entry> getBloodOxygenpoints() {//製造血氧假資料
+        ArrayList<Entry> points = new ArrayList<>();
+        Random r=new Random();
+        for(int i = 0;i<7;i++){
+            int num=90+r.nextInt(100-90+1);
+            String s=""+num;
+            Float f=Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+
+            points.add(new Entry(i, f));
+
+
+        }
+
+        return points;
+    }
 
     public class LineChartData{
         Context context;
