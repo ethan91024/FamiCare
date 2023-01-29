@@ -82,26 +82,20 @@ public class MoodFragment extends Fragment {
     }
 
 
-
-
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //是否能run分析壓力指數
     private View mainview;
-    private double HeartRrte =-1;
-    private double Sleep = -1;
-    private double BloodOxygen = -1;
+     int HeartRrte = 0;
+     int Sleep = 0;
+     int BloodOxygen = 0;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
-    private ArrayList<Entry> HeartRateList =new ArrayList<>();
-    private ArrayList<Entry> SleepList =new ArrayList<>();
-    private ArrayList<Entry> BloodOxygenList =new ArrayList<>();
+
 
     //set linechart
     LineChartData lineChartData;
     LineChart lineChart;
     ArrayList<String> HeartRrtexData = new ArrayList<>();
-
-
 
 
     @Override
@@ -111,27 +105,56 @@ public class MoodFragment extends Fragment {
         Scanner cin = new Scanner(System.in);
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
         Button update = mainview.findViewById(R.id.update);
-        ArrayList<Entry> copy = new ArrayList<>();
-        HeartRateList=getHeaetRatepoints();
+        ArrayList<String> HeartRateList = getHeaetRatepoints();
+        ArrayList<String> SleepList = getSleeppoints();
+        ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
+        int HeartRateStressN=0; //心率的壓力指數
+        int SleepStressN=0; //睡眠的壓力指數
+        int BloodCxygenN=0;//血氧的壓力指數
+        double [] daily =new double[7];
+        double WeekStressN=0;
 
-        if (Sleep == -1 || HeartRrte == -1 || BloodOxygen == -1) {
+
+        if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
             run = false;
         } else {
-            if (HeartRrte > 79 && HeartRrte < 89) {
-                StressNumber += 2;
+
+            for(int i=0;i<daily.length;i++){
+                String hearts=HeartRateList.get(i);
+                String sleeps=SleepList.get(i);
+                String bloods=BloodOxygenList.get(i);
+                HeartRrte =Integer.parseInt(hearts);
+                Sleep=Integer.parseInt(sleeps);
+                BloodOxygen =Integer.parseInt(bloods);
+
+                //心率
+                if(HeartRrte>79&&HeartRrte<89){
+                    HeartRateStressN=6;
+                } else if (HeartRrte>89) {
+                    HeartRateStressN=8;
+                }
+                //血氧
+                if (BloodOxygen < 98 && BloodOxygen > 95) {
+                    BloodCxygenN=7;
+                } else if (BloodOxygen <= 95) {
+                    BloodCxygenN=8;
+                }
+                //睡眠
+                if (Sleep < 8&& Sleep>6) {
+                    SleepStressN=4;
+                } else if (Sleep < 6&&Sleep>4) {
+                    SleepStressN=6;
+                } else if (Sleep<4) {
+                    SleepStressN=8;
+                }
+                //壓力數日平均
+                daily[i]=(HeartRateStressN+BloodCxygenN+SleepStressN)/3;
+                WeekStressN+=daily[i];
+                System.out.println("壓力指數(日)" + daily[i]);
             }
-            if (BloodOxygen < 98 && BloodOxygen > 95) {
-                StressNumber++;
-            } else if (BloodOxygen <= 95) {
-                StressNumber += 2;
-            }
-            if (Sleep < 8) {
-                StressNumber++;
-            } else if (Sleep < 6) {
-                StressNumber += 2;
-            }
+            StressNumber=(int)WeekStressN/7;
             String sn = StressNumber + "";
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText(sn);
@@ -154,16 +177,45 @@ public class MoodFragment extends Fragment {
         });
 
         //載入心律、睡眠等資料
-        lineChart=mainview.findViewById(R.id.lineChart);
-        lineChartData=new LineChartData(lineChart,this.getContext());
-        for(int i = 1;i<=7;i++) {
+        lineChart = mainview.findViewById(R.id.lineChart);
+        lineChartData = new LineChartData(lineChart, this.getContext());
+        for (int i = 1; i <= 7; i++) {
             HeartRrtexData.add("第" + i + "天");
         }
         lineChartData.initX(HeartRrtexData);
-        lineChartData.initY(0F,10F);
+        lineChartData.initY(0F, 10F);
 
-        lineChartData.initDataSet(getHeaetRatepoints(),getSleeppoints(),getBloodOxygenpoints());
+        //醜程式從這邊開
+        ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
+        ArrayList<Entry> HeartRatepoints = new ArrayList<>();
+        for (int i = 0; i < EntryHeartRatepoints.size(); i++) {//把隨機變數存進Entry陣列
+            String s = EntryHeartRatepoints.get(i);
+            Float f = Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+            HeartRatepoints.add(new Entry(i, f));
+        }
+        ArrayList<String> EntrySleeppoints = getSleeppoints();//從getSleeppoints取得隨機值
+        ArrayList<Entry> Sleeppoints = new ArrayList<>();//把隨機變數存進Entry陣列
+        for (int i = 0; i < EntrySleeppoints.size(); i++) {
+            String s = EntrySleeppoints.get(i);
+            Float f = Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+            Sleeppoints.add(new Entry(i, f));
+        }
+        ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
+        ArrayList<Entry> BloodOxygenpoints = new ArrayList<>();//把隨機變數存進Entry陣列
+        for (int i = 0; i < EntryBloodOxygenpoints.size(); i++) {
+            String s = EntryBloodOxygenpoints.get(i);
+            Float f = Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+            BloodOxygenpoints.add(new Entry(i, f));
+        }
+        //醜程式到這邊結束(幫你包起來了)
 
+        lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
 
 
         return mainview;
@@ -175,7 +227,7 @@ public class MoodFragment extends Fragment {
             for (int i : id) {
                 ckb = (CheckBox) view.findViewById(i);
                 if (ckb.isChecked()) {
-                    plusnumber+=0.5;
+                    plusnumber += 0.5;
                 }
             }
         } else {
@@ -185,51 +237,17 @@ public class MoodFragment extends Fragment {
     }
 
 
-    private ArrayList<Entry> getHeaetRatepoints() {//製造心率假資料
-        ArrayList<Entry> points = new ArrayList<>();
-        Random r=new Random();
-        for(int i = 0;i<7;i++){
-            int num=60+r.nextInt(100-60+1);
-            String s=""+num;
-            Float f=Float.parseFloat(s);
+    private ArrayList<String> getHeaetRatepoints() {//製造心率假資料，名子不要改會亂掉
+        ArrayList<String> points = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 7; i++) {
+            int num = 60 + r.nextInt(100 - 60 + 1);
+            String s = "" + num;
+            //Float f=Float.parseFloat(s);
             //HeartRrtexData.add("第" + i + "天");
             //HeartRrteyData.add(new Entry(i+1,f));
-
-            points.add(new Entry(i, f));
-
-
-        }
-
-        return points;
-    }
-    private ArrayList<Entry> getSleeppoints() {//製造睡眠假資料
-        ArrayList<Entry> points = new ArrayList<>();
-        Random r=new Random();
-        for(int i = 0;i<7;i++){
-            int num=r.nextInt(20);
-            String s=""+num;
-            Float f=Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-
-            points.add(new Entry(i, f));
-
-
-        }
-
-        return points;
-    }
-    private ArrayList<Entry> getBloodOxygenpoints() {//製造血氧假資料
-        ArrayList<Entry> points = new ArrayList<>();
-        Random r=new Random();
-        for(int i = 0;i<7;i++){
-            int num=90+r.nextInt(100-90+1);
-            String s=""+num;
-            Float f=Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-
-            points.add(new Entry(i, f));
+            //points.add(new Entry(i, f))
+            points.add(s);
 
 
         }
@@ -237,21 +255,57 @@ public class MoodFragment extends Fragment {
         return points;
     }
 
-    public class LineChartData{
+    private ArrayList<String> getSleeppoints() {//製造睡眠假資料，名子不要改
+        ArrayList<String> points = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 7; i++) {
+            int num = r.nextInt(20);
+            String s = "" + num;
+            //Float f=Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+            //points.add(new Entry(i, f));
+            points.add(s);
+
+
+        }
+
+        return points;
+    }
+
+    private ArrayList<String> getBloodOxygenpoints() {//製造血氧假資料，名子不要改
+        ArrayList<String> points = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 7; i++) {
+            int num = 90 + r.nextInt(100 - 90 + 1);
+            String s = "" + num;
+            //Float f=Float.parseFloat(s);
+            //HeartRrtexData.add("第" + i + "天");
+            //HeartRrteyData.add(new Entry(i+1,f));
+            //points.add(new Entry(i, f));
+            points.add(s);
+
+
+        }
+
+        return points;
+    }
+
+    public class LineChartData {
         Context context;
         LineChart lineChart;
 
-        public LineChartData(LineChart lineChart,Context context){
-            this.context=context;
-            this.lineChart=lineChart;
+        public LineChartData(LineChart lineChart, Context context) {
+            this.context = context;
+            this.lineChart = lineChart;
         }
 
-        public void initDataSet(ArrayList<Entry> valuesY1,ArrayList<Entry> valuesY2,ArrayList<Entry> valuesY3) {
-            if(valuesY1.size()>0){
-                LineDataSet set1,set2,set3;
-                set1=new LineDataSet(valuesY1,"heartrate");
-                set2=new LineDataSet(valuesY2,"sleep");
-                set3=new LineDataSet(valuesY3,"blood");
+        public void initDataSet(ArrayList<Entry> valuesY1, ArrayList<Entry> valuesY2, ArrayList<Entry> valuesY3) {
+            if (valuesY1.size() > 0) {
+                LineDataSet set1, set2, set3;
+                set1 = new LineDataSet(valuesY1, "heartrate");
+                set2 = new LineDataSet(valuesY2, "sleep");
+                set3 = new LineDataSet(valuesY3, "blood");
 
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set1.setColor(context.getResources().getColor(R.color.colorPrimary));//線的顏
@@ -288,14 +342,14 @@ public class MoodFragment extends Fragment {
                 description.setEnabled(false);//不顯示Description Label (預設顯示)
 
 
-                ArrayList<ILineDataSet> dataSets=new ArrayList<>();
+                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 dataSets.add(set1);
                 dataSets.add(set2);
                 dataSets.add(set3);
 
                 LineData data = new LineData(dataSets);
                 lineChart.setData(data);//一定要放在最後
-            }else{
+            } else {
                 lineChart.setNoDataText("暫時沒有數據");
                 lineChart.setNoDataTextColor(Color.BLUE);//文字顏色
             }
@@ -303,8 +357,8 @@ public class MoodFragment extends Fragment {
         }
 
 
-        public void  initX(ArrayList datalist){
-            XAxis xAxis=lineChart.getXAxis();
+        public void initX(ArrayList datalist) {
+            XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//X軸標籤顯示位置(預設顯示在上方，分為上方內/外側、下方內/外側及上下同時顯示)
             xAxis.setTextColor(Color.GRAY);//X軸標籤顏色
             xAxis.setTextSize(12);//X軸標籤大小
@@ -326,8 +380,8 @@ public class MoodFragment extends Fragment {
             leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
             leftAxis.setTextSize(12);//Y軸標籤大小
 
-            leftAxis.setAxisMinimum(min-10);//Y軸標籤最小值
-            leftAxis.setAxisMaximum(max+10);//Y軸標籤最大值
+            leftAxis.setAxisMinimum(min - 10);//Y軸標籤最小值
+            leftAxis.setAxisMaximum(max + 10);//Y軸標籤最大值
 
             leftAxis.setValueFormatter(new MyYAxisValueFormatter());
         }
