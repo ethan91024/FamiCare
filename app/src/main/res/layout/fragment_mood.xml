@@ -93,22 +93,20 @@
             android:text="更新壓力指數分析"
             android:textColor="#FFFFFF"
             android:textSize="23dp"
-            android:textStyle="bold">
-
-        </Button>
+            android:textStyle="bold"></Button>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="50"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginHorizontal="7dp"
-            android:layout_weight="25"
+            android:layout_weight="10"
             android:gravity="center">
 
             <TextView
@@ -130,19 +128,19 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="75"
-            android:gravity="center"
-            android:text="折線圖顯示"
-            android:textSize="25dp" />
+            android:layout_height="1dp"
+            android:background="#000000" />
+
+
 
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="0dp"
+            android:layout_weight="50">
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
@@ -152,10 +150,16 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="20"
         android:orientation="vertical">
 
         <TextView
