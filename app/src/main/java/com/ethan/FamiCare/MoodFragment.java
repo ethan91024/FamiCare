@@ -146,32 +146,13 @@ public class MoodFragment extends Fragment {
 
         //醜程式從這邊開使
         ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
-        ArrayList<Entry> HeartRatepoints = new ArrayList<>();
-        for (int i = 0; i < EntryHeartRatepoints.size(); i++) {//把隨機變數存進Entry陣列
-            String s = EntryHeartRatepoints.get(i);
-            Float f = Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-            HeartRatepoints.add(new Entry(i, f));
-        }
+        ArrayList<Entry> HeartRatepoints =points(EntryHeartRatepoints);
+
         ArrayList<String> EntrySleeppoints = getSleeppoints();//從getSleeppoints取得隨機值
-        ArrayList<Entry> Sleeppoints = new ArrayList<>();//把隨機變數存進Entry陣列
-        for (int i = 0; i < EntrySleeppoints.size(); i++) {
-            String s = EntrySleeppoints.get(i);
-            Float f = Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-            Sleeppoints.add(new Entry(i, f));
-        }
+        ArrayList<Entry> Sleeppoints = points(EntrySleeppoints);
+
         ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
-        ArrayList<Entry> BloodOxygenpoints = new ArrayList<>();//把隨機變數存進Entry陣列
-        for (int i = 0; i < EntryBloodOxygenpoints.size(); i++) {
-            String s = EntryBloodOxygenpoints.get(i);
-            Float f = Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-            BloodOxygenpoints.add(new Entry(i, f));
-        }
+        ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
         //醜程式到這邊結束(幫你包起來了)
 
         lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
@@ -247,7 +228,7 @@ public class MoodFragment extends Fragment {
 
     private ArrayList<String> getHeaetRatepoints() {//製造心率假資料，名子不要改會亂掉
         ArrayList<String> points = new ArrayList<>();
-        Random r = new Random();
+        Random r = new Random(111);
         for (int i = 0; i < 7; i++) {
             int num = 60 + r.nextInt(100 - 60 + 1);
             String s = "" + num;
@@ -265,7 +246,7 @@ public class MoodFragment extends Fragment {
 
     private ArrayList<String> getSleeppoints() {//製造睡眠假資料，名子不要改
         ArrayList<String> points = new ArrayList<>();
-        Random r = new Random();
+        Random r = new Random(111);
         for (int i = 0; i < 7; i++) {
             int num = r.nextInt(20);
             String s = "" + num;
@@ -283,7 +264,7 @@ public class MoodFragment extends Fragment {
 
     private ArrayList<String> getBloodOxygenpoints() {//製造血氧假資料，名子不要改
         ArrayList<String> points = new ArrayList<>();
-        Random r = new Random();
+        Random r = new Random(111);
         for (int i = 0; i < 7; i++) {
             int num = 90 + r.nextInt(100 - 90 + 1);
             String s = "" + num;
@@ -299,6 +280,20 @@ public class MoodFragment extends Fragment {
         return points;
     }
 
+    private  ArrayList<Entry> points(ArrayList<String> entrypoints){//加進Y軸資料
+        ArrayList<Entry> getpoints=new ArrayList<>();
+        for (int i=0;i<entrypoints.size();i++){
+            String s=entrypoints.get(i);
+            Float f=Float.parseFloat(s);
+            if(f>20){
+                f=f/10;
+            }
+            getpoints.add(new Entry(i,f));
+        }
+        return getpoints;
+    }
+
+
     public class LineChartData {
         Context context;
         LineChart lineChart;
@@ -309,12 +304,10 @@ public class MoodFragment extends Fragment {
         }
 
         public void initDataSet(ArrayList<Entry> valuesY1, ArrayList<Entry> valuesY2, ArrayList<Entry> valuesY3) {
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             if (valuesY1.size() > 0) {
-                LineDataSet set1, set2, set3;
+                LineDataSet set1;
                 set1 = new LineDataSet(valuesY1, "heartrate");
-                set2 = new LineDataSet(valuesY2, "sleep");
-                set3 = new LineDataSet(valuesY3, "blood");
-
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set1.setColor(context.getResources().getColor(R.color.colorPrimary));//線的顏
                 set1.setCircleColor(context.getResources().getColor(R.color.colorPrimary));//圓點顏色
@@ -323,8 +316,15 @@ public class MoodFragment extends Fragment {
                 set1.setLineWidth(1.5f);//線寬
                 set1.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set1.setValueTextSize(8);//座標點數字大小
+                dataSets.add(set1);
+            } else {
+                lineChart.setNoDataText("暫時沒有數據");
+                lineChart.setNoDataTextColor(Color.BLUE);//文字顏色
+            }
 
-
+            if (valuesY2.size() > 0) {
+                LineDataSet set2;
+                set2 = new LineDataSet(valuesY2, "sleep");
                 set2.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set2.setColor(context.getResources().getColor(R.color.colorTheme));//線的顏
                 set2.setCircleColor(context.getResources().getColor(R.color.colorTheme));//圓點顏色
@@ -333,8 +333,15 @@ public class MoodFragment extends Fragment {
                 set2.setLineWidth(1.5f);//線寬
                 set2.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set2.setValueTextSize(8);//座標點數字大小
+                dataSets.add(set2);
+            } else {
+                lineChart.setNoDataText("暫時沒有數據");
+                lineChart.setNoDataTextColor(Color.YELLOW);//文字顏色
+            }
 
-
+            if (valuesY3.size() > 0) {
+                LineDataSet set3;
+                set3 = new LineDataSet(valuesY3, "blood");
                 set3.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set3.setColor(context.getResources().getColor(R.color.colorAccent));//線的顏
                 set3.setCircleColor(context.getResources().getColor(R.color.colorAccent));//圓點顏色
@@ -343,24 +350,19 @@ public class MoodFragment extends Fragment {
                 set3.setLineWidth(1.5f);//線寬
                 set3.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set3.setValueTextSize(8);//座標點數字大小
-
-                Legend legend = lineChart.getLegend();
-                legend.setEnabled(false);//不顯示圖例 (預設顯示)
-                Description description = lineChart.getDescription();
-                description.setEnabled(false);//不顯示Description Label (預設顯示)
-
-
-                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                dataSets.add(set1);
-                dataSets.add(set2);
                 dataSets.add(set3);
-
-                LineData data = new LineData(dataSets);
-                lineChart.setData(data);//一定要放在最後
             } else {
                 lineChart.setNoDataText("暫時沒有數據");
-                lineChart.setNoDataTextColor(Color.BLUE);//文字顏色
+                lineChart.setNoDataTextColor(Color.GRAY);//文字顏色
             }
+
+                Legend legend = lineChart.getLegend();
+                legend.setEnabled(true);//顯示圖例 (預設顯示)
+                Description description = lineChart.getDescription();
+                description.setEnabled(false);//不顯示Description Label (預設顯示)
+                LineData data = new LineData(dataSets);
+                lineChart.setData(data);//一定要放在最後
+
             lineChart.invalidate();//繪製圖表
         }
 
