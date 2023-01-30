@@ -85,16 +85,17 @@ public class DiaryContentFragment extends Fragment {
         save_diary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSaveNote();
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
+                if (onSaveNote()) {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
+                }
             }
         });
 
         return view;
     }
 
-    private void onSaveNote() {
+    private boolean onSaveNote() {
         String title_text = title.getText().toString();
         String content_text = content.getText().toString();
 
@@ -109,6 +110,8 @@ public class DiaryContentFragment extends Fragment {
             }
         } else {
             Toast.makeText(getContext(), "先寫下標題跟內容吧", Toast.LENGTH_SHORT).show();
+            return false;
         }
+        return true;
     }
 }
