@@ -86,9 +86,9 @@ public class MoodFragment extends Fragment {
     private CheckBox ckb;
     private boolean run = true; //可否分析壓力指數
     private View mainview;
-    int HeartRrte = 0;
-    int Sleep = 0;
-    int BloodOxygen = 0;
+    private int HeartRrte = 0;
+    private int Sleep = 0;
+    private int BloodOxygen = 0;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
 
 
@@ -144,7 +144,7 @@ public class MoodFragment extends Fragment {
         lineChartData.initX(HeartRrtexData);
         lineChartData.initY(0F, 10F);
 
-        //醜程式從這邊開使
+
         ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
         ArrayList<Entry> HeartRatepoints =points(EntryHeartRatepoints);
 
@@ -153,7 +153,7 @@ public class MoodFragment extends Fragment {
 
         ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
         ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
-        //醜程式到這邊結束(幫你包起來了)
+
 
         lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
 
