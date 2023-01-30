@@ -137,6 +137,7 @@
 
 
         <RelativeLayout
+
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -146,9 +147,19 @@
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
+
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingVertical="1dp"
+        android:text="*心率和血氧*10才是真正的數值，此為量化結果"
+        android:textSize="10dp"
+        />
 
     <View
         android:layout_width="match_parent"
@@ -159,7 +170,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="23"
+        android:layout_weight="20"
         android:orientation="vertical">
 
         <TextView
