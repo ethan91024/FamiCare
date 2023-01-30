@@ -1,34 +1,29 @@
 
 package com.ethan.FamiCare;
 
-        import static com.ethan.FamiCare.Firebasecords.FirebaseCords.Main_Chat_Database;
+import static com.ethan.FamiCare.Firebasecords.FirebaseCords.Main_Chat_Database;
 
-        import android.net.Uri;
-        import android.os.Bundle;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
-        import androidx.annotation.NonNull;
-        import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-        import android.os.Message;
-        import android.text.TextUtils;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 
-        import com.ethan.FamiCare.Firebasecords.FirebaseCords;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.firestore.FieldValue;
-
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
-        import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
 public class GroupChatroom extends Fragment {
 
@@ -66,46 +61,47 @@ public class GroupChatroom extends Fragment {
     }
 
     EditText chatbox;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
-        chatbox=view.findViewById(R.id.cahtbox);
+        chatbox = view.findViewById(R.id.cahtbox);
         return view;
     }
 
     public void sendmessage(View view) {
-        String message =chatbox.getText().toString();
-        FirebaseUser user=mAuth.getCurrentUser();
+        String message = chatbox.getText().toString();
+        FirebaseUser user = mAuth.getCurrentUser();
 
-        if (!TextUtils.isEmpty(message)){
+        if (!TextUtils.isEmpty(message)) {
 
-            Date today=new Date();
-            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String messageID=format.format(today);
-            String user_image_url="";
-            Uri photoUrl=user.getPhotoUrl();
-            String originalUrl="s96-c/photo.jpg";
-            String resizeImageUrl="s400-c/photo.jpg";
-            if(photoUrl!=null){
-                String photoPath=photoUrl.toString();
-                user_image_url = photoPath.replace(originalUrl,resizeImageUrl);
+            Date today = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String messageID = format.format(today);
+            String user_image_url = "";
+            Uri photoUrl = user.getPhotoUrl();
+            String originalUrl = "s96-c/photo.jpg";
+            String resizeImageUrl = "s400-c/photo.jpg";
+            if (photoUrl != null) {
+                String photoPath = photoUrl.toString();
+                user_image_url = photoPath.replace(originalUrl, resizeImageUrl);
             }
-            HashMap<String,Object>messageobj=new HashMap<>();
+            HashMap<String, Object> messageobj = new HashMap<>();
             messageobj.put("Message", message);
-            messageobj.put("user name",user.getDisplayName());
+            messageobj.put("user name", user.getDisplayName());
             messageobj.put("timestamp", FieldValue.serverTimestamp());
-            messageobj.put("messageID",messageID);
-            messageobj.put("user_image_url",user_image_url);
+            messageobj.put("messageID", messageID);
+            messageobj.put("user_image_url", user_image_url);
             Main_Chat_Database.document(messageID).set(messageobj).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(GroupChatroom.this.getContext(),"Message Send",Toast.LENGTH_SHORT).show();
+                    if (task.isSuccessful()) {
+                        Toast.makeText(GroupChatroom.this.getContext(), "Message Send", Toast.LENGTH_SHORT).show();
                         chatbox.setText("");
-                    }else {
-                        Toast.makeText(GroupChatroom.this.getContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(GroupChatroom.this.getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
