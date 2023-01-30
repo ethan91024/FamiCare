@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "891248474728",
+    "project_id": "chatapp-as-29fcf",
+    "storage_bucket": "chatapp-as-29fcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891248474728:android:12e8e4728d57146c2e19dd",
+        "android_client_info": {
+          "package_name": "com.ethan.FamiCare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891248474728-0286du7dnt2846e1f5t4110imh2o9chr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV6XuuwaNjytRJnbVTAg6VXP6hVClOb6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891248474728-0286du7dnt2846e1f5t4110imh2o9chr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
