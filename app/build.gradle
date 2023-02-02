@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.ethan.FamiCare"
-        minSdk 21
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -45,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.1'
+    implementation 'androidx.preference:preference:1.2.0'
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
@@ -52,8 +54,7 @@ dependencies {
     //linechart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Google Fit
-    implementation 'com.google.android.gms:play-services-fitness:21.1.0'
-    implementation 'com.google.android.gms:play-services-auth:20.4.0'
+    implementation 'androidx.health.connect:connect-client:1.0.0-alpha09'
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
@@ -64,7 +65,8 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
-    
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="health_permissions">
+        //資料類型清單
+        //https://developer.android.com/guide/health-and-fitness/health-connect/data-and-data-types/data-types?hl=zh-tw
+        //心率
+        <item>androidx.health.permission.HeartRate.READ</item>
+        <item>androidx.health.permission.HeartRate.WRITE</item>
+        //身高
+        <item>androidx.health.permission.Height.READ</item>
+        <item>androidx.health.permission.Height.WRITE</item>
+        //血氧
+        <item>androidx.health.permission.OxygenSaturation.READ</item>
+        <item>androidx.health.permission.OxygenSaturation.WRITE</item>
+        //體重
+        <item>androidx.health.permission.Weight.READ</item>
+        <item>androidx.health.permission.Weight.WRITE</item>
+        //睡眠
+        <item>androidx.health.permission.SleepSession.READ</item>
+        <item>androidx.health.permission.SleepSession.WRITE</item>
+    </array>
+</resources>

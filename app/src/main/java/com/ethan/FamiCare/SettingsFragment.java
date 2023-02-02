@@ -1,9 +1,11 @@
 package com.ethan.FamiCare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -43,10 +45,15 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        TextView Hello = view.findViewById(R.id.hello);
-        Hello.setText("點選設定");
+        Button healthconnect = view.findViewById(R.id.setting_healthconnect);
+        healthconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HealthConnect.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
-
-
 }

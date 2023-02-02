@@ -14,4 +14,16 @@
         android:text="hello"
         android:textSize="60sp" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9F9F9" />
+
+    <Button
+        android:id="@+id/setting_healthconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#F8F8F8"
+        android:text="Health Connect" />
+
 </FrameLayout>
