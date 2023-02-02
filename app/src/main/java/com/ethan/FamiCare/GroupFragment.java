@@ -1,16 +1,13 @@
 package com.ethan.FamiCare;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toolbar;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +48,7 @@ public class GroupFragment extends Fragment {
     }
 
     private Button create;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +63,15 @@ public class GroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group, container, false);
-        GroupNameEditFragment groupNameEditFragment=new GroupNameEditFragment();
+        GroupNameEditFragment groupNameEditFragment = new GroupNameEditFragment();
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        create=view.findViewById(R.id.創建群組);
-        create.setOnClickListener(new View.OnClickListener(){
+        create = view.findViewById(R.id.創建群組);
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
-                
+
             }
         });
         return view;

@@ -1,25 +1,17 @@
 package com.ethan.FamiCare;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.health.connect.client.HealthConnectClient;
-
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.health.connect.client.HealthConnectClient;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        //啟動直接在群組
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, new GroupFragment()).commit();
 
         checkAvailability();
     }
@@ -68,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-                    TextView hello = findViewById(R.id.homehello);
-                    hello.setText("");
                     //用switch分析被按下的item
                     switch (item.getItemId()) {
                         case R.id.navigation_health:
