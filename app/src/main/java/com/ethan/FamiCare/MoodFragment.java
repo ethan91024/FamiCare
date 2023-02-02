@@ -197,7 +197,6 @@ public class MoodFragment extends Fragment {
             }
             //壓力數日平均
             daily[i] = (HeartRateStressN + BloodCxygenN + SleepStressN) / 3;
-            System.out.println("壓力指數(日)" + daily[i]);
             WeekStressN += daily[i];
         }
         int n1 = (int) WeekStressN / 7, n2 = (int) (WeekStressN / 7) + 1;//四捨五入
