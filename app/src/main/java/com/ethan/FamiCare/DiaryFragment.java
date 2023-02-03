@@ -94,7 +94,7 @@ public class DiaryFragment extends Fragment {
                         diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
 
                         fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_layout, diaryContentFragment).commit();
-                    } else {//待修改
+                    } else {
                         bundle.putBoolean("edited", true);//被編輯過
                         bundle.putInt("id", selected_date);
                         diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
