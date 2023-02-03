@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -31,20 +32,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MoodFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MoodFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -52,15 +44,6 @@ public class MoodFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MoodFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MoodFragment newInstance(String param1, String param2) {
         MoodFragment fragment = new MoodFragment();
         Bundle args = new Bundle();
@@ -85,12 +68,12 @@ public class MoodFragment extends Fragment {
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //可否分析壓力指數
-    private View mainview;
     private int HeartRrte = 0;
     private int Sleep = 0;
     private int BloodOxygen = 0;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
 
+    private Button analize;
 
     //set linechart
     LineChartData lineChartData;
@@ -103,40 +86,51 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Scanner cin = new Scanner(System.in);
-        mainview = inflater.inflate(R.layout.fragment_mood, container, false);
-        Button update = mainview.findViewById(R.id.update);
+        View view = inflater.inflate(R.layout.fragment_mood, container, false);
+        Button update = view.findViewById(R.id.update);
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
 
         if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
-            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
             run = false;
         } else {
             String sn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
-            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
             stressnumber.setText(sn);
 
         }
+
+        //跳到MoodSymptom
+        analize = view.findViewById(R.id.analize);
+        analize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout, new MoodSymptomFragment()).addToBackStack(null).commit();
+            }
+        });
+
         update.setOnClickListener(new View.OnClickListener() {//checkbox 更新壓力指數分析
             @Override
             public void onClick(View view) {
-                double plusnumber = SymptomCheckBox(mainview, run);//勾選症狀的加分
+                double plusnumber = SymptomCheckBox(view, run);//勾選症狀的加分
                 if (plusnumber < 0) {//如果沒有心率、睡眠、血氧資料，顯示無法分析
-                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+                    TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
                     stressnumber.setText("缺少資料無法分析");
                 } else {//把症狀勾選的資料加上壓力指數
                     plusnumber += StressNumber;
                     String sn = "" + plusnumber;
-                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+                    TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
                     stressnumber.setText(sn);
                 }
             }
         });
 
         //載入心律、睡眠等資料
-        lineChart = mainview.findViewById(R.id.lineChart);
+        lineChart = view.findViewById(R.id.lineChart);
         lineChartData = new LineChartData(lineChart, this.getContext());
         for (int i = 1; i <= 7; i++) {
             HeartRrtexData.add("第" + i + "天");
@@ -146,7 +140,7 @@ public class MoodFragment extends Fragment {
 
 
         ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
-        ArrayList<Entry> HeartRatepoints =points(EntryHeartRatepoints);
+        ArrayList<Entry> HeartRatepoints = points(EntryHeartRatepoints);
 
         ArrayList<String> EntrySleeppoints = getSleeppoints();//從getSleeppoints取得隨機值
         ArrayList<Entry> Sleeppoints = points(EntrySleeppoints);
@@ -154,11 +148,10 @@ public class MoodFragment extends Fragment {
         ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
         ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
 
-
         lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
 
 
-        return mainview;
+        return view;
     }
 
     public String getStressNumber(ArrayList<String> HeartRateList, ArrayList<String> SleepList, ArrayList<String> BloodOxygenList) {//計算壓力指數
@@ -279,15 +272,15 @@ public class MoodFragment extends Fragment {
         return points;
     }
 
-    private  ArrayList<Entry> points(ArrayList<String> entrypoints){//加進Y軸資料
-        ArrayList<Entry> getpoints=new ArrayList<>();
-        for (int i=0;i<entrypoints.size();i++){
-            String s=entrypoints.get(i);
-            Float f=Float.parseFloat(s);
-            if(f>20){
-                f=f/10;
+    private ArrayList<Entry> points(ArrayList<String> entrypoints) {//加進Y軸資料
+        ArrayList<Entry> getpoints = new ArrayList<>();
+        for (int i = 0; i < entrypoints.size(); i++) {
+            String s = entrypoints.get(i);
+            Float f = Float.parseFloat(s);
+            if (f > 20) {
+                f = f / 10;
             }
-            getpoints.add(new Entry(i,f));
+            getpoints.add(new Entry(i, f));
         }
         return getpoints;
     }
@@ -355,12 +348,12 @@ public class MoodFragment extends Fragment {
                 lineChart.setNoDataTextColor(Color.GRAY);//文字顏色
             }
 
-                Legend legend = lineChart.getLegend();
-                legend.setEnabled(true);//顯示圖例 (預設顯示)
-                Description description = lineChart.getDescription();
-                description.setEnabled(false);//不顯示Description Label (預設顯示)
-                LineData data = new LineData(dataSets);
-                lineChart.setData(data);//一定要放在最後
+            Legend legend = lineChart.getLegend();
+            legend.setEnabled(true);//顯示圖例 (預設顯示)
+            Description description = lineChart.getDescription();
+            description.setEnabled(false);//不顯示Description Label (預設顯示)
+            LineData data = new LineData(dataSets);
+            lineChart.setData(data);//一定要放在最後
 
             lineChart.invalidate();//繪製圖表
         }
