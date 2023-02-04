@@ -6,14 +6,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SettingsFragment">
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
         android:text="身心狀況報告"
         android:textSize="30dp"
         android:textStyle="bold" />
+        <Button
+            android:id="@+id/analize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:text="進階分析"
+            android:textSize="20dp" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -41,13 +53,7 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/analize"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="進階分析"
-                android:textSize="10sp" />
+
         </LinearLayout>
 
 
@@ -107,7 +113,8 @@
             android:text="更新壓力指數分析"
             android:textColor="#FFFFFF"
             android:textSize="23dp"
-            android:textStyle="bold"></Button>
+            android:textStyle="bold"
+            ></Button>
     </LinearLayout>
 
     <LinearLayout

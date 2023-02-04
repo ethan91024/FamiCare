@@ -1,10 +1,13 @@
 package com.ethan.FamiCare;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -41,14 +44,34 @@ public class MoodSymptomFragment extends Fragment {
     }
 
     private Button back;
+    CheckBox ckb;
+    private Button updatesy;
+    private int[] id = {R.id.head1, R.id.dizzy1, R.id.nausea1, R.id.tried1, R.id.stomachache1};
+    private double synumber =0;
+    private double []synumberlist = new double[7];
+
+    private View mainview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
+        mainview = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
+        updatesy = mainview.findViewById(R.id.updatesy);
+        updatesy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        back = view.findViewById(R.id.back_to_mood);
+                synumber = SymptomCheckBox(mainview);//勾選症狀的加分
+                String sn = "" + synumber;
+                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
+                stressnumber.setText(sn);
+            }
+
+        });
+
+
+        back = mainview.findViewById(R.id.back_to_mood);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +80,18 @@ public class MoodSymptomFragment extends Fragment {
             }
         });
 
-        return view;
+
+        return mainview;
+    }
+
+    public double SymptomCheckBox(View view) {
+        double checkboxn = 0;
+        for (int i : id) {
+            ckb = (CheckBox) view.findViewById(i);
+            if (ckb.isChecked()) {
+                checkboxn += 0.1;
+            }
+        }
+        return checkboxn;
     }
 }

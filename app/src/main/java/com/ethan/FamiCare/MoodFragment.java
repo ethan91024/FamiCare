@@ -72,7 +72,7 @@ public class MoodFragment extends Fragment {
     private int Sleep = 0;
     private int BloodOxygen = 0;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
-
+    private View mainview;
     private Button analize;
 
     //set linechart
@@ -85,26 +85,25 @@ public class MoodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Scanner cin = new Scanner(System.in);
-        View view = inflater.inflate(R.layout.fragment_mood, container, false);
-        Button update = view.findViewById(R.id.update);
+        mainview = inflater.inflate(R.layout.fragment_mood, container, false);
+        Button update = mainview.findViewById(R.id.update);
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
 
         if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
-            TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
             run = false;
         } else {
             String sn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
-            TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText(sn);
 
         }
 
         //跳到MoodSymptom
-        analize = view.findViewById(R.id.analize);
+        analize = mainview.findViewById(R.id.analize);
         analize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,21 +115,21 @@ public class MoodFragment extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {//checkbox 更新壓力指數分析
             @Override
             public void onClick(View view) {
-                double plusnumber = SymptomCheckBox(view, run);//勾選症狀的加分
+                double plusnumber = SymptomCheckBox(mainview, run);//勾選症狀的加分
                 if (plusnumber < 0) {//如果沒有心率、睡眠、血氧資料，顯示無法分析
-                    TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
+                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                     stressnumber.setText("缺少資料無法分析");
                 } else {//把症狀勾選的資料加上壓力指數
                     plusnumber += StressNumber;
                     String sn = "" + plusnumber;
-                    TextView stressnumber = (TextView) view.findViewById(R.id.stressnumber);
+                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                     stressnumber.setText(sn);
                 }
             }
         });
 
         //載入心律、睡眠等資料
-        lineChart = view.findViewById(R.id.lineChart);
+        lineChart = mainview.findViewById(R.id.lineChart);
         lineChartData = new LineChartData(lineChart, this.getContext());
         for (int i = 1; i <= 7; i++) {
             HeartRrtexData.add("第" + i + "天");
@@ -151,7 +150,7 @@ public class MoodFragment extends Fragment {
         lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
 
 
-        return view;
+        return mainview;
     }
 
     public String getStressNumber(ArrayList<String> HeartRateList, ArrayList<String> SleepList, ArrayList<String> BloodOxygenList) {//計算壓力指數
