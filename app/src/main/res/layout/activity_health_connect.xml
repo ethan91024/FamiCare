@@ -1,55 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/HealthConnect_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HealthConnect">
-
     <TextView
-        android:id="@+id/syncstatus"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="286dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-black"
         android:text="Sync Status"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/Onbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
-    <RadioButton
-        android:id="@+id/Onbutton"
+    <RadioGroup
+        android:id="@+id/HealthRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="346dp"
-        android:layout_marginBottom="12dp"
-        android:text="On"
-        app:layout_constraintBottom_toTopOf="@+id/OffButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/syncstatus" />
+        android:checkedButton="@id/OffButton">
 
-    <RadioButton
-        android:id="@+id/OffButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="344dp"
-        android:layout_marginBottom="577dp"
-        android:checked="true"
-        android:text="Off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Onbutton" />
+        <RadioButton
+            android:onClick="onSelect"
+            android:id="@+id/OnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="On" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioButton
+            android:onClick="onSelect"
+            android:id="@+id/OffButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Off" />
+    </RadioGroup>
+</LinearLayout>
