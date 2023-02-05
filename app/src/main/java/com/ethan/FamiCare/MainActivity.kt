@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+//
     private suspend fun onPermissionAvailable(client: HealthConnectClient) {
         // todo: read data
     }
