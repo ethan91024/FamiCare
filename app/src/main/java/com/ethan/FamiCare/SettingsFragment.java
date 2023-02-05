@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,12 +69,13 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
+        Intent intent = new Intent();
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.password);
         login = view.findViewById(R.id.login);
         signup = view.findViewById(R.id.signup);
         auth = FirebaseAuth.getInstance();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,8 @@ public class SettingsFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Login successd!", Toast.LENGTH_SHORT).show();
+                            fm.beginTransaction().addToBackStack(null).replace(R.id.setting,new GroupChatroom()).commit();
+
                         } else {
                             Toast.makeText(getActivity(), "Login Failed!", Toast.LENGTH_SHORT).show();
                         }
@@ -113,4 +117,15 @@ public class SettingsFragment extends Fragment {
         });
         return view;
     }
+/*
+    @Override
+    public void onStart() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        super.onStart();
+        if(auth!=null ){
+            fm.beginTransaction().replace(R.id.setting,new GroupChatroom()).commit();
+        }
+    }
+
+ */
 }
