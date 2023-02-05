@@ -25,7 +25,6 @@
         android:checkedButton="@id/OffButton">
 
         <RadioButton
-            android:onClick="onSelect"
             android:id="@+id/OnButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +33,6 @@
             android:text="On" />
 
         <RadioButton
-            android:onClick="onSelect"
             android:id="@+id/OffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
