@@ -73,7 +73,7 @@ class HealthConnect : AppCompatActivity() {
                 ).show()
             }
         }
-
+//
         // 4
         lifecycleScope.launch {
             val granted = client.permissionController
