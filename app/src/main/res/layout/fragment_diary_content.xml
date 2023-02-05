@@ -8,11 +8,11 @@
     tools:context=".DiaryContentFragment">
 
 
-    <!--命名標題  比例2-->
+    <!--命名標題  比例2.5-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:orientation="vertical">
 
         <!--留白  比例2-->
@@ -57,11 +57,11 @@
 
     </LinearLayout>
 
-    <!--編輯日記內容  比例8-->
+    <!--編輯日記內容  比例7.5-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="7.5"
         android:orientation="vertical">
 
         <!--日記內容  比例1-->
