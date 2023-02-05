@@ -19,4 +19,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="privacy_policy">暫時沒有隱私權政策</string>
+
+    <string name="format_height_average">%.2f</string>
+    <string name="format_weight_average">%.2f</string>
 </resources>
