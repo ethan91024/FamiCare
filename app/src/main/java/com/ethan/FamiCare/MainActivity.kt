@@ -15,8 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
+
 class MainActivity : AppCompatActivity() {
-    private val healthConnectClient: HealthConnectClient? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,10 +40,18 @@ class MainActivity : AppCompatActivity() {
             ).show()
             checkPermissionsAndRun()
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            Toast.makeText(this@MainActivity, "Health Connect is not supported!", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                this@MainActivity,
+                "Health Connect is not supported!",
+                Toast.LENGTH_SHORT
+            )
                 .show()
         } else {
-            Toast.makeText(this@MainActivity, "Health Connect is not installed!", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                this@MainActivity,
+                "Health Connect is not installed!",
+                Toast.LENGTH_SHORT
+            )
                 .show()
             installHealthConnect()
             checkPermissionsAndRun()
@@ -84,17 +92,18 @@ class MainActivity : AppCompatActivity() {
         val requestPermissionActivityContract =
             PermissionController.createRequestPermissionResultContract()
 
-        val requestPermissions = registerForActivityResult(requestPermissionActivityContract) { granted ->
-            if (granted.containsAll(permissionsSet)) {
-                lifecycleScope.launch {
-                    onPermissionAvailable(client)
+        val requestPermissions =
+            registerForActivityResult(requestPermissionActivityContract) { granted ->
+                if (granted.containsAll(permissionsSet)) {
+                    lifecycleScope.launch {
+                        onPermissionAvailable(client)
+                    }
+                } else {
+                    Toast.makeText(
+                        this, "Permissions not granted", Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } else {
-                Toast.makeText(
-                    this, "Permissions not granted", Toast.LENGTH_SHORT
-                ).show()
             }
-        }
 
         lifecycleScope.launch {
             val granted = client.permissionController
@@ -106,10 +115,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-//
+
+
     private suspend fun onPermissionAvailable(client: HealthConnectClient) {
-        // todo: read data
+        val fragment:Fragment
+        fragment=HealthFragment()
+        fragment.readData(client)
     }
+
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         var selectedFragment: Fragment? = null
         when (item.itemId) {
