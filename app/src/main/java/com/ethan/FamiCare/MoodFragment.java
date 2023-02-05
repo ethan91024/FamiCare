@@ -71,7 +71,6 @@ public class MoodFragment extends Fragment {
     private int HeartRrte = 0;
     private int Sleep = 0;
     private int BloodOxygen = 0;
-    private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.stomachache, R.id.tired};
     private View mainview;
     private Button analize;
 
@@ -86,19 +85,17 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
-        Button update = mainview.findViewById(R.id.update);
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
-
         if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
             run = false;
         } else {
-            String sn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-            stressnumber.setText(sn);
+            String getstressn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
+            stressnumber.setText(getstressn);
 
         }
 
@@ -112,21 +109,18 @@ public class MoodFragment extends Fragment {
             }
         });
 
-        update.setOnClickListener(new View.OnClickListener() {//checkbox 更新壓力指數分析
-            @Override
-            public void onClick(View view) {
-                double plusnumber = SymptomCheckBox(mainview, run);//勾選症狀的加分
-                if (plusnumber < 0) {//如果沒有心率、睡眠、血氧資料，顯示無法分析
-                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-                    stressnumber.setText("缺少資料無法分析");
-                } else {//把症狀勾選的資料加上壓力指數
-                    plusnumber += StressNumber;
-                    String sn = "" + plusnumber;
-                    TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-                    stressnumber.setText(sn);
-                }
-            }
-        });
+        double synumber = SymptomCheckBox(run);//勾選症狀的加分
+        if (synumber < 0) {
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            stressnumber.setText("缺少資料無法顯示");
+        }else{
+            synumber+=StressNumber;
+            String sn=synumber+"";
+            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+            stressnumber.setText(sn);
+
+        }
+
 
         //載入心律、睡眠等資料
         lineChart = mainview.findViewById(R.id.lineChart);
@@ -201,18 +195,20 @@ public class MoodFragment extends Fragment {
         return sn;
     }
 
-    public double SymptomCheckBox(View view, boolean run) { //症狀checkbox 加分計算
+    public double SymptomCheckBox(boolean run) { //症狀checkbox 加分計算
         double plusnumber = 0;
         if (run) {
-            for (int i : id) {
-                ckb = view.findViewById(i);
-                if (ckb.isChecked()) {
-                    plusnumber += 0.5;
-                }
+            Bundle arguments = getArguments();
+            if(arguments != null) {
+                plusnumber = arguments.getDouble("symptom");
+            }else{
+                plusnumber=0;
+                System.out.println("null");
             }
         } else {
             plusnumber = -1;//如果缺乏心率睡眠血氧資料，直接無法分析，回傳-1表示無法run
         }
+        System.out.println(plusnumber);
         return plusnumber;
     }
 

@@ -46,7 +46,7 @@ public class MoodSymptomFragment extends Fragment {
     private Button back;
     CheckBox ckb;
     private Button updatesy;
-    private int[] id = {R.id.head1, R.id.dizzy1, R.id.nausea1, R.id.tried1, R.id.stomachache1};
+    private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.tried, R.id.stomachache};
     private double synumber =0;
     private double []synumberlist = new double[7];
 
@@ -62,7 +62,7 @@ public class MoodSymptomFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                synumber = SymptomCheckBox(mainview);//勾選症狀的加分
+                synumber += SymptomCheckBox(mainview);//勾選症狀的加分
                 String sn = "" + synumber;
                 TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
                 stressnumber.setText(sn);
@@ -75,8 +75,13 @@ public class MoodSymptomFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putDouble("symptom", synumber);
+                MoodFragment MoodFragment =new MoodFragment();
+                MoodFragment.setArguments(bundle);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_Symptom_layout, new MoodFragment()).addToBackStack(null).commit();
+                fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
+
             }
         });
 
@@ -92,6 +97,14 @@ public class MoodSymptomFragment extends Fragment {
                 checkboxn += 0.1;
             }
         }
+        for(int i : id){
+            ckb= (CheckBox) view.findViewById(i);
+            ckb.setChecked(false);
+        }
+        //不知為何0.3會有很多小數點，因此只取小數點第一位
+        double td=checkboxn*10;
+        int ti=(int)td;
+        checkboxn=(double)ti/10;
         return checkboxn;
     }
 }
