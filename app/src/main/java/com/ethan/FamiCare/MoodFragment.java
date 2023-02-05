@@ -205,7 +205,7 @@ public class MoodFragment extends Fragment {
         double plusnumber = 0;
         if (run) {
             for (int i : id) {
-                ckb = (CheckBox) view.findViewById(i);
+                ckb = view.findViewById(i);
                 if (ckb.isChecked()) {
                     plusnumber += 0.5;
                 }
