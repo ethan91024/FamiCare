@@ -136,35 +136,35 @@
                     android:orientation="vertical">
 
                     <CheckBox
-                        android:id="@+id/head1"
+                        android:id="@+id/headache"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="頭痛"
                         android:textSize="22dp" />
 
                     <CheckBox
-                        android:id="@+id/dizzy1"
+                        android:id="@+id/dizzy"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="頭暈"
                         android:textSize="22dp" />
 
                     <CheckBox
-                        android:id="@+id/nausea1"
+                        android:id="@+id/nausea"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="噁心"
                         android:textSize="22dp" />
 
                     <CheckBox
-                        android:id="@+id/tried1"
+                        android:id="@+id/tried"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="疲勞"
                         android:textSize="22dp" />
 
                     <CheckBox
-                        android:id="@+id/stomachache1"
+                        android:id="@+id/stomachache"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="胃痛"
