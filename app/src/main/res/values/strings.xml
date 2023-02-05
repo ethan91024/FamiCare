@@ -18,5 +18,5 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="privacy_policy">Lorem ipsum dolor sit amet, consectetur adipiscing elit....</string>
+    <string name="privacy_policy">暫時沒有隱私權政策</string>
 </resources>
