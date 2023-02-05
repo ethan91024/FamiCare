@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     void checkAvailability() {
         if (HealthConnectClient.isProviderAvailable(MainActivity.this)) {
             Toast.makeText(MainActivity.this, "Health Connect is installed and supported!", Toast.LENGTH_LONG).show();
-            healthConnectClient = HealthConnectClient.getOrCreate(MainActivity.this);
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             Toast.makeText(MainActivity.this, "Health Connect is not supported!", Toast.LENGTH_LONG).show();
         } else {
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //----!----導向下載頁面的method沒反應
+    //----!----導向下載頁面的method沒反應(只有我)
     void installHealthConnect() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);

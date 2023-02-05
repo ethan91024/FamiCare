@@ -2,18 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <queries>
-        <package android:name="com.google.android.apps.healthdata" />
-        <!--
-             This is required such that the app can query and resolve packages that have written
-             Health Connect data, and obtain their friendly App Name and Icon to show for data
-             attribution in the app
-        -->
-        <intent>
-            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
-        </intent>
-    </queries>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,8 +11,13 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
+            android:exported="true"
+            android:name=".PrivacyPolicyActivity">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
+            </intent-filter>
+            <meta-data android:name="health_permissions" android:resource="@array/health_permissions" />
+        </activity>
         <activity
             android:name=".HealthConnect"
             android:exported="false" />
@@ -33,17 +26,11 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <!-- (a) reference permissions resource -->
-            <meta-data
-                android:name="health_permissions"
-                android:resource="@array/health_permissions" /> <!-- (b) handle intent -->
-            <intent-filter>
-                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
         </activity>
     </application>
-
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
 </manifest>
