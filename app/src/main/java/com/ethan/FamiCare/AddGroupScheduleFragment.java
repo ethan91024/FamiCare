@@ -94,7 +94,7 @@ public class AddGroupScheduleFragment extends Fragment {
     String minute_text;
 
     Context context;
-
+    private int notificationId=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,16 +123,25 @@ public class AddGroupScheduleFragment extends Fragment {
             temp=new GroupCal();
         }
 
+
+
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(onSaveNote()) {
+
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     fm.beginTransaction().addToBackStack(null).replace(R.id.addSchedule, new GroupCalendarFragment()).commit();
 
                 }
+
             }
         });
+
+
+
+
         return view;
     }
 
@@ -147,8 +156,9 @@ public class AddGroupScheduleFragment extends Fragment {
             temp.setHour(hour_text);
             temp.setMinute(minute_text);
 
+            groupCalDoa.deleteGroupCalById(date1);
             if (status) {//更新或創建
-                groupCalDoa.deleteGroupCal(temp);
+
                 groupCalDoa.updateGroupCal(temp);
             } else {
                 GroupCalDB.getInstance(getContext()).groupCalDoa().insertGroupCal(temp);
@@ -160,6 +170,7 @@ public class AddGroupScheduleFragment extends Fragment {
         return true;
 
     }
+
 
 
 }

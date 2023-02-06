@@ -81,13 +81,28 @@
             android:textStyle="bold"
             >
         </EditText>
+
+
+        <Button
+            android:id="@+id/cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/search"
+            android:clickable="true"
+            android:text="行事曆"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+
+
     </RelativeLayout>
 </LinearLayout>
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
-        />
+        android:layout_below="@id/top"/>
+
 
 </RelativeLayout>
