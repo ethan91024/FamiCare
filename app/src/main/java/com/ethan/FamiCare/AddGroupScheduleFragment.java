@@ -148,6 +148,7 @@ public class AddGroupScheduleFragment extends Fragment {
             temp.setMinute(minute_text);
 
             if (status) {//更新或創建
+                groupCalDoa.deleteGroupCal(temp);
                 groupCalDoa.updateGroupCal(temp);
             } else {
                 GroupCalDB.getInstance(getContext()).groupCalDoa().insertGroupCal(temp);

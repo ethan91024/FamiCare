@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chatroom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,13 +15,24 @@
         android:layout_weight="1"
         android:orientation="horizontal">
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="8"
         android:text="聊天室"
         android:textSize="28sp"
         android:textStyle="bold"
         android:gravity="center"
-        /></LinearLayout>
+        />
+    <Button
+        android:id="@+id/cal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:clickable="true"
+        android:text="行事曆"
+        android:textSize="15dp"
+        />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
