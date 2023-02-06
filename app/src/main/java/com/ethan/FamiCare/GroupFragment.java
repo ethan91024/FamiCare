@@ -32,6 +32,7 @@ public class GroupFragment extends Fragment {
     }
 
     private Button create;
+    private Button cal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,26 @@ public class GroupFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         create = view.findViewById(R.id.創建群組);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
 
-            }
-        });
+        cal = view.findViewById(R.id.cal);
+
+        create.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
+
+                                      }
+                                  });
+
+        GroupCalendarFragment groupCalendarFragment=new GroupCalendarFragment();
+                cal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        fm.beginTransaction().addToBackStack(null).replace(R.id.main_group,groupCalendarFragment).commit();
+                    }
+                });
+
         return view;
     }
 
