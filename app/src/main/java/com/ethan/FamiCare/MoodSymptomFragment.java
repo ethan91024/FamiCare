@@ -92,7 +92,7 @@ public class MoodSymptomFragment extends Fragment {
             }
 
         });
-
+//1
 
         back = mainview.findViewById(R.id.back_to_mood);
         back.setOnClickListener(new View.OnClickListener() {

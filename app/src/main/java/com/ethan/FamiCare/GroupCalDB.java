@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 
 @Database(entities =GroupCal.class,version = 1)
 
-public abstract class GroupCalDB extends RoomDatabase {
+public abstract class GroupCalDB extends RoomDatabase {//1
     public abstract GroupCalDoa groupCalDoa();
 
     private  static final String DATABASE_NAME = "GroupCalDB";

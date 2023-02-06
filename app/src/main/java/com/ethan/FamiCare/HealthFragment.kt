@@ -128,7 +128,7 @@ class HealthFragment : Fragment() {
         if (view != null) {
             weightTextView = view.findViewById(R.id.weightTodayValue)
             weightTextView.text = WeightToday[0].weight.toString()
-        }
+        }//1
     }
 
     private suspend fun readAggregatedData(client: HealthConnectClient) {

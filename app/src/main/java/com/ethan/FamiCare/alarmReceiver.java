@@ -10,7 +10,7 @@ import android.content.Intent;
 
 public class alarmReceiver extends BroadcastReceiver {
 
-
+    //1
     // 建立notificationManager與notification物件
     private NotificationManager notificationManager;
     private Notification notification;

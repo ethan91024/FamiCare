@@ -8,4 +8,4 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_privacy_policy)
     }
-}
+}//1

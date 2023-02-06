@@ -43,7 +43,7 @@ public class AddGroupScheduleFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+//1
     Button save;
     EditText event;
     EditText hour;

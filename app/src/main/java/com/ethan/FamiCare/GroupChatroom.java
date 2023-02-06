@@ -29,7 +29,7 @@ import java.util.Calendar;
 
 public class GroupChatroom extends Fragment {
     RecyclerViewAdapter adapter;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView;//1
     ArrayList<GroupMessage> list;
     TextInputLayout message;
     FloatingActionButton send;
