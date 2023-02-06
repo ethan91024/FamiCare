@@ -40,3 +40,4 @@ public class GroupMessage {
         this.datetime = datetime;
     }
 }
+

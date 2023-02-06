@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/cardview_dark_background"
-    app:cardCornerRadius="12dp">
-
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="@color/cardview_dark_background">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
-
+        android:padding="10dp"
+        >
         <TextView
             android:id="@+id/user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xyzEmail@gmail.com"
-            android:textColor="@color/cardview_light_background"
+            android:text="xyzEmail"
             android:textSize="15sp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:textColor="@color/cardview_light_background"
+            />
         <TextView
             android:id="@+id/user_message"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:text="Hi How Are You"
-            android:textColor="@color/cardview_light_background"
             android:textSize="15sp"
+            android:textColor="@color/cardview_light_background"
+            app:layout_constraintTop_toBottomOf="@id/user_email"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_email" />
-
+            />
         <TextView
             android:id="@+id/user_message_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17-6-22 10:00 AM"
-            android:textColor="@color/cardview_light_background"
             android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/user_message"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_message" />
+            android:textColor="@color/cardview_light_background"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
