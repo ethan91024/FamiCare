@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import androidx.constraintlayout.widget.Group;
 import androidx.core.app.NotificationCompat;
 
 public class alarmReceiver extends BroadcastReceiver {
@@ -30,21 +31,20 @@ public class alarmReceiver extends BroadcastReceiver {
     String description="FemiCare";
 
 
-
     public void onReceive(Context context, Intent intent){
-
-        notificationManager= (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         channel=new NotificationChannel("ID","FemiCare",NotificationManager.IMPORTANCE_HIGH);
         notificationManager.createNotificationChannel(channel);
+
         //實作觸發通知訊息，開啟首頁動作
-        Intent notifyIntent=new Intent(context,GroupChatroom.class);
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,notifyIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent notifyIntent=new Intent(context, GroupCalendarFragment.class);
+        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,notifyIntent,0);
 
         // 執行通知
         broadcastNotify(context, pendingIntent);
     }
 
     private void broadcastNotify(Context context, PendingIntent pendingIntent) {
+        notificationManager= (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification.Builder builder = new Notification.Builder(context);
                 builder.setWhen(System.currentTimeMillis())
@@ -52,6 +52,7 @@ public class alarmReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_baseline_groups_24)
                 .setContentTitle("訊息")
                 .setContentText("行程")
+                        .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
                 Notification notification=builder.build();

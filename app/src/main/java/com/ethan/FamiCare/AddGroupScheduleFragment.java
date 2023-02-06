@@ -75,6 +75,7 @@ public class AddGroupScheduleFragment extends Fragment {
     EditText hour;
     EditText minute;
 
+
     private int date1;
     private GroupCal temp;
     public static final String NOTE_EXTRA_key = "note_id";
@@ -88,7 +89,7 @@ public class AddGroupScheduleFragment extends Fragment {
     private long settime;//存取設定的時間時間
     private Calendar calendar;
 
-    //取得時、分三種時間輸入
+    //取得時、分時間輸入
     String event_text;
     String hour_text;
     String minute_text;
@@ -109,6 +110,7 @@ public class AddGroupScheduleFragment extends Fragment {
         minute=view.findViewById(R.id.minute);
 
         save=view.findViewById(R.id.save2);
+
         groupCalDoa=GroupCalDB.getInstance(this.getContext()).groupCalDoa();
 
         if(arguments!=null){
@@ -130,16 +132,12 @@ public class AddGroupScheduleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(onSaveNote()) {
-
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     fm.beginTransaction().addToBackStack(null).replace(R.id.addSchedule, new GroupCalendarFragment()).commit();
-
                 }
 
             }
         });
-
-
 
 
         return view;
@@ -171,7 +169,49 @@ public class AddGroupScheduleFragment extends Fragment {
 
     }
 
+    //取得目前時間
+    private void currentTime(){
+        calendar=Calendar.getInstance();//calendar實例化，取得預設時間、預設時區
+        calendar.setTimeInMillis(System.currentTimeMillis());//設定時間
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));//設定時區時區
+        currentsystemtime=System.currentTimeMillis();//獲得系統目前的時間
+    }
+    //設定定時
+    private void setTime(Calendar calendar){
+        calendar.set(Calendar.DATE,date1);
+        calendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(hour_text));
+        calendar.set(Calendar.MINUTE,Integer.parseInt(minute_text));
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        //獲得定時時間
+        settime=calendar.getTimeInMillis();
+        // 若定時時間(日、時、分)比目前小自動設定為下個月的時間(日、時、分)
+        if(currentsystemtime>settime){
+            calendar.add(Calendar.MONTH,1);
+            //  重新獲得定時時間
+            settime = calendar.getTimeInMillis();
+        }
+    }
+
+    private void setAlarm() {
+        Intent intent = new Intent(this.getContext(), alarmReceiver.class);
+        //        PendingIntent.getBroadcast調用廣播
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getContext(), 0, intent, 0);
+        //        獲得AlarmManager物件
+        AlarmManager alarmManager = (AlarmManager) this.getContext().getSystemService(ALARM_SERVICE);
+        //        設定單次提醒
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+
+    private void showtime(){
+        String text=(calendar.get(Calendar.MONTH)+1)+"月"+calendar.get(Calendar.DAY_OF_MONTH)+"日\n" +calendar.get(Calendar.HOUR_OF_DAY)+":" + calendar.get(Calendar.MINUTE);
+        Toast.makeText(this.getContext(),text,Toast.LENGTH_LONG).show();
+
+    }
+
+    }
 
 
-}
+
+
 
