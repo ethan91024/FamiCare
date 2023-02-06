@@ -124,6 +124,5 @@ public class SettingsFragment extends Fragment {
             fm.beginTransaction().replace(R.id.setting,new GroupChatroom()).commit();
         }
     }
-
  */
 }
