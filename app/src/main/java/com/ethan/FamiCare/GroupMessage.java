@@ -6,7 +6,7 @@ public class GroupMessage {
     private String datetime;
 
     //for firebase getting data back
-    public GroupMessage(){
+    public GroupMessage() {
 
     }
 

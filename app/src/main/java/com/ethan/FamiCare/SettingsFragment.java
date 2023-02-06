@@ -1,13 +1,11 @@
 package com.ethan.FamiCare;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,9 +26,10 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TextInputLayout  email, password;
+    TextInputLayout email, password;
     Button login, signup;
     FirebaseAuth auth;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -52,7 +51,6 @@ public class SettingsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
 
 
     @Override
@@ -87,7 +85,7 @@ public class SettingsFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Login successd!", Toast.LENGTH_SHORT).show();
-                            fm.beginTransaction().addToBackStack(null).replace(R.id.setting,new GroupChatroom()).commit();
+                            fm.beginTransaction().addToBackStack(null).replace(R.id.setting, new GroupChatroom()).commit();
 
                         } else {
                             Toast.makeText(getActivity(), "Login Failed!", Toast.LENGTH_SHORT).show();
@@ -108,7 +106,7 @@ public class SettingsFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Account Created Successful", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), "Failed!"+task.getException(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Failed!" + task.getException(), Toast.LENGTH_LONG).show();
 
                         }
                     }
