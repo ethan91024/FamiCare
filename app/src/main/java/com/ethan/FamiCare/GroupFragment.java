@@ -14,7 +14,6 @@ public class GroupFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -52,25 +51,28 @@ public class GroupFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         create = view.findViewById(R.id.創建群組);
-
         cal = view.findViewById(R.id.cal);
 
         create.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
-                                          fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
 
-                                      }
-                                  });
+            }
+        });
 
-        GroupCalendarFragment groupCalendarFragment=new GroupCalendarFragment();
-                cal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        GroupCalendarFragment groupCalendarFragment = new GroupCalendarFragment();
+        cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                        fm.beginTransaction().addToBackStack(null).replace(R.id.main_group,groupCalendarFragment).commit();
-                    }
-                });
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_group, groupCalendarFragment).commit();
+            }
+        });
 
         return view;
     }
