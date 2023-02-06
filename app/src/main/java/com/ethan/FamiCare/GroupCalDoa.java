@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface GroupCalDoa {
+public interface GroupCalDoa {//1
 
     @Insert
     long insertGroupCal(GroupCal groupCal);

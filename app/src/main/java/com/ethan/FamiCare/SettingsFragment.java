@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+//1
         Intent intent = new Intent();
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.password);

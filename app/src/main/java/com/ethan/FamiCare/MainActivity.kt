@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
             .commit()
         checkAvailability()
-    }
+    }//1
 
     //判斷HealthConnect是否安裝了
     fun checkAvailability() {

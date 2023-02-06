@@ -32,4 +32,4 @@ class HealthConnect : AppCompatActivity() {
         OffButton = findViewById(R.id.OffButton)
 
     }
-}
+}//1

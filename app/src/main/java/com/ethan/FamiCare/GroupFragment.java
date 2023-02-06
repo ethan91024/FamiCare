@@ -32,7 +32,7 @@ public class GroupFragment extends Fragment {
 
     private Button create;
     private Button cal;
-
+    //1
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

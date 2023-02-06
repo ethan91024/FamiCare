@@ -9,7 +9,7 @@ public class GroupMessage {
     public GroupMessage() {
 
     }
-
+    //1
     public GroupMessage(String userEmail, String message, String datetime) {
         this.userEmail = userEmail;
         this.message = message;

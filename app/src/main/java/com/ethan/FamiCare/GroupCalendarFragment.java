@@ -57,7 +57,7 @@ public class GroupCalendarFragment extends Fragment {
     //資料庫
     private GroupCalDoa groupCalDoa;
     private GroupCal groupCal;
-
+    //1
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
