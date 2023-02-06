@@ -1,45 +1,39 @@
 
 package com.ethan.FamiCare;
 
+import static com.ethan.FamiCare.Firebasecords.FirebaseCords.Main_Chat_Database;
+
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 public class GroupChatroom extends Fragment {
-    RecyclerViewAdapter adapter;
-    RecyclerView recyclerView;
-    ArrayList<GroupMessage> list;
-    TextInputLayout message;
-    FloatingActionButton send;
-    DatabaseReference db;
-    FirebaseAuth auth;
-    FirebaseUser user;
 
+    FirebaseAuth mAuth;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -47,6 +41,7 @@ public class GroupChatroom extends Fragment {
         // Required empty public constructor
     }
 
+    // TODO: Rename and change types and number of parameters
     public static GroupChatroom newInstance(String param1, String param2) {
         GroupChatroom fragment = new GroupChatroom();
         Bundle args = new Bundle();
@@ -65,67 +60,51 @@ public class GroupChatroom extends Fragment {
         }
     }
 
-
-
-    private void receiveMessages() {
-        db.child("Messages").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    GroupMessage message = snap.getValue(GroupMessage.class);
-                    list.add(message);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
+    EditText chatbox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
-
-        send = view.findViewById(R.id.fab_send);
-        message = view.findViewById(R.id.message);
-        recyclerView = view.findViewById(R.id.recyclerview);
-        list = new ArrayList<>();
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
-        user = auth.getCurrentUser();
-        String uid = user.getUid();
-        String uEmail = user.getEmail();
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mma").format(Calendar.getInstance().getTime());
-
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = message.getEditText().getText().toString();
-//這行可能有問題但找不出來影片30:23
-                db.child("Messages").push().setValue(new GroupMessage(uEmail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        message.getEditText().setText("");
-                    }
-                });
-            }
-        });
-
-        adapter = new RecyclerViewAdapter(GroupChatroom.this.getContext(), list);
-        LinearLayoutManager llm = new LinearLayoutManager(GroupChatroom.this.getContext(), RecyclerView.VERTICAL, true);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(adapter);
-        receiveMessages();
-
+        chatbox = view.findViewById(R.id.cahtbox);
         return view;
     }
 
+    public void sendmessage(View view) {
+        String message = chatbox.getText().toString();
+        FirebaseUser user = mAuth.getCurrentUser();
 
+        if (!TextUtils.isEmpty(message)) {
+
+            Date today = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String messageID = format.format(today);
+            String user_image_url = "";
+            Uri photoUrl = user.getPhotoUrl();
+            String originalUrl = "s96-c/photo.jpg";
+            String resizeImageUrl = "s400-c/photo.jpg";
+            if (photoUrl != null) {
+                String photoPath = photoUrl.toString();
+                user_image_url = photoPath.replace(originalUrl, resizeImageUrl);
+            }
+            HashMap<String, Object> messageobj = new HashMap<>();
+            messageobj.put("Message", message);
+            messageobj.put("user name", user.getDisplayName());
+            messageobj.put("timestamp", FieldValue.serverTimestamp());
+            messageobj.put("messageID", messageID);
+            messageobj.put("user_image_url", user_image_url);
+            Main_Chat_Database.document(messageID).set(messageobj).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(GroupChatroom.this.getContext(), "Message Send", Toast.LENGTH_SHORT).show();
+                        chatbox.setText("");
+                    } else {
+                        Toast.makeText(GroupChatroom.this.getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
 }
