@@ -203,12 +203,10 @@ public class MoodFragment extends Fragment {
                 plusnumber = arguments.getDouble("symptom");
             }else{
                 plusnumber=0;
-                System.out.println("null");
             }
         } else {
             plusnumber = -1;//如果缺乏心率睡眠血氧資料，直接無法分析，回傳-1表示無法run
         }
-        System.out.println(plusnumber);
         return plusnumber;
     }
 
