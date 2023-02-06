@@ -1,33 +1,23 @@
 package com.ethan.FamiCare;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GroupCalendarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 public class GroupCalendarFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -35,15 +25,6 @@ public class GroupCalendarFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GroupCalendarFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static GroupCalendarFragment newInstance(String param1, String param2) {
         GroupCalendarFragment fragment = new GroupCalendarFragment();
         Bundle args = new Bundle();
@@ -76,21 +57,21 @@ public class GroupCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_group_calendar, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_calendar, container, false);
 
-        calender=view.findViewById(R.id.cal1);
-        date=view.findViewById(R.id.group_date);
-        add=view.findViewById(R.id.add);
-        groupCalDoa=GroupCalDB.getInstance(this.getContext()).groupCalDoa();
+        calender = view.findViewById(R.id.cal1);
+        date = view.findViewById(R.id.group_date);
+        add = view.findViewById(R.id.add);
+        groupCalDoa = GroupCalDB.getInstance(this.getContext()).groupCalDoa();
 
         calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date.setText((month+1)+"/"+dayOfMonth);
+                date.setText((month + 1) + "/" + dayOfMonth);
                 selected_date = getSelected_date(year, month, dayOfMonth);
-                if(groupCalDoa.getGroupCalById(selected_date)!=null){
-                    add.setText(groupCalDoa.getGroupCalById(selected_date).getEvent()+"\n"+groupCalDoa.getGroupCalById(selected_date).getHour()+":"+groupCalDoa.getGroupCalById(selected_date).getMinute());
-                }else{
+                if (groupCalDoa.getGroupCalById(selected_date) != null) {
+                    add.setText(groupCalDoa.getGroupCalById(selected_date).getEvent() + "\n" + groupCalDoa.getGroupCalById(selected_date).getHour() + ":" + groupCalDoa.getGroupCalById(selected_date).getMinute());
+                } else {
                     add.setText("沒有事件");
                 }
 
@@ -99,27 +80,27 @@ public class GroupCalendarFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!date.getText().equals("日期")){
-                   AddGroupScheduleFragment addGroupScheduleFragment=new AddGroupScheduleFragment();
+                if (!date.getText().equals("日期")) {
+                    AddGroupScheduleFragment addGroupScheduleFragment = new AddGroupScheduleFragment();
                     Bundle bundle = new Bundle();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
 
-                    if(add.getText().equals("沒有事件")){
-                        bundle.putBoolean("edit",false);
-                        bundle.putInt("id",selected_date);
+                    if (add.getText().equals("沒有事件")) {
+                        bundle.putBoolean("edit", false);
+                        bundle.putInt("id", selected_date);
                         addGroupScheduleFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
 
                         fm.beginTransaction().addToBackStack(null).replace(R.id.groupcal, addGroupScheduleFragment).commit();
 
-                    }else {
-                        bundle.putBoolean("edit",true);
-                        bundle.putInt("id",selected_date);
+                    } else {
+                        bundle.putBoolean("edit", true);
+                        bundle.putInt("id", selected_date);
 
                         addGroupScheduleFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
                         fm.beginTransaction().addToBackStack(null).replace(R.id.groupcal, addGroupScheduleFragment).commit();
 
                     }
-                }else if(date.getText().equals("日期")){
+                } else if (date.getText().equals("日期")) {
                     Toast.makeText(getContext(), "請選擇日期", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -128,11 +109,11 @@ public class GroupCalendarFragment extends Fragment {
         return view;
 
     }
+
     public int getSelected_date(int year, int month, int dayOfMonth) {
         String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
         return Integer.parseInt(s);
     }
-
 
 
 }

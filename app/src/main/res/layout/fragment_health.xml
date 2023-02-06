@@ -20,10 +20,10 @@
         android:id="@+id/heightEditText"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/heightTitle"
-        tools:ignore="Autofill,LabelFor"
-        android:inputType="numberDecimal" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/weightTitle"
@@ -38,18 +38,18 @@
         android:id="@+id/weightEditText"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/heightEditText"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/weightTitle"
-        tools:ignore="Autofill,LabelFor"
-        android:inputType="numberDecimal" />
+        app:layout_constraintTop_toBottomOf="@id/heightEditText"
+        tools:ignore="Autofill,LabelFor" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="更新"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weightEditText" />
 
     <TextView
@@ -66,29 +66,29 @@
         android:id="@+id/heightTodayTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:text="身高"
-        app:layout_constraintTop_toBottomOf="@id/todayHeading"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/todayHeading" />
 
     <TextView
         android:id="@+id/heightTodayValue"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="0"
         android:layout_marginStart="12dp"
+        android:text="0"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="@id/heightTodayTitle"
-        app:layout_constraintStart_toEndOf="@+id/heightTodayTitle" />
+        app:layout_constraintStart_toEndOf="@+id/heightTodayTitle"
+        app:layout_constraintTop_toTopOf="@id/heightTodayTitle" />
 
     <TextView
         android:id="@+id/weightTodayTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:text="體重"
-        app:layout_constraintTop_toBottomOf="@id/todayHeading"
-        app:layout_constraintStart_toEndOf="@id/heightTodayValue" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/heightTodayValue"
+        app:layout_constraintTop_toBottomOf="@id/todayHeading" />
 
     <TextView
         android:id="@+id/weightTodayValue"
@@ -104,47 +104,48 @@
         android:id="@+id/averageHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_marginTop="24dp"
         android:text="本月平均"
-        app:layout_constraintTop_toBottomOf="@id/heightTodayTitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heightTodayTitle" />
 
     <TextView
         android:id="@+id/heightAverageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:text="身高"
-        app:layout_constraintTop_toBottomOf="@id/averageHeading"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/averageHeading" />
 
     <TextView
         android:id="@+id/heightAverageValue"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:text="0"
         android:textSize="16sp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintTop_toTopOf="@id/heightAverageTitle"
-        app:layout_constraintStart_toEndOf="@+id/heightAverageTitle" />
+        app:layout_constraintStart_toEndOf="@+id/heightAverageTitle"
+        app:layout_constraintTop_toTopOf="@id/heightAverageTitle" />
 
     <TextView
         android:id="@+id/weightAverageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:text="體重"
-        app:layout_constraintTop_toBottomOf="@id/averageHeading"
-        app:layout_constraintStart_toEndOf="@id/heightAverageValue" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/heightAverageValue"
+        app:layout_constraintTop_toBottomOf="@id/averageHeading" />
 
     <TextView
         android:id="@+id/weightAverageValue"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="0"
         android:layout_marginStart="12dp"
+        android:text="0"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="@id/weightAverageTitle"
-        app:layout_constraintStart_toEndOf="@+id/weightAverageTitle" />
+        app:layout_constraintStart_toEndOf="@+id/weightAverageTitle"
+        app:layout_constraintTop_toTopOf="@id/weightAverageTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

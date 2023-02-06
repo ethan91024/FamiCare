@@ -15,12 +15,12 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="70"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/analize"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_weight="18"
             android:text="進階症狀分析"
             android:textSize="23dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -91,7 +91,6 @@
         android:layout_height="1dp"
         android:background="#000000" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -115,6 +114,5 @@
             android:text="冥想、運動、聽歌、寫日記"
             android:textSize="20dp" />
     </LinearLayout>
-
 
 </LinearLayout>
