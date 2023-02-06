@@ -1,17 +1,22 @@
 package com.ethan.FamiCare;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import org.checkerframework.checker.units.qual.A;
 
 public class GroupCalendarFragment extends Fragment {
 
@@ -81,7 +86,7 @@ public class GroupCalendarFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!date.getText().equals("日期")) {
-                    AddGroupScheduleFragment addGroupScheduleFragment = new AddGroupScheduleFragment();
+                   AddGroupScheduleFragment addGroupScheduleFragment=new AddGroupScheduleFragment();
                     Bundle bundle = new Bundle();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
 
@@ -89,8 +94,8 @@ public class GroupCalendarFragment extends Fragment {
                         bundle.putBoolean("edit", false);
                         bundle.putInt("id", selected_date);
                         addGroupScheduleFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
-
                         fm.beginTransaction().addToBackStack(null).replace(R.id.groupcal, addGroupScheduleFragment).commit();
+
 
                     } else {
                         bundle.putBoolean("edit", true);
@@ -104,6 +109,10 @@ public class GroupCalendarFragment extends Fragment {
                     Toast.makeText(getContext(), "請選擇日期", Toast.LENGTH_SHORT).show();
                 }
             }
+
+
+
+
         });
 
         return view;
@@ -114,6 +123,27 @@ public class GroupCalendarFragment extends Fragment {
         String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
         return Integer.parseInt(s);
     }
+    private void dialog() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(GroupCalendarFragment.super.getContext());
+        final EditText editText=new EditText(GroupCalendarFragment.super.getContext());
+        final EditText editText2=new EditText(GroupCalendarFragment.super.getContext());
+        builder.setView(editText);
+        builder.setView(editText2);
+        builder.setTitle("請輸入行程、時間");builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getContext(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                //將get到的文字轉成字串才可以給Toast顯示哦
 
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getContext(), "取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.create().show();
+    }
 
 }
