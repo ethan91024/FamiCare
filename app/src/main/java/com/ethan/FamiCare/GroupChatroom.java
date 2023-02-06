@@ -1,18 +1,10 @@
 
 package com.ethan.FamiCare;
 
-import static com.ethan.FamiCare.Firebasecords.FirebaseCords.Main_Chat_Database;
-
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,13 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FieldValue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 
 public class GroupChatroom extends Fragment {
     RecyclerViewAdapter adapter;
@@ -48,12 +37,9 @@ public class GroupChatroom extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -61,7 +47,6 @@ public class GroupChatroom extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static GroupChatroom newInstance(String param1, String param2) {
         GroupChatroom fragment = new GroupChatroom();
         Bundle args = new Bundle();
@@ -71,58 +56,23 @@ public class GroupChatroom extends Fragment {
         return fragment;
     }
 
-
-    public View onCreate(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        send=view.findViewById(R.id.fab_send);
-        message=view.findViewById(R.id.message);
-        recyclerView=view.findViewById(R.id.recyclerview);
-        list=new ArrayList<>();
-        auth=FirebaseAuth.getInstance();
-        db= FirebaseDatabase.getInstance().getReference();
-        user=auth.getCurrentUser();
-        String uid =user.getUid();
-        String uemail=user.getEmail();
-        String timeStamp=new SimpleDateFormat("yyyy-MM-dd HH:mma").format(Calendar.getInstance().getTime());
-
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg=message.getEditText().getText().toString();
-//這行可能有問題但找不出來影片30:23
-        db.child("Messages").push().setValue(new GroupMessage(uemail,msg,timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-    @Override
-    public void onComplete(@NonNull Task<Void> task) {
-            message.getEditText().setText("");
-    }
-});
-            }
-        });
-
-        adapter=new RecyclerViewAdapter(GroupChatroom.this.getContext(),list);
-        LinearLayoutManager llm=new LinearLayoutManager(GroupChatroom.this.getContext(),RecyclerView.VERTICAL,true);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(adapter);
-        receiveMessages();
-        return view;
     }
 
 
 
-
-    private void receiveMessages(){
+    private void receiveMessages() {
         db.child("Messages").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snap:snapshot.getChildren()){
-                    GroupMessage message=snap.getValue(GroupMessage.class);
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    GroupMessage message = snap.getValue(GroupMessage.class);
                     list.add(message);
                     adapter.notifyDataSetChanged();
                 }
@@ -141,6 +91,39 @@ public class GroupChatroom extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
+
+        send = view.findViewById(R.id.fab_send);
+        message = view.findViewById(R.id.message);
+        recyclerView = view.findViewById(R.id.recyclerview);
+        list = new ArrayList<>();
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance().getReference();
+        user = auth.getCurrentUser();
+        String uid = user.getUid();
+        String uEmail = user.getEmail();
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mma").format(Calendar.getInstance().getTime());
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = message.getEditText().getText().toString();
+//這行可能有問題但找不出來影片30:23
+                db.child("Messages").push().setValue(new GroupMessage(uEmail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        message.getEditText().setText("");
+                    }
+                });
+            }
+        });
+
+        adapter = new RecyclerViewAdapter(GroupChatroom.this.getContext(), list);
+        LinearLayoutManager llm = new LinearLayoutManager(GroupChatroom.this.getContext(), RecyclerView.VERTICAL, true);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(adapter);
+        receiveMessages();
+
         return view;
     }
 
