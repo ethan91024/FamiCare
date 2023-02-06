@@ -7,10 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 
 public class MoodSymptomFragment extends Fragment {
@@ -47,9 +53,10 @@ public class MoodSymptomFragment extends Fragment {
     CheckBox ckb;
     private Button updatesy;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.tried, R.id.stomachache};
-    private double synumber =0;
-    private double []synumberlist = new double[7];
-
+    private double synumber = 0;
+    ArrayList<Integer> RadioID = new ArrayList<>();
+    int[] synumberlist =new int[7];
+    boolean run;
     private View mainview;
 
     @Override
@@ -58,14 +65,30 @@ public class MoodSymptomFragment extends Fragment {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
         updatesy = mainview.findViewById(R.id.updatesy);
+        RadioGroup weekID = (RadioGroup) mainview.findViewById(R.id.week);
         updatesy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (weekID.getCheckedRadioButtonId() == -1) {
+                    // no radio buttons are checked
+                    run = false;
+                    synumber += SymptomCheckBox(mainview, run);
+                    Toast.makeText(getContext(), "請選擇星期", Toast.LENGTH_SHORT).show();
 
-                synumber += SymptomCheckBox(mainview);//勾選症狀的加分
-                String sn = "" + synumber;
-                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
-                stressnumber.setText(sn);
+                } else {
+                    run = true;
+                    synumber += SymptomCheckBox(mainview, run);
+                    // one of the radio buttons is checked
+                }//勾選症狀的加分
+                double td = synumber * 10;//去除小數點後一位
+                int ti = (int) td;
+                synumber = (double) ti / 10;
+
+                //顯示textview
+//                String sn = "" + synumber;
+//                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
+//                stressnumber.setText(sn);
+
             }
 
         });
@@ -75,9 +98,10 @@ public class MoodSymptomFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Bundle bundle = new Bundle();
                 bundle.putDouble("symptom", synumber);
-                MoodFragment MoodFragment =new MoodFragment();
+                MoodFragment MoodFragment = new MoodFragment();
                 MoodFragment.setArguments(bundle);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
@@ -89,22 +113,22 @@ public class MoodSymptomFragment extends Fragment {
         return mainview;
     }
 
-    public double SymptomCheckBox(View view) {
+    public double SymptomCheckBox(View view, boolean run) {
         double checkboxn = 0;
-        for (int i : id) {
-            ckb = (CheckBox) view.findViewById(i);
-            if (ckb.isChecked()) {
-                checkboxn += 0.1;
+        if (run) {
+            for (int i : id) {
+                ckb = (CheckBox) view.findViewById(i);
+                if (ckb.isChecked()) {
+                    checkboxn += 0.1;
+                }
             }
         }
-        for(int i : id){
-            ckb= (CheckBox) view.findViewById(i);
+        for (int i : id) {
+            ckb = (CheckBox) view.findViewById(i);
             ckb.setChecked(false);
         }
         //不知為何0.3會有很多小數點，因此只取小數點第一位
-        double td=checkboxn*10;
-        int ti=(int)td;
-        checkboxn=(double)ti/10;
+
         return checkboxn;
     }
 }

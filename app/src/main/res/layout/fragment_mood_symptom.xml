@@ -44,7 +44,8 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/week">
 
 
                     <RadioButton
@@ -62,7 +63,7 @@
                         android:textSize="22dp"></RadioButton>
 
                     <RadioButton
-                        android:id="@+id/Wensday"
+                        android:id="@+id/Wednesday"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:text="星期三"
@@ -100,6 +101,7 @@
 
                 </RadioGroup>
             </LinearLayout>
+
         </LinearLayout>
 
         <View
@@ -138,62 +140,58 @@
                     <CheckBox
                         android:id="@+id/headache"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="55dp"
                         android:text="頭痛"
                         android:textSize="22dp" />
 
                     <CheckBox
                         android:id="@+id/dizzy"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="55dp"
                         android:text="頭暈"
                         android:textSize="22dp" />
 
                     <CheckBox
                         android:id="@+id/nausea"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="55dp"
                         android:text="噁心"
                         android:textSize="22dp" />
 
                     <CheckBox
                         android:id="@+id/tried"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="55dp"
                         android:text="疲勞"
                         android:textSize="22dp" />
 
                     <CheckBox
                         android:id="@+id/stomachache"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="55dp"
                         android:text="胃痛"
                         android:textSize="22dp" />
 
-                    <TextView
-                        android:id="@+id/number1"
+
+
+                    <Button
+                        android:id="@+id/updatesy"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=" 壓力數字"
+                        android:layout_height="60dp"
+                        android:text="更新症狀"
                         android:textSize="20dp">
 
-                    </TextView>
+                    </Button>
 
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/updatesy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="更新症狀"
-        android:textSize="20dp">
 
-    </Button>
 
     <Button
         android:id="@+id/back_to_mood"
