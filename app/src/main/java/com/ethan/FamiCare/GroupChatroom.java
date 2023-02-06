@@ -56,15 +56,14 @@ public class GroupChatroom extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
+    public View onCreate(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
+
+        return view;
+    }
 
 
     private void receiveMessages() {
@@ -92,6 +91,10 @@ public class GroupChatroom extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
 
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
         send = view.findViewById(R.id.fab_send);
         message = view.findViewById(R.id.message);
         recyclerView = view.findViewById(R.id.recyclerview);
@@ -100,7 +103,7 @@ public class GroupChatroom extends Fragment {
         db = FirebaseDatabase.getInstance().getReference();
         user = auth.getCurrentUser();
         String uid = user.getUid();
-        String uEmail = user.getEmail();
+        String uemail = user.getEmail();
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mma").format(Calendar.getInstance().getTime());
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +111,7 @@ public class GroupChatroom extends Fragment {
             public void onClick(View v) {
                 String msg = message.getEditText().getText().toString();
 //這行可能有問題但找不出來影片30:23
-                db.child("Messages").push().setValue(new GroupMessage(uEmail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                db.child("Messages").push().setValue(new GroupMessage(uemail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -40,6 +40,6 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_send_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/message" />
+        app:layout_constraintEnd_toEndOf="@id/message"
+        app:layout_constraintStart_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
