@@ -22,4 +22,5 @@
 
     <string name="format_height_average">%.2f</string>
     <string name="format_weight_average">%.2f</string>
+
 </resources>

@@ -7,145 +7,125 @@
     android:layout_margin="24dp"
     tools:context=".HealthFragment">
 
-    <TextView
-        android:id="@+id/heightTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身高"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/heightEditText"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/heightEditText"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/heightTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,LabelFor" />
-
-    <TextView
-        android:id="@+id/weightTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="體重"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/weightEditText"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/weightEditText"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/weightTitle"
-        app:layout_constraintTop_toBottomOf="@id/heightEditText"
-        tools:ignore="Autofill,LabelFor" />
-
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="更新"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/stepsButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:text="步數"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/hydrationButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="336dp"
+        android:text="喝水量"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/caloriesButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="84dp"
+        android:text="卡路里"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/oxygensaturationButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="168dp"
+        android:text="血氧"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/speedButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="252dp"
+        android:text="速度"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/heartrateButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="184dp"
+        android:text="心率"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weightEditText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/todayHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="最近的資料"
+    <Button
+        android:id="@+id/bloodpressureButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="84dp"
+        android:text="血壓"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/submit" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heightTodayTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身高"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todayHeading" />
-
-    <TextView
-        android:id="@+id/heightTodayValue"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="0"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/heightTodayTitle"
-        app:layout_constraintTop_toTopOf="@id/heightTodayTitle" />
-
-    <TextView
-        android:id="@+id/weightTodayTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="體重"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/heightTodayValue"
-        app:layout_constraintTop_toBottomOf="@id/todayHeading" />
-
-    <TextView
-        android:id="@+id/weightTodayValue"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="0"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/weightTodayTitle"
-        app:layout_constraintTop_toTopOf="@id/weightTodayTitle" />
-
-    <TextView
-        android:id="@+id/averageHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="本月平均"
+    <Button
+        android:id="@+id/sleepstageButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="336dp"
+        android:text="睡眠"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/heightTodayTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heightAverageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身高"
-        android:textSize="16sp"
+    <Button
+        android:id="@+id/respiratoryrateButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="252dp"
+        android:text="呼吸"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/averageHeading" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/heightAverageValue"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="0"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/heightAverageTitle"
-        app:layout_constraintTop_toTopOf="@id/heightAverageTitle" />
+    <Button
+        android:id="@+id/bloodglucoseButton"
+        android:layout_width="177dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="168dp"
+        android:text="血糖"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/weightAverageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="體重"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/heightAverageValue"
-        app:layout_constraintTop_toBottomOf="@id/averageHeading" />
-
-    <TextView
-        android:id="@+id/weightAverageValue"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="0"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/weightAverageTitle"
-        app:layout_constraintTop_toTopOf="@id/weightAverageTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
