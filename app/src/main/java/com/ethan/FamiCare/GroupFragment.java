@@ -50,7 +50,7 @@ public class GroupFragment extends Fragment {
         GroupNameEditFragment groupNameEditFragment = new GroupNameEditFragment();
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        create = view.findViewById(R.id.創建群組);
+        create = view.findViewById(R.id.createGroup);
         cal = view.findViewById(R.id.cal);
 
         create.setOnClickListener(new View.OnClickListener() {

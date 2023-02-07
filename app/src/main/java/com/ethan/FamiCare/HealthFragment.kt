@@ -1,5 +1,6 @@
 package com.ethan.FamiCare
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,26 +46,51 @@ class HealthFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_health, container, false)
-        heightEditText = view.findViewById(R.id.heightEditText)
-        weightEditText = view.findViewById(R.id.weightEditText)
+        //heightEditText = view.findViewById(R.id.heightEditText)
+        //weightEditText = view.findViewById(R.id.weightEditText)
 
+        //更新按鈕
         view.findViewById<Button>(R.id.submit).setOnClickListener {
-            val height = heightEditText.text.toString().toDouble().meters
-            val weight = weightEditText.text.toString().toDouble().kilograms
+            //val height = heightEditText.text.toString().toDouble().meters
+            //val weight = weightEditText.text.toString().toDouble().kilograms
 
-            val client = HealthConnectClient.getOrCreate(requireContext())
-            insertData(client, height, weight)
+            //val client = HealthConnectClient.getOrCreate(requireContext())
+            //insertData(client, height, weight)
 
-            heightEditText.setText("")
-            weightEditText.setText("")
-            weightEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+            //heightEditText.setText("")
+            //weightEditText.setText("")
+            //weightEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
         }
 
-        heightTextView = view.findViewById(R.id.heightTodayValue)
-        weightTextView = view.findViewById(R.id.weightTodayValue)
+        //資料按鈕intent
+        view.findViewById<Button>(R.id.stepsButton).setOnClickListener {
+            startActivity(Intent(requireContext(),StepsActivity::class.java ))
+        }
+        view.findViewById<Button>(R.id.heartrateButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.caloriesButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.bloodpressureButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.oxygensaturationButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.bloodglucoseButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.speedButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.respiratoryrateButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.hydrationButton).setOnClickListener {
+        }
+        view.findViewById<Button>(R.id.sleepstageButton).setOnClickListener {
+        }
 
-        heightAverageTextView = view.findViewById(R.id.heightAverageValue)
-        weightAverageTextView = view.findViewById(R.id.weightAverageValue)
+
+        //heightTextView = view.findViewById(R.id.heightTodayValue)
+        //weightTextView = view.findViewById(R.id.weightTodayValue)
+
+        //heightAverageTextView = view.findViewById(R.id.heightAverageValue)
+        //weightAverageTextView = view.findViewById(R.id.weightAverageValue)
         return view
     }
 
@@ -119,16 +145,16 @@ class HealthFragment : Fragment() {
         val heightRecordRequest = ReadRecordsRequest(HeightRecord::class,TimeRangeFilter.between(start, end))
         val HeightToday = client.readRecords(heightRecordRequest).records
         if (view != null) {
-            heightTextView = view.findViewById(R.id.heightTodayValue)
+            //heightTextView = view.findViewById(R.id.heightTodayValue)
             heightTextView.text = HeightToday[0].height.toString()
         }
 
         val weightRecordRequest = ReadRecordsRequest(WeightRecord::class,TimeRangeFilter.between(start, end))
         val WeightToday = client.readRecords(weightRecordRequest).records
         if (view != null) {
-            weightTextView = view.findViewById(R.id.weightTodayValue)
+            //weightTextView = view.findViewById(R.id.weightTodayValue)
             weightTextView.text = WeightToday[0].weight.toString()
-        }//1
+        }
     }
 
     private suspend fun readAggregatedData(client: HealthConnectClient) {
@@ -156,14 +182,14 @@ class HealthFragment : Fragment() {
 
         val height = data[HeightRecord.HEIGHT_AVG]
         if (view != null) {
-            heightTextView = view.findViewById(R.id.heightTodayValue)
+            //heightTextView = view.findViewById(R.id.heightTodayValue)
             //heightAverageTextView.text = String.format("%.3f",height) //format會出bug
             heightAverageTextView.text =height.toString()
         }
 
         val weight = data[WeightRecord.WEIGHT_AVG]
         if (view != null) {
-            weightTextView = view.findViewById(R.id.weightTodayValue)
+            //weightTextView = view.findViewById(R.id.weightTodayValue)
             //weightAverageTextView.text = String.format("%.3f",weight)
             weightAverageTextView.text =weight.toString()
         }

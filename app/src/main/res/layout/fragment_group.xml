@@ -36,16 +36,16 @@
                 ></TextView>
 
             <Button
-                android:id="@+id/創建群組"
+                android:id="@+id/createGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/刪除群組"
+                android:layout_toLeftOf="@id/deleteGroup"
                 android:onClick="add"
                 android:text="創建群組"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/刪除群組"
+                android:id="@+id/deleteGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
