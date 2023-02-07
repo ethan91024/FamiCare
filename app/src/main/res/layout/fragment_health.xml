@@ -1,131 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="24dp"
+    android:orientation="vertical"
     tools:context=".HealthFragment">
 
+    <!--資料列表  比例9-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stepsButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  步數"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/hydrationButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  喝水量"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/caloriesButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  卡路里"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/oxygensaturationButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  血氧"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/speedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  速度"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/heartrateButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  心率"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/bloodpressureButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  血壓"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/sleepstageButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  睡眠"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/respiratoryrateButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  呼吸"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/bloodglucoseButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:gravity="center|left"
+                android:text="  血糖"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--更新按鈕  比例1-->
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:text="更新"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/stepsButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:text="步數"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/hydrationButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="336dp"
-        android:text="喝水量"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/caloriesButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="84dp"
-        android:text="卡路里"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/oxygensaturationButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="168dp"
-        android:text="血氧"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/speedButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="252dp"
-        android:text="速度"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/heartrateButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="184dp"
-        android:text="心率"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/bloodpressureButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="84dp"
-        android:text="血壓"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sleepstageButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="336dp"
-        android:text="睡眠"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/respiratoryrateButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="252dp"
-        android:text="呼吸"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/bloodglucoseButton"
-        android:layout_width="177dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="168dp"
-        android:text="血糖"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
