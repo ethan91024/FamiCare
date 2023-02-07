@@ -76,17 +76,15 @@ class MainActivity : AppCompatActivity() {
 
         val permissionsSet = setOf(
             HealthPermission.getReadPermission(HeartRateRecord::class),
-            HealthPermission.getWritePermission(HeartRateRecord::class),
-            HealthPermission.getReadPermission(HeightRecord::class),
-            HealthPermission.getWritePermission(HeightRecord::class),
-            HealthPermission.getReadPermission(WeightRecord::class),
-            HealthPermission.getWritePermission(WeightRecord::class),
+            HealthPermission.getReadPermission(StepsRecord::class),
+            HealthPermission.getReadPermission(TotalCaloriesBurnedRecord::class),
+            HealthPermission.getReadPermission(BloodGlucoseRecord::class),
+            HealthPermission.getReadPermission(BloodPressureRecord::class),
+            HealthPermission.getReadPermission(HydrationRecord::class),
             HealthPermission.getReadPermission(OxygenSaturationRecord::class),
-            HealthPermission.getWritePermission(OxygenSaturationRecord::class),
-            HealthPermission.getReadPermission(SleepSessionRecord::class),
-            HealthPermission.getWritePermission(SleepSessionRecord::class),
             HealthPermission.getReadPermission(SleepStageRecord::class),
-            HealthPermission.getWritePermission(SleepStageRecord::class),
+            HealthPermission.getReadPermission(SpeedRecord::class),
+            HealthPermission.getReadPermission(RespiratoryRateRecord::class),
         )
 
         val requestPermissionActivityContract =
