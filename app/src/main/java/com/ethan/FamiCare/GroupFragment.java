@@ -14,7 +14,6 @@ public class GroupFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -32,7 +31,8 @@ public class GroupFragment extends Fragment {
     }
 
     private Button create;
-
+    private Button cal;
+    //1
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +50,9 @@ public class GroupFragment extends Fragment {
         GroupNameEditFragment groupNameEditFragment = new GroupNameEditFragment();
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        create = view.findViewById(R.id.創建群組);
+        create = view.findViewById(R.id.createGroup);
+        cal = view.findViewById(R.id.cal);
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +60,20 @@ public class GroupFragment extends Fragment {
 
             }
         });
+
+        GroupCalendarFragment groupCalendarFragment = new GroupCalendarFragment();
+        cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_group, groupCalendarFragment).commit();
+            }
+        });
+
         return view;
     }
 

@@ -7,21 +7,20 @@
     android:orientation="vertical"
     tools:context=".AddGroupScheduleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/event"
             android:layout_width="0dp"
-            android:layout_height="88dp"
+            android:layout_height="40dp"
             android:layout_marginHorizontal="7dp"
             android:layout_weight="8"
             android:hint="事件或提醒事項"
-            android:textSize="20dp" />
+            />
 
         <Button
             android:id="@+id/save2"
@@ -43,48 +42,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.25"
             android:layout_marginHorizontal="7dp"
+            android:layout_weight="0.5"
             android:gravity="center_vertical"
             android:text="請輸入時間"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/hour"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
             android:layout_marginHorizontal="7dp"
-            android:hint="時間"
-            />
+            android:layout_weight="0.5"
+            android:hint="時間" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.25"
             android:layout_marginHorizontal="7dp"
+            android:layout_weight="0.5"
             android:gravity="center_vertical"
             android:text="請輸入分鐘"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/minute"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
             android:layout_marginHorizontal="7dp"
-            android:hint="時間"
-            />
+            android:layout_weight="0.5"
+            android:hint="時間" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="0.5">
 
     </LinearLayout>
 

@@ -15,7 +15,7 @@ public class GroupNameEditFragment extends Fragment {
     //1
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    //1
     private String mParam1;
     private String mParam2;
 

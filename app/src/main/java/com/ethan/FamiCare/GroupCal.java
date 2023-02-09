@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 //日記類別
 @Entity(tableName = "groupcal")
-public class GroupCal {
+public class GroupCal {//1
     @PrimaryKey//用日期當id
     private int id;
     @ColumnInfo(name = "Event")

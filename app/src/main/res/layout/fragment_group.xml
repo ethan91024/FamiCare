@@ -7,26 +7,25 @@
     android:orientation="vertical"
     tools:context=".GroupFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="生活圈"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    >
+        android:orientation="vertical">
 
-</TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="生活圈"
+            android:textSize="28sp"
+            android:textStyle="bold">
+
+        </TextView>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,60 +33,70 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
 
-                >
-            </TextView>
+                ></TextView>
 
             <Button
-                android:id="@+id/創建群組"
+                android:id="@+id/createGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/刪除群組"
-                android:text="創建群組"
+                android:layout_toLeftOf="@id/deleteGroup"
                 android:onClick="add"
-                android:textStyle="bold"
-                />
+                android:text="創建群組"
+                android:textStyle="bold" />
+
             <Button
-                android:id="@+id/刪除群組"
+                android:id="@+id/deleteGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="刪除群組"
                 android:onClick="del"
+                android:text="刪除群組"
                 android:textStyle="bold"
 
                 />
 
         </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="搜尋"
-            android:onClick="search"
-            android:textStyle="bold"
-            />
+            <Button
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="search"
+                android:text="搜尋"
+                android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/search"
-            android:textStyle="bold"
-            >
-        </EditText>
-    </RelativeLayout>
-</LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/search"
+                android:textStyle="bold"></EditText>
+
+
+            <Button
+                android:id="@+id/cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:text="行事曆"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
-        />
+        android:layout_below="@id/top" />
 
 </RelativeLayout>
