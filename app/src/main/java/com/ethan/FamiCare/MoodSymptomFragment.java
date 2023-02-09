@@ -16,7 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class MoodSymptomFragment extends Fragment {
@@ -54,10 +58,11 @@ public class MoodSymptomFragment extends Fragment {
     private Button updatesy;
     private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.tried, R.id.stomachache};
     private double synumber = 0;
-    ArrayList<Integer> RadioID = new ArrayList<>();
-    int[] synumberlist =new int[7];
     boolean run;
     private View mainview;
+    String Date[]=new String[7];
+    int rblist [] = {R.id.DDAY,R.id.TWOD,R.id.THREED,R.id.FOURD,R.id.FIVED,R.id.SIXD,R.id.SEVEND};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +98,17 @@ public class MoodSymptomFragment extends Fragment {
 
         });
 //1
+        String date[]=SetDate();
+        for(int i=0;i<date.length;i++){
+            RadioButton rb =(RadioButton) mainview.findViewById(rblist[i]);
+            rb.setText(date[i]);
+
+        }
+
+
+
+//依照設定格式取得字串
+
 
         back = mainview.findViewById(R.id.back_to_mood);
         back.setOnClickListener(new View.OnClickListener() {
@@ -130,5 +146,28 @@ public class MoodSymptomFragment extends Fragment {
         //不知為何0.3會有很多小數點，因此只取小數點第一位
 
         return checkboxn;
+    }
+
+    public String[] SetDate(){
+        //定義好時間字串的格式
+        SimpleDateFormat sdf =new SimpleDateFormat("MM/dd");
+        Date dt=new Date();
+//透過SimpleDateFormat的format方法將Date轉為字串
+        String dts=sdf.format(dt);
+        try {
+            Date dt2 = sdf.parse(dts);
+            for(int i=0;i<7;i++) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dt2);
+                calendar.add(Calendar.DATE, ((i*-1)));//日期減1
+                Date tdt = calendar.getTime();//取得加減過後的Date
+                String time = sdf.format(tdt);
+                Date[i]=time;
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return Date;
+
     }
 }

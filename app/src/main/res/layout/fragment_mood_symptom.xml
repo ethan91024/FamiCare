@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="375dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -23,81 +23,89 @@
             android:layout_weight="35"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="206dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="7dp"
-                android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarStyle="insideInset"
+                tools:layout_editor_absoluteX="159dp"
+                tools:layout_editor_absoluteY="99dp">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="206dp"
                     android:layout_height="wrap_content"
-                    android:text="星期選擇"
-                    android:textSize="25dp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <RadioGroup
-                    android:id="@+id/week"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="7dp"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="日期選擇"
+                        android:textSize="25dp"
+                        android:textStyle="bold">
 
-                    <RadioButton
-                        android:id="@+id/Monday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期一"
-                        android:textSize="22dp"></RadioButton>
+                    </TextView>
 
-                    <RadioButton
-                        android:id="@+id/Tuesday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期二"
-                        android:textSize="22dp"></RadioButton>
-
-                    <RadioButton
-                        android:id="@+id/Wednesday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期三"
-                        android:textSize="22dp"></RadioButton>
-
-                    <RadioButton
-                        android:id="@+id/Thursday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期四"
-                        android:textSize="22dp"></RadioButton>
+                    <RadioGroup
+                        android:id="@+id/week"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
 
-                    <RadioButton
-                        android:id="@+id/Friday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期五"
-                        android:textSize="22dp"></RadioButton>
+                        <RadioButton
+                            android:id="@+id/DDAY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/Saturday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期六"
-                        android:textSize="22dp"></RadioButton>
+                        <RadioButton
+                            android:id="@+id/TWOD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/Sunday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="星期日"
-                        android:textSize="22dp"></RadioButton>
+                        <RadioButton
+                            android:id="@+id/THREED"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
+
+                        <RadioButton
+                            android:id="@+id/FOURD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
 
 
-                </RadioGroup>
-            </LinearLayout>
+                        <RadioButton
+                            android:id="@+id/FIVED"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
+
+                        <RadioButton
+                            android:id="@+id/SIXD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
+
+                        <RadioButton
+                            android:id="@+id/SEVEND"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="日期"
+                            android:textSize="22dp"></RadioButton>
+
+
+                    </RadioGroup>
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
