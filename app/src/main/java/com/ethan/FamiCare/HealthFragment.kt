@@ -14,6 +14,8 @@ import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import java.time.Instant
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 
 class HealthFragment : Fragment() {
     private var mParam1: String? = null
@@ -66,13 +68,12 @@ class HealthFragment : Fragment() {
     }
 
     suspend fun readData(client: HealthConnectClient) {
-        //val today = ZonedDateTime.now()
-        //val startOfDay = today.truncatedTo(ChronoUnit.DAYS)
-        //val timeRangeFilter = TimeRangeFilter.between(
-        //    startOfDay.toLocalDateTime(),
-        //    today.toLocalDateTime()
-        //)
-
+        val today = ZonedDateTime.now()
+        val startOfDay = today.truncatedTo(ChronoUnit.DAYS)
+        val timeRangeFilter = TimeRangeFilter.between(
+            startOfDay.toLocalDateTime(),
+            today.toLocalDateTime()
+        )
 
     }
 
