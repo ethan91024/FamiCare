@@ -1,5 +1,6 @@
 package com.ethan.FamiCare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class GroupFragment extends Fragment {
 
     private Button create;
     private Button cal;
+
     //1
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,16 +63,13 @@ public class GroupFragment extends Fragment {
             }
         });
 
-        GroupCalendarFragment groupCalendarFragment = new GroupCalendarFragment();
+
         cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_group, groupCalendarFragment).commit();
+            Intent intent=new Intent(getActivity(), GroupCalendar.class);
+            startActivity(intent);
             }
         });
 
