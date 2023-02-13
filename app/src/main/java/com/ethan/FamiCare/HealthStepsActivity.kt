@@ -16,10 +16,10 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 
-class StepsActivity : AppCompatActivity() {
+class HealthStepsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_steps)
+        setContentView(R.layout.activity_health_steps)
 
         val client = HealthConnectClient.getOrCreate(this)
         this.findViewById<Button>(R.id.update).setOnClickListener {
