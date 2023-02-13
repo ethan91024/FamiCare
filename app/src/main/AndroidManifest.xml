@@ -26,6 +26,33 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".HealthBloodGlucoseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthRespiratoryRateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthSleepActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthBloodPressureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthHeartRateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthSpeedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthOxygenSaturationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthCaloriesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthHydrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupCalendar"
             android:exported="false">
             <meta-data
@@ -47,7 +74,7 @@
             android:name=".HealthConnect"
             android:exported="false" />
         <activity
-            android:name=".StepsActivity"
+            android:name=".HealthStepsActivity"
             android:exported="false" />
         <activity
             android:name=".CaloriesActivity"

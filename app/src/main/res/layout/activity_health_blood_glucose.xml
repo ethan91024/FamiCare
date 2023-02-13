@@ -4,31 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StepsActivity">
+    tools:context=".HealthBloodGlucoseActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="本日步數"
+        android:text="本日血糖"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/today"
+        android:id="@+id/today_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="7dp"
-        android:text="."
+        android:text="今日"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_bg" />
 
     <Button
-        android:id="@+id/update"
+        android:id="@+id/update_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
@@ -38,22 +38,23 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/yesterday"
+        android:id="@+id/yesterday_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:text="一天前"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_bg" />
 
     <TextView
-        android:id="@+id/twodaysago"
+        android:id="@+id/twodaysago_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="9dp"
-        android:text="TextView"
+        android:text="兩天前"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yesterday" />
+        app:layout_constraintTop_toBottomOf="@+id/yesterday_bg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
