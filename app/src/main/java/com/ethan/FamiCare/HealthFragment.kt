@@ -29,8 +29,6 @@ class HealthFragment : Fragment() {
         }
     }
 
-    private var list: ListView? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,29 +75,15 @@ class HealthFragment : Fragment() {
         return view
     }
 
-    suspend fun readData(client: HealthConnectClient) {
-        val today = ZonedDateTime.now()
-        val startOfDay = today.truncatedTo(ChronoUnit.DAYS)
-        val timeRangeFilter = TimeRangeFilter.between(
-            startOfDay.toLocalDateTime(),
-            today.toLocalDateTime()
-        )
+    //suspend fun readData(client: HealthConnectClient) {
+    //    val today = ZonedDateTime.now()
+    //    val startOfDay = today.truncatedTo(ChronoUnit.DAYS)
+    //    val timeRangeFilter = TimeRangeFilter.between(
+    //        startOfDay.toLocalDateTime(),
+    //        today.toLocalDateTime()
+    //    )
+    //}
 
-    }
-
-    suspend fun getStepCount(
-        client: HealthConnectClient,
-        start: Instant,
-        end: Instant
-    ): List<StepsRecord> {
-
-        val request = ReadRecordsRequest(
-            recordType = StepsRecord::class,
-            timeRangeFilter = TimeRangeFilter.between(start, end)
-        )
-        val response = client.readRecords(request)
-        return response.records
-    }
 
     companion object {
         private const val ARG_PARAM1 = "param1"
