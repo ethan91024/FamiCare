@@ -116,9 +116,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private suspend fun onPermissionAvailable(client: HealthConnectClient) {
-        val fragment:Fragment
-        fragment=HealthFragment()
-        fragment.readData(client)
+
     }
 
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
