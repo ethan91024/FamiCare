@@ -36,10 +36,6 @@ class HealthFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_health, container, false)
 
-        //更新按鈕
-        view.findViewById<Button>(R.id.submit).setOnClickListener {
-        }
-
         //資料按鈕intent
         view.findViewById<TextView>(R.id.stepsButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthStepsActivity::class.java))
