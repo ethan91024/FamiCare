@@ -3,11 +3,9 @@ package com.ethan.FamiCare
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class CaloriesActivity : AppCompatActivity() {
+class HealthBloodGlucoseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calories)
-
-
+        setContentView(R.layout.activity_health_blood_glucose)
     }
 }
