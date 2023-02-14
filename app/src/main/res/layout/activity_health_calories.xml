@@ -29,7 +29,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/monthAvg_cal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -60,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_cal" />
 
     <TextView
-        android:id="@+id/weekAvg2_cal"
+        android:id="@+id/monthAvg_cal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

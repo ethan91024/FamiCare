@@ -33,14 +33,11 @@ class HealthStepsActivity : AppCompatActivity() {
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            val first: TextView
-            first = findViewById(R.id.today)
+            val first: TextView = findViewById(R.id.today)
             first.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-1].endTime.toString()))+"  "+steps[steps.size-1].count.toString()+"步"
-            val yesterday: TextView
-            yesterday = findViewById(R.id.yesterday)
+            val yesterday: TextView = findViewById(R.id.yesterday)
             yesterday.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-2].endTime.toString()))+"  "+steps[steps.size-2].count.toString()+"步"
-            val twodaysago: TextView
-            twodaysago = findViewById(R.id.twodaysago)
+            val twodaysago: TextView = findViewById(R.id.twodaysago)
             twodaysago.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-3].endTime.toString()))+"  "+steps[steps.size-3].count.toString()+"步"
 
             aggregateStepsIntoWeeks(
@@ -60,14 +57,11 @@ class HealthStepsActivity : AppCompatActivity() {
                     client,
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now())
-                val first: TextView
-                first = findViewById(R.id.today)
+                val first: TextView = findViewById(R.id.today)
                 first.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-1].endTime.toString()))+"  "+steps[steps.size-1].count.toString()+"步"
-                val yesterday: TextView
-                yesterday = findViewById(R.id.yesterday)
+                val yesterday: TextView = findViewById(R.id.yesterday)
                 yesterday.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-2].endTime.toString()))+"  "+steps[steps.size-2].count.toString()+"步"
-                val twodaysago: TextView
-                twodaysago = findViewById(R.id.twodaysago)
+                val twodaysago: TextView = findViewById(R.id.twodaysago)
                 twodaysago.text = myDateTimeFormatter.format(Instant.parse(steps[steps.size-3].endTime.toString()))+"  "+steps[steps.size-3].count.toString()+"步"
 
                 aggregateStepsIntoWeeks(
@@ -116,7 +110,7 @@ class HealthStepsActivity : AppCompatActivity() {
             val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
             val week: TextView = findViewById(R.id.weekAvg)
             if (totalSteps != null) {
-                week.text = totalSteps.div(7).toString()+"步"
+                week.text = totalSteps.div(response.size).toString()+"步"
             }
         }
     }
@@ -139,7 +133,7 @@ class HealthStepsActivity : AppCompatActivity() {
             val totalSteps = monthlyResult.result[StepsRecord.COUNT_TOTAL]
             val month: TextView = findViewById(R.id.monthAvg)
             if (totalSteps != null) {
-                month.text = totalSteps.div(30).toString()+"步"
+                month.text = totalSteps.div(response.size).toString()+"步"
             }
         }
     }
