@@ -56,35 +56,32 @@ public class MoodSymptomFragment extends Fragment {
     private Button back;
     CheckBox ckb;
     private Button updatesy;
-    private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.tried, R.id.stomachache};
+    private int[] id = {R.id.headache, R.id.dizzy, R.id.nausea, R.id.tried, R.id.stomachache,
+            R.id.headache_Two, R.id.dizzy_Two, R.id.nausea_Two, R.id.tried_Two, R.id.stomachache_Two,
+            R.id.headache_Three, R.id.dizzy_Three, R.id.nausea_Three, R.id.tried_Three, R.id.stomachache_Three,
+            R.id.headache_Four, R.id.dizzy_Four, R.id.nausea_Four, R.id.tried_Four, R.id.stomachache_Four,
+            R.id.headache_Five, R.id.dizzy_Five, R.id.nausea_Five, R.id.tried_Five, R.id.stomachache_Five,
+            R.id.headache_Six, R.id.dizzy_Six, R.id.nausea_Six, R.id.tried_Six, R.id.stomachache_Six,
+            R.id.headache_Seven, R.id.dizzy_Seven, R.id.nausea_Seven, R.id.tried_Seven, R.id.stomachache_Seven};
     private double synumber = 0;
     boolean run;
     private View mainview;
     String Date[]=new String[7];
-    int rblist [] = {R.id.DDAY,R.id.TWOD,R.id.THREED,R.id.FOURD,R.id.FIVED,R.id.SIXD,R.id.SEVEND};
-
-
+    int Daylist [] = {R.id.DDAY, R.id.TWOD, R.id.THREED, R.id.FOURD, R.id.FIVED, R.id.SIXD, R.id.SEVEND};
+    boolean doublecheck =true;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
         updatesy = mainview.findViewById(R.id.updatesy);
-        RadioGroup weekID = (RadioGroup) mainview.findViewById(R.id.week);
         updatesy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (weekID.getCheckedRadioButtonId() == -1) {
-                    // no radio buttons are checked
-                    run = false;
-                    synumber += SymptomCheckBox(mainview, run);
-                    Toast.makeText(getContext(), "請選擇星期", Toast.LENGTH_SHORT).show();
-
-                } else {
                     run = true;
-                    synumber += SymptomCheckBox(mainview, run);
+                    synumber = SymptomCheckBox(mainview, run);
                     // one of the radio buttons is checked
-                }//勾選症狀的加分
+                //勾選症狀的加分
                 double td = synumber * 10;//去除小數點後一位
                 int ti = (int) td;
                 synumber = (double) ti / 10;
@@ -93,6 +90,7 @@ public class MoodSymptomFragment extends Fragment {
 //                String sn = "" + synumber;
 //                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
 //                stressnumber.setText(sn);
+                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -100,8 +98,8 @@ public class MoodSymptomFragment extends Fragment {
 //1
         String date[]=SetDate();
         for(int i=0;i<date.length;i++){
-            RadioButton rb =(RadioButton) mainview.findViewById(rblist[i]);
-            rb.setText(date[i]);
+            TextView tv =(TextView) mainview.findViewById(Daylist[i]);
+            tv.setText(date[i]);
 
         }
 
@@ -139,10 +137,10 @@ public class MoodSymptomFragment extends Fragment {
                 }
             }
         }
-        for (int i : id) {
-            ckb = (CheckBox) view.findViewById(i);
-            ckb.setChecked(false);
-        }
+//        for (int i : id) {
+//            ckb = (CheckBox) view.findViewById(i);
+//            ckb.setChecked(false);
+//        }
         //不知為何0.3會有很多小數點，因此只取小數點第一位
 
         return checkboxn;
