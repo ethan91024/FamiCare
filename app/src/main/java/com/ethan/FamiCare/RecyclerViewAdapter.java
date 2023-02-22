@@ -19,6 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
         this.list = list;
     }
+
     //1
     @NonNull
     @Override
