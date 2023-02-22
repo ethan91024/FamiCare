@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calender"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/calender"
     android:orientation="vertical"
     tools:context=".GroupCalendar">
 
@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3.5" />
-
 
 
     <LinearLayout
@@ -66,8 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="timePicker"
             android:gravity="center"
+            android:onClick="timePicker"
             android:text="新增時間"
             android:textSize="15dp" />
     </LinearLayout>
@@ -84,8 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="儲存"
-            android:textSize="15dp"
-            />
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/noti"
@@ -93,15 +91,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="設提醒"
-            android:textSize="15dp"
-            />
+            android:textSize="15dp" />
 
     </LinearLayout>
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 
 </LinearLayout>
