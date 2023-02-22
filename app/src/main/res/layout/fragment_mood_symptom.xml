@@ -31,7 +31,7 @@
                 tools:layout_editor_absoluteY="99dp">
 
                 <LinearLayout
-                    android:layout_width="206dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="7dp"
                     android:orientation="vertical">
@@ -45,65 +45,72 @@
 
                     </TextView>
 
-                    <RadioGroup
-                        android:id="@+id/week"
+
+                    <TextView
+                        android:id="@+id/DDAY"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="日期"
+                        android:textSize="22dp"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/TWOD"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="日期"
+                        android:textSize="22dp"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/THREED"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="日期"
+                        android:textSize="22dp"
+                        android:textStyle="bold"></TextView>
+
+                    <TextView
+                        android:id="@+id/FOURD"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="日期"
+                        android:textSize="22dp"></TextView>
 
 
-                        <RadioButton
-                            android:id="@+id/DDAY"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
+                    <TextView
+                        android:id="@+id/FIVED"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="日期"
+                        android:textSize="22dp"></TextView>
 
-                        <RadioButton
-                            android:id="@+id/TWOD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
+                    <TextView
+                        android:id="@+id/SIXD"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="日期"
+                        android:textSize="22dp"></TextView>
 
-                        <RadioButton
-                            android:id="@+id/THREED"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
-
-                        <RadioButton
-                            android:id="@+id/FOURD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
-
-
-                        <RadioButton
-                            android:id="@+id/FIVED"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
-
-                        <RadioButton
-                            android:id="@+id/SIXD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
-
-                        <RadioButton
-                            android:id="@+id/SEVEND"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="日期"
-                            android:textSize="22dp"></RadioButton>
+                    <TextView
+                        android:id="@+id/SEVEND"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="日期"
+                        android:textSize="22dp"></TextView>
 
 
-                    </RadioGroup>
                 </LinearLayout>
             </ScrollView>
 
@@ -134,7 +141,12 @@
                     android:text="症狀勾選"
                     android:textSize="25dp"
                     android:textStyle="bold" />
-
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarStyle="insideInset"
+                    tools:layout_editor_absoluteX="159dp"
+                    tools:layout_editor_absoluteY="99dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,57 +154,330 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/headache"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:text="頭痛"
-                        android:textSize="22dp" />
-
-                    <CheckBox
-                        android:id="@+id/dizzy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:text="頭暈"
-                        android:textSize="22dp" />
-
-                    <CheckBox
-                        android:id="@+id/nausea"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:text="噁心"
-                        android:textSize="22dp" />
-
-                    <CheckBox
-                        android:id="@+id/tried"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:text="疲勞"
-                        android:textSize="22dp" />
-
-                    <CheckBox
-                        android:id="@+id/stomachache"
-                        android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:text="胃痛"
-                        android:textSize="22dp" />
-
-
-                    <Button
-                        android:id="@+id/updatesy"
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:text="更新症狀"
-                        android:textSize="20dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:text="症狀勾選"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
 
-                    </Button>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Two"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Three"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Four"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Six"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Six"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Six"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Six"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Six"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/headache_Seven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭痛"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/dizzy_Seven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="頭暈"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/nausea_Seven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="噁心"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/tried_Seven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="疲勞"
+                            android:textSize="22dp" />
+
+                        <CheckBox
+                            android:id="@+id/stomachache_Seven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:text="胃痛"
+                            android:textSize="22dp" />
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
+                </HorizontalScrollView>
 
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/updatesy"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="更新症狀"
+        android:textSize="20dp">
+
+    </Button>
 
     <Button
         android:id="@+id/back_to_mood"
