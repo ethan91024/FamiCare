@@ -14,38 +14,17 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class alarmReceiver extends BroadcastReceiver {
 
-    //private static final String Channel_ID="cal_channel";
-    private int notificationId = 1;
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Get id from intent
 
         String event = intent.getStringExtra("event");
+        String time = intent.getStringExtra("time");
+        NotificationHelper notificationHelper=new NotificationHelper(context);
+        NotificationCompat.Builder nb=notificationHelper.notificationChannelBuild(event,time);
+        PendingIntent contextIntent=PendingIntent.getActivity(context,0,new Intent(context,GroupCalendar.class),PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+        nb.setContentIntent(contextIntent);
 
-
-        //Call GroupCalendar when notification is tapped
-        Intent main = new Intent(context, GroupCalendar.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent contextTntent = PendingIntent.getActivity(context, 0, main, 0);
-
-        //NotificationManager
-        //NotificationManager notificationManager=(NotificationManager) context.getSystemService((Context.NOTIFICATION_SERVICE));
-
-        //準備通知
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "calandroid")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("行程")
-                .setContentText(event)
-                .setContentIntent(contextTntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL);
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-
-        //Notify
-        notificationManagerCompat.notify(notificationId, builder.build());
+        notificationHelper.getManager().notify(1,nb.build());
 
     }
 }
