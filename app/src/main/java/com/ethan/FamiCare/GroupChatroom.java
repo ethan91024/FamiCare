@@ -111,7 +111,7 @@ public class GroupChatroom extends Fragment {
             public void onClick(View v) {
                 String msg = message.getEditText().getText().toString();
 //這行可能有問題但找不出來影片30:23
-                db.child("Messages").push().setValue(new GroupMessage(uemail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                db.child("Messages").push().setValue(new GroupMessage(uemail, msg, timeStamp,uid)).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -122,7 +122,7 @@ public class GroupChatroom extends Fragment {
         });
 
         adapter = new RecyclerViewAdapter(GroupChatroom.this.getContext(), list);
-        LinearLayoutManager llm = new LinearLayoutManager(GroupChatroom.this.getContext(), RecyclerView.VERTICAL, true);
+        LinearLayoutManager llm = new LinearLayoutManager(GroupChatroom.this.getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(adapter);
         receiveMessages();

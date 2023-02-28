@@ -6,5 +6,6 @@
     <color name="colorClick">#353434</color>
     <color name="colorTheme">#FFC107</color>
     <color name="colorThemeLight">#FFEB3B</color>
-
+    <color name="dark">#000000</color>
+    <color name="green">#00DB00</color>
 </resources>
