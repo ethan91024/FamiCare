@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="儲存"
-            android:textSize="15dp" />
+            android:textSize="10sp" />
 
         <Button
             android:id="@+id/noti"
@@ -91,7 +91,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="設提醒"
-            android:textSize="15dp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
