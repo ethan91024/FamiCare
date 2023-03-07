@@ -13,14 +13,17 @@ public class Diary {
     private String title;
     @ColumnInfo(name = "content")
     private String content;
+    @ColumnInfo(name = "photo_path")
+    private String photoPath; // 新增的照片路徑
 
     public Diary() {
     }
 
-    public Diary(int id, String title, String content) {
+    public Diary(int id, String title, String content, String photoPath) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.photoPath = photoPath;
     }
 
     public int getId() {
@@ -47,12 +50,21 @@ public class Diary {
         this.content = content;
     }
 
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
     @Override
     public String toString() {
         return "Diary{" +
                 "date = " + id +
                 ", title = " + title +
                 ", content = " + content +
+                ", photoPath = " + photoPath +
                 '}';
     }
 }

@@ -33,20 +33,20 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            val total1=HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-            val total11=String.format("%.2f",total1.toDouble()).toDouble()
+            val total1 = HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+            val total11 = String.format("%.2f", total1.toDouble()).toDouble()
             val first: TextView = findViewById(R.id.today_hr)
             first.text =
                 myDateTimeFormatter.format(Instant.parse(HR[HR.size - 1].endTime.toString())) + "  " + total11.toString() + "次/秒"
 
-            val total2=HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-            val total22=String.format("%.2f",total2.toDouble()).toDouble()
+            val total2 = HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+            val total22 = String.format("%.2f", total2.toDouble()).toDouble()
             val yesterday: TextView = findViewById(R.id.yesterday_hr)
             yesterday.text =
                 myDateTimeFormatter.format(Instant.parse(HR[HR.size - 2].endTime.toString())) + "  " + total22.toString() + "次/秒"
 
-            val total3=HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-            val total33=String.format("%.2f",total3.toDouble()).toDouble()
+            val total3 = HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+            val total33 = String.format("%.2f", total3.toDouble()).toDouble()
             val twodaysago: TextView = findViewById(R.id.twodaysago_hr)
             twodaysago.text =
                 myDateTimeFormatter.format(Instant.parse(HR[HR.size - 3].endTime.toString())) + "  " + total33.toString() + "次/秒"
@@ -71,20 +71,23 @@ class HealthHeartRateActivity : AppCompatActivity() {
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now()
                 )
-                val total1=HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-                val total11=String.format("%.2f",total1.toDouble()).toDouble()
+                val total1 =
+                    HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+                val total11 = String.format("%.2f", total1.toDouble()).toDouble()
                 val first: TextView = findViewById(R.id.today_hr)
                 first.text =
                     myDateTimeFormatter.format(Instant.parse(HR[HR.size - 1].endTime.toString())) + "  " + total11.toString() + "次/秒"
 
-                val total2=HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-                val total22=String.format("%.2f",total2.toDouble()).toDouble()
+                val total2 =
+                    HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+                val total22 = String.format("%.2f", total2.toDouble()).toDouble()
                 val yesterday: TextView = findViewById(R.id.yesterday_hr)
                 yesterday.text =
                     myDateTimeFormatter.format(Instant.parse(HR[HR.size - 2].endTime.toString())) + "  " + total22.toString() + "次/秒"
 
-                val total3=HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ","")
-                val total33=String.format("%.2f",total3.toDouble()).toDouble()
+                val total3 =
+                    HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
+                val total33 = String.format("%.2f", total3.toDouble()).toDouble()
                 val twodaysago: TextView = findViewById(R.id.twodaysago_hr)
                 twodaysago.text =
                     myDateTimeFormatter.format(Instant.parse(HR[HR.size - 3].endTime.toString())) + "  " + total33.toString() + "次/秒"
@@ -137,8 +140,8 @@ class HealthHeartRateActivity : AppCompatActivity() {
             val totalHR = weeklyResult.result[HeartRateRecord.BPM_AVG]
             val week: TextView = findViewById(R.id.weekAvg_hr)
             if (totalHR != null) {
-                val total=totalHR.toString().replaceFirst(" ","")
-                val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
+                val total = totalHR.toString().replaceFirst(" ", "")
+                val total1 = String.format("%.2f", total.toDouble().div(response.size)).toDouble()
                 week.text = total1.toString() + " 次/秒"
             }
         }
@@ -162,8 +165,8 @@ class HealthHeartRateActivity : AppCompatActivity() {
             val totalHR = monthlyResult.result[HeartRateRecord.BPM_AVG]
             val month: TextView = findViewById(R.id.monthAvg_hr)
             if (totalHR != null) {
-                val total=totalHR.toString().replaceFirst(" ","")
-                val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
+                val total = totalHR.toString().replaceFirst(" ", "")
+                val total1 = String.format("%.2f", total.toDouble().div(response.size)).toDouble()
                 month.text = total1.toString() + " 次/秒"
             }
         }
