@@ -74,27 +74,27 @@ public class MoodSymptomFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
-        updatesy = mainview.findViewById(R.id.updatesy);
-        updatesy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    run = true;
-                    synumber = SymptomCheckBox(mainview, run);
-                    // one of the radio buttons is checked
-                //勾選症狀的加分
-                double td = synumber * 10;//去除小數點後一位
-                int ti = (int) td;
-                synumber = (double) ti / 10;
-
-                //顯示textview
-//                String sn = "" + synumber;
-//                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
-//                stressnumber.setText(sn);
-                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
+//        updatesy = mainview.findViewById(R.id.updatesy);
+//        updatesy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                    run = true;
+//                    synumber = SymptomCheckBox(mainview, run);
+//                    // one of the radio buttons is checked
+//                //勾選症狀的加分
+//                double td = synumber * 10;//去除小數點後一位
+//                int ti = (int) td;
+//                synumber = (double) ti / 10;
+//
+//                //顯示textview
+////                String sn = "" + synumber;
+////                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
+////                stressnumber.setText(sn);
+//                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//        });
 //1
         String date[]=SetDate();
         for(int i=0;i<date.length;i++){
@@ -112,6 +112,19 @@ public class MoodSymptomFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                run = true;
+                synumber = SymptomCheckBox(mainview, run);
+                // one of the radio buttons is checked
+                //勾選症狀的加分
+                double td = synumber * 10;//去除小數點後一位
+                int ti = (int) td;
+                synumber = (double) ti / 10;
+
+                //顯示textview
+//                String sn = "" + synumber;
+//                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
+//                stressnumber.setText(sn);
+                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
 
                 Bundle bundle = new Bundle();
                 bundle.putDouble("symptom", synumber);
