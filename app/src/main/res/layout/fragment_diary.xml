@@ -43,44 +43,53 @@
 
     </LinearLayout>
 
-    <!--顯示日期和標題，可以點進去寫日記內容  比例1-->
-    <LinearLayout
+    <!--日記資料  比例2.5  可以滾動-->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="2.5">
 
-        <!--日期  比例2  id="@+id/date-->
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="日期"
-            android:textSize="20sp" />
+            android:orientation="vertical">
+            <!--顯示日期和標題，可以點進去寫日記內容  比例1-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-        <!--日記標題  比例6 id="@+id/title"-->
-        <Button
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:clickable="true"
-            android:gravity="center_vertical|left"
-            android:text="尚未命名標題"
-            android:textSize="20sp" />
+                <!--日期  比例2  id="@+id/date-->
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="日期"
+                    android:textSize="20sp" />
 
+                <!--日記標題  比例6 id="@+id/title"-->
+                <Button
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:clickable="true"
+                    android:gravity="center_vertical|left"
+                    android:text="尚未命名標題"
+                    android:textSize="20sp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <!--留白  比例1.5-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

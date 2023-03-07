@@ -1,17 +1,23 @@
 package com.ethan.FamiCare;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import java.io.File;
+import java.util.Calendar;
 
 public class DiaryFragment extends Fragment {
 
@@ -48,10 +54,13 @@ public class DiaryFragment extends Fragment {
     private CalendarView calender;
     private TextView date;
     private Button title;
+    private ImageView image_view;
 
     //資料庫
     private DiaryDoa diaryDoa;
     private Diary diary;
+    private Diary diary2;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +72,34 @@ public class DiaryFragment extends Fragment {
         date = view.findViewById(R.id.date);
         title = view.findViewById(R.id.title);
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
+        image_view = view.findViewById(R.id.image_view);
+
+        //一跳轉頁面就可以顯示是否輸入過資料
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        selected_date = getSelected_date(year, month, day);
+        diary = diaryDoa.getDiaryById(selected_date);
+
+        date.setText((month + 1) + "/" + day);
+        if (diary != null) {
+            //設定日記標題
+            title.setText(diary.getTitle());
+
+            //設定日記照片
+            if(diary.getPhotoPath() != null){
+                File imageFile = new File(diary.getPhotoPath());
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                image_view.setImageBitmap(bitmap);
+            }else{
+                image_view.setImageDrawable(null);
+            }
+
+
+        } else {
+            title.setText("尚未命名標題");
+        }
 
         //監聽選擇到的日期，改變date，抓取資料庫對應日期的資料，顯示資料庫標題到title
         calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -71,8 +108,20 @@ public class DiaryFragment extends Fragment {
                 //變更日期
                 date.setText((month + 1) + "/" + dayOfMonth);
                 selected_date = getSelected_date(year, month, dayOfMonth);
-                if (diaryDoa.getDiaryById(selected_date) != null) {
-                    title.setText(diaryDoa.getDiaryById(selected_date).getTitle());
+                diary2 = diaryDoa.getDiaryById(selected_date);
+
+                if (diary2 != null) {
+                    title.setText(diary2.getTitle());
+
+                    //設定日記照片
+                    if(diary2.getPhotoPath() != null){
+                        File imageFile2 = new File(diary2.getPhotoPath());
+                        Bitmap bitmap = BitmapFactory.decodeFile(imageFile2.getAbsolutePath());
+                        image_view.setImageBitmap(bitmap);
+                    }else{
+                        image_view.setImageDrawable(null);
+                    }
+
                 } else {
                     title.setText("尚未命名標題");
                 }

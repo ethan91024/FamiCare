@@ -35,20 +35,20 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            val total1=RR[RR.size - 1].rate.toString().replaceFirst(" kcal","")
-            val total11=String.format("%.2f",total1.toDouble()).toDouble()
+            val total1 = RR[RR.size - 1].rate.toString().replaceFirst(" kcal", "")
+            val total11 = String.format("%.2f", total1.toDouble()).toDouble()
             val first: TextView = findViewById(R.id.today_rr)
             first.text =
                 myDateTimeFormatter.format(Instant.parse(RR[RR.size - 1].time.toString())) + "  " + total11.toString() + "次/分"
 
-            val total2=RR[RR.size - 2].rate.toString().replaceFirst(" kcal","")
-            val total22=String.format("%.2f",total2.toDouble()).toDouble()
+            val total2 = RR[RR.size - 2].rate.toString().replaceFirst(" kcal", "")
+            val total22 = String.format("%.2f", total2.toDouble()).toDouble()
             val yesterday: TextView = findViewById(R.id.yesterday_rr)
             yesterday.text =
                 myDateTimeFormatter.format(Instant.parse(RR[RR.size - 2].time.toString())) + "  " + total22.toString() + "次/分"
 
-            val total3=RR[RR.size - 3].rate.toString().replaceFirst(" kcal","")
-            val total33=String.format("%.2f",total3.toDouble()).toDouble()
+            val total3 = RR[RR.size - 3].rate.toString().replaceFirst(" kcal", "")
+            val total33 = String.format("%.2f", total3.toDouble()).toDouble()
             val twodaysago: TextView = findViewById(R.id.twodaysago_rr)
             twodaysago.text =
                 myDateTimeFormatter.format(Instant.parse(RR[RR.size - 3].time.toString())) + "  " + total33.toString() + "次/分"
@@ -62,20 +62,20 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now()
                 )
-                val total1=RR[RR.size - 1].rate.toString().replaceFirst(" kcal","")
-                val total11=String.format("%.2f",total1.toDouble()).toDouble()
+                val total1 = RR[RR.size - 1].rate.toString().replaceFirst(" kcal", "")
+                val total11 = String.format("%.2f", total1.toDouble()).toDouble()
                 val first: TextView = findViewById(R.id.today_rr)
                 first.text =
                     myDateTimeFormatter.format(Instant.parse(RR[RR.size - 1].time.toString())) + "  " + total11.toString() + "次/分"
 
-                val total2=RR[RR.size - 2].rate.toString().replaceFirst(" kcal","")
-                val total22=String.format("%.2f",total2.toDouble()).toDouble()
+                val total2 = RR[RR.size - 2].rate.toString().replaceFirst(" kcal", "")
+                val total22 = String.format("%.2f", total2.toDouble()).toDouble()
                 val yesterday: TextView = findViewById(R.id.yesterday_rr)
                 yesterday.text =
                     myDateTimeFormatter.format(Instant.parse(RR[RR.size - 2].time.toString())) + "  " + total22.toString() + "次/分"
 
-                val total3=RR[RR.size - 3].rate.toString().replaceFirst(" kcal","")
-                val total33=String.format("%.2f",total3.toDouble()).toDouble()
+                val total3 = RR[RR.size - 3].rate.toString().replaceFirst(" kcal", "")
+                val total33 = String.format("%.2f", total3.toDouble()).toDouble()
                 val twodaysago: TextView = findViewById(R.id.twodaysago_rr)
                 twodaysago.text =
                     myDateTimeFormatter.format(Instant.parse(RR[RR.size - 3].time.toString())) + "  " + total33.toString() + "次/分"
@@ -98,4 +98,4 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
         )
         return request.records
     }
-    }
+}
