@@ -73,6 +73,8 @@ public class MoodFragment extends Fragment {
     private int BloodOxygen = 0;
     private View mainview;
     private Button analize;
+    private TextView advice;
+    private Fragment advice_fm[]={new MeditationFragment()}; //各個緩解方式的介面，要做新的就加新的
 
     //set linechart
     LineChartData lineChartData;
@@ -142,6 +144,18 @@ public class MoodFragment extends Fragment {
         ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
 
         lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
+
+        //跳轉到緩解方式介面
+        advice = mainview.findViewById(R.id.Advice);
+        advice.setText("冥想");
+        advice.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[0]).addToBackStack(null).commit();
+            }
+        });
+
 
 
         return mainview;
