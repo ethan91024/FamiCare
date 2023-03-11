@@ -68,7 +68,6 @@
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
-
             <meta-data
                 android:name="health_permissions"
                 android:resource="@array/health_permissions" />
@@ -80,19 +79,14 @@
             android:name=".HealthStepsActivity"
             android:exported="false" />
         <activity
-            android:name=".CaloriesActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
+            android:label="FamiCare"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        
         <receiver android:name=".alarmReceiver"/>
     </application>
 

@@ -31,7 +31,7 @@ class HealthStepsActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
-            val steps = getStepCount(
+            val steps = getDailyStepCounts(
                 client,
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
@@ -69,7 +69,7 @@ class HealthStepsActivity : AppCompatActivity() {
         this.findViewById<Button>(R.id.update).setOnClickListener {
             lifecycleScope.launch {
 
-                val steps = getStepCount(
+                val steps = getDailyStepCounts(
                     client,
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now()
@@ -106,8 +106,7 @@ class HealthStepsActivity : AppCompatActivity() {
             }
         }
     }
-
-    suspend fun getStepCount(
+    suspend fun getDailyStepCounts(
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
@@ -118,26 +117,28 @@ class HealthStepsActivity : AppCompatActivity() {
                 timeRangeFilter = TimeRangeFilter.between(start, end)
             )
         )
-
         return request.records
-
     }
-
-    suspend fun aggregateStepsIntoWeeks(
-        healthConnectClient: HealthConnectClient,
-        startTime: LocalDateTime,
-        endTime: LocalDateTime
+    suspend fun aggregateStepsIntoDays(
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
     ) {
         try {
             val response =
-                healthConnectClient.aggregateGroupByPeriod(
+                client.aggregateGroupByPeriod(
                     AggregateGroupByPeriodRequest(
                         metrics = setOf(StepsRecord.COUNT_TOTAL),
-                        timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
-                        timeRangeSlicer = Period.ofWeeks(1)
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
+                        timeRangeSlicer = Period.ofDays(1)
                     )
                 )
-
+            val request = client.readRecords(
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
+            )
             for (weeklyResult in response) {
                 val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
                 val week: TextView = findViewById(R.id.weekAvg)
@@ -145,6 +146,43 @@ class HealthStepsActivity : AppCompatActivity() {
                     week.text = totalSteps.div(7).toString() + "步"
                 }
             }
+
+        } catch (exception: Exception) {
+            Toast.makeText(
+                this@HealthStepsActivity,
+                "Don't Have Data!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+    suspend fun aggregateStepsIntoWeeks(
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
+    ) {
+        try {
+            val response =
+                client.aggregateGroupByPeriod(
+                    AggregateGroupByPeriodRequest(
+                        metrics = setOf(StepsRecord.COUNT_TOTAL),
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
+                        timeRangeSlicer = Period.ofWeeks(1)
+                    )
+                )
+            val request = client.readRecords(
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
+            )
+            for (weeklyResult in response) {
+                val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
+                val week: TextView = findViewById(R.id.weekAvg)
+                if (totalSteps != null) {
+                    week.text = totalSteps.div(7).toString() + "步"
+                }
+            }
+
         } catch (exception: Exception) {
             Toast.makeText(
                 this@HealthStepsActivity,
@@ -155,25 +193,30 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateStepsIntoMonths(
-        healthConnectClient: HealthConnectClient,
-        startTime: LocalDateTime,
-        endTime: LocalDateTime
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
     ) {
         try {
             val response =
-                healthConnectClient.aggregateGroupByPeriod(
+                client.aggregateGroupByPeriod(
                     AggregateGroupByPeriodRequest(
                         metrics = setOf(StepsRecord.COUNT_TOTAL),
-                        timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
                         timeRangeSlicer = Period.ofMonths(1)
                     )
                 )
-
+            val request = client.readRecords(
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
+            )
             for (monthlyResult in response) {
                 val totalSteps = monthlyResult.result[StepsRecord.COUNT_TOTAL]
                 val month: TextView = findViewById(R.id.monthAvg)
                 if (totalSteps != null) {
-                    month.text = totalSteps.div(response.size).toString() + "步"
+                    month.text = totalSteps.div(30).toString() + "步"
                 }
             }
         } catch (exception: Exception) {
