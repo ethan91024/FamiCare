@@ -119,18 +119,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="5dp"
-                    android:layout_weight="15"
+                    android:layout_weight="25"
                     android:text="緩減建議"
-                    android:textSize="23dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="85"
+                    android:layout_weight="75"
                     android:gravity="center"
-                    android:text="冥想、運動、聽歌、寫日記"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:id="@+id/Advice"
+                    android:contextClickable="true"/>
             </LinearLayout>
 
         </LinearLayout>

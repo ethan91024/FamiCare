@@ -128,7 +128,7 @@ public class MoodSymptomFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putDouble("symptom", synumber);
-                MoodFragment MoodFragment = new MoodFragment();
+                Fragment  MoodFragment = new MoodFragment();
                 MoodFragment.setArguments(bundle);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
