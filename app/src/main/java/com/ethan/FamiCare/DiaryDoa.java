@@ -28,4 +28,5 @@ public interface DiaryDoa {
 
     @Query("DELETE FROM diaries WHERE id = :diary_id")
     void deleteDiaryById(int diary_id);
+
 }

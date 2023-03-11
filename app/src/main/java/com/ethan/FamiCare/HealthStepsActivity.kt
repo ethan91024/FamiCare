@@ -36,7 +36,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            if (steps.size == 0) {
+            if (steps.isEmpty()) {
                 Toast.makeText(
                     this@HealthStepsActivity,
                     "Don't Have Data!",
@@ -75,7 +75,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     LocalDateTime.now()
                 )
 
-                if (steps.size == 0) {
+                if (steps.isEmpty()) {
                     Toast.makeText(
                         this@HealthStepsActivity,
                         "Don't Have Data!",
@@ -142,7 +142,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
                 val week: TextView = findViewById(R.id.weekAvg)
                 if (totalSteps != null) {
-                    week.text = totalSteps.div(response.size).toString() + "步"
+                    week.text = totalSteps.div(7).toString() + "步"
                 }
             }
         } catch (exception: Exception) {
