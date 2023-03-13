@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-
+import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MeditationFragment#newInstance} factory method to
@@ -36,7 +39,9 @@ public class MeditationFragment extends Fragment {
     private View mainview;
     private TextView count_time;
     private TextView timeV;
-    final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    boolean shutdown=true;
+//    SimpleDateFormat sdf = new SimpleDateFormat("mm分ss秒");
+
 
     public MeditationFragment() {
         // Required empty public constructor
@@ -77,25 +82,32 @@ public class MeditationFragment extends Fragment {
         count_time=mainview.findViewById(R.id.counter);
         timeV=mainview.findViewById(R.id.time_view);
         count_time.setOnClickListener(new View.OnClickListener() {
-            int cnt=0;
+
             @Override
             public void onClick(View view) {
+                final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
                     final Runnable runnable = new Runnable() {
                         int countdownStarter = 5;
                         public void run() {
-                            System.out.println(countdownStarter);
-                            count_time.setText(countdownStarter + "");
-                            countdownStarter--;
-                            timeV.setText("Start!(分鐘)");
-                            if (countdownStarter < 0) {
-                                System.out.println("Timer Over!");
+                            if(shutdown) {
+                                System.out.println(countdownStarter);
+                                count_time.setText(countdownStarter + "");
+                                countdownStarter--;
+                                timeV.setText("Start!(分鐘)");
+                                if (countdownStarter < 0) {
+                                    System.out.println("Timer Over!");
+                                    scheduler.shutdown();
+                                    timeV.setText("Timer Over!");
+                                }
+                            }else{
                                 scheduler.shutdown();
-                                timeV.setText("Timer Over!");
                             }
                         }
                     };
                     scheduler.scheduleAtFixedRate(runnable, 0, 1, MINUTES);
+
+
             }
         });
 
@@ -104,8 +116,9 @@ public class MeditationFragment extends Fragment {
         back = mainview.findViewById(R.id.back_mood);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                scheduler.shutdown();
+                shutdown=false;
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Meditation_Layout, new MoodFragment()).addToBackStack(null).commit();
             }
@@ -115,4 +128,5 @@ public class MeditationFragment extends Fragment {
 
         return mainview;
     }
+
 }
