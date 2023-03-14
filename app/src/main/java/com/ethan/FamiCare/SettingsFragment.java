@@ -2,6 +2,7 @@ package com.ethan.FamiCare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.ethan.FamiCare.Firebasecords.Users;
+import com.ethan.FamiCare.databinding.FragmentSettingsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,9 +26,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SettingsFragment extends Fragment {
 
@@ -33,10 +40,11 @@ public class SettingsFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
-
-    TextInputLayout email, password;
+    FragmentSettingsBinding binding;
+    TextInputLayout email, password,username;
     Button login, signup;
     FirebaseAuth auth;
+    FirebaseDatabase database;
     ImageView google_img;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -59,11 +67,15 @@ public class SettingsFragment extends Fragment {
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        binding=FragmentSettingsBinding.inflate(getLayoutInflater());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        auth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
 
     }
 
@@ -76,6 +88,7 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         Button healthconnect = view.findViewById(R.id.setting_healthconnect);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         healthconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,12 +103,13 @@ public class SettingsFragment extends Fragment {
                 .requestEmail()
                 .build();
 
-        gsc= GoogleSignIn.getClient(SettingsFragment.this.getContext(),gso);
+        gsc= GoogleSignIn.getClient(SettingsFragment.this.getActivity(),gso);
 
         google_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 google_singin();
+                fm.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.setting, new AfterLogin()).commit();
             }
         });
 
@@ -103,19 +117,22 @@ public class SettingsFragment extends Fragment {
 
 //1
         Intent intent = new Intent();
+        username=view.findViewById(R.id.username);
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.password);
         login = view.findViewById(R.id.login);
         signup = view.findViewById(R.id.signup);
         auth = FirebaseAuth.getInstance();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
+
                 auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -127,18 +144,24 @@ public class SettingsFragment extends Fragment {
                         }
                     }
                 });
+
             }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String u = username.getEditText().getText().toString();
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
                 auth.createUserWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Users user=new Users(u,e,p);
+                            String id=task.getResult().getUser().getUid();
+                            database.getInstance().getReference().child("Users").push().child(id).setValue(user);
                             Toast.makeText(getActivity(), "Account Created Successful", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Failed!" + task.getException(), Toast.LENGTH_LONG).show();
@@ -150,28 +173,54 @@ public class SettingsFragment extends Fragment {
         });
         return view;
     }
+
     private void google_singin() {
 
         Intent intent=gsc.getSignInIntent();
-        startActivityForResult(intent,100);
+        startActivityForResult(intent,65);
 
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        if(requestCode==100){
+
+        if(requestCode==65){
             Task<GoogleSignInAccount>task=GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
-                task.getResult(ApiException.class);
-                fm.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.setting, new AfterLogin()).commit();
-
+                GoogleSignInAccount account=task.getResult(ApiException.class);
+                Log.d("TAG","firebaseAuthWithGoogle:"+account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
+                Log.w("TAG","Sign in fail",e);
                 Toast.makeText(SettingsFragment.this.getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential= GoogleAuthProvider.getCredential(idToken,null);
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(SettingsFragment.this.getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TAG", "firebaseAuthWithGoogle:success");
+                            FirebaseUser user = auth.getCurrentUser();
+                            /*
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.afterlogin, new SettingsFragment());
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                             */
+                            Toast.makeText(SettingsFragment.this.getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.w("TAG","Sign in fail",task.getException());
+                        }
+                    }
+                });
+    }
+
 /*
     @Override
     public void onStart() {

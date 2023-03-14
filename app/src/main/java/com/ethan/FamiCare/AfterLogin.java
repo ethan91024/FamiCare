@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AfterLogin extends Fragment {
 
@@ -43,6 +45,7 @@ public class AfterLogin extends Fragment {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     Button logout;
+    FirebaseAuth mauth;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
@@ -75,9 +78,12 @@ public class AfterLogin extends Fragment {
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.logout, new SettingsFragment()).commit();
 
+                if(task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Signout Successful", Toast.LENGTH_SHORT).show();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.afterlogin, new SettingsFragment()).commit();
+                }
             }
         });
     }
