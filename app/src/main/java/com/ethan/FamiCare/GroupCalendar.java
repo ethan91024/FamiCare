@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.checkerframework.checker.units.qual.C;
+import org.json.JSONException;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class GroupCalendar extends AppCompatActivity {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://famicare-375914-default-rtdb.firebaseio.com/");
     //顯示現在使用者
     FirebaseUser user;
+    String token;
 
 
     //用來做time
@@ -83,8 +85,8 @@ public class GroupCalendar extends AppCompatActivity {
     Calendar calendar1 = Calendar.getInstance();
 
     //notification
-    private static final String channelId="channeId";
-    private static final String channelName="channelName";
+    private static final String channelId = "channeId";
+    private static final String channelName = "channelName";
     private NotificationManager notificationManager;
 
 
@@ -114,81 +116,91 @@ public class GroupCalendar extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {
-                        if(!task.isSuccessful()){
+                        if (!task.isSuccessful()) {
                             return;
                         }
-                        String token=task.getResult();
-                        System.out.println("Token="+token);
+                        token = task.getResult();
+                        System.out.println("Token=" + token);
                     }
                 });
 
+/*
+        if(isTokenEmpty(token)==true){
+            try {
+                FCMaddgroup.addgroup(
+                        GroupCalendar.this,
+                        "add",
+                        token
+                );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(GroupCalendar.this,"已經加入過", Toast.LENGTH_SHORT).show();
+        }
 
 
-                //監聽日期改變
-                calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+ */
+
+        //監聽日期改變
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                caldate.setText((month + 1) + "/" + dayOfMonth);
+                selected_date = getSelected_date(year, month, dayOfMonth);
+                String sd = String.valueOf(selected_date);
+                arrayList = new ArrayList<>();
+                arrayListnull = new ArrayList<>();
+
+                myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                        caldate.setText((month + 1) + "/" + dayOfMonth);
-                        selected_date = getSelected_date(year, month, dayOfMonth);
-                        String sd = String.valueOf(selected_date);
-                        arrayList = new ArrayList<>();
-                        arrayListnull=new ArrayList<>();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            CalendarDB calendarDB = ds.getValue(CalendarDB.class);
+                            if (calendarDB.getId().equals(sd)) {
+                                setAdapter();
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put(from[0], calendarDB.getId());
+                                hashMap.put(from[1], calendarDB.getEvent());
+                                hashMap.put(from[2], calendarDB.getTime());
+                                hashMap.put(from[3], calendarDB.getUser());
+                                arrayList.add(hashMap);
+                                adapter.notifyDataSetChanged();
 
-                        myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot ds : snapshot.getChildren()) {
-                                    CalendarDB calendarDB = ds.getValue(CalendarDB.class);
-                                    if (calendarDB.getId().equals(sd)) {
-                                        setAdapter();
-                                        HashMap<String, String> hashMap = new HashMap<>();
-                                        hashMap.put(from[0], calendarDB.getId());
-                                        hashMap.put(from[1], calendarDB.getEvent());
-                                        hashMap.put(from[2], calendarDB.getTime());
-                                        hashMap.put(from[3], calendarDB.getUser());
-                                        arrayList.add(hashMap);
-                                        adapter.notifyDataSetChanged();
-
-                                    } else {
-
-                                        setnullAdapter();
-                                        HashMap<String, String> hashMap = new HashMap<>();
-                                        hashMap.put(from[0], sd);
-                                        hashMap.put(from[1], "無行程");
-                                        hashMap.put(from[2], "無");
-                                        hashMap.put(from[3], calendarDB.getUser());
-                                        arrayListnull.add(hashMap);
-                                        adapter.notifyDataSetChanged();
-
-                                    }
-                                }
+                            } else {
+                                setnullAdapter();
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                arrayListnull.add(hashMap);
+                                adapter.notifyDataSetChanged();
                             }
+                        }
+                    }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.w(TAG, "Failed to read value.", error.toException());
-                            }
-                        });
-
-
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w(TAG, "Failed to read value.", error.toException());
                     }
                 });
+
+
+            }
+        });
 
         //設置點擊觸發事件
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                final int which_position=position;
+                final int which_position = position;
 
                 new AlertDialog.Builder(GroupCalendar.this)
                         .setTitle("確定要刪除行程嗎?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                HashMap hashMap=arrayList.get(which_position);
-                                String event=(String) hashMap.get("event");
-                                String date=(String) hashMap.get("date");
+                                HashMap hashMap = arrayList.get(which_position);
+                                String event = (String) hashMap.get("event");
+                                String date = (String) hashMap.get("date");
                                 arrayList.remove(which_position);
                                 adapter.notifyDataSetChanged();
 
@@ -197,9 +209,9 @@ public class GroupCalendar extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot ds : snapshot.getChildren()) {
                                             CalendarDB calendarDB = ds.getValue(CalendarDB.class);
-                                            if(calendarDB.getEvent().equals(event) && calendarDB.getId().equals(date)){
-                                                String path=ds.getKey();
-                                                Toast.makeText(GroupCalendar.this,path,Toast.LENGTH_SHORT).show();
+                                            if (calendarDB.getEvent().equals(event) && calendarDB.getId().equals(date)) {
+                                                String path = ds.getKey();
+                                                Toast.makeText(GroupCalendar.this, path, Toast.LENGTH_SHORT).show();
                                                 myRef.child("Calendar").child(path).removeValue();
 
                                             }
@@ -214,7 +226,7 @@ public class GroupCalendar extends AppCompatActivity {
 
                             }
                         })
-                        .setNegativeButton("No",null)
+                        .setNegativeButton("No", null)
                         .show();
 
                 return true;
@@ -246,31 +258,24 @@ public class GroupCalendar extends AppCompatActivity {
                 String[] date1 = date.split("/");
                 int month = Integer.parseInt(date1[0]) - 1;
 
-                if(!addevent_text.equals("") && !time4.equals("")) {
-                    FCMsend.pushNotification(
-                            GroupCalendar.this,
-                            "APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4",
-                            addevent_text,
-                            time4
-                    );
-
-                    //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                if (!(addevent_text.isEmpty() && time4.isEmpty())) {
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
                     //给每个闹钟设置不同ID防止覆盖
-                    //int alarmId = SharedPreUtils.getInt(context, "alarm_id", 0);
-                    //SharedPreUtils.setInteger(context, "alarm_id", ++alarmId);
-                    //PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, myIntent, 0);
+                    int alarmId = SharedPreUtils.getInt(GroupCalendar.this, "alarm_id", 0);
+                    SharedPreUtils.setInt(GroupCalendar.this, "alarm_id", ++alarmId);
+
 
                     //notificationId & message
-                   // Intent intent = new Intent(GroupCalendar.this, PushNotificationService.class);
-                    //intent.putExtra("event", addevent_text);
-                    //intent.putExtra("time", time4);
+                    Intent intent = new Intent(GroupCalendar.this,alarmReceiver.class);
+                    intent.putExtra("event", addevent_text);
+                    intent.putExtra("time", time4);
 
                     //PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, alarmId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
                     String[] time5 = time4.split(":");//ex:14:28
-                    int hour = Integer.parseInt(time5[0]) - 1;
+                    int hour = Integer.parseInt(time5[0]);
                     int minute = Integer.parseInt(time5[1]);
 
                     //create time
@@ -285,12 +290,12 @@ public class GroupCalendar extends AppCompatActivity {
 
 
                     //Set Alarm
-                   // alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
 
 
                     String text = (starttime.get(Calendar.MONTH) + 1) + "月"
                             + starttime.get(Calendar.DAY_OF_MONTH) + "日\n"
-                            + (starttime.get(Calendar.HOUR_OF_DAY) + 1) + ":"
+                            + starttime.get(Calendar.HOUR_OF_DAY) + ":"
                             + starttime.get(Calendar.MINUTE);
                     Toast.makeText(GroupCalendar.this, text, Toast.LENGTH_SHORT).show();
 
@@ -326,7 +331,7 @@ public class GroupCalendar extends AppCompatActivity {
                 String event = addevent.getText().toString();
 
                 String time1 = time_text;
-                if (event.isEmpty() || time1.isEmpty()) {
+                if (event.isEmpty() || time1.isEmpty() || id_date.isEmpty()) {
                     Toast.makeText(GroupCalendar.this, "請填寫事件和時間", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
@@ -336,7 +341,7 @@ public class GroupCalendar extends AppCompatActivity {
                     String email = user.getEmail();
 
 
-                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email);
+                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token);
 
 
                     myRef.child("Calendar").push().setValue(calevent);
@@ -357,5 +362,23 @@ public class GroupCalendar extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    private boolean isTokenEmpty(String token) {
+        myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    CalendarDB calendarDB = ds.getValue(CalendarDB.class);
+                    if (calendarDB.getToken() == token) {
+                        return;
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return true;
+    }
 }
