@@ -48,7 +48,7 @@ FragmentGroupBinding binding;
     }
 
     private Button create;
-    private Button cal;
+
 
     //1
     @Override
@@ -98,7 +98,7 @@ FragmentGroupBinding binding;
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         create = view.findViewById(R.id.createGroup);
-        cal = view.findViewById(R.id.cal);
+
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,14 +109,7 @@ FragmentGroupBinding binding;
         });
 
 
-        cal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            Intent intent=new Intent(getActivity(), GroupCalendar.class);
-            startActivity(intent);
-            }
-        });
 
         return binding.getRoot();
     }
