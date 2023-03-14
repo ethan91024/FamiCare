@@ -1,5 +1,6 @@
 package com.ethan.FamiCare;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -56,6 +57,8 @@ public class DiaryFragment extends Fragment {
     private Button title;
     private ImageView image_view;
 
+    private Button cal;
+
     //資料庫
     private DiaryDoa diaryDoa;
     private Diary diary;
@@ -73,6 +76,7 @@ public class DiaryFragment extends Fragment {
         title = view.findViewById(R.id.title);
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
         image_view = view.findViewById(R.id.image_view);
+        cal = view.findViewById(R.id.cal);
 
         //一跳轉頁面就可以顯示是否輸入過資料
         Calendar calendar = Calendar.getInstance();
@@ -156,6 +160,16 @@ public class DiaryFragment extends Fragment {
                 }
             }
         });
+
+        cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(getActivity(), GroupCalendar.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
