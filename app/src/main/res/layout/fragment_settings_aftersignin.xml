@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/afterlogin"
     tools:context=".AfterLogin"
     android:background="@color/cardview_light_background">
 

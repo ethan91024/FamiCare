@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ethan.FamiCare.Firebasecords.GroupMessage;
+import com.ethan.FamiCare.Firebasecords.RecyclerViewAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -111,7 +113,7 @@ public class GroupChatroom extends Fragment {
             public void onClick(View v) {
                 String msg = message.getEditText().getText().toString();
 //這行可能有問題但找不出來影片30:23
-                db.child("Messages").push().setValue(new GroupMessage(uemail, msg, timeStamp,uid)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                db.child("Messages").push().setValue(new GroupMessage(uemail, msg, timeStamp)).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -126,7 +128,6 @@ public class GroupChatroom extends Fragment {
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(adapter);
         receiveMessages();
-
         return view;
     }
 
