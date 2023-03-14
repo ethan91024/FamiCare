@@ -12,13 +12,6 @@
 
 
 
-    <Button
-        android:id="@+id/setting_healthconnect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#F8F8F8"
-        android:text="Health Connect" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

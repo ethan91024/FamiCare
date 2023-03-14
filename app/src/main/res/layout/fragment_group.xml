@@ -4,9 +4,9 @@
     android:id="@+id/main_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical"
-    tools:context=".GroupFragment"
-    android:background="@color/cardview_light_background">
+    tools:context=".GroupFragment">
 
     <LinearLayout
         android:id="@+id/top"
@@ -14,14 +14,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="生活圈"
-            android:textSize="28sp"
-            android:textStyle="bold">
+            android:layout_height="wrap_content">
 
-        </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="生活圈"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/ChatGPT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:onClick="chatgpt"
+                    android:text="ChatGPT"
+                    android:textStyle="bold" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,7 +93,9 @@
 
 
         </RelativeLayout>
+
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatrecy"
         android:layout_width="match_parent"

@@ -34,6 +34,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -83,4 +84,5 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'com.android.volley:volley:1.2.1'
+
 }
