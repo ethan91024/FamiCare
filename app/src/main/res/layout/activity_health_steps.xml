@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".HealthStepsActivity">
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="317dp"
+        android:layout_height="172dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="88dp"
         android:text="近三筆步數"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,17 +32,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="288dp"
         android:text="本週平均"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="384dp"
+        android:layout_width="102dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="288dp"
         android:text="本月平均"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,20 +63,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="338dp"
         android:text="週平均"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/monthAvg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="338dp"
         android:text="月平均"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/update"

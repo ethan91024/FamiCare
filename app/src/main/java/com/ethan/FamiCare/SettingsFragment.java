@@ -21,6 +21,7 @@ import com.ethan.FamiCare.databinding.FragmentSettingsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -87,15 +88,15 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button healthconnect = view.findViewById(R.id.setting_healthconnect);
+        //Button healthconnect = view.findViewById(R.id.setting_healthconnect);
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        healthconnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HealthConnect.class);
-                startActivity(intent);
-            }
-        });
+        //healthconnect.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        Intent intent = new Intent(getActivity(), HealthConnect.class);
+        //        startActivity(intent);
+        //    }
+        //});
 
         google_img=view.findViewById(R.id.google);
 

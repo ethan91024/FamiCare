@@ -5,31 +5,28 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
-import androidx.health.connect.client.request.AggregateRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
+
 
 class HealthStepsActivity : AppCompatActivity() {
     val myDateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
-    val startOfTheDay=LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
-    val endOfTheDay=LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
+    val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
+    val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_steps)
 
         val client = HealthConnectClient.getOrCreate(this)
-
 
         lifecycleScope.launch {
             val steps = getDailyStepCounts(
@@ -37,7 +34,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            if (steps.size<3) {
+            if (steps.size < 3) {
                 Toast.makeText(
                     this@HealthStepsActivity,
                     "Don't Have Data!",
@@ -60,7 +57,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 startOfTheDay,
                 endOfTheDay
             )
-            var todaySteps=aggregateStepsIntoDays(
+            var todaySteps = aggregateStepsIntoDays(
                 client,
                 startOfTheDay,
                 endOfTheDay
@@ -90,7 +87,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     LocalDateTime.now()
                 )
 
-                if (steps.size<3) {
+                if (steps.size < 3) {
                     Toast.makeText(
                         this@HealthStepsActivity,
                         "Don't Have Data!",
@@ -108,13 +105,13 @@ class HealthStepsActivity : AppCompatActivity() {
                         myDateTimeFormatter.format(Instant.parse(steps[steps.size - 3].endTime.toString())) + "  " + steps[steps.size - 3].count.toString() + "步"
                 }
 
-                var todaySteps=aggregateStepsIntoDays(
+                var todaySteps = aggregateStepsIntoDays(
                     client,
                     startOfTheDay,
                     endOfTheDay
                 )
                 val today: TextView = findViewById(R.id.todaySteps)
-                    today.text = todaySteps.toString() + "步"
+                today.text = todaySteps.toString() + "步"
 
                 aggregateStepsIntoWeeks(
                     client,
@@ -129,7 +126,10 @@ class HealthStepsActivity : AppCompatActivity() {
                 )
             }
         }
+
+
     }
+
     suspend fun getDailyStepCounts(
         client: HealthConnectClient,
         start: LocalDateTime,
@@ -143,12 +143,13 @@ class HealthStepsActivity : AppCompatActivity() {
         )
         return request.records
     }
+
     suspend fun aggregateStepsIntoDays(
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
-    ) :Long?{
-        var totalSteps:Long?=0
+    ): Long? {
+        var totalSteps: Long? = 0
         try {
             val response =
                 client.aggregateGroupByPeriod(
@@ -170,6 +171,7 @@ class HealthStepsActivity : AppCompatActivity() {
         }
         return totalSteps
     }
+
     suspend fun aggregateStepsIntoWeeks(
         client: HealthConnectClient,
         start: LocalDateTime,
@@ -242,5 +244,6 @@ class HealthStepsActivity : AppCompatActivity() {
             ).show()
         }
     }
+
 
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,7 @@ FragmentGroupBinding binding;
     }
 
     private Button create;
-
+    private Button chatgpt;
 
     //1
     @Override
@@ -93,14 +94,11 @@ FragmentGroupBinding binding;
 
             }
         });
-        View view = inflater.inflate(R.layout.fragment_group, container, false);
+
         GroupNameEditFragment groupNameEditFragment = new GroupNameEditFragment();
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        create = view.findViewById(R.id.createGroup);
-
-
-        create.setOnClickListener(new View.OnClickListener() {
+        binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
@@ -108,6 +106,13 @@ FragmentGroupBinding binding;
             }
         });
 
+        binding.ChatGPT.findViewById(R.id.ChatGPT).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatGPTActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
