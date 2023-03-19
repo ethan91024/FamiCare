@@ -68,7 +68,6 @@ public class GroupCalendar extends AppCompatActivity {
     //Listview呈現提醒事項
     private ListView listView;
     private ArrayList<HashMap<String, String>> arrayList;
-    private ArrayList<HashMap<String, String>> arrayListnull;
     private SimpleAdapter adapter;
     private String[] from = {"date", "event", "time", "email"};
     private int[] to = {R.id.item_id, R.id.item_event, R.id.item_time, R.id.item_email};
@@ -150,11 +149,11 @@ public class GroupCalendar extends AppCompatActivity {
                 selected_date = getSelected_date(year, month, dayOfMonth);
                 String sd = String.valueOf(selected_date);
                 arrayList = new ArrayList<>();
-                arrayListnull = new ArrayList<>();
 
                 myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean isDataExists = false;
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             CalendarDB calendarDB = ds.getValue(CalendarDB.class);
                             if (calendarDB.getId().equals(sd)) {
@@ -166,13 +165,13 @@ public class GroupCalendar extends AppCompatActivity {
                                 hashMap.put(from[3], calendarDB.getUser());
                                 arrayList.add(hashMap);
                                 adapter.notifyDataSetChanged();
-
-                            } else {
-                                setnullAdapter();
-                                HashMap<String, String> hashMap = new HashMap<>();
-                                arrayListnull.add(hashMap);
-                                adapter.notifyDataSetChanged();
+                                isDataExists=true;
                             }
+                        }
+                        // 如果在日期上没有找到数据，则将 ArrayList 重置为空数组
+                        if (!isDataExists) {
+                            arrayList = new ArrayList<>();
+                            setAdapter();
                         }
                     }
 
@@ -302,7 +301,14 @@ public class GroupCalendar extends AppCompatActivity {
                 }
             }
         });
-
+        /*
+        Intent intent=getIntent();
+        if(intent!=null && intent.hasExtra("eventNotification") && intent.hasExtra("timeNotification")){
+            String notificationMessageEvent=intent.getStringExtra("eventNotification");
+            String notificationMessageTime=intent.getStringExtra("timenotification");
+            Toast.makeText(GroupCalendar.this, notificationMessageEvent+notificationMessageTime, Toast.LENGTH_SHORT).show();
+        }
+*/
 
     }
 
@@ -354,11 +360,6 @@ public class GroupCalendar extends AppCompatActivity {
 
     private void setAdapter() {
         adapter = new SimpleAdapter(this, arrayList, R.layout.event_item, from, to);
-        listView.setAdapter(adapter);
-    }
-
-    private void setnullAdapter() {
-        adapter = new SimpleAdapter(this, arrayListnull, R.layout.event_item, from, to);
         listView.setAdapter(adapter);
     }
 

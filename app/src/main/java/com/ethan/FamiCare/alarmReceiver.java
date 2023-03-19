@@ -31,7 +31,10 @@ public class alarmReceiver extends BroadcastReceiver {
 
         NotificationHelper notificationHelper=new NotificationHelper(context);
         NotificationCompat.Builder nb=notificationHelper.notificationChannelBuild(event,time);
-        PendingIntent contextIntent=PendingIntent.getActivity(context,0,new Intent(context,GroupCalendar.class),PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent1=new Intent(context,GroupCalendar.class);
+        intent1.putExtra("eventNotification",event);
+        intent1.putExtra("timenotification",time);
+        PendingIntent contextIntent=PendingIntent.getActivity(context,0,intent1,PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(contextIntent);
 
         notificationHelper.getManager().notify(1,nb.build());
