@@ -6,106 +6,127 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DiaryFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:orientation="horizontal">
-    <!--生活點滴 比例1-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="7"
-        android:gravity="bottom"
-        android:text="生活點滴"
-        android:textSize="28sp"
-        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/cal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginHorizontal="7dp"
-        android:clickable="true"
-        android:text="行事曆"
-        android:textSize="15dp"
-        android:textStyle="bold" />
-
-</LinearLayout>
-    <!--選擇日期  比例0.5-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:gravity="center"
-        android:text="選擇日期"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <!--行事曆  比例5.5  id="@+id/calender-->
-    <CalendarView
-        android:id="@+id/calender"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5.5" />
-
-    <!--留白  比例0.5-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <!--生活點滴 比例1-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:gravity="bottom"
+            android:text="生活點滴"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="7dp"
+            android:clickable="true"
+            android:text="行事曆"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/look"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看他人" />
 
     </LinearLayout>
 
-    <!--日記資料  比例2.5  可以滾動-->
-    <ScrollView
+    <!--生活點滴以下 比例9-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5">
+        android:layout_weight="9"
+        android:orientation="vertical">
 
+        <!--選擇日期  比例0.5-->
+        <TextView
+            android:id="@+id/cal_fold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="選擇日期"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!--行事曆  比例5.5  id="@+id/calender-->
+        <CalendarView
+            android:id="@+id/calender"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5.5"
+            android:visibility="visible" />
+
+        <!--留白  比例0.5-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:orientation="vertical">
-            <!--顯示日期和標題，可以點進去寫日記內容  比例1-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <!--日期  比例2  id="@+id/date-->
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:text="日期"
-                    android:textSize="20sp" />
-
-                <!--日記標題  比例6 id="@+id/title"-->
-                <Button
-                    android:id="@+id/title"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8"
-                    android:clickable="true"
-                    android:gravity="center_vertical|left"
-                    android:text="尚未命名標題"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <!--日記資料  比例2.5  可以滾動-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!--顯示日期和標題，可以點進去寫日記內容  比例1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!--日期  比例2  id="@+id/date-->
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="日期"
+                        android:textSize="20sp" />
+
+                    <!--日記標題  比例6 id="@+id/title"-->
+                    <Button
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8"
+                        android:clickable="true"
+                        android:gravity="center_vertical|left"
+                        android:text="尚未命名標題"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
 
 </LinearLayout>

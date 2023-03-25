@@ -56,8 +56,10 @@ public class DiaryFragment extends Fragment {
     private TextView date;
     private Button title;
     private ImageView image_view;
+    private TextView cal_fold;
 
     private Button cal;
+    private Button look;
 
     //資料庫
     private DiaryDoa diaryDoa;
@@ -77,6 +79,8 @@ public class DiaryFragment extends Fragment {
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
         image_view = view.findViewById(R.id.image_view);
         cal = view.findViewById(R.id.cal);
+        cal_fold = view.findViewById(R.id.cal_fold);
+        look = view.findViewById(R.id.look);
 
         //一跳轉頁面就可以顯示是否輸入過資料
         Calendar calendar = Calendar.getInstance();
@@ -92,11 +96,11 @@ public class DiaryFragment extends Fragment {
             title.setText(diary.getTitle());
 
             //設定日記照片
-            if(diary.getPhotoPath() != null){
+            if (diary.getPhotoPath() != null) {
                 File imageFile = new File(diary.getPhotoPath());
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 image_view.setImageBitmap(bitmap);
-            }else{
+            } else {
                 image_view.setImageDrawable(null);
             }
 
@@ -118,11 +122,11 @@ public class DiaryFragment extends Fragment {
                     title.setText(diary2.getTitle());
 
                     //設定日記照片
-                    if(diary2.getPhotoPath() != null){
+                    if (diary2.getPhotoPath() != null) {
                         File imageFile2 = new File(diary2.getPhotoPath());
                         Bitmap bitmap = BitmapFactory.decodeFile(imageFile2.getAbsolutePath());
                         image_view.setImageBitmap(bitmap);
-                    }else{
+                    } else {
                         image_view.setImageDrawable(null);
                     }
 
@@ -165,11 +169,31 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(getActivity(), GroupCalendar.class);
+                Intent intent = new Intent(getActivity(), GroupCalendar.class);
                 startActivity(intent);
             }
         });
 
+        //摺疊行事曆
+        cal_fold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (calender.getVisibility() == View.VISIBLE) {
+                    calender.setVisibility(View.GONE);
+                } else {
+                    calender.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        //跳轉到DiaryPostsFragment
+        look.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_layout, new DiaryPostsFragment()).commit();
+            }
+        });
 
         return view;
     }
