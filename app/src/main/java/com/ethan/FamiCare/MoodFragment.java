@@ -73,10 +73,15 @@ public class MoodFragment extends Fragment {
     private int BloodOxygen = 0;
     private View mainview;
     private Button analize;
-    private TextView advice;
+
+    private TextView advice; //建議的 textview(現在先放冥想)
+    private TextView breathe;
+    private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment()}; //各個緩解方式的介面，要做新的就加新的
+
     private Fragment advice_fm[]={new MeditationFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的//nai
 
     private TextView sport;//nai
+
 
     //set linechart
     LineChartData lineChartData;
@@ -102,7 +107,6 @@ public class MoodFragment extends Fragment {
             stressnumber.setText(getstressn);
 
         }
-
         //跳到MoodSymptom
         analize = mainview.findViewById(R.id.analize);
         analize.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +159,15 @@ public class MoodFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[0]).addToBackStack(null).commit();
+            }
+        });
+        //跳轉呼吸介面
+        breathe = mainview.findViewById(R.id.Breathe);
+        breathe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[1]).addToBackStack(null).commit();
             }
         });
 

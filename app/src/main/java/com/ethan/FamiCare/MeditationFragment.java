@@ -3,6 +3,8 @@ package com.ethan.FamiCare;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,14 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.TimerTask;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MeditationFragment#newInstance} factory method to
@@ -39,7 +44,16 @@ public class MeditationFragment extends Fragment {
     private View mainview;
     private TextView count_time;
     private TextView timeV;
-    boolean shutdown=true;
+    boolean shutdown = true;
+    private final int MIN_CLICK_DELAY_TIME = 60000;
+    private long lastClickTime = 0L;
+    private boolean flag = true;
+    private int cnt = 0;
+    private AnimationDrawable seaAnimation;
+    CountThread t = null;
+    int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
+
+
 //    SimpleDateFormat sdf = new SimpleDateFormat("mm分ss秒");
 
 
@@ -79,38 +93,35 @@ public class MeditationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_meditation, container, false);
-        count_time=mainview.findViewById(R.id.counter);
-        timeV=mainview.findViewById(R.id.time_view);
+        count_time = mainview.findViewById(R.id.counter);
+        timeV = mainview.findViewById(R.id.time_view);
+        Drawable drawable = getResources().getDrawable(pic[0]);
+        drawable.setBounds(10, 10, 20, 10);
+        timeV.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+
+        ImageView sea_an =mainview.findViewById(R.id.sea_animation);
+        sea_an.setBackgroundResource(R.drawable.sea);
+
+
+
+
         count_time.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                if (t == null || !t.isAlive()) {
+                    t = new CountThread(mainview);
+                    t.start();
+                }
 
-                    final Runnable runnable = new Runnable() {
-                        int countdownStarter = 5;
-                        public void run() {
-                            if(shutdown) {
-                                System.out.println(countdownStarter);
-                                count_time.setText(countdownStarter + "");
-                                countdownStarter--;
-                                timeV.setText("Start!(分鐘)");
-                                if (countdownStarter < 0) {
-                                    System.out.println("Timer Over!");
-                                    scheduler.shutdown();
-                                    timeV.setText("Timer Over!");
-                                }
-                            }else{
-                                scheduler.shutdown();
-                            }
-                        }
-                    };
-                    scheduler.scheduleAtFixedRate(runnable, 0, 1, MINUTES);
+                sea_an.setBackgroundResource(R.drawable.sea_animation);
+                seaAnimation = (AnimationDrawable) sea_an.getBackground();
+                seaAnimation.start();
+
 
 
             }
         });
-
 
 
         back = mainview.findViewById(R.id.back_mood);
@@ -118,7 +129,9 @@ public class MeditationFragment extends Fragment {
             @Override
 
             public void onClick(View view) {
-                shutdown=false;
+                if(t!=null) {
+                    t.SetRunning(false);
+                }
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Meditation_Layout, new MoodFragment()).addToBackStack(null).commit();
             }
@@ -128,5 +141,49 @@ public class MeditationFragment extends Fragment {
 
         return mainview;
     }
+
+    class CountThread extends Thread { //計時器
+        boolean running = true;
+        TextView tv;
+        View view;
+
+        CountThread(View v) {
+            view = v;
+            tv = v.findViewById(R.id.time_view);
+        }
+
+        public void run() {
+            int time_cnt = 1;
+            int page=0;
+            while (running) {
+                tv.setText("" + time_cnt);
+//                SetPic(view);
+                if (++time_cnt > 300) {
+                    seaAnimation.stop();
+                    break;
+                }
+                System.out.println(time_cnt);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
+
+        public void SetRunning(boolean run) {
+
+                running = run;
+                seaAnimation.stop();
+
+        }
+
+
+
+
+    }
+
 
 }

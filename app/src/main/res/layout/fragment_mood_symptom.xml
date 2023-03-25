@@ -504,8 +504,8 @@
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
 
 
     <Button
@@ -514,5 +514,6 @@
         android:layout_height="50dp"
         android:text="返回壓力指數"
         android:textSize="20dp" />
+
 
 </LinearLayout>
