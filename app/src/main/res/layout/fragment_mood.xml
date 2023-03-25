@@ -111,6 +111,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -138,6 +139,23 @@
                         android:text="呼吸調整"
                         android:contextClickable="true"/>
                 </LinearLayout>
+<LinearLayout
+                    android:layout_height="0dp"
+                    android:layout_weight="75"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:id="@+id/Advice"
+                    android:contextClickable="true"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="75"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:id="@+id/sport"
+                    android:contextClickable="true"/>
+            </LinearLayout>
+
 
             </LinearLayout>
         </ScrollView>
