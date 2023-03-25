@@ -38,9 +38,11 @@ public class GroupFragment extends Fragment {
     public GroupFragment() {
         // Required empty public constructor
     }
-FragmentGroupBinding binding;
-    ArrayList<Users>list=new ArrayList<>();
+
+    FragmentGroupBinding binding;
+    ArrayList<Users> list = new ArrayList<>();
     FirebaseDatabase database;
+
     public static GroupFragment newInstance(String param1, String param2) {
         GroupFragment fragment = new GroupFragment();
         Bundle args = new Bundle();
@@ -67,25 +69,27 @@ FragmentGroupBinding binding;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         binding=FragmentGroupBinding.inflate(inflater,container,false);
         database=FirebaseDatabase.getInstance();
         UsersAdapter adapter=new UsersAdapter(list,getContext());
         DatabaseReference myRef = database.getReference("Users");
 
+
         binding.chatrecy.setAdapter(adapter);
 
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.chatrecy.setLayoutManager(layoutManager);
 
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
-
                     if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+
                         list.add(users);
                         Log.d("TAG", "Message: " + users);
                     }
@@ -117,7 +121,6 @@ FragmentGroupBinding binding;
                 startActivity(intent);
             }
         });
-
 
 
         return binding.getRoot();
