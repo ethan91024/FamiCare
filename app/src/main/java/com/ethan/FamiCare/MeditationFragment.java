@@ -49,6 +49,7 @@ public class MeditationFragment extends Fragment {
     private long lastClickTime = 0L;
     private boolean flag = true;
     private int cnt = 0;
+    private AnimationDrawable seaAnimation;
     CountThread t = null;
     int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
 
@@ -99,6 +100,7 @@ public class MeditationFragment extends Fragment {
         timeV.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
 
         ImageView sea_an =mainview.findViewById(R.id.sea_animation);
+        sea_an.setBackgroundResource(R.drawable.sea);
 
 
 
@@ -111,7 +113,7 @@ public class MeditationFragment extends Fragment {
                     t = new CountThread(mainview);
                     t.start();
                 }
-                AnimationDrawable seaAnimation;
+
                 sea_an.setBackgroundResource(R.drawable.sea_animation);
                 seaAnimation = (AnimationDrawable) sea_an.getBackground();
                 seaAnimation.start();
@@ -127,7 +129,9 @@ public class MeditationFragment extends Fragment {
             @Override
 
             public void onClick(View view) {
-                t.SetRunning(false);
+                if(t!=null) {
+                    t.SetRunning(false);
+                }
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Meditation_Layout, new MoodFragment()).addToBackStack(null).commit();
             }
@@ -138,7 +142,7 @@ public class MeditationFragment extends Fragment {
         return mainview;
     }
 
-    class CountThread extends Thread {
+    class CountThread extends Thread { //計時器
         boolean running = true;
         TextView tv;
         View view;
@@ -155,9 +159,9 @@ public class MeditationFragment extends Fragment {
                 tv.setText("" + time_cnt);
 //                SetPic(view);
                 if (++time_cnt > 300) {
+                    seaAnimation.stop();
                     break;
                 }
-                SetPic(page);
                 System.out.println(time_cnt);
                 try {
                     Thread.sleep(1000);
@@ -167,11 +171,12 @@ public class MeditationFragment extends Fragment {
             }
         }
 
-        private void SetPic(int page) {
-        }
+
 
         public void SetRunning(boolean run) {
-            running = run;
+
+                running = run;
+                seaAnimation.stop();
 
         }
 
