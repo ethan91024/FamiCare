@@ -2,6 +2,7 @@ package com.ethan.FamiCare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.ethan.FamiCare.databinding.FragmentGroupBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -67,9 +69,12 @@ public class GroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentGroupBinding.inflate(inflater, container, false);
-        database = FirebaseDatabase.getInstance();
-        UsersAdapter adapter = new UsersAdapter(list, getContext());
+
+        binding=FragmentGroupBinding.inflate(inflater,container,false);
+        database=FirebaseDatabase.getInstance();
+        UsersAdapter adapter=new UsersAdapter(list,getContext());
+        DatabaseReference myRef = database.getReference("Users");
+
 
         binding.chatrecy.setAdapter(adapter);
 
@@ -83,8 +88,10 @@ public class GroupFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
-                    if (!users.getUserId().equals(FirebaseAuth.getInstance().getUid())) {
+                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+
                         list.add(users);
+                        Log.d("TAG", "Message: " + users);
                     }
 
                 }
@@ -93,7 +100,7 @@ public class GroupFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
 
@@ -103,7 +110,6 @@ public class GroupFragment extends Fragment {
         binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fm.beginTransaction().addToBackStack(null).replace(R.id.main_group, groupNameEditFragment).commit();
 
             }
         });
