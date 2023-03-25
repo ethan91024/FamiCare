@@ -4,4 +4,5 @@
     <item android:drawable="@drawable/sea"  android:duration="1000"></item>
     <item android:drawable="@drawable/sea2" android:duration="1000"></item>
     <item android:drawable="@drawable/sea3" android:duration="1000"></item>
+
 </animation-list>
