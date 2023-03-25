@@ -73,9 +73,15 @@ public class MoodFragment extends Fragment {
     private int BloodOxygen = 0;
     private View mainview;
     private Button analize;
+
     private TextView advice; //建議的 textview(現在先放冥想)
     private TextView breathe;
     private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment()}; //各個緩解方式的介面，要做新的就加新的
+
+    private Fragment advice_fm[]={new MeditationFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的//nai
+
+    private TextView sport;//nai
+
 
     //set linechart
     LineChartData lineChartData;
@@ -165,6 +171,16 @@ public class MoodFragment extends Fragment {
             }
         });
 
+        //nai
+        sport=mainview.findViewById(R.id.sport);
+        sport.setText("運動");
+        sport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm=getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[1]).addToBackStack(null).commit();
+            }
+        });
 
 
         return mainview;
