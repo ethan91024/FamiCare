@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ethan.FamiCare.sport.Sport1Fragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -78,7 +79,7 @@ public class MoodFragment extends Fragment {
     private TextView breathe;
    // private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的
 
-    private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment()};
+    private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()};
     private TextView sport;//nai
 
 
@@ -106,6 +107,7 @@ public class MoodFragment extends Fragment {
             stressnumber.setText(getstressn);
 
         }
+
         //跳到MoodSymptom
         analize = mainview.findViewById(R.id.analize);
         analize.setOnClickListener(new View.OnClickListener() {
@@ -164,22 +166,22 @@ public class MoodFragment extends Fragment {
         breathe = mainview.findViewById(R.id.Breathe);
         breathe.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[1]).addToBackStack(null).commit();
+            public void onClick(View v) {
+                FragmentManager fm=getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[1]).addToBackStack(null).commit();
             }
         });
 
         //nai
-//        sport=mainview.findViewById(R.id.Sport);
-//        sport.setText("運動");
-//        sport.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fm=getActivity().getSupportFragmentManager();
-//                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[1]).addToBackStack(null).commit();
-//            }
-//        });
+        sport=mainview.findViewById(R.id.Sport);
+        sport.setText("運動");
+        sport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm=getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[2]).addToBackStack(null).commit();
+            }
+        });
 
 
         return mainview;

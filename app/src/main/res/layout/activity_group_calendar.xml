@@ -19,12 +19,26 @@
         android:textSize="15dp"
         android:textStyle="bold" />
 
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="2">
     <CalendarView
         android:id="@+id/cal1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3" />
+        android:layout_height="match_parent" />
 
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/checknoti"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center"
+        android:paddingVertical="2dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
