@@ -64,6 +64,7 @@ public class GroupCalendar extends AppCompatActivity {
     private Button savecal;
     private String time_text;
     private Button noti;
+    private TextView checknoti;
 
     //Listview呈現提醒事項
     private ListView listView;
@@ -86,7 +87,10 @@ public class GroupCalendar extends AppCompatActivity {
     //notification
     private static final String channelId = "channeId";
     private static final String channelName = "channelName";
-    private NotificationManager notificationManager;
+
+    //接收點擊後的通知內容
+    String titlevalue;
+    String bodyvalue;
 
 
     @Override
@@ -101,6 +105,7 @@ public class GroupCalendar extends AppCompatActivity {
         listView = findViewById(R.id.listview);
         savecal = findViewById(R.id.savecal);
         noti = findViewById(R.id.noti);
+        checknoti=findViewById(R.id.checknoti);
 
 
         //顯示現在使用者
@@ -123,7 +128,7 @@ public class GroupCalendar extends AppCompatActivity {
                     }
                 });
 
-/*
+        /*
         if(isTokenEmpty(token)==true){
             try {
                 FCMaddgroup.addgroup(
@@ -137,9 +142,15 @@ public class GroupCalendar extends AppCompatActivity {
         }else{
             Toast.makeText(GroupCalendar.this,"已經加入過", Toast.LENGTH_SHORT).show();
         }
+        */
 
+        // Check if the activity was started from a notification
+        if(getIntent().getExtras() != null) {
+            titlevalue = getIntent().getExtras().getString("title");
+            bodyvalue = getIntent().getExtras().getString("body");
+            checknoti.setText("今日行程:\t" + titlevalue + "\t時間:" + bodyvalue + "\t已通知");
+        }
 
- */
 
         //監聽日期改變
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -301,14 +312,7 @@ public class GroupCalendar extends AppCompatActivity {
                 }
             }
         });
-        /*
-        Intent intent=getIntent();
-        if(intent!=null && intent.hasExtra("eventNotification") && intent.hasExtra("timeNotification")){
-            String notificationMessageEvent=intent.getStringExtra("eventNotification");
-            String notificationMessageTime=intent.getStringExtra("timenotification");
-            Toast.makeText(GroupCalendar.this, notificationMessageEvent+notificationMessageTime, Toast.LENGTH_SHORT).show();
-        }
-*/
+
 
     }
 
@@ -382,4 +386,5 @@ public class GroupCalendar extends AppCompatActivity {
         });
         return true;
     }
+
 }

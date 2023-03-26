@@ -3,7 +3,9 @@ package com.ethan.FamiCare;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
@@ -30,15 +32,24 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         super.onMessageReceived(message);
         getFirebaseMessage(message.getNotification().getTitle(),message.getNotification().getBody());
+
     }
 
     private void getFirebaseMessage(String title, String body) {
         creatNotificationChannel();
+
+        Intent intent=new Intent(this,GroupCalendar.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.putExtra("title",title);
+        //intent.putExtra("body",body);
+        PendingIntent contextIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setContentIntent(contextIntent);
         NotificationManagerCompat.from(this).notify(1, builder.build());
     }
 
