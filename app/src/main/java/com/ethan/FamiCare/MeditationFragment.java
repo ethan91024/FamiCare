@@ -3,8 +3,10 @@ package com.ethan.FamiCare;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -54,6 +56,8 @@ public class MeditationFragment extends Fragment {
     int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
 
 
+
+
 //    SimpleDateFormat sdf = new SimpleDateFormat("mm分ss秒");
 
 
@@ -99,9 +103,16 @@ public class MeditationFragment extends Fragment {
         drawable.setBounds(10, 10, 20, 10);
         timeV.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
 
-        ImageView sea_an =mainview.findViewById(R.id.sea_animation);
-        sea_an.setBackgroundResource(R.drawable.sea);
-
+        ImageView sea_an =mainview.findViewById(R.id.sea_animation); //首頁預設圖片
+        sea_an.setBackgroundResource(R.drawable.sea);   //sea的動畫
+        MediaPlayer sea_sound =MediaPlayer.create(getActivity(),R.raw.sea_sound);
+//        if (isAdded()) {
+//// Fragment 已附加到活动中
+//            System.out.println("add");
+//        } else {
+//            System.out.println("no add");
+//// Fragment 未附加到活动中，不能调用 getActivity() 方法
+//        }
 
 
 
@@ -109,14 +120,20 @@ public class MeditationFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                sea_an.setBackgroundResource(R.drawable.sea_animation);
+                seaAnimation = (AnimationDrawable) sea_an.getBackground();
                 if (t == null || !t.isAlive()) {
                     t = new CountThread(mainview);
                     t.start();
+                    seaAnimation.start();
+
+                    sea_sound.start();
+
                 }
 
-                sea_an.setBackgroundResource(R.drawable.sea_animation);
-                seaAnimation = (AnimationDrawable) sea_an.getBackground();
-                seaAnimation.start();
+
+
+
 
 
 
@@ -131,6 +148,8 @@ public class MeditationFragment extends Fragment {
             public void onClick(View view) {
                 if(t!=null) {
                     t.SetRunning(false);
+                    sea_sound.stop();
+
                 }
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Meditation_Layout, new MoodFragment()).addToBackStack(null).commit();
@@ -160,6 +179,7 @@ public class MeditationFragment extends Fragment {
 //                SetPic(view);
                 if (++time_cnt > 300) {
                     seaAnimation.stop();
+//                    sea_sound.stop();
                     break;
                 }
                 System.out.println(time_cnt);
@@ -177,6 +197,7 @@ public class MeditationFragment extends Fragment {
 
                 running = run;
                 seaAnimation.stop();
+//               sea_sound.stop();
 
         }
 
