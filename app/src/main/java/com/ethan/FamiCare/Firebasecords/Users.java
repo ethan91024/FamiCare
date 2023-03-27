@@ -8,6 +8,7 @@ public class Users {
     private String username;
     private String status;
     private String password;
+
     public Users() {
 
     }
@@ -22,10 +23,10 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String username,String userEmail,  String password) {
+    public Users(String username, String userEmail, String password) {
         this.userEmail = userEmail;
         this.password = password;
-        this.username= username;
+        this.username = username;
     }
 
     public String getProfilepic() {

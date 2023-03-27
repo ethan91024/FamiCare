@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.health.READ_SLEEP" />
     <uses-permission android:name="android.permission.health.READ_SPEED" />
     <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -73,7 +73,6 @@
         <activity
             android:name=".GroupCalendar"
             android:exported="false" >
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -97,8 +96,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:label="FamiCare"
-            android:exported="true" >
+            android:exported="true"
+            android:label="FamiCare" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -106,17 +105,15 @@
             </intent-filter>
         </activity>
 
-
         <service
             android:name=".PushNotificationService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".alarmReceiver"/>
-
+        <receiver android:name=".alarmReceiver" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.ethan.FamiCare;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,11 +103,12 @@ public class DiaryFragment extends Fragment {
                 image_view.setImageBitmap(bitmap);
             } else {
                 image_view.setImageDrawable(null);
-            }
 
+            }
 
         } else {
             title.setText("尚未命名標題");
+            image_view.setImageDrawable(null);
         }
 
         //監聽選擇到的日期，改變date，抓取資料庫對應日期的資料，顯示資料庫標題到title
@@ -132,6 +134,7 @@ public class DiaryFragment extends Fragment {
 
                 } else {
                     title.setText("尚未命名標題");
+                    image_view.setImageDrawable(null);
                 }
             }
         });
