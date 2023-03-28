@@ -44,13 +44,8 @@ public class MeditationFragment extends Fragment {
     private String mParam2;
     private Button back;
     private View mainview;
-    private TextView count_time;
-    private TextView timeV;
-    boolean shutdown = true;
-    private final int MIN_CLICK_DELAY_TIME = 60000;
-    private long lastClickTime = 0L;
-    private boolean flag = true;
-    private int cnt = 0;
+    private Button count_time;
+
     private AnimationDrawable seaAnimation;
     CountThread t = null;
     int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
@@ -98,12 +93,10 @@ public class MeditationFragment extends Fragment {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_meditation, container, false);
         count_time = mainview.findViewById(R.id.counter);
-        timeV = mainview.findViewById(R.id.time_view);
         Drawable drawable = getResources().getDrawable(pic[0]);
         drawable.setBounds(10, 10, 20, 10);
-        timeV.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
 
-        ImageView sea_an =mainview.findViewById(R.id.sea_animation); //首頁預設圖片
+        ImageView sea_an =mainview.findViewById(R.id.Sea_animation); //首頁預設圖片
         sea_an.setBackgroundResource(R.drawable.sea);   //sea的動畫
         MediaPlayer sea_sound =MediaPlayer.create(getActivity(),R.raw.sea_sound);
 //        if (isAdded()) {
@@ -131,12 +124,6 @@ public class MeditationFragment extends Fragment {
 
                 }
 
-
-
-
-
-
-
             }
         });
 
@@ -149,7 +136,6 @@ public class MeditationFragment extends Fragment {
                 if(t!=null) {
                     t.SetRunning(false);
                     sea_sound.stop();
-
                 }
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Meditation_Layout, new MoodFragment()).addToBackStack(null).commit();
@@ -163,23 +149,17 @@ public class MeditationFragment extends Fragment {
 
     class CountThread extends Thread { //計時器
         boolean running = true;
-        TextView tv;
         View view;
 
         CountThread(View v) {
             view = v;
-            tv = v.findViewById(R.id.time_view);
         }
 
         public void run() {
-            int time_cnt = 1;
-            int page=0;
+            int time_cnt = 0;
             while (running) {
-                tv.setText("" + time_cnt);
-//                SetPic(view);
                 if (++time_cnt > 300) {
                     seaAnimation.stop();
-//                    sea_sound.stop();
                     break;
                 }
                 System.out.println(time_cnt);
@@ -194,11 +174,8 @@ public class MeditationFragment extends Fragment {
 
 
         public void SetRunning(boolean run) {
-
                 running = run;
                 seaAnimation.stop();
-//               sea_sound.stop();
-
         }
 
 

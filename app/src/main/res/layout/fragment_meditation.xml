@@ -7,8 +7,6 @@
     tools:context=".MeditationFragment">
 
 
-
-
     <!-- TODO: Update blank fragment layout -->
 
 
@@ -28,11 +26,17 @@
             android:layout_height="55dp"
             android:gravity=""
             android:text="舒緩方式  冥想"
-            android:textSize="30dp"></TextView>
+            android:textSize="30dp"
+            android:textStyle="bold"></TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="77dp"
+            android:layout_height="80dp"
             android:gravity=""
             android:text="冥想可以降低壓力與焦慮。讓我們專注在這5分鐘，調整呼吸，放鬆情緒，好好感受心靈。"
             android:textSize="20dp"></TextView>
@@ -42,23 +46,11 @@
             android:layout_height="300dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/time_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/sea"
-                android:gravity="center"
-                android:text="5分鐘"
-                android:textSize="30dp"></TextView>
-
 
             <ImageView
-                android:id="@+id/sea_animation"
+                android:id="@+id/Sea_animation"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="80"
->
+                android:layout_height="250dp">
 
             </ImageView>
 

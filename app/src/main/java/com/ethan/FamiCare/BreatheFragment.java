@@ -1,5 +1,6 @@
 package com.ethan.FamiCare;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,8 @@ public class BreatheFragment extends Fragment {
 
     private View mainview;
     private Button back;
+    private Button count_time;
+    CountThread_Breathe t=null;
 
     public BreatheFragment() {
         // Required empty public constructor
@@ -65,7 +68,20 @@ public class BreatheFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview= inflater.inflate(R.layout.fragment_breathe, container, false);
+        count_time = mainview.findViewById(R.id.Breathe_count);
+        count_time.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+
+                if (t == null || !t.isAlive()) {
+                    t = new CountThread_Breathe(mainview);
+                    t.start();
+
+                }
+
+            }
+        });
 
 
 
@@ -75,11 +91,49 @@ public class BreatheFragment extends Fragment {
             @Override
 
             public void onClick(View view) {
+                if(t!=null) {
+                    t.SetRunning(false);
+                }
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Breathe_layout, new MoodFragment()).addToBackStack(null).commit();
             }
         });
         return mainview;
+    }
+    class CountThread_Breathe extends Thread { //計時器
+        boolean running = true;
+        View view;
+
+        CountThread_Breathe(View view) {
+            this.view=view;
+        }
+
+        public void run() {
+            int time_cnt = 0;
+            while (running) {
+                if (++time_cnt > 300) {
+                    break;
+                }
+                System.out.println(time_cnt);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+
+
+        public void SetRunning(boolean run) {
+            running = run;
+
+
+        }
+
+
+
+
     }
 }
