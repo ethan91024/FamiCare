@@ -268,7 +268,7 @@ public class DiaryContentFragment extends Fragment {
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts").push();
                         String key = databaseReference.getKey();
                         Posts post = new Posts(date, title.getText().toString(), content.getText().toString());
-                        databaseReference.child(key).setValue(post);
+                        databaseReference.setValue(post);
 
                         // 照片上傳成功，取得下載 URL
 //                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
