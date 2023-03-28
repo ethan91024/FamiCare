@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.R;
@@ -16,15 +15,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter{
-    ArrayList<GroupMessage> messageModels;
+    ArrayList<MessageModel> messageModels;
     Context context;
+    String recId;
 
     int Sender_View_Type=1;
     int Receiver_View_Type=2;
 
-    public ChatAdapter(ArrayList<GroupMessage> messageModels, Context context) {
+    public ChatAdapter(ArrayList<MessageModel> messageModels, Context context) {
         this.messageModels = messageModels;
         this.context = context;
+    }
+
+    public ChatAdapter(ArrayList<MessageModel> messageModels, Context context, String recId) {
+        this.messageModels = messageModels;
+        this.context = context;
+        this.recId = recId;
     }
 
     @NonNull
@@ -52,11 +58,11 @@ public class ChatAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        GroupMessage messageModel=messageModels.get(position);
+        MessageModel messageModel=messageModels.get(position);
         if(holder.getClass()==SenderViewHolder.class){
-            ((SenderViewHolder)holder).senderMsg.setText(messageModel.getUserId());
+            ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
         }else{
-            ((RecieverViewHolder)holder).receiverMsg.setText(messageModel.getUserId());
+            ((RecieverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
         }
     }
 
