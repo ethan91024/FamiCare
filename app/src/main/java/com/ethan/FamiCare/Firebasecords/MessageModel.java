@@ -1,25 +1,24 @@
 package com.ethan.FamiCare.Firebasecords;
 
-public class GroupMessage {
+public class MessageModel {
 
     private String message;
     private Long datetime;
     private String userId;
-
     private String messageId;
 
     //for firebase getting data back
-    public GroupMessage() {
+    public MessageModel() {
 
     }
 
-    public GroupMessage(String message, Long datetime, String userId) {
+    public MessageModel(String userId,String message, Long datetime) {
         this.message = message;
         this.datetime = datetime;
         this.userId = userId;
     }
 
-    public GroupMessage(String message, String userId) {
+    public MessageModel(String userId,String message) {
         this.message = message;
         this.userId = userId;
     }
