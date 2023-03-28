@@ -1,21 +1,13 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.StepsRecord
-import androidx.health.connect.client.request.ReadRecordsRequest
-import androidx.health.connect.client.time.TimeRangeFilter
-import java.time.Instant
-import java.time.ZonedDateTime
-import java.time.temporal.ChronoUnit
+import com.ethan.FamiCare.R
 
 class HealthFragment : Fragment() {
     private var mParam1: String? = null

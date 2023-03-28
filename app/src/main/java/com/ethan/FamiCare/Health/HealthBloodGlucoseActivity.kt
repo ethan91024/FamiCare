@@ -1,4 +1,4 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,10 +6,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.BloodGlucoseRecord
-import androidx.health.connect.client.records.OxygenSaturationRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.R
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime

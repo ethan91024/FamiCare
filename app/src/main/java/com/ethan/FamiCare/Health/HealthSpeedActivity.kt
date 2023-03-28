@@ -1,16 +1,16 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.HydrationRecord
-import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
+import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.R
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
@@ -18,83 +18,84 @@ import java.time.Period
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class HealthCaloriesActivity : AppCompatActivity() {
+class HealthSpeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_health_calories)
+        setContentView(R.layout.activity_health_speed)
+
         val myDateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
         val client = HealthConnectClient.getOrCreate(this)
 
         lifecycleScope.launch {
-            val Cal = getCalories(
+            val Speed = getSpeed(
                 client,
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            val total1=Cal[Cal.size - 1].energy.toString().replaceFirst(" kcal","")
+            val total1=Speed[Speed.size - 1].samples[0].speed.toString().replaceFirst(" meters/sec","")
             val total11=String.format("%.2f",total1.toDouble()).toDouble()
-            val first: TextView = findViewById(R.id.today_cal)
+            val first: TextView = findViewById(R.id.today_speed)
             first.text =
-                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 1].endTime.toString())) + "  " + total11.toString() + "大卡"
+                myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 1].endTime.toString())) + "  " + total11.toString() + "公尺/秒"
 
-            val total2=Cal[Cal.size - 2].energy.toString().replaceFirst(" kcal","")
+            val total2=Speed[Speed.size - 2].samples[0].speed.toString().replaceFirst(" meters/sec","")
             val total22=String.format("%.2f",total2.toDouble()).toDouble()
-            val yesterday: TextView = findViewById(R.id.yesterday_cal)
+            val yesterday: TextView = findViewById(R.id.yesterday_speed)
             yesterday.text =
-                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 2].endTime.toString())) + "  " + total22.toString() + "大卡"
+                myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 2].endTime.toString())) + "  " + total22.toString() + "公尺/秒"
 
-            val total3=Cal[Cal.size - 3].energy.toString().replaceFirst(" kcal","")
+            val total3=Speed[Speed.size - 3].samples[0].speed.toString().replaceFirst(" meters/sec","")
             val total33=String.format("%.2f",total3.toDouble()).toDouble()
-            val twodaysago: TextView = findViewById(R.id.twodaysago_cal)
+            val twodaysago: TextView = findViewById(R.id.twodaysago_speed)
             twodaysago.text =
-                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 3].endTime.toString())) + "  " + total33.toString() + "大卡"
+                myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 3].endTime.toString())) + "  " + total33.toString() + "公尺/秒"
 
-            aggregateCaloriesIntoWeeks(
+            aggregateSpeedIntoWeeks(
                 client,
                 LocalDateTime.now().minusDays(7),
                 LocalDateTime.now()
             )
 
-            aggregateCaloriesIntoMonths(
+            aggregateSpeedIntoMonths(
                 client,
                 LocalDateTime.now().minusDays(30),
                 LocalDateTime.now()
             )
         }
 
-        this.findViewById<Button>(R.id.update_cal).setOnClickListener {
+        this.findViewById<Button>(R.id.update_speed).setOnClickListener {
             lifecycleScope.launch {
-                val Cal = getCalories(
+                val Speed = getSpeed(
                     client,
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now()
                 )
-                val total1=Cal[Cal.size - 1].energy.toString().replaceFirst(" kcal","")
+                val total1=Speed[Speed.size - 1].samples[0].speed.toString().replaceFirst(" meters/sec","")
                 val total11=String.format("%.2f",total1.toDouble()).toDouble()
-                val first: TextView = findViewById(R.id.today_cal)
+                val first: TextView = findViewById(R.id.today_speed)
                 first.text =
-                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 1].endTime.toString())) + "  " + total11.toString() + "大卡"
+                    myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 1].endTime.toString())) + "  " + total11.toString() + "公尺/秒"
 
-                val total2=Cal[Cal.size - 2].energy.toString().replaceFirst(" kcal","")
+                val total2=Speed[Speed.size - 2].samples[0].speed.toString().replaceFirst(" meters/sec","")
                 val total22=String.format("%.2f",total2.toDouble()).toDouble()
-                val yesterday: TextView = findViewById(R.id.yesterday_cal)
+                val yesterday: TextView = findViewById(R.id.yesterday_speed)
                 yesterday.text =
-                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 2].endTime.toString())) + "  " + total22.toString() + "大卡"
+                    myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 2].endTime.toString())) + "  " + total22.toString() + "公尺/秒"
 
-                val total3=Cal[Cal.size - 3].energy.toString().replaceFirst(" kcal","")
+                val total3=Speed[Speed.size - 3].samples[0].speed.toString().replaceFirst(" meters/sec","")
                 val total33=String.format("%.2f",total3.toDouble()).toDouble()
-                val twodaysago: TextView = findViewById(R.id.twodaysago_cal)
+                val twodaysago: TextView = findViewById(R.id.twodaysago_speed)
                 twodaysago.text =
-                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 3].endTime.toString())) + "  " + total33.toString() + "大卡"
+                    myDateTimeFormatter.format(Instant.parse(Speed[Speed.size - 3].endTime.toString())) + "  " + total33.toString() + "公尺/秒"
 
-                aggregateCaloriesIntoWeeks(
+                aggregateSpeedIntoWeeks(
                     client,
                     LocalDateTime.now().minusDays(7),
                     LocalDateTime.now()
                 )
 
-                aggregateCaloriesIntoMonths(
+                aggregateSpeedIntoMonths(
                     client,
                     LocalDateTime.now().minusDays(30),
                     LocalDateTime.now()
@@ -103,22 +104,22 @@ class HealthCaloriesActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun getCalories(
+    suspend fun getSpeed(
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
-    ): List<TotalCaloriesBurnedRecord> {
+    ): List<SpeedRecord> {
 
         val request = client.readRecords(
             ReadRecordsRequest(
-                TotalCaloriesBurnedRecord::class,
+                SpeedRecord::class,
                 timeRangeFilter = TimeRangeFilter.between(start, end)
             )
         )
         return request.records
     }
 
-    suspend fun aggregateCaloriesIntoWeeks(
+    suspend fun aggregateSpeedIntoWeeks(
         healthConnectClient: HealthConnectClient,
         startTime: LocalDateTime,
         endTime: LocalDateTime
@@ -126,24 +127,24 @@ class HealthCaloriesActivity : AppCompatActivity() {
         val response =
             healthConnectClient.aggregateGroupByPeriod(
                 AggregateGroupByPeriodRequest(
-                    metrics = setOf(TotalCaloriesBurnedRecord.ENERGY_TOTAL),
+                    metrics = setOf(SpeedRecord.SPEED_AVG),
                     timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
                     timeRangeSlicer = Period.ofWeeks(1)
                 )
             )
 
         for (weeklyResult in response) {
-            val totalCal = weeklyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL]
-            val week: TextView = findViewById(R.id.weekAvg_cal)
-            if (totalCal != null) {
-                val total=totalCal.toString().replaceFirst(" kcal","")
+            val totalSpeed = weeklyResult.result[SpeedRecord.SPEED_AVG]
+            val week: TextView = findViewById(R.id.weekAvg_speed)
+            if (totalSpeed != null) {
+                val total=totalSpeed.toString().replaceFirst(" meters/sec","")
                 val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
-                week.text = total1.toString() + " 大卡"
+                week.text = total1.toString() + " 公尺/秒"
             }
         }
     }
 
-    suspend fun aggregateCaloriesIntoMonths(
+    suspend fun aggregateSpeedIntoMonths(
         healthConnectClient: HealthConnectClient,
         startTime: LocalDateTime,
         endTime: LocalDateTime
@@ -151,20 +152,21 @@ class HealthCaloriesActivity : AppCompatActivity() {
         val response =
             healthConnectClient.aggregateGroupByPeriod(
                 AggregateGroupByPeriodRequest(
-                    metrics = setOf(TotalCaloriesBurnedRecord.ENERGY_TOTAL),
+                    metrics = setOf(SpeedRecord.SPEED_AVG),
                     timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
                     timeRangeSlicer = Period.ofMonths(1)
                 )
             )
 
         for (monthlyResult in response) {
-            val totalCal = monthlyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL]
-            val month: TextView = findViewById(R.id.monthAvg_cal)
-            if (totalCal != null) {
-                val total=totalCal.toString().replaceFirst(" kcal","")
+            val totalSpeed = monthlyResult.result[SpeedRecord.SPEED_AVG]
+            val month: TextView = findViewById(R.id.monthAvg_speed)
+            if (totalSpeed != null) {
+                val total=totalSpeed.toString().replaceFirst(" meters/sec","")
                 val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
-                month.text = total1.toString() + " 大卡"
+                month.text = total1.toString() + " 公尺/秒"
             }
         }
     }
-    }
+}
+

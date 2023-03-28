@@ -1,7 +1,8 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ethan.FamiCare.R
 
 class HealthBloodPressureActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

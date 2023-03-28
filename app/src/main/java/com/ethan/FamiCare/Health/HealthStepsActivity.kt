@@ -1,4 +1,4 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import android.os.Bundle
 import android.widget.Button
@@ -11,6 +11,7 @@ import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.R
 import kotlinx.coroutines.launch
 import java.time.*
 import java.time.format.DateTimeFormatter
