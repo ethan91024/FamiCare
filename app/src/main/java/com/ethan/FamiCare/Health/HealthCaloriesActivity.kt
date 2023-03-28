@@ -1,17 +1,16 @@
-package com.ethan.FamiCare
+package com.ethan.FamiCare.Health
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.HydrationRecord
-import androidx.health.connect.client.records.StepsRecord
+import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
-import androidx.health.connect.client.units.Volume
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.R
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDateTime
@@ -19,84 +18,83 @@ import java.time.Period
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class HealthHydrationActivity : AppCompatActivity() {
+class HealthCaloriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_health_hydration)
+        setContentView(R.layout.activity_health_calories)
         val myDateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
         val client = HealthConnectClient.getOrCreate(this)
 
         lifecycleScope.launch {
-            val Hydra = getHydration(
+            val Cal = getCalories(
                 client,
                 LocalDateTime.now().minusDays(3),
                 LocalDateTime.now()
             )
-            val total1=Hydra[Hydra.size - 1].volume.toString().replaceFirst(" L","")
+            val total1=Cal[Cal.size - 1].energy.toString().replaceFirst(" kcal","")
             val total11=String.format("%.2f",total1.toDouble()).toDouble()
-            val first: TextView = findViewById(R.id.today_hydration)
+            val first: TextView = findViewById(R.id.today_cal)
             first.text =
-                myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 1].endTime.toString())) + "  " + total11.toString() + "公升"
+                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 1].endTime.toString())) + "  " + total11.toString() + "大卡"
 
-            val total2=Hydra[Hydra.size - 2].volume.toString().replaceFirst(" L","")
+            val total2=Cal[Cal.size - 2].energy.toString().replaceFirst(" kcal","")
             val total22=String.format("%.2f",total2.toDouble()).toDouble()
-            val yesterday: TextView = findViewById(R.id.yesterday_hydration)
+            val yesterday: TextView = findViewById(R.id.yesterday_cal)
             yesterday.text =
-                myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 2].endTime.toString())) + "  " + total22.toString() + "公升"
+                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 2].endTime.toString())) + "  " + total22.toString() + "大卡"
 
-            val total3=Hydra[Hydra.size - 3].volume.toString().replaceFirst(" L","")
+            val total3=Cal[Cal.size - 3].energy.toString().replaceFirst(" kcal","")
             val total33=String.format("%.2f",total3.toDouble()).toDouble()
-            val twodaysago: TextView = findViewById(R.id.twodaysago_hydration)
+            val twodaysago: TextView = findViewById(R.id.twodaysago_cal)
             twodaysago.text =
-                myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 3].endTime.toString())) + "  " + total33.toString() + "公升"
+                myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 3].endTime.toString())) + "  " + total33.toString() + "大卡"
 
-            aggregateHydrationIntoWeeks(
+            aggregateCaloriesIntoWeeks(
                 client,
                 LocalDateTime.now().minusDays(7),
                 LocalDateTime.now()
             )
 
-            aggregateHydrationIntoMonths(
+            aggregateCaloriesIntoMonths(
                 client,
                 LocalDateTime.now().minusDays(30),
                 LocalDateTime.now()
             )
         }
 
-        this.findViewById<Button>(R.id.update_hydration).setOnClickListener {
+        this.findViewById<Button>(R.id.update_cal).setOnClickListener {
             lifecycleScope.launch {
-                val Hydra = getHydration(
+                val Cal = getCalories(
                     client,
                     LocalDateTime.now().minusDays(3),
                     LocalDateTime.now()
                 )
-
-                val total1=Hydra[Hydra.size - 1].volume.toString().replaceFirst(" L","")
+                val total1=Cal[Cal.size - 1].energy.toString().replaceFirst(" kcal","")
                 val total11=String.format("%.2f",total1.toDouble()).toDouble()
-                val first: TextView = findViewById(R.id.today_hydration)
+                val first: TextView = findViewById(R.id.today_cal)
                 first.text =
-                    myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 1].endTime.toString())) + "  " + total11.toString() + "公升"
+                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 1].endTime.toString())) + "  " + total11.toString() + "大卡"
 
-                val total2=Hydra[Hydra.size - 2].volume.toString().replaceFirst(" L","")
+                val total2=Cal[Cal.size - 2].energy.toString().replaceFirst(" kcal","")
                 val total22=String.format("%.2f",total2.toDouble()).toDouble()
-                val yesterday: TextView = findViewById(R.id.yesterday_hydration)
+                val yesterday: TextView = findViewById(R.id.yesterday_cal)
                 yesterday.text =
-                    myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 2].endTime.toString())) + "  " + total22.toString() + "公升"
+                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 2].endTime.toString())) + "  " + total22.toString() + "大卡"
 
-                val total3=Hydra[Hydra.size - 3].volume.toString().replaceFirst(" L","")
+                val total3=Cal[Cal.size - 3].energy.toString().replaceFirst(" kcal","")
                 val total33=String.format("%.2f",total3.toDouble()).toDouble()
-                val twodaysago: TextView = findViewById(R.id.twodaysago_hydration)
+                val twodaysago: TextView = findViewById(R.id.twodaysago_cal)
                 twodaysago.text =
-                    myDateTimeFormatter.format(Instant.parse(Hydra[Hydra.size - 3].endTime.toString())) + "  " + total33.toString() + "公升"
+                    myDateTimeFormatter.format(Instant.parse(Cal[Cal.size - 3].endTime.toString())) + "  " + total33.toString() + "大卡"
 
-                aggregateHydrationIntoWeeks(
+                aggregateCaloriesIntoWeeks(
                     client,
                     LocalDateTime.now().minusDays(7),
                     LocalDateTime.now()
                 )
 
-                aggregateHydrationIntoMonths(
+                aggregateCaloriesIntoMonths(
                     client,
                     LocalDateTime.now().minusDays(30),
                     LocalDateTime.now()
@@ -105,22 +103,22 @@ class HealthHydrationActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun getHydration(
+    suspend fun getCalories(
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
-    ): List<HydrationRecord> {
+    ): List<TotalCaloriesBurnedRecord> {
 
         val request = client.readRecords(
             ReadRecordsRequest(
-                HydrationRecord::class,
+                TotalCaloriesBurnedRecord::class,
                 timeRangeFilter = TimeRangeFilter.between(start, end)
             )
         )
         return request.records
     }
 
-    suspend fun aggregateHydrationIntoWeeks(
+    suspend fun aggregateCaloriesIntoWeeks(
         healthConnectClient: HealthConnectClient,
         startTime: LocalDateTime,
         endTime: LocalDateTime
@@ -128,24 +126,24 @@ class HealthHydrationActivity : AppCompatActivity() {
         val response =
             healthConnectClient.aggregateGroupByPeriod(
                 AggregateGroupByPeriodRequest(
-                    metrics = setOf(HydrationRecord.VOLUME_TOTAL),
+                    metrics = setOf(TotalCaloriesBurnedRecord.ENERGY_TOTAL),
                     timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
                     timeRangeSlicer = Period.ofWeeks(1)
                 )
             )
 
         for (weeklyResult in response) {
-            val totalHydra = weeklyResult.result[HydrationRecord.VOLUME_TOTAL]
-            val week: TextView = findViewById(R.id.weekAvg_hydration)
-            if (totalHydra != null) {
-                val total=totalHydra.toString().replaceFirst(" L","")
+            val totalCal = weeklyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL]
+            val week: TextView = findViewById(R.id.weekAvg_cal)
+            if (totalCal != null) {
+                val total=totalCal.toString().replaceFirst(" kcal","")
                 val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
-                week.text = total1.toString() + " 公升"
+                week.text = total1.toString() + " 大卡"
             }
         }
     }
 
-    suspend fun aggregateHydrationIntoMonths(
+    suspend fun aggregateCaloriesIntoMonths(
         healthConnectClient: HealthConnectClient,
         startTime: LocalDateTime,
         endTime: LocalDateTime
@@ -153,22 +151,20 @@ class HealthHydrationActivity : AppCompatActivity() {
         val response =
             healthConnectClient.aggregateGroupByPeriod(
                 AggregateGroupByPeriodRequest(
-                    metrics = setOf(HydrationRecord.VOLUME_TOTAL),
+                    metrics = setOf(TotalCaloriesBurnedRecord.ENERGY_TOTAL),
                     timeRangeFilter = TimeRangeFilter.between(startTime, endTime),
                     timeRangeSlicer = Period.ofMonths(1)
                 )
             )
 
         for (monthlyResult in response) {
-            val totalHydra = monthlyResult.result[HydrationRecord.VOLUME_TOTAL]
-            val month: TextView = findViewById(R.id.month_hydration)
-            if (totalHydra != null) {
-                val total=totalHydra.toString().replaceFirst(" L","")
+            val totalCal = monthlyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL]
+            val month: TextView = findViewById(R.id.monthAvg_cal)
+            if (totalCal != null) {
+                val total=totalCal.toString().replaceFirst(" kcal","")
                 val total1=String.format("%.2f",total.toDouble().div(response.size)).toDouble()
-                month.text = total1.toString() + " 公升"
+                month.text = total1.toString() + " 大卡"
             }
         }
     }
-}
-
-
+    }

@@ -38,31 +38,34 @@
             android:name=".Chatroom"
             android:exported="false" />
         <activity
-            android:name=".HealthSpeedActivity"
+            android:name=".ChatGPT.ChatGPTActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthSleepActivity"
+            android:name=".Health.HealthSpeedActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthRespiratoryRateActivity"
+            android:name=".Health.HealthSleepActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthOxygenSaturationActivity"
+            android:name=".Health.HealthRespiratoryRateActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthHydrationActivity"
+            android:name=".Health.HealthOxygenSaturationActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthHeartRateActivity"
+            android:name=".Health.HealthHydrationActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthCaloriesActivity"
+            android:name=".Health.HealthHeartRateActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthBloodPressureActivity"
+            android:name=".Health.HealthCaloriesActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthBloodGlucoseActivity"
+            android:name=".Health.HealthBloodPressureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Health.HealthBloodGlucoseActivity"
             android:exported="false" />
         <activity
             android:name=".GroupChatroom"
@@ -92,10 +95,10 @@
                 android:resource="@array/health_permissions" />
         </activity>
         <activity
-            android:name=".HealthConnect"
+            android:name=".Health.HealthConnect"
             android:exported="false" />
         <activity
-            android:name=".HealthStepsActivity"
+            android:name=".Health.HealthStepsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

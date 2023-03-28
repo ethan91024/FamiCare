@@ -9,12 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ethan.FamiCare.Firebasecords.GroupMessage;
+import com.ethan.FamiCare.ChatGPT.ChatGPTActivity;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.Firebasecords.UsersAdapter;
 import com.ethan.FamiCare.databinding.FragmentGroupBinding;

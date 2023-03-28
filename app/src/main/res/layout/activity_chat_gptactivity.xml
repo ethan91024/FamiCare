@@ -4,61 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatGPTActivity">
+    tools:context=".ChatGPT.ChatGPTActivity">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/idTILQuery"
-        android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
-        android:padding="5dp">
+        android:layout_above="@id/bottom_layout" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!-- text view for displaying question-->
-            <TextView
-                android:id="@+id/idTVQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:padding="4dp"
-                android:text="Question"
-                android:textSize="17sp" />
-
-            <!-- text view for displaying response-->
-            <TextView
-                android:id="@+id/idTVResponse"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:padding="4dp"
-                android:text="Response"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-    </ScrollView>
-    <!-- text field for asking question-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/idTILQuery"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
-        android:hint="Enter your query"
-        android:padding="5dp">
+        android:id="@+id/welcome_text"
+        android:layout_centerInParent="true"
+        android:text="簡易ChatGPT"
+        android:gravity="center"
+        android:textSize="28dp"
+        android:textIsSelectable="true"
+        />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/idEdtQuery"
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">
+
+        <EditText
+            android:id="@+id/message_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:imeOptions="actionSend"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/send_btn"
+            android:background="@drawable/rounded_corner"
+            android:hint="Write here "
+            android:padding="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+
+        <ImageButton
+            android:id="@+id/send_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/baseline_send_24" />
+    </RelativeLayout>
 </RelativeLayout>
