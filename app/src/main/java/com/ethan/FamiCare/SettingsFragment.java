@@ -1,5 +1,7 @@
 package com.ethan.FamiCare;
 
+import static androidx.databinding.DataBindingUtil.setContentView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +24,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +33,7 @@ public class SettingsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     FragmentSettingsBinding binding;
-    Button login, signup;
+    Button login, signup,logout;
     FirebaseAuth auth;
     FirebaseDatabase database;
     ImageView google_img;
@@ -66,7 +67,6 @@ public class SettingsFragment extends Fragment {
 
     }
 
-Button logout;
 
 
     @Override
@@ -76,6 +76,7 @@ Button logout;
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         logout=view.findViewById(R.id.logout);
         login=view.findViewById(R.id.login);
+        signup=view.findViewById(R.id.signup);
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
                 .requestEmail()
                 .build();
@@ -85,6 +86,14 @@ Button logout;
         if(account!=null){
 
         }
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Signup.class);
+                startActivity(intent);
+
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

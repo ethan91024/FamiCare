@@ -15,6 +15,14 @@
         android:textSize="28sp"
         android:layout_alignParentBottom="true"/>
     <Button
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="signup"
+        android:textSize="28sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/login"/>
+    <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

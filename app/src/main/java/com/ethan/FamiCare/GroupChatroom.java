@@ -42,10 +42,9 @@ public class GroupChatroom extends AppCompatActivity {
 
 
 
-    public View onCreate(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_group_chatroom, container, false);
+
         binding=FragmentGroupChatroomBinding.inflate(getLayoutInflater());
         database=FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
@@ -58,7 +57,7 @@ public class GroupChatroom extends AppCompatActivity {
 
         binding.username.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);
-        return view;
+
     }
 
 
