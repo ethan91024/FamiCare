@@ -61,10 +61,6 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         binding=FragmentSettingsBinding.inflate(getLayoutInflater());
 
-
-        auth=FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
-
     }
 
 
@@ -80,7 +76,8 @@ public class SettingsFragment extends Fragment {
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
                 .requestEmail()
                 .build();
-
+        auth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
         gsc= GoogleSignIn.getClient(SettingsFragment.this.getContext(),gso);
         GoogleSignInAccount account=GoogleSignIn.getLastSignedInAccount(SettingsFragment.this.getContext());
         if(account!=null){
@@ -105,22 +102,32 @@ public class SettingsFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
+                Toast.makeText(SettingsFragment.this.getContext(), "logout success", Toast.LENGTH_SHORT).show();
+                /*
                 Signout();
+
+                 */
             }
         });
         return view;
     }
     private void Signout() {
+        auth.signOut();
+        Intent intent = new Intent(getActivity(), GroupFragment.class);
+        startActivity(intent);
+        /*
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
                 if(task.isSuccessful()) {
                     Toast.makeText(SettingsFragment.this.getContext(), "Signout Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), Login.class);
+                    Intent intent = new Intent(getActivity(), GroupFragment.class);
                     startActivity(intent);
                 }
             }
         });
+        */
     }
 }

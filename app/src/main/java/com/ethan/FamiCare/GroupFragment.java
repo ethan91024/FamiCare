@@ -89,7 +89,6 @@ public class GroupFragment extends Fragment {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
                     if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
-
                         list.add(users);
                         Log.d("TAG", "Message: " + users);
                     }
