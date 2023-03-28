@@ -74,7 +74,7 @@
             android:name=".GroupNameEditFragment"
             android:exported="false" />
         <activity
-            android:name=".ChatGPTActivity"
+            android:name=".ChatGPT.ChatGPTActivity"
             android:exported="false" />
         <activity
             android:name=".GroupCalendar"
