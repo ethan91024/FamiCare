@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ethan.FamiCare.sport.Sport1Fragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -31,7 +30,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class MoodFragment extends Fragment {
 

@@ -1,10 +1,10 @@
 package com.ethan.FamiCare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.ethan.FamiCare.sport.Sport1Fragment;
+import com.ethan.FamiCare.sport.Sport1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +69,7 @@ public class sportFragment extends Fragment {
     private GridView gridView;
     String[] sportname={"1","2","3","4","5","6"};
     int[] images={R.drawable.baseline_co2_24,R.drawable.baseline_coffee_maker_24,R.drawable.baseline_directions_walk_24,R.drawable.baseline_bloodtype_24,R.drawable.baseline_speed_24,R.drawable.ic_baseline_groups_24};
+    //private Intent[] sportactivity={new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class)};
 
 
 
@@ -87,8 +87,9 @@ public class sportFragment extends Fragment {
        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               //FragmentManager fm = getActivity().getSupportFragmentManager();
-              // fm.beginTransaction().replace(R.id.Sport_layout, new Sport1Fragment()).addToBackStack(null).commit();
+
+               Intent intent=new Intent(getActivity(), Sport1.class) ;
+               startActivity(intent);
            }
        });
 
@@ -120,12 +121,12 @@ public class sportFragment extends Fragment {
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return sportname[position];
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
@@ -141,5 +142,6 @@ public class sportFragment extends Fragment {
 
             return convertView;
         }
+
     }
 }
