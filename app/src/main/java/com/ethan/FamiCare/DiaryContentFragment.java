@@ -23,9 +23,18 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ethan.FamiCare.Post.Posts;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 public class DiaryContentFragment extends Fragment {
 
@@ -74,6 +83,7 @@ public class DiaryContentFragment extends Fragment {
     Bitmap bitmap;
     private static final int TAKE_PHOTO_REQUEST = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri selectedImageUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,21 +190,35 @@ public class DiaryContentFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
-                ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
-                imageView.setImageBitmap(bitmap);
-                Save_Photo(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK && data != null) {
-            //照片放到DiaryFragment，並存到本地端
-            bitmap = (Bitmap) data.getExtras().get("data");
+            selectedImageUri = data.getData();
             ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
-            imageView.setImageBitmap(bitmap);
-            Save_Photo(bitmap);
+            imageView.setImageURI(selectedImageUri);
+
+            // 上傳照片到 Firebase Storage 並取得下載 URL
+            uploadPost();
+
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+//                imageView.setImageBitmap(bitmap);
+//                Save_Photo(bitmap);
+
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+        } else if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK && data != null) {
+            // 上傳照片到 Firebase Storage 並取得下載 URL
+            selectedImageUri = data.getData();
+            ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
+//            imageView.setImageURI(selectedImageUri);
+
+            // 上傳照片到 Firebase Storage 並取得下載 URL
+//            uploadPost(selectedImageUri);
+
+            //照片放到DiaryFragment，並存到本地端
+//            bitmap = (Bitmap) data.getExtras().get("data");
+//            imageView.setImageBitmap(bitmap);
+//            Save_Photo(bitmap);
         }
     }
 
@@ -218,6 +242,49 @@ public class DiaryContentFragment extends Fragment {
         diary = diaryDoa.getDiaryById(photoId);//拿到剛儲存的日期
         diary.setPhotoPath(file.getAbsolutePath());
         diaryDoa.updateDiary(diary);
+    }
+
+
+    //實現 uploadPhoto 方法，使用 Firebase Storage 將照片上傳到雲端並取得下載 URL，最後將整個Post傳到firebase
+    private void uploadPost() {
+
+        // 建立 Firebase Storage 的參考，用於上傳圖片
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+        // 建立一個隨機的檔名，避免檔名重複
+        String randomFileName = UUID.randomUUID().toString();
+
+        // 建立上傳圖片的參考
+        StorageReference imageReference = storageReference.child("images/" + randomFileName);
+
+
+        // 上傳照片到 Firebase Storage
+        imageReference.putFile(selectedImageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+//                         創建 Post 對象並上傳到 Firebase Realtime Database
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts").push();
+                        String key = databaseReference.getKey();
+                        Posts post = new Posts(date, title.getText().toString(), content.getText().toString());
+                        databaseReference.child(key).setValue(post);
+
+                        // 照片上傳成功，取得下載 URL
+//                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                String photoUrl = uri.toString();
+//
+//                                // 創建 Post 對象並上傳到 Firebase Realtime Database
+//                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("posts").push();
+//                                String key = databaseReference.getKey();
+//                                Posts post = new Posts(date, title.getText().toString(), content.getText().toString(), photoUrl);
+//                                databaseReference.child(key).setValue(post);
+//                            }
+//                        });
+                    }
+                });
     }
 
 }
