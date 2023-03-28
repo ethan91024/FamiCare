@@ -3,9 +3,7 @@ package com.ethan.FamiCare;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ethan.FamiCare.databinding.FragmentSettingsLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,9 +33,8 @@ public class Login extends AppCompatActivity {
     public Login() {
         // Required empty public constructor
     }
-    FragmentSettingsLoginBinding binding;
     TextInputLayout email, password;
-    Button login, signup;
+    Button login, cancel;
     FirebaseAuth auth;
     FirebaseDatabase database;
     ImageView google_img;
@@ -46,21 +42,19 @@ public class Login extends AppCompatActivity {
     GoogleSignInClient gsc;
 
 
-    public void onCreate(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_settings_login, container, false);
+        setContentView(R.layout.activity_login2);
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        google_img = findViewById(R.id.google);
 
-        setContentView(R.layout.fragment_settings_login);
-        auth=FirebaseAuth.getInstance();
-        database= FirebaseDatabase.getInstance();
-        google_img=view.findViewById(R.id.google);
-
-        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-        gsc= GoogleSignIn.getClient(Login.this,gso);
+        gsc = GoogleSignIn.getClient(Login.this, gso);
 
         google_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,14 +64,12 @@ public class Login extends AppCompatActivity {
         });
 
 
-
         //1
-        email = view.findViewById(R.id.email);
-        password = view.findViewById(R.id.password);
-        login = view.findViewById(R.id.loginb);
-        signup = view.findViewById(R.id.signup);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.loginb);
+        cancel = findViewById(R.id.cancelb);
         auth = FirebaseAuth.getInstance();
-
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +84,7 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login.this, "Login successd!", Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(Login.this, Login.class);
+                            Intent intent = new Intent(Login.this, GroupFragment.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
@@ -103,14 +95,13 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Signup.class);
+                Intent intent = new Intent(Login.this, GroupFragment.class);
                 startActivity(intent);
             }
         });
-
     }
 
 
@@ -159,6 +150,5 @@ public class Login extends AppCompatActivity {
                     }
                 });
     }
-
 
 }

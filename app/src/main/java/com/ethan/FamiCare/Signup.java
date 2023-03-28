@@ -2,9 +2,7 @@ package com.ethan.FamiCare;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,22 +27,20 @@ public class Signup extends AppCompatActivity {
     FirebaseDatabase database;
 
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_settings_signup, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        email = view.findViewById(R.id.email);
-        password = view.findViewById(R.id.password);
-        cancel= view.findViewById(R.id.cancel);
-        signup = view.findViewById(R.id.signupb);
+        setContentView(R.layout.activity_signup2);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        cancel= findViewById(R.id.cancel);
+        signup = findViewById(R.id.signupb);
         auth = FirebaseAuth.getInstance();
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Signup.this, Login.class);
+                Intent intent = new Intent(Signup.this, GroupFragment.class);
                 startActivity(intent);
-
 
             }
         });
@@ -64,7 +60,7 @@ public class Signup extends AppCompatActivity {
                             String id=task.getResult().getUser().getUid();
                             database.getInstance().getReference().child("Users").push().child(id).setValue(user);
                             Toast.makeText(Signup.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Signup.this, Login.class);
+                            Intent intent = new Intent(Signup.this, GroupFragment.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Signup.this, "Failed!" + task.getException(), Toast.LENGTH_LONG).show();
@@ -74,8 +70,7 @@ public class Signup extends AppCompatActivity {
                 });
             }
         });
-        return view;
     }
-    }
+}
 
 
