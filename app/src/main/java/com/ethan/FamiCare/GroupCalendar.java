@@ -128,8 +128,8 @@ public class GroupCalendar extends AppCompatActivity {
                     }
                 });
 
-        /*
-        if(isTokenEmpty(token)==true){
+
+       /* if(isTokenEmpty(token)==false){
             try {
                 FCMaddgroup.addgroup(
                         GroupCalendar.this,
@@ -142,7 +142,7 @@ public class GroupCalendar extends AppCompatActivity {
         }else{
             Toast.makeText(GroupCalendar.this,"已經加入過", Toast.LENGTH_SHORT).show();
         }
-        */
+*/
 
         // Check if the activity was started from a notification
         if(getIntent().getExtras() != null) {
@@ -226,6 +226,7 @@ public class GroupCalendar extends AppCompatActivity {
 
                                             }
                                         }
+
                                     }
 
                                     @Override
@@ -374,9 +375,10 @@ public class GroupCalendar extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     CalendarDB calendarDB = ds.getValue(CalendarDB.class);
                     if (calendarDB.getToken() == token) {
-                        return;
+                        return ;
                     }
                 }
+
             }
 
             @Override
@@ -384,7 +386,7 @@ public class GroupCalendar extends AppCompatActivity {
 
             }
         });
-        return true;
+        return false;
     }
 
 }

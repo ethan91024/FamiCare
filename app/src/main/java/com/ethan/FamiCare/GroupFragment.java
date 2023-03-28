@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ethan.FamiCare.ChatGPT.ChatGPTActivity;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.Firebasecords.UsersAdapter;
 import com.ethan.FamiCare.databinding.FragmentGroupBinding;
@@ -115,8 +114,8 @@ public class GroupFragment extends Fragment {
         binding.ChatGPT.findViewById(R.id.ChatGPT).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChatGPTActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getActivity(), ChatGPTActivity.class);
+                //startActivity(intent);
             }
         });
 

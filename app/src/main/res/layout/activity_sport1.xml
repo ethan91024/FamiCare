@@ -14,44 +14,53 @@
         android:textSize="25dp"
         android:gravity="center"
         android:layout_marginVertical="10dp"/>
-
-    
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <ImageView
-           android:id="@+id/sport1_img"
-           android:layout_width="match_parent"
-           android:layout_height="100dp"
-           android:scaleType="centerCrop"/>
-
-       <View
-           android:layout_width="match_parent"
-           android:layout_height="20dp"
-           android:id="@+id/empty"
-           android:layout_below="@+id/sport1_img"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="請跟著以下動畫做運動"
+        android:textSize="10dp"
+        android:gravity="center"
+        android:layout_marginVertical="5dp"/>
 
 
-      <TextView
-          android:id="@+id/textview_countdown"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
-          android:layout_below="@+id/empty"
-          android:gravity="center"
-          android:textStyle="bold"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-   </RelativeLayout>
+
+        <ImageSwitcher
+            android:id="@+id/sport1_imgswitcher"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:id="@+id/empty"
+            android:layout_below="@+id/sport1_imgswitcher"/>
+
+
+        <TextView
+            android:id="@+id/textview_countdown"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/empty"
+            android:gravity="center"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp">
+        android:layout_height="5dp">
 
     </LinearLayout>
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <Button
             android:id="@+id/start"
             android:layout_width="0dp"
@@ -67,7 +76,6 @@
             android:layout_weight="5"
             android:layout_marginHorizontal="7dp"
             android:text="重置"
-
             android:textStyle="bold"/>
 
     </LinearLayout>
