@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class Signup extends AppCompatActivity {
     public Signup() {
@@ -27,6 +28,7 @@ public class Signup extends AppCompatActivity {
     Button cancel, signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    String token;//紀錄裝置
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,26 @@ public class Signup extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        token = task.getResult();
+                        System.out.println("Token=" + token);
+                       /* FCMaddgroup.addgroup(
+                                Signup.this,
+                                "add",
+                                token
+                        );
+
+                        */
+                    }
+                });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +86,7 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Users user = new Users(u, e, p);
+                                Users user = new Users(u, e, p,token);
                                 String id = task.getResult().getUser().getUid();
                                 database.getReference().child("Users").child(id).setValue(user);
                                 Toast.makeText(Signup.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
