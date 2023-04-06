@@ -125,24 +125,22 @@ public class GroupCalendar extends AppCompatActivity {
                         }
                         token = task.getResult();
                         System.out.println("Token=" + token);
+                        FCMaddgroup.addgroup(
+                                GroupCalendar.this,
+                                "add",
+                                token
+                        );
+
                     }
                 });
 
+        //if(isTokenEmpty(token)==true){
 
-       /* if(isTokenEmpty(token)==false){
-            try {
-                FCMaddgroup.addgroup(
-                        GroupCalendar.this,
-                        "add",
-                        token
-                );
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-            Toast.makeText(GroupCalendar.this,"已經加入過", Toast.LENGTH_SHORT).show();
-        }
-*/
+
+       // }else{
+         //   Toast.makeText(GroupCalendar.this,"已經加入過", Toast.LENGTH_SHORT).show();
+        //}
+
 
         // Check if the activity was started from a notification
         if(getIntent().getExtras() != null) {
@@ -367,7 +365,7 @@ public class GroupCalendar extends AppCompatActivity {
         adapter = new SimpleAdapter(this, arrayList, R.layout.event_item, from, to);
         listView.setAdapter(adapter);
     }
-
+/*
     private boolean isTokenEmpty(String token) {
         myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
             @Override
@@ -388,5 +386,7 @@ public class GroupCalendar extends AppCompatActivity {
         });
         return false;
     }
+
+ */
 
 }
