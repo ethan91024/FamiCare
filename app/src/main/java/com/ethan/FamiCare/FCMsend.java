@@ -45,7 +45,6 @@ public class FCMsend {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
                 }
                 }){
                 @Override
