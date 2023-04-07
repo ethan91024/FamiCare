@@ -1,8 +1,12 @@
 package com.ethan.FamiCare;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -77,7 +83,7 @@ public class MoodFragment extends Fragment {
     private TextView breathe;
    // private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的
 
-    private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()};
+    private Fragment advice_fm[]={new sportFragment()};
     private TextView sport;//nai
 
 
@@ -156,17 +162,20 @@ public class MoodFragment extends Fragment {
         advice.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[0]).addToBackStack(null).commit();
-            }
+//               FragmentManager fm = getActivity().getSupportFragmentManager();
+//               fm.beginTransaction().replace(R.id.Mood_layout, new MeditationFragment()).addToBackStack(null).commit();
+               Intent intent = new Intent(getActivity(), Meditation.class);
+               startActivity(intent);
+
+           }
         });
         //跳轉呼吸介面
         breathe = mainview.findViewById(R.id.Breathe);
         breathe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm=getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[1]).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), Breathe.class);
+                startActivity(intent);
             }
         });
 
@@ -177,7 +186,7 @@ public class MoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fm=getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[2]).addToBackStack(null).commit();
+                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[0]).addToBackStack(null).commit();
             }
         });
 
@@ -434,6 +443,20 @@ public class MoodFragment extends Fragment {
 
 
         }
+    }
+    public void onResume() {
+        Log.e(TAG,"心情---onResume");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e(TAG,"心情---onPause");
+        super.onPause();
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.e(TAG,"心情---onViewCreated");
+        super.onViewCreated(view, savedInstanceState);
     }
 }
 
