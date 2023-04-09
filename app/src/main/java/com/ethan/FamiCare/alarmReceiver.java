@@ -12,6 +12,8 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.ArrayList;
+
 public class alarmReceiver extends BroadcastReceiver {
 
     @Override
@@ -19,16 +21,18 @@ public class alarmReceiver extends BroadcastReceiver {
 
         String event = intent.getStringExtra("event");
         String time = intent.getStringExtra("time");
+        ArrayList<String> object=intent.getStringArrayListExtra("object");
 
         if(!event.equals("") && !time.equals("")) {
             FCMsend.pushNotification(
                     context,
-                    "APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4",
+                    object,
                     event,
                     time
             );
         }
 
+        //"APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4"
         NotificationHelper notificationHelper=new NotificationHelper(context);
         NotificationCompat.Builder nb=notificationHelper.notificationChannelBuild(event,time);
         Intent intent1=new Intent(context,GroupCalendar.class);

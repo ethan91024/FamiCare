@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.ethan.FamiCare.Firebasecords.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,8 +42,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 import org.json.JSONException;
 
@@ -92,6 +96,9 @@ public class GroupCalendar extends AppCompatActivity {
     String titlevalue;
     String bodyvalue;
 
+    ArrayList<String> getalluser;
+    ArrayList<String> getalltoken;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,12 +132,14 @@ public class GroupCalendar extends AppCompatActivity {
                         }
                         token = task.getResult();
                         System.out.println("Token=" + token);
-                        FCMaddgroup.addgroup(
+                       /* FCMaddgroup.addgroup(
                                 GroupCalendar.this,
                                 "add",
                                 token
                         );
 
+
+                        */
                     }
                 });
 
@@ -149,6 +158,8 @@ public class GroupCalendar extends AppCompatActivity {
             checknoti.setText("今日行程:\t" + titlevalue + "\t時間:" + bodyvalue + "\t已通知");
         }
 
+        //得到所有通知對象
+       getAlluser();
 
         //監聽日期改變
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -218,7 +229,7 @@ public class GroupCalendar extends AppCompatActivity {
                                         for (DataSnapshot ds : snapshot.getChildren()) {
                                             CalendarDB calendarDB = ds.getValue(CalendarDB.class);
                                             if (calendarDB.getEvent().equals(event) && calendarDB.getId().equals(date)) {
-                                                String path = ds.getKey();
+                                                String path = ds.getKey();//第一層
                                                 Toast.makeText(GroupCalendar.this, path, Toast.LENGTH_SHORT).show();
                                                 myRef.child("Calendar").child(path).removeValue();
 
@@ -267,7 +278,12 @@ public class GroupCalendar extends AppCompatActivity {
                 String[] date1 = date.split("/");
                 int month = Integer.parseInt(date1[0]) - 1;
 
-                if (!(addevent_text.isEmpty() && time4.isEmpty())) {
+
+                    getDialog(addevent_text, time4, month, date1);
+
+
+                /*
+
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
                     //给每个闹钟设置不同ID防止覆盖
@@ -309,10 +325,135 @@ public class GroupCalendar extends AppCompatActivity {
                     Toast.makeText(GroupCalendar.this, text, Toast.LENGTH_SHORT).show();
 
                 }
+
+                 */
             }
         });
 
 
+    }
+
+    private void getAlluser() {
+        getalluser=new ArrayList<>();
+        getalltoken=new ArrayList<>();
+        getalluser.add(0,"All");
+        getalltoken.add(0,"APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4");
+
+        myRef.child("Users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Users user1 = snapshot1.getValue(Users.class);
+                            getalluser.add(user1.getUsername());
+                            getalltoken.add(user1.getToken());
+                           // System.out.println("Added user: " + user1.getUsername());
+                    }
+                    System.out.println("getalluser->" + getalluser.toString());
+                    System.out.println("getalluser->" + getalltoken.toString());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+
+    private void getDialog(String addevent_text,String time4,int month,String[] date1) {
+        String[] users = getalluser.toArray(new String[getalluser.size()]);
+        String[] tokens = getalltoken.toArray(new String[getalltoken.size()]);
+        boolean[] checkitems=new boolean[getalluser.size()];
+        for (int i=0;i<checkitems.length;i++){
+            checkitems[i]=false;
+        }
+
+        AlertDialog.Builder alertDialog=new AlertDialog.Builder(GroupCalendar.this);
+        alertDialog.setCancelable(false);
+        alertDialog.setTitle("通知對象");
+        alertDialog.setMultiChoiceItems(users, checkitems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    checkitems[which]=isChecked;
+            }
+        });
+          alertDialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                  //StringBuilder sb = new StringBuilder();
+                  //String delimiter = ",";
+                  ArrayList<String> object=new ArrayList<>();
+                  if(checkitems[0]){
+                      object.add(tokens[0]);
+                  }else {
+                      for (int j = 1; j < checkitems.length; j++) {
+                          if (checkitems[j]) {
+                              object.add(tokens[j]);
+                          }
+                      }
+                  }
+                    System.out.println(object.toString());
+                    setAlarm(addevent_text,time4,month,date1,object);
+                    dialog.dismiss();
+              }
+          });
+          alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                  dialog.dismiss();
+              }
+          });
+          alertDialog.create().show();
+
+    }
+
+
+    private void setAlarm(String addevent_text,String time4,int month,String[] date1,ArrayList<String> object){
+        if (!(addevent_text.isEmpty() && time4.isEmpty())) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            //给每个闹钟设置不同ID防止覆盖
+            int alarmId = SharedPreUtils.getInt(GroupCalendar.this, "alarm_id", 0);
+            SharedPreUtils.setInt(GroupCalendar.this, "alarm_id", ++alarmId);
+
+
+            //notificationId & message
+            Intent intent = new Intent(GroupCalendar.this, alarmReceiver.class);
+            intent.putExtra("event", addevent_text);
+            intent.putExtra("time", time4);
+            intent.putExtra("object", object);
+
+
+            //PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, alarmId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+            String[] time5 = time4.split(":");//ex:14:28
+            int hour = Integer.parseInt(time5[0]);
+            int minute = Integer.parseInt(time5[1]);
+
+            //create time
+            Calendar starttime = Calendar.getInstance();
+            starttime.set(Calendar.MONTH, month);
+            starttime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date1[1]));
+            starttime.set(Calendar.HOUR_OF_DAY, hour);
+            starttime.set(Calendar.MINUTE, minute);
+            starttime.set(Calendar.SECOND, 0);
+            starttime.set(Calendar.MILLISECOND, 0);
+            long alarmStartTime = starttime.getTimeInMillis();
+
+
+            //Set Alarm
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+
+
+            String text = (starttime.get(Calendar.MONTH) + 1) + "月"
+                    + starttime.get(Calendar.DAY_OF_MONTH) + "日\n"
+                    + starttime.get(Calendar.HOUR_OF_DAY) + ":"
+                    + starttime.get(Calendar.MINUTE);
+            Toast.makeText(GroupCalendar.this, text, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 
