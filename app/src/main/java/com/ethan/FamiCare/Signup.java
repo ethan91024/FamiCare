@@ -55,13 +55,13 @@ public class Signup extends AppCompatActivity {
                         }
                         token = task.getResult();
                         System.out.println("Token=" + token);
-                       /* FCMaddgroup.addgroup(
+                        FCMaddgroup.addgroup(
                                 Signup.this,
                                 "add",
                                 token
                         );
 
-                        */
+
                     }
                 });
 
