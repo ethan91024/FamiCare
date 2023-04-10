@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ethan.FamiCare.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -56,10 +57,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         System.out.println(post.getTitle() + "-------------------------------------------------");
         holder.usertitle.setText(post.getTitle());
         holder.usercontent.setText(post.getContent());
-        holder.userphoto.setBackgroundColor(Color.BLACK);
-//        Glide.with(context)
-//                .load(post.getPhotoUrl())
-//                .into(holder.userphoto);
+//        holder.userphoto.setBackgroundColor(Color.BLACK);
+        Glide.with(context)
+                .load(post.getphotoUrl())
+                .into(holder.userphoto);
     }
 
     @Override

@@ -4,16 +4,16 @@ public class Posts {
     private int Id;
     private String Title;
     private String Content;
-//    public String PhotoUrl;
+    public String photoUrl;
 
     public Posts() {
     }
 
-    public Posts(int id, String title, String content) {
+    public Posts(int id, String title, String content, String photoUrl) {
         this.Id = id;
         this.Title = title;
         this.Content = content;
-//        this.PhotoUrl = photoUrl;
+        this.photoUrl = photoUrl;
     }
 
     public int getId() {
@@ -40,12 +40,12 @@ public class Posts {
         this.Content = content;
     }
 
-//    public String getPhotoUrl() {
-//        return PhotoUrl;
-//    }
-//
-//    public void setPhotoUrl(String photoUrl) {
-//        this.PhotoUrl = photoUrl;
-//    }
+    public String getphotoUrl() {
+        return photoUrl;
+    }
+
+    public void setphotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
 }
