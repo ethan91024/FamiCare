@@ -63,37 +63,17 @@ public class DiaryPostsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary_posts, container, false);
 
-//        diaries = new ArrayList<>();
-//
-//        //資料庫
-//        diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
-//
-//        //拿今天日期
-//        Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        DiaryFragment diaryFragment = new DiaryFragment();
-//        int selected_date = diaryFragment.getSelected_date(year, month, day);//今天日期
-//
-//        diaries.add(diaryDoa.getDiaryById(selected_date));
-//        postrecycler = view.findViewById(R.id.PostRecycler);
-//        postAdapter = new PostAdapter(diaries);
-//        postrecycler.setAdapter(postAdapter);
-//
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        postrecycler.setLayoutManager(layoutManager);
-
-
         // Initialize database reference
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Posts");
 
         // Initialize the RecyclerView and Adapter
         recyclerView = view.findViewById(R.id.PostRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts);
+        postAdapter = new PostAdapter(getContext(), posts, recyclerView);
         recyclerView.setAdapter(postAdapter);
 
         // Attach database listener
@@ -104,9 +84,14 @@ public class DiaryPostsFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Posts post = snapshot.getValue(Posts.class);
                     posts.add(post);
-
                 }
                 postAdapter.notifyDataSetChanged();
+
+                // 如果有資料就滾動到最上方
+                if (posts.size() > 0) {
+                    int latestPosition = postAdapter.getItemCount() - 1;
+                    recyclerView.scrollToPosition(latestPosition);
+                }
             }
 
             @Override

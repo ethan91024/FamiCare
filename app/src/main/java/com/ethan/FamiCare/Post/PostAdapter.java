@@ -20,11 +20,12 @@ import java.util.ArrayList;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     Context context;
     ArrayList<Posts> posts;
+    RecyclerView recyclerView;
 
-    public PostAdapter(Context context, ArrayList<Posts> posts) {
+    public PostAdapter(Context context, ArrayList<Posts> posts, RecyclerView recyclerView) {
         this.context = context;
         this.posts = posts;
-//        notifyDataSetChanged();//not sure
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -37,27 +38,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        try {
-//            Diary diary = posts.get(position);
-//            holder.username.setText(diary.getTitle());//之後要改成使用者的名稱
-//            holder.usercontent.setText(diary.getContent());
-//
-//            //圖片
-//            if (diary.getPhotoPath() != null) {
-//                File imageFile2 = new File(diary.getPhotoPath());
-//                Bitmap bitmap = BitmapFactory.decodeFile(imageFile2.getAbsolutePath());
-//                holder.userphoto.setImageBitmap(bitmap);
-//            } else {
-//                holder.userphoto.setImageDrawable(null);
-//            }
-//        } catch (Exception e) {
-//        }
 
         Posts post = posts.get(position);
         System.out.println(post.getTitle() + "-------------------------------------------------");
         holder.usertitle.setText(post.getTitle());
         holder.usercontent.setText(post.getContent());
-//        holder.userphoto.setBackgroundColor(Color.BLACK);
         Glide.with(context)
                 .load(post.getphotoUrl())
                 .into(holder.userphoto);
