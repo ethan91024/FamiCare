@@ -40,6 +40,8 @@ public class Meditation extends AppCompatActivity {
 
         ImageView sea_an = findViewById(R.id.Sea_animation); //首頁預設圖片
         sea_an.setBackgroundResource(R.drawable.sea);   //sea的動畫
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 55, 0);
 
 
         timer = findViewById(R.id.timer);
@@ -49,6 +51,7 @@ public class Meditation extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                System.out.println("開始");
                 sea_an.setBackgroundResource(R.drawable.sea_animation);
                 seaAnimation = (AnimationDrawable) sea_an.getBackground();
                 if (t == null || !t.isAlive()) {
@@ -58,9 +61,9 @@ public class Meditation extends AppCompatActivity {
 //                        sea_sound = MediaPlayer.create(Meditation.this, R.raw.sea_sound);
 //                        System.out.println("create music");
 //                    }
-//                    seaAnimation.start();
+                    seaAnimation.start();
 
-                  startPlaying();
+                 startPlaying();
 
                 }
 
@@ -87,13 +90,16 @@ public class Meditation extends AppCompatActivity {
             }
             sea_sound.start();
 
-//            if(sea_sound.isPlaying()){
-//                System.out.println("music_start");
-//            }
+            if(sea_sound.isPlaying()){
+                System.out.println("music_start");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     class CountThread extends Thread { //計時器
 
@@ -107,6 +113,7 @@ public class Meditation extends AppCompatActivity {
             int time_cnt = 0;
             while (running) {
                 if (++time_cnt > (60 * Double.parseDouble(String.valueOf(timer.getText())))) {
+                    System.out.println(time_cnt);
                     seaAnimation.stop();
                     break;
                 }
@@ -126,9 +133,9 @@ public class Meditation extends AppCompatActivity {
             seaAnimation.stop();
             if (sea_sound != null) {
                 sea_sound.stop();
-//                if(!sea_sound.isPlaying()){
-//                    System.out.println("music_stop");
-//                }
+                if(!sea_sound.isPlaying()){
+                    System.out.println("music_stop");
+                }
                 sea_sound.release();
                 sea_sound = null;
 
@@ -151,5 +158,12 @@ public class Meditation extends AppCompatActivity {
         Log.e(TAG, "冥想---onPause");
         super.onPause();
     }
+    @Override
+    protected void onDestroy() {
+        System.out.println("onDestroy");
+        super.onDestroy();
+        sea_sound.release();
+    }
+
 
 }
