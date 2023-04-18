@@ -1,10 +1,14 @@
 package com.ethan.FamiCare.Post;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Posts {
     private int Id;
     private String Title;
     private String Content;
-    public String photoUrl;
+    private String photoUrl;
+    private List<Comment> comments;
 
     public Posts() {
     }
@@ -14,6 +18,7 @@ public class Posts {
         this.Title = title;
         this.Content = content;
         this.photoUrl = photoUrl;
+        this.comments = new ArrayList<>();
     }
 
     public int getId() {
@@ -48,4 +53,11 @@ public class Posts {
         this.photoUrl = photoUrl;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

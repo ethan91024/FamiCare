@@ -25,7 +25,7 @@ public class Meditation extends AppCompatActivity {
     private AnimationDrawable seaAnimation;
     CountThread t = null;
     int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
-    MediaPlayer sea_sound ;
+    MediaPlayer sea_sound;
     private Button back;
     private EditText timer;
     private Button stop_counting;
@@ -43,7 +43,7 @@ public class Meditation extends AppCompatActivity {
 
 
         timer = findViewById(R.id.timer);
-        stop_counting=findViewById(R.id.stop_counting);
+        stop_counting = findViewById(R.id.stop_counting);
 //        sea_sound = MediaPlayer.create(this, R.raw.sea_sound);
         count_time.setOnClickListener(new View.OnClickListener() {
 
@@ -58,9 +58,9 @@ public class Meditation extends AppCompatActivity {
 //                        sea_sound = MediaPlayer.create(Meditation.this, R.raw.sea_sound);
 //                        System.out.println("create music");
 //                    }
-//                    seaAnimation.start();
+                    seaAnimation.start();
 
-                  startPlaying();
+                    startPlaying();
 
                 }
 
@@ -69,7 +69,7 @@ public class Meditation extends AppCompatActivity {
         stop_counting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(t!=null) {
+                if (t != null) {
                     t.SetRunning(false);
                 }
 
@@ -77,9 +77,8 @@ public class Meditation extends AppCompatActivity {
         });
 
 
-
-
     }
+
     private void startPlaying() {
         try {
             if (sea_sound == null) {

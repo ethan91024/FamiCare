@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +47,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Glide.with(context)
                 .load(post.getphotoUrl())
                 .into(holder.userphoto);
+
+        // 設置留言的 RecyclerView
+        if(post.getComments() != null){
+            CommentAdapter commentAdapter = new CommentAdapter(post.getComments(), context);
+            holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+            holder.commentRecyclerView.setAdapter(commentAdapter);
+        }
+
     }
 
     @Override
@@ -57,12 +66,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public TextView usertitle;
         public ImageView userphoto;
         public TextView usercontent;
+        public RecyclerView commentRecyclerView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             usertitle = itemView.findViewById(R.id.UserTitle);
             userphoto = itemView.findViewById(R.id.UserPhoto);
             usercontent = itemView.findViewById(R.id.UserContent);
+            commentRecyclerView = itemView.findViewById(R.id.comments_recycler_view);
         }
     }
 }
