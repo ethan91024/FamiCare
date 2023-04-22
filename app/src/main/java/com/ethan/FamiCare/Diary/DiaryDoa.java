@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Diary;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -10,7 +10,6 @@ import java.util.List;
 
 @Dao
 public interface DiaryDoa {
-
     @Insert
     long insertDiary(Diary diary);
 
@@ -23,10 +22,12 @@ public interface DiaryDoa {
     @Query("SELECT * FROM diaries")
     List<Diary> getDiaries();
 
-    @Query("SELECT * FROM diaries WHERE id LIKE :diary_id")
-    Diary getDiaryById(int diary_id);
+    @Query("SELECT * FROM diaries WHERE id = :diary_id")
+    List<Diary> getDiariesById(int diary_id);
 
-    @Query("DELETE FROM diaries WHERE id = :diary_id")
-    void deleteDiaryById(int diary_id);
+    @Query("SELECT * FROM diaries WHERE id = :id AND title = :title")
+    Diary getDiaryByIdAndTitle(int id, String title);
 
+    @Query("DELETE FROM diaries WHERE id = :id AND title = :title")
+    void deleteDiaryByIdAndTitle(int id, String title);
 }

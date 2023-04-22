@@ -1,126 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Diary_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".DiaryFragment">
 
-    <!---->
-    <!--生活點滴 比例1-->
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-        <!--生活點滴 比例1-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:gravity="bottom"
-            android:text="生活點滴"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+        android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/cal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginHorizontal="7dp"
-            android:clickable="true"
-            android:text="行事曆"
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/look"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查看他人" />
-
-    </LinearLayout>
-
-    <!--生活點滴以下 比例9-->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!--選擇日期  比例0.5-->
-        <TextView
-            android:id="@+id/cal_fold"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="選擇日期"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <!--行事曆  比例6.5  id="@+id/calender-->
-        <CalendarView
-            android:id="@+id/calender"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6.5"
-            android:visibility="visible" />
-
-
-        <!--日記資料  比例2  可以滾動-->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2">
-
+            <!--生活點滴-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <!--顯示日期和標題，可以點進去寫日記內容  比例1-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:gravity="bottom"
+                    android:text="生活點滴"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
-                    <!--日期  比例2  id="@+id/date-->
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="日期"
-                        android:textSize="20sp" />
+                <Button
+                    android:id="@+id/cal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="7dp"
+                    android:clickable="true"
+                    android:text="行事曆"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
-                    <!--日記標題  比例6 id="@+id/title"-->
-                    <Button
-                        android:id="@+id/title"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="8"
-                        android:clickable="true"
-                        android:gravity="center_vertical|left"
-                        android:text="尚未命名標題"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:background="@null" />
+                <Button
+                    android:id="@+id/look"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看他人" />
 
             </LinearLayout>
 
-        </ScrollView>
+            <!--選擇日期-->
+            <TextView
+                android:id="@+id/cal_fold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="選擇日期"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <!--行事曆-->
+            <CalendarView
+                android:id="@+id/calender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible" />
 
-    </LinearLayout>
+            <!--日期-->
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="日期"
+                android:textSize="20sp" />
 
-</LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--Floating Action Button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@android:color/white" />
+
+</RelativeLayout>
