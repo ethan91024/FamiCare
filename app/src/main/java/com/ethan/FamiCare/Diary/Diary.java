@@ -1,20 +1,24 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Diary;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 //日記類別
-@Entity(tableName = "diaries")
+@Entity(tableName = "diaries", primaryKeys = {"id", "title"})
 public class Diary {
-    @PrimaryKey//用日期當id
+    @ColumnInfo(name = "id")
     private int id;
+
     @ColumnInfo(name = "title")
+    @NonNull
     private String title;
+
     @ColumnInfo(name = "content")
     private String content;
+
     @ColumnInfo(name = "photo_path")
-    private String photoPath; // 新增的照片路徑
+    private String photoPath;
 
     public Diary() {
     }
@@ -30,8 +34,8 @@ public class Diary {
         return id;
     }
 
-    public void setId(int date) {
-        this.id = date;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -61,10 +65,10 @@ public class Diary {
     @Override
     public String toString() {
         return "Diary{" +
-                "date = " + id +
-                ", title = " + title +
-                ", content = " + content +
-                ", photoPath = " + photoPath +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", photoPath='" + photoPath + '\'' +
                 '}';
     }
 }

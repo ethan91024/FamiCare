@@ -3,25 +3,18 @@ package com.ethan.FamiCare;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
@@ -29,13 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.ethan.FamiCare.Diary.Diary;
+import com.ethan.FamiCare.Diary.DiaryDB;
+import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.Post.Posts;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -43,7 +38,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 public class DiaryContentFragment extends Fragment {
 
@@ -74,15 +68,19 @@ public class DiaryContentFragment extends Fragment {
         }
     }
 
-    private int date;
+
     private Diary temp;
     public static final String NOTE_EXTRA_key = "note_id";
     private boolean status;
 
     //Layout 元素
-    Button save_diary;
-    EditText title;
-    MultiAutoCompleteTextView content;
+    private Button save_diary;
+    private EditText title;
+    private MultiAutoCompleteTextView content;
+
+    //Bundle
+    private int date;
+    private String t;
 
     //資料庫
     private DiaryDoa diaryDoa;
@@ -97,8 +95,6 @@ public class DiaryContentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary_content, container, false);
 
-        Bundle arguments = getArguments();
-        date = arguments.getInt("id");
         title = view.findViewById(R.id.Title);
         content = view.findViewById(R.id.Content);
 
@@ -109,16 +105,23 @@ public class DiaryContentFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference("Posts");
         databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
 
+        //接收Bundle
+        Bundle arguments = getArguments();
         if (arguments != null) {
             status = arguments.getBoolean("edited", false);
+
+            if (status) {
+                date = arguments.getInt("id");
+                t = arguments.getString("title");
+                temp = diaryDoa.getDiaryByIdAndTitle(date, t);
+                title.setText(temp.getTitle());
+                content.setText(temp.getContent());
+            } else {
+                date = arguments.getInt("id");
+                temp = new Diary();
+            }
         }
-        if (status) {
-            temp = diaryDoa.getDiaryById(date);
-            title.setText(temp.getTitle());
-            content.setText(temp.getContent());
-        } else {
-            temp = new Diary();
-        }
+
 
         //按下按鈕後，將標題跟內容處存到資料庫，並跳轉回DiaryFragment
         save_diary.setOnClickListener(new View.OnClickListener() {
@@ -143,9 +146,11 @@ public class DiaryContentFragment extends Fragment {
             temp.setTitle(title_text);
             temp.setContent(content_text);
             temp.setPhotoPath(null);//先設定為空值
-            if (status) {//更新或創建
+
+            //若編輯過，更新，否則創建
+            if (status) {//更新
                 diaryDoa.updateDiary(temp);
-            } else {
+            } else {//創建
                 DiaryDB.getInstance(getContext()).diaryDoa().insertDiary(temp);
             }
         } else {
@@ -162,7 +167,8 @@ public class DiaryContentFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
 
-    //上傳照片
+
+    //上傳照片或相簿挑選或直接離開編輯
     private void Call_AlertDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle("紀錄今天的你")
@@ -174,6 +180,7 @@ public class DiaryContentFragment extends Fragment {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, TAKE_PHOTO_REQUEST);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
+
                         fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
                     }
                 })
@@ -186,6 +193,7 @@ public class DiaryContentFragment extends Fragment {
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
                         FragmentManager fm = getActivity().getSupportFragmentManager();
+
                         fm.beginTransaction().addToBackStack(null).replace(R.id.Diary_content_layout, new DiaryFragment()).commit();
                     }
                 })
@@ -201,6 +209,7 @@ public class DiaryContentFragment extends Fragment {
                 .show();
     }
 
+
     //跳轉到相機或是相簿
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -215,8 +224,8 @@ public class DiaryContentFragment extends Fragment {
             //照片放到DiaryFragment，並存到本地端
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
-                ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
-                imageView.setImageBitmap(bitmap);
+//                ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
+//                imageView.setImageBitmap(bitmap);
                 Save_Photo(bitmap);
 
             } catch (IOException e) {
@@ -233,25 +242,17 @@ public class DiaryContentFragment extends Fragment {
             uploadPost();
 
             //照片放到DiaryFragment，並存到本地端
-            ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
-            imageView.setImageBitmap(bitmap);
+//            ImageView imageView = (ImageView) getView().findViewById(R.id.image_view);
+//            imageView.setImageBitmap(bitmap);
             Save_Photo(bitmap);
         }
-    }
-
-    //拿到bitmap的URI
-    private Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
     }
 
 
     //將照片存到本地端
     public void Save_Photo(Bitmap bitmap) {
         // 創建一個照片ID
-        int photoId = date;//"20230101"
+        String photoId = date + title.getText().toString();//"20230101" + "日記標題"
 
         // 將照片保存到本地文件系統中
         File file = new File(getContext().getFilesDir(), photoId + ".jpg");
@@ -265,7 +266,7 @@ public class DiaryContentFragment extends Fragment {
         }
 
         // 將照片ID和路徑存儲在資料庫中
-        diary = diaryDoa.getDiaryById(photoId);//拿到剛儲存的日期
+        diary = diaryDoa.getDiaryByIdAndTitle(date, t);//拿到剛儲存的日記
         diary.setPhotoPath(file.getAbsolutePath());
         diaryDoa.updateDiary(diary);
     }
@@ -291,7 +292,7 @@ public class DiaryContentFragment extends Fragment {
                                     databaseReference.child(postId).setValue(new Posts(date, title.getText().toString(), content.getText().toString(), uri.toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Toast.makeText(getContext(), "photo uploaded",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "photo uploaded", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -332,6 +333,15 @@ public class DiaryContentFragment extends Fragment {
 //                });
 
 
+    }
+
+
+    //拿到bitmap的URI
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
     }
 
 }
