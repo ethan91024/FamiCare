@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -113,22 +114,28 @@ public class DiaryFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                if (childView != null && e.getAction() == MotionEvent.ACTION_UP) {
-                    int position = rv.getChildAdapterPosition(childView);
-                    TextView textView = childView.findViewById(R.id.diary_title);
-                    String t = textView.getText().toString();
+                if (rv.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+                    View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                    if (childView != null && e.getAction() == MotionEvent.ACTION_UP) {
+                        int position = rv.getChildAdapterPosition(childView);
+                        TextView textView = childView.findViewById(R.id.diary_title);
+                        String t = textView.getText().toString();
 
-                    DiaryContentFragment diaryContentFragment = new DiaryContentFragment();
-                    Bundle bundle = new Bundle();
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    bundle.putBoolean("edited", true);//被編輯過
-                    bundle.putInt("id", selected_date);
-                    bundle.putString("title", t);
-                    diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
+                        DiaryContentFragment diaryContentFragment = new DiaryContentFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("edited", true);//被編輯過
+                        bundle.putInt("id", selected_date);
+                        bundle.putString("title", t);
+                        diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
 
-                    fm.beginTransaction().replace(R.id.container, diaryContentFragment).commit();
-                    return true;
+                        FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                        fl.removeAllViews();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.add(R.id.container, diaryContentFragment)
+                                .addToBackStack(null)
+                                .commit();
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -154,11 +161,12 @@ public class DiaryFragment extends Fragment {
                 selected_date = getSelected_date(year, month, dayOfMonth);
 
                 //Recycler 的內容會跟著日期改變
-                diaries.clear();
                 if (diaryDoa.getDiariesById(selected_date) != null) {
+                    diaries.clear();
                     diaries = diaryDoa.getDiariesById(selected_date);
                 }
-                diaryAdapter.notifyDataSetChanged();
+                diaryAdapter = new DiaryAdapter(getContext(), diaries, recyclerView);
+                recyclerView.setAdapter(diaryAdapter);
 
             }
         });
@@ -168,29 +176,36 @@ public class DiaryFragment extends Fragment {
         floating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!date.getText().equals("日期")) {//已選擇日期
+                if (!date.getText().equals("日期")) {
                     DiaryContentFragment diaryContentFragment = new DiaryContentFragment();
                     Bundle bundle = new Bundle();
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    bundle.putBoolean("edited", false);//沒被編輯過
+                    bundle.putBoolean("edited", false);
                     bundle.putInt("id", selected_date);
-                    diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
+                    diaryContentFragment.setArguments(bundle);
 
-                    fm.beginTransaction().replace(R.id.container, diaryContentFragment).commit();
-
-                } else if (date.getText().equals("日期")) {
+                    FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                    fl.removeAllViews();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.container, diaryContentFragment)
+                            .addToBackStack(null)
+                            .commit();
+                } else {
                     Toast.makeText(getContext(), "請選擇日期", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
-        cal.setOnClickListener(new View.OnClickListener() {
+        //跳轉到DiaryPostsFragment
+        look.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), GroupCalendar.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                fl.removeAllViews();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.container, new DiaryPostsFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -207,12 +222,13 @@ public class DiaryFragment extends Fragment {
             }
         });
 
-        //跳轉到DiaryPostsFragment
-        look.setOnClickListener(new View.OnClickListener() {
+
+        cal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.container, new DiaryPostsFragment()).commit();
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), GroupCalendar.class);
+                startActivity(intent);
             }
         });
 

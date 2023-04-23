@@ -7,4 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CalendarDateText">
+        <item name="android:textColor">#FFC107</item>
+    </style>
 </resources>

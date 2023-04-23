@@ -252,8 +252,8 @@ public class DiaryContentFragment extends Fragment {
     //將照片存到本地端
     public void Save_Photo(Bitmap bitmap) {
         // 創建一個照片ID
-        String photoId = date + title.getText().toString();//"20230101" + "日記標題"
-
+        String photoId = (date + "") + (title.getText().toString().replace("/", "_"));//"20230101" + "日記標題"
+        Toast.makeText(getContext(), photoId, Toast.LENGTH_SHORT).show();
         // 將照片保存到本地文件系統中
         File file = new File(getContext().getFilesDir(), photoId + ".jpg");
         try {
@@ -261,14 +261,14 @@ public class DiaryContentFragment extends Fragment {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
+
         } catch (Exception e) {
+            Toast.makeText(getContext(), "Upload image in local failed", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
-        // 將照片ID和路徑存儲在資料庫中
-        diary = diaryDoa.getDiaryByIdAndTitle(date, t);//拿到剛儲存的日記
-        diary.setPhotoPath(file.getAbsolutePath());
-        diaryDoa.updateDiary(diary);
+        temp.setPhotoPath(file.getAbsolutePath());
+        diaryDoa.updateDiary(temp);
     }
 
 
@@ -281,7 +281,6 @@ public class DiaryContentFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getContext(), "Upload successful", Toast.LENGTH_SHORT).show();
 
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
@@ -292,7 +291,6 @@ public class DiaryContentFragment extends Fragment {
                                     databaseReference.child(postId).setValue(new Posts(date, title.getText().toString(), content.getText().toString(), uri.toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Toast.makeText(getContext(), "photo uploaded", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

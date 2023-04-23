@@ -1,14 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DiaryFragment">
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/container"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent" />-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -81,24 +82,24 @@
                 android:text="日期"
                 android:textSize="20sp" />
 
+            <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_diary"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="100dp" />
 
         </LinearLayout>
 
     </ScrollView>
 
-    <!--Floating Action Button-->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
 
-</RelativeLayout>
+</FrameLayout>

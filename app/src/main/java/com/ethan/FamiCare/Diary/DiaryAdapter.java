@@ -39,20 +39,21 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull DiaryAdapter.ViewHolder holder, int position) {
-
         Diary diary = diaries.get(position);
         holder.diary_title.setText(diary.getTitle());
 
         //設定日記照片
         if (diary.getPhotoPath() != null) {
             File imageFile = new File(diary.getPhotoPath());
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            holder.diary_image.setImageBitmap(bitmap);
+            if (imageFile.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                holder.diary_image.setImageBitmap(bitmap);
+            } else {
+                holder.diary_image.setImageResource(android.R.color.black);
+            }
         } else {
             holder.diary_image.setImageDrawable(null);
-
         }
-
     }
 
     @Override
