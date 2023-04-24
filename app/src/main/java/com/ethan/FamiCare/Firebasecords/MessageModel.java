@@ -18,6 +18,7 @@ public class MessageModel {
         this.userId = userId;
     }
 
+
     public MessageModel(String userId,String message) {
         this.message = message;
         this.userId = userId;

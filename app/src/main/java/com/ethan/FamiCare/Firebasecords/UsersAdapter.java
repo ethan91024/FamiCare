@@ -16,6 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ethan.FamiCare.GroupChatroom;
 import com.ethan.FamiCare.GroupFragment;
 import com.ethan.FamiCare.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,6 +50,25 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
 
         Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.avatar_b).into(holder.image);
         holder.username.setText(users.getUsername());
+
+        //最後一則訊息
+        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid()+users.getUserId())
+                        .orderByChild("timestamp").limitToLast(1)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.hasChildren()){
+                                    for (DataSnapshot snapshot1:snapshot.getChildren()){
+                                        holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

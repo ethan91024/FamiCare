@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
     </queries>
@@ -30,16 +31,28 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".sport.Sport6"
+            android:exported="false" />
+        <activity
+            android:name=".sport.Sport5"
+            android:exported="false" />
+        <activity
+            android:name=".sport.Sport4"
+            android:exported="false" />
+        <activity
+            android:name=".sport.Sport3"
+            android:exported="false" />
+        <activity
+            android:name=".sport.Sport2"
+            android:exported="false" />
+        <activity
+            android:name=".GroupChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Breathe"
             android:exported="false" />
         <activity
             android:name=".Meditation"
-            android:exported="false" />
-        <activity
-            android:name=".ChatGPTActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatGPT"
             android:exported="false" />
         <activity
             android:name=".sport.Sport1"
@@ -49,9 +62,6 @@
             android:exported="false" />
         <activity
             android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".Chatroom"
             android:exported="false" />
         <activity
             android:name=".Health.HealthSpeedActivity"
@@ -91,7 +101,8 @@
             android:exported="false" />
         <activity
             android:name=".GroupCalendar"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

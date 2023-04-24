@@ -112,7 +112,8 @@ public class GroupFragment extends Fragment {
         binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent1 = new Intent(getActivity(), GroupChatActivity.class);
+                startActivity(intent1);
             }
         });
 
