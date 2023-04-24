@@ -1,5 +1,6 @@
 package com.ethan.FamiCare
 
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -14,22 +15,50 @@ import androidx.health.connect.client.records.*
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.Health.HealthFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
+    //    var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
+
         //啟動直接在群組
         val fm = supportFragmentManager
         fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
             .commit()
         checkAvailability()
-    }//1
+//        // 檢查用戶是否已經登入
+//        val userLoggedIn: Boolean = checkUserLoggedIn()
+//
+//        if (!userLoggedIn) {
+//            // 如果用戶未登錄，跳轉到登錄 Activity
+//            val intent = Intent(this, Login::class.java)
+//            startActivity(intent)
+//            finish()
+//        } else {
+//            //啟動直接在群組
+//            val fm = supportFragmentManager
+//            fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
+//                .commit()
+//            checkAvailability()
+//        }
+    }
+
+//    private fun checkUserLoggedIn(): Boolean {
+//        // 檢查用戶是否已經登錄
+//        // 如果已經登錄，返回 true
+//        if(mAuth?.getCurrentUser() !=null){
+//            return true;
+//        }else{// 否則返回 false
+//            return false;
+//        }
+//    }
 
     //判斷HealthConnect是否安裝了
     fun checkAvailability() {
