@@ -46,16 +46,13 @@
             android:name=".sport.Sport2"
             android:exported="false" />
         <activity
+            android:name=".GroupChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Breathe"
             android:exported="false" />
         <activity
             android:name=".Meditation"
-            android:exported="false" />
-        <activity
-            android:name=".ChatGPTActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatGPT"
             android:exported="false" />
         <activity
             android:name=".sport.Sport1"
@@ -65,9 +62,6 @@
             android:exported="false" />
         <activity
             android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".Chatroom"
             android:exported="false" />
         <activity
             android:name=".Health.HealthSpeedActivity"

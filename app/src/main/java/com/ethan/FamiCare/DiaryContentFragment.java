@@ -82,6 +82,7 @@ public class DiaryContentFragment extends Fragment {
     private int date;
     private String t;
 
+    FirebaseDatabase database;
     //資料庫
     private DiaryDoa diaryDoa;
     private Diary diary;
@@ -97,6 +98,7 @@ public class DiaryContentFragment extends Fragment {
 
         title = view.findViewById(R.id.Title);
         content = view.findViewById(R.id.Content);
+        database=FirebaseDatabase.getInstance();
 
         save_diary = view.findViewById(R.id.save_diary);
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();

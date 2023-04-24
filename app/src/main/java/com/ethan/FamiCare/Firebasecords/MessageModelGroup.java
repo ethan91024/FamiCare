@@ -1,27 +1,39 @@
 package com.ethan.FamiCare.Firebasecords;
 
-public class MessageModel {
+public class MessageModelGroup {
 
     private String message;
     private Long datetime;
     private String userId;
     private String messageId;
+    private String username;
 
     //for firebase getting data back
-    public MessageModel() {
+    public MessageModelGroup() {
 
     }
 
-    public MessageModel(String userId,String message, Long datetime) {
+
+
+
+    public MessageModelGroup(String username,String userId,String message, Long datetime) {
+        this.username=username;
         this.message = message;
         this.datetime = datetime;
         this.userId = userId;
     }
-
-
-    public MessageModel(String userId,String message) {
+    public MessageModelGroup(String username,String userId,String message) {
+        this.username=username;
         this.message = message;
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {
@@ -56,3 +68,5 @@ public class MessageModel {
         this.messageId = messageId;
     }
 }
+
+
