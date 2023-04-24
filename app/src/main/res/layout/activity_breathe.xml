@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Breathe">
+
     <LinearLayout
         android:id="@+id/Mood_Breathe_layoutA"
         android:layout_width="wrap_content"
@@ -13,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="800dp"
         android:orientation="vertical">
 
         <TextView
@@ -35,41 +36,43 @@
             android:text="控制身體進行深呼吸，令大腦以及身體快速遠離疲憊，對神經系統也有調節作用，使身體和精神更加的輕鬆。"
             android:textSize="20dp"></TextView>
 
-        <ImageView
-            android:id="@+id/Breathe_animation"
+        <VideoView
+            android:id="@+id/breath_videoview"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            ></VideoView>
 
-        </ImageView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="35"
+                android:gravity="center"
                 android:text=" 設定時間  :"
-                android:textSize="25dp"
-                android:gravity="center">
-            </TextView>
+                android:textSize="25dp"></TextView>
+
             <EditText
                 android:id="@+id/breathe_timer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
+                android:gravity="center"
                 android:text="5"
-                android:textSize="25dp"
-                android:gravity="center">
-            </EditText>
+                android:textSize="25dp"></EditText>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="35"
+                android:gravity="center"
                 android:text="分鐘"
-                android:textSize="25dp"
-                android:gravity="center">
-            </TextView>
+                android:textSize="25dp"></TextView>
 
 
         </LinearLayout>
@@ -78,14 +81,15 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:text="開始"
-            android:textSize="25dp"
-            android:id="@+id/breathe_start">
-        </Button>
+
+            <Button
+                android:id="@+id/breathe_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="開始"
+                android:textSize="25dp"></Button>
+
             <Button
                 android:id="@+id/breathe_cancel"
                 android:layout_width="0dp"
@@ -93,8 +97,7 @@
                 android:layout_weight="50"
                 android:gravity="center"
                 android:text="取消"
-                android:textSize="25dp">
-            </Button>
+                android:textSize="25dp"></Button>
 
 
         </LinearLayout>
