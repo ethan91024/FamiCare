@@ -27,7 +27,6 @@
         android:id="@+id/cal1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     </ScrollView>
 
     <TextView
@@ -110,12 +109,13 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:scrollbars="vertical"/>
 
 
 </LinearLayout>

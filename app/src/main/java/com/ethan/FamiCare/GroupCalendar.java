@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -32,6 +34,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.ethan.FamiCare.Calendar.CalendarItem;
+import com.ethan.FamiCare.Calendar.calendarAdapter;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,10 +76,13 @@ public class GroupCalendar extends AppCompatActivity {
 
     //Listview呈現提醒事項
     private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvAdapter;
+    private ArrayList<CalendarItem> arrayList2;
     private ArrayList<HashMap<String, String>> arrayList;
     private SimpleAdapter adapter;
-    private String[] from = {"date", "event", "time", "email"};
-    private int[] to = {R.id.item_id, R.id.item_event, R.id.item_time, R.id.item_email};
+    private String[] from = {"date", "event", "time", "email","Image"};//Image暫放
+    private int[] to = {R.id.item_id, R.id.item_event, R.id.item_time, R.id.item_email,R.id.all_image};
 
     //連firebase資料庫
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://famicare-375914-default-rtdb.firebaseio.com/");
@@ -109,11 +116,17 @@ public class GroupCalendar extends AppCompatActivity {
         caldate = findViewById(R.id.caldate);
         addevent = findViewById(R.id.addevent);
         addtime = findViewById(R.id.addtime);
-        listView = findViewById(R.id.listview);
+        listView = findViewById(R.id.listView);
+        //recyclerView=findViewById(R.id.recycleView);
         savecal = findViewById(R.id.savecal);
         noti = findViewById(R.id.noti);
         checknoti=findViewById(R.id.checknoti);
 
+       arrayList=new ArrayList<>();
+
+       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+       // rvAdapter=new calendarAdapter(arrayList2,this);
+       // recyclerView.setAdapter(rvAdapter);
 
         //顯示現在使用者
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -168,12 +181,14 @@ public class GroupCalendar extends AppCompatActivity {
                 caldate.setText((month + 1) + "/" + dayOfMonth);
                 selected_date = getSelected_date(year, month, dayOfMonth);
                 String sd = String.valueOf(selected_date);
-                arrayList = new ArrayList<>();
-
+                //arrayList = new ArrayList<>();
+                //arrayList2=new ArrayList<>();
+                arrayList.clear();
                 myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         boolean isDataExists = false;
+                        arrayList.clear();
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             CalendarDB calendarDB = ds.getValue(CalendarDB.class);
                             if (calendarDB.getId().equals(sd)) {
@@ -185,12 +200,15 @@ public class GroupCalendar extends AppCompatActivity {
                                 hashMap.put(from[3], calendarDB.getUser());
                                 arrayList.add(hashMap);
                                 adapter.notifyDataSetChanged();
-                                isDataExists=true;
+
+                                //arrayList2.add(new CalendarItem(calendarDB.getId(),calendarDB.getEvent(),calendarDB.getTime(),calendarDB.getUser()));
+
+                                isDataExists = true;
                             }
                         }
                         // 如果在日期上没有找到数据，则将 ArrayList 重置为空数组
                         if (!isDataExists) {
-                            arrayList = new ArrayList<>();
+                           // arrayList2 = new ArrayList<>();
                             setAdapter();
                         }
                     }
@@ -252,7 +270,6 @@ public class GroupCalendar extends AppCompatActivity {
                 return true;
             }
         });
-
         //time裡面dialog時間的選擇給Calendar.xxx及時間的顯示
         timeDialog = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -278,55 +295,8 @@ public class GroupCalendar extends AppCompatActivity {
                 String[] date1 = date.split("/");
                 int month = Integer.parseInt(date1[0]) - 1;
 
-
                     getDialog(addevent_text, time4, month, date1);
 
-
-                /*
-
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                    //给每个闹钟设置不同ID防止覆盖
-                    int alarmId = SharedPreUtils.getInt(GroupCalendar.this, "alarm_id", 0);
-                    SharedPreUtils.setInt(GroupCalendar.this, "alarm_id", ++alarmId);
-
-
-                    //notificationId & message
-                    Intent intent = new Intent(GroupCalendar.this,alarmReceiver.class);
-                    intent.putExtra("event", addevent_text);
-                    intent.putExtra("time", time4);
-
-                    //PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(GroupCalendar.this, alarmId, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    String[] time5 = time4.split(":");//ex:14:28
-                    int hour = Integer.parseInt(time5[0]);
-                    int minute = Integer.parseInt(time5[1]);
-
-                    //create time
-                    Calendar starttime = Calendar.getInstance();
-                    starttime.set(Calendar.MONTH, month);
-                    starttime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date1[1]));
-                    starttime.set(Calendar.HOUR_OF_DAY, hour);
-                    starttime.set(Calendar.MINUTE, minute);
-                    starttime.set(Calendar.SECOND, 0);
-                    starttime.set(Calendar.MILLISECOND, 0);
-                    long alarmStartTime = starttime.getTimeInMillis();
-
-
-                    //Set Alarm
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
-
-
-                    String text = (starttime.get(Calendar.MONTH) + 1) + "月"
-                            + starttime.get(Calendar.DAY_OF_MONTH) + "日\n"
-                            + starttime.get(Calendar.HOUR_OF_DAY) + ":"
-                            + starttime.get(Calendar.MINUTE);
-                    Toast.makeText(GroupCalendar.this, text, Toast.LENGTH_SHORT).show();
-
-                }
-
-                 */
             }
         });
 
@@ -386,7 +356,9 @@ public class GroupCalendar extends AppCompatActivity {
                   ArrayList<String> object=new ArrayList<>();
                   if(checkitems[0]){
                       object.add(tokens[0]);
+                  //   addListViewImage(selected_date,addevent_text,time4);
                   }else {
+                      object.add(token);
                       for (int j = 1; j < checkitems.length; j++) {
                           if (checkitems[j]) {
                               object.add(tokens[j]);
@@ -407,7 +379,6 @@ public class GroupCalendar extends AppCompatActivity {
           alertDialog.create().show();
 
     }
-
 
     private void setAlarm(String addevent_text,String time4,int month,String[] date1,ArrayList<String> object){
         if (!(addevent_text.isEmpty() && time4.isEmpty())) {
@@ -457,6 +428,20 @@ public class GroupCalendar extends AppCompatActivity {
     }
 
 
+    //如果選all，listview會出現圓圈符號
+    private void addListViewImage(int selected_date,String addevent_text,String time4) {
+        for (int i=0;i<adapter.getCount();i++){
+            HashMap item= (HashMap<String, String>) arrayList.get(i);
+            if(item.get(from[0]).equals(String.valueOf(selected_date)) && item.get(from[1]).equals(addevent_text) && item.get(from[2]).equals(time4)){
+                item.put(from[4], R.drawable.baseline_co2_24);//圖片暫放
+                adapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+
+
     public int getSelected_date(int year, int month, int dayOfMonth) {
         String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
         return Integer.parseInt(s);
@@ -495,7 +480,7 @@ public class GroupCalendar extends AppCompatActivity {
 
 
                     myRef.child("Calendar").push().setValue(calevent);
-                    Toast.makeText(GroupCalendar.this, "儲存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GroupCalendar.this, "儲存成功", Toast.LENGTH_SHORT).show();
                 }
             }
         });

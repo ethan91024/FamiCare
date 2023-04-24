@@ -9,14 +9,15 @@
     tools:context=".sportFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<GridView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/gridview"
-    android:numColumns="2"
-    android:clickable="true"
-    android:layout_marginHorizontal="10dp"
-    />
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gridview"
+        android:numColumns="2"
+        android:clickable="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        />
 
 
 

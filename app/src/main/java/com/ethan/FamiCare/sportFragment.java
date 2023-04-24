@@ -16,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ethan.FamiCare.sport.Sport1;
+import com.ethan.FamiCare.sport.Sport2;
+import com.ethan.FamiCare.sport.Sport3;
+import com.ethan.FamiCare.sport.Sport4;
+import com.ethan.FamiCare.sport.Sport5;
+import com.ethan.FamiCare.sport.Sport6;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,9 +92,30 @@ public class sportFragment extends Fragment {
        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-               Intent intent=new Intent(getActivity(), Sport1.class) ;
-               startActivity(intent);
+               if(position==0) {
+                   Intent intent = new Intent(getActivity(), Sport1.class);
+                   startActivity(intent);
+               }
+                if (position==1) {
+                   Intent intent=new Intent(getActivity(), Sport2.class) ;
+                   startActivity(intent);
+               }
+                if (position==2) {
+                   Intent intent=new Intent(getActivity(), Sport3.class) ;
+                   startActivity(intent);
+               }
+               if(position==3) {
+                   Intent intent = new Intent(getActivity(), Sport4.class);
+                   startActivity(intent);
+               }
+               if (position==4) {
+                   Intent intent=new Intent(getActivity(), Sport5.class) ;
+                   startActivity(intent);
+               }
+               if (position==5) {
+                   Intent intent=new Intent(getActivity(), Sport6.class) ;
+                   startActivity(intent);
+               }
            }
        });
 
