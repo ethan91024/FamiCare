@@ -104,16 +104,16 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 auth.signOut();
                 Toast.makeText(SettingsFragment.this.getContext(), "logout success", Toast.LENGTH_SHORT).show();
-                /*
+
                 Signout();
 
-                 */
             }
         });
         return view;
     }
     private void Signout() {
         auth.signOut();
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), GroupFragment.class);
         startActivity(intent);
         /*

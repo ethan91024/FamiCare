@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/setting"
-    tools:context=".SettingsFragment">
+    tools:context=".SettingsFragment"
+    android:background="@color/white">
 
     <Button
         android:id="@+id/login"

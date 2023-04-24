@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/deleteGroup"
                 android:onClick="add"
-                android:text="創建群組"
+                android:text="開啟群組"
                 android:textStyle="bold" />
 
             <Button

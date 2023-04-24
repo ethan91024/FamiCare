@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ethan.FamiCare.Firebasecords.Users;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -40,6 +44,8 @@ public class Login extends AppCompatActivity {
     ImageView google_img;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
+    private boolean showOneTapUI = true;
 
 
     @Override
@@ -52,6 +58,15 @@ public class Login extends AppCompatActivity {
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .build();
+        BeginSignInRequest signInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(true)
+                        .build())
                 .build();
 
         gsc = GoogleSignIn.getClient(Login.this, gso);
@@ -117,38 +132,76 @@ public class Login extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        SignInClient oneTapClient = null;
+        switch (requestCode) {
+            case REQ_ONE_TAP:
+                try {
 
-        if(requestCode==65){
-            Task<GoogleSignInAccount>task=GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            try {
-                GoogleSignInAccount account=task.getResult(ApiException.class);
-                Log.d("TAG","firebaseAuthWithGoogle:"+account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
+                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
+                    String idToken = credential.getGoogleIdToken();
+                    if (idToken !=  null) {
+                        // Got an ID token from Google. Use it to authenticate
+                        // with Firebase.
+                        Log.d("TAG", "Got ID token.");
+                    }
             } catch (ApiException e) {
                 Log.w("TAG","Sign in fail",e);
                 Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
             }
         }
+        SignInCredential googleCredential = null;
+        try {
+            googleCredential = oneTapClient.getSignInCredentialFromIntent(data);
+        } catch (ApiException e) {
+            throw new RuntimeException(e);
+        }
+        String idToken = googleCredential.getGoogleIdToken();
+        if (idToken !=  null) {
+            // Got an ID token from Google. Use it to authenticate
+            // with Firebase.
+            AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
+            auth.signInWithCredential(firebaseCredential)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("TAG", "signInWithCredential:success");
+                                FirebaseUser user = auth.getCurrentUser();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("TAG", "signInWithCredential:failure", task.getException());
+                            }
+                        }
+                    });
+        }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential= GoogleAuthProvider.getCredential(idToken,null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "firebaseAuthWithGoogle:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            Intent intent=new Intent(Login.this, Login.class);
-                            startActivity(intent);
-                            Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Log.w("TAG","Sign in fail",task.getException());
-                        }
-                    }
-                });
-    }
+//    private void firebaseAuthWithGoogle(String idToken) {
+//        AuthCredential credential= GoogleAuthProvider.getCredential(idToken,null);
+//        auth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d("TAG", "firebaseAuthWithGoogle:success");
+//                            FirebaseUser user = auth.getCurrentUser();
+//
+//                            Users users=new Users();
+//                            users.setUserId(user.getUid());
+//                            users.setUsername(user.getDisplayName());
+//                            users.setProfilepic(user.getPhotoUrl().toString());
+//                            database.getReference().child("Users").child(user.getUid()).setValue(users);
+//
+//                            Intent intent=new Intent(Login.this, MainActivity.class);
+//                            startActivity(intent);
+//
+//                            Toast.makeText(Login.this, "Sign in with Google", Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            Log.w("TAG","Sign in fail",task.getException());
+//                        }
+//                    }
+//                });
+//    }
 
 }
