@@ -1,39 +1,40 @@
 package com.ethan.FamiCare.Post;
 
 public class Comment {
-    private String id;
-    private String userId;
-    private String content;
+    private String Id;
+    private String UserName;
+    private String Content;
 
-    public Comment() {}
+    public Comment() {
+    }
 
-    public Comment(String id, String userId, String content) {
-        this.id = id;
-        this.userId = userId;
-        this.content = content;
+    public Comment(String id, String userName, String content) {
+        this.Id = id;
+        this.UserName = userName;
+        this.Content = content;
     }
 
     public String getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String userId) {
+        this.Id = userId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.UserName = userName;
     }
 
     public String getContent() {
-        return content;
+        return Content;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.Content = content;
     }
 }

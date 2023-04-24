@@ -18,7 +18,7 @@ public class Posts {
         this.Title = title;
         this.Content = content;
         this.photoUrl = photoUrl;
-        this.comments = new ArrayList<>();
+        this.comments = comments;
     }
 
     public int getId() {
@@ -59,5 +59,12 @@ public class Posts {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        comments.add(comment);
     }
 }

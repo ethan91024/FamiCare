@@ -72,7 +72,7 @@ public class DiaryPostsFragment extends Fragment {
         layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts, recyclerView);
+        postAdapter = new PostAdapter(getContext(), posts);
         recyclerView.setAdapter(postAdapter);
 
         // Attach database listener
