@@ -15,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
-    private List<Comment> commentList;
     private Context context;
+    private List<Comment> commentList;
+
 
     public CommentAdapter(List<Comment> commentList, Context context) {
         this.commentList = commentList;
@@ -26,7 +27,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_diary_comment_recycler, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_diary_comment_recycler, parent, false);
         return new CommentViewHolder(view);
     }
 
@@ -40,10 +42,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public int getItemCount() {
-        if (commentList == null) {
-            return 0;
+        int size = 0;
+        if (commentList != null) {
+            size = commentList.size();
         }
-        return commentList.size();
+        return size;
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {

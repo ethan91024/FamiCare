@@ -62,43 +62,48 @@
     </ScrollView>
 
     <!--添加評論 weight = 1-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:orientation="horizontal">-->
 
-        <EditText
-            android:id="@+id/Input_comment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:hint="Add a comment..." />
+<!--        <EditText-->
+<!--            android:id="@+id/Input_comment"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="8"-->
+<!--            android:hint="Add a comment..." />-->
 
-        <ImageView
-            android:id="@+id/Add_comment"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="0"
-            android:src="@drawable/send" />
+<!--        <ImageView-->
+<!--            android:id="@+id/Add_comment"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="4dp"-->
+<!--            android:layout_marginLeft="4dp"-->
+<!--            android:layout_marginEnd="4dp"-->
+<!--            android:layout_marginRight="4dp"-->
+<!--            android:layout_weight="0"-->
+<!--            android:src="@drawable/send" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/See_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="view comments"/>
 
 
     <!--留言列表 weight = 2-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comments_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_margin="5dp"
-        android:visibility="visible" />
-    <!--        tools:listitem="@layout/fragment_diary_comment_recycler" -->
-
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/comments_recycler_view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginLeft="20dp"-->
+    <!--        android:layout_weight="2"-->
+    <!--        android:visibility="visible" />-->
 
 </LinearLayout>

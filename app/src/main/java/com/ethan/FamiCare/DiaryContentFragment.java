@@ -15,12 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ethan.FamiCare.Diary.Diary;
 import com.ethan.FamiCare.Diary.DiaryDB;
@@ -98,7 +101,7 @@ public class DiaryContentFragment extends Fragment {
 
         title = view.findViewById(R.id.Title);
         content = view.findViewById(R.id.Content);
-        database=FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         save_diary = view.findViewById(R.id.save_diary);
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
@@ -283,18 +286,12 @@ public class DiaryContentFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Posts post = new Posts(date, title.getText().toString(), content.getText().toString(), uri.toString());
-//                                    Posts post = new Posts(date, title.getText().toString(), content.getText().toString());
                                     String postId = databaseReference.push().getKey();
-                                    databaseReference.child(postId).setValue(new Posts(date, title.getText().toString(), content.getText().toString(), uri.toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                        }
-                                    });
+                                    databaseReference.child(postId).setValue(new Posts(date, title.getText().toString(), content.getText().toString(), uri.toString()));
                                 }
                             });
                         }

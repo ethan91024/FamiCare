@@ -2,17 +2,22 @@ package com.ethan.FamiCare.Post;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,71 +67,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 .into(holder.userphoto);
 
 
-        //評論資料庫，接著放到CommentAdapter
-        List<Comment> commentList = new ArrayList<>();
+        //跳轉到子view對應的留言列表
         String commentId = (post.getId() + "") + (post.getTitle().replace("/", "_"));
-        DatabaseReference commentRef = FirebaseDatabase.getInstance().getReference("Comments");
-        Query query = commentRef.orderByChild("id").equalTo(commentId);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                commentList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Comment comment = ds.getValue(Comment.class);
-                    commentList.add(comment);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("PostAdapter", "Failed to get comments", error.toException());
-            }
-        });
-
-
-        // 設置留言的 RecyclerView
-        holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        CommentAdapter commentAdapter = new CommentAdapter(commentList, context);
-        holder.commentRecyclerView.setAdapter(commentAdapter);
-
-
-        // 添加評論
-        holder.addcomment.setOnClickListener(new View.OnClickListener() {
+        holder.seecomments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String commentText = holder.inputcomment.getText().toString();
-                // 建立 Comment 对象，id是該post的id(日期) + title，userId之後會是使用者的id
-                Comment comment = new Comment(commentId, "Unknown", commentText);
-                // 将 Comment 放到 firebase
-                String commentkey = commentRef.push().getKey();
-                commentRef.child(commentkey).setValue(comment);
+                //把需要到firebase搜尋的Id字串丟到DiaryCommentsFragment
+                Bundle bundle = new Bundle();
+                bundle.putString("commentId", commentId);
+                DiaryCommentsFragment diaryCommentsFragment = new DiaryCommentsFragment();
+                diaryCommentsFragment.setArguments(bundle);
 
-                // 更新評論列表
-                Query query = commentRef.orderByChild("id").equalTo(commentId);
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        commentList.clear();
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            Comment comment = ds.getValue(Comment.class);
-                            commentList.add(comment);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("PostAdapter", "Failed to get comments", error.toException());
-                    }
-                });
-                holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-                CommentAdapter commentAdapter = new CommentAdapter(commentList, context);
-                holder.commentRecyclerView.setAdapter(commentAdapter);
-
-
-                // 清空輸入框
-                holder.inputcomment.getText().clear();
+                FrameLayout frameLayout = (FrameLayout) ((AppCompatActivity) context).findViewById(R.id.diary_posts_container);
+                frameLayout.removeAllViews();
+                FragmentTransaction ft = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.diary_posts_container, diaryCommentsFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
+
     }
 
     @Override
@@ -138,18 +98,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public TextView usertitle;
         public ImageView userphoto;
         public TextView usercontent;
-        public EditText inputcomment;
-        public ImageView addcomment;
-        public RecyclerView commentRecyclerView;
+        public Button seecomments;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             usertitle = itemView.findViewById(R.id.UserTitle);
             userphoto = itemView.findViewById(R.id.UserPhoto);
             usercontent = itemView.findViewById(R.id.UserContent);
-            inputcomment = itemView.findViewById(R.id.Input_comment);
-            addcomment = itemView.findViewById(R.id.Add_comment);
-            commentRecyclerView = itemView.findViewById(R.id.comments_recycler_view);
+            seecomments = itemView.findViewById(R.id.See_comments);
         }
     }
 }

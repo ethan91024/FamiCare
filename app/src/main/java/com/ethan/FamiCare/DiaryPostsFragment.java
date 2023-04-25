@@ -4,16 +4,22 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ethan.FamiCare.Diary.Diary;
 import com.ethan.FamiCare.Diary.DiaryDoa;
+import com.ethan.FamiCare.Post.DiaryCommentsFragment;
 import com.ethan.FamiCare.Post.PostAdapter;
 import com.ethan.FamiCare.Post.Posts;
 import com.google.firebase.database.DataSnapshot;

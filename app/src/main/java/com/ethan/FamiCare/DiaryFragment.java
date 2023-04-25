@@ -172,7 +172,7 @@ public class DiaryFragment extends Fragment {
         });
 
 
-        //點擊日記標題，紀錄選擇的日期(20230101)，跳轉到DiaryContent，一定是創建新的日記
+        //點擊新增，紀錄選擇的日期(20230101)，跳轉到DiaryContent，一定是創建新的日記
         floating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +186,7 @@ public class DiaryFragment extends Fragment {
                     FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
                     fl.removeAllViews();
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.container, diaryContentFragment)
+                    ft.replace(R.id.container, diaryContentFragment)
                             .addToBackStack(null)
                             .commit();
                 } else {
