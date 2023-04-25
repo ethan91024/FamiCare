@@ -20,7 +20,7 @@ public class Sport4 extends AppCompatActivity {
     private static final long Start_time=120000;
 
     private ImageSwitcher imageSwitcher;
-    int[] imgs={R.drawable.sport4,R.drawable.sport4_1};
+    int[] imgs={R.drawable.sport4_3,R.drawable.sport4_1};
 
     private TextView textView_countdown;
     private Button start;
@@ -47,7 +47,7 @@ public class Sport4 extends AppCompatActivity {
                 //makeView返回當前需要顯示的imageview控件，填進imageSwitcher
                 ImageView imageView = new ImageView(Sport4.this);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setImageResource(R.drawable.sport4);
+                imageView.setImageResource(R.drawable.sport4_3);
                 return imageView;
             }
         });
