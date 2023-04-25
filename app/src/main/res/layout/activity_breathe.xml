@@ -40,8 +40,7 @@
             android:id="@+id/breath_videoview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_gravity="center"
-            ></VideoView>
+            android:layout_gravity="center"></VideoView>
 
 
         <LinearLayout
@@ -76,6 +75,14 @@
 
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="設定時間請輸入30分鐘以內"
+            android:textSize="20dp"></TextView>
+
 
         <LinearLayout
             android:layout_width="match_parent"

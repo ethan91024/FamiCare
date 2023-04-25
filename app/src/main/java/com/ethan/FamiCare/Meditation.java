@@ -45,8 +45,8 @@ public class Meditation extends AppCompatActivity {
 //
 //        ImageView sea_an = findViewById(R.id.Sea_animation); //首頁預設圖片
 //        sea_an.setBackgroundResource(R.drawable.sea);   //sea的動畫
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 55, 0);
+//        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 55, 0);
 
 
         timer = findViewById(R.id.timer);
