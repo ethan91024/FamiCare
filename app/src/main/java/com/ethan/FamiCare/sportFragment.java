@@ -72,8 +72,8 @@ public class sportFragment extends Fragment {
 
     private View mainview;
     private GridView gridView;
-    String[] sportname={"1","2","3","4","5","6"};
-    int[] images={R.drawable.baseline_co2_24,R.drawable.baseline_coffee_maker_24,R.drawable.baseline_directions_walk_24,R.drawable.baseline_bloodtype_24,R.drawable.baseline_speed_24,R.drawable.ic_baseline_groups_24};
+    String[] sportname={"1","2","3","4"};
+    int[] images={R.drawable.sport1_1,R.drawable.sport2_1,R.drawable.sport3,R.drawable.sport4_3};
     //private Intent[] sportactivity={new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class)};
 
 
@@ -112,10 +112,7 @@ public class sportFragment extends Fragment {
                    Intent intent=new Intent(getActivity(), Sport5.class) ;
                    startActivity(intent);
                }
-               if (position==5) {
-                   Intent intent=new Intent(getActivity(), Sport6.class) ;
-                   startActivity(intent);
-               }
+
            }
        });
 

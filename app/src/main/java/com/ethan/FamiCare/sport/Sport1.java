@@ -20,7 +20,7 @@ public class Sport1 extends AppCompatActivity {
     private static final long Start_time=60000;
 
     private ImageSwitcher imageSwitcher;
-    int[] imgs={R.drawable.sport1_img,R.drawable.sport1_img2,R.drawable.sport1_img3};
+    int[] imgs={R.drawable.sport1_1,R.drawable.sport1_2};
     private TextView textView_countdown;
     private Button start;
     private Button reset;
@@ -47,12 +47,13 @@ public class Sport1 extends AppCompatActivity {
                 //makeView返回當前需要顯示的imageview控件，填進imageSwitcher
                 ImageView imageView=new ImageView(Sport1.this);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setImageResource(R.drawable.sport1_1);
                 return imageView;
             }
         });
 
         imageSwitcher.postDelayed(new Runnable() {
-            int cnt=-1;
+            int cnt=0;
             @Override
             public void run() {
                 cnt++;
@@ -60,7 +61,7 @@ public class Sport1 extends AppCompatActivity {
                     cnt=0;
                 }
                 imageSwitcher.setImageResource(imgs[cnt]);
-                imageSwitcher.postDelayed(this,1000);
+                imageSwitcher.postDelayed(this,3000);
             }
         },1000);
 
