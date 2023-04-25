@@ -10,8 +10,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="運動3"
+        android:text="嬰兒式"
         android:textSize="25dp"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_marginVertical="10dp"/>
     <TextView
