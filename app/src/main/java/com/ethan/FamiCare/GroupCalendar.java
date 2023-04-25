@@ -130,10 +130,10 @@ public class GroupCalendar extends AppCompatActivity {
 
         //顯示現在使用者
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+       // if (user == null) {
+        //    Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
+         //   finish();
+      //  }
 
 
         FirebaseMessaging.getInstance().getToken()
@@ -473,10 +473,10 @@ public class GroupCalendar extends AppCompatActivity {
                     String[] time2 = time1.split("\t");
                     String time3 = time2[2];
 
-                    String email = user.getEmail();
+                   // String email = user.getEmail();
 
-
-                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token);
+//後面改
+                    CalendarDB calevent = new CalendarDB(id_date, event, time3, "null", token);
 
 
                     myRef.child("Calendar").push().setValue(calevent);
