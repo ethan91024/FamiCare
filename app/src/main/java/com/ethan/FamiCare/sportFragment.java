@@ -73,7 +73,7 @@ public class sportFragment extends Fragment {
     private View mainview;
     private GridView gridView;
     String[] sportname={"1","2","3","4"};
-    int[] images={R.drawable.sport1_1,R.drawable.sport2_1,R.drawable.sport3,R.drawable.sport4};
+    int[] images={R.drawable.sport1_1,R.drawable.sport2_1,R.drawable.sport3,R.drawable.sport4_3};
     //private Intent[] sportactivity={new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class)};
 
 
