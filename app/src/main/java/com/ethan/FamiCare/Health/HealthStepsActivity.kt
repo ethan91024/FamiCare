@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnAttach
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
@@ -38,12 +39,12 @@ class HealthStepsActivity : AppCompatActivity() {
         val client = HealthConnectClient.getOrCreate(this)
 
         lifecycleScope.launch {
-            val steps = getDailyStepCounts(
+            val dailysteps = getDailyStepCounts(
                 client,
-                LocalDateTime.now().minusDays(3),
+                LocalDateTime.now().minusDays(1),
                 LocalDateTime.now()
             )
-            if (steps.size < 1) {
+            if (dailysteps.size < 1) {
                 Toast.makeText(
                     this@HealthStepsActivity,
                     "Don't Have Data!",
@@ -51,18 +52,34 @@ class HealthStepsActivity : AppCompatActivity() {
                 ).show()
             }
 
+            // 計算一天有多少個時間點需要顯示在 X 軸上
+            val numXAxisLabels = 24
+
+            // 初始化時間點計數器，用於計算每個時間點上的步數計數值
+            val stepCountsByHour = MutableList(numXAxisLabels) { 0 }
+
+            // 將步數資料的時間點轉換為對應的時間點索引，並放置到對應的時間點索引中
+            dailysteps.forEach { step ->
+                val localDateTime = step.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val hour = localDateTime.hour
+                if (hour >= 0 && hour < numXAxisLabels) {
+                    stepCountsByHour[hour] = step.count.toInt()
+                }
+            }
+
             // 創建BarEntry對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<BarEntry> = ArrayList()
-            for (i in 0 until steps.size) {
-                entries.add(BarEntry(i.toFloat(), steps.get(i).count.toFloat()))
+            for (i in 0 until numXAxisLabels) {
+                entries.add(BarEntry(i.toFloat(), stepCountsByHour[i].toFloat()))
             }
 
             // 創建BarDataSet對象，用於設置柱狀圖的樣式和顏色
             val dataSet = BarDataSet(entries, "步數")
             barChart.description.isEnabled = false
-            barChart.setFitBars(true)
+
             // 設置柱狀圖的顏色
             dataSet.color = Color.BLUE
+
             // 創建BarData對象，用於將BarDataSet對象添加到柱狀圖中
             val data = BarData(dataSet)
 
@@ -83,10 +100,9 @@ class HealthStepsActivity : AppCompatActivity() {
 
             val xAxis = barChart.xAxis
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.setDrawGridLines(true);
-            xAxis.setCenterAxisLabels(true)
-            xAxis.setGranularity(1f)
-            xAxis.setGranularityEnabled(false)
+            xAxis.setDrawGridLines(true)
+            xAxis.setCenterAxisLabels(false)
+            xAxis.setGranularityEnabled(true)
             xAxis.labelCount = 24
             xAxis.axisMinimum = 0f
             xAxis.axisMaximum = 24f
@@ -106,11 +122,21 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
-            barChart.data = data
+            val leftAxis = barChart.getAxisLeft();
+            val rightAxis = barChart.getAxisRight();
+            leftAxis.setAxisMinimum(0f);
+            rightAxis.setAxisMinimum(0f);
+
+            barChart.setData(data)
+            barChart.setFitBars(true)
+            barChart.axisRight.isGranularityEnabled = true
+            barChart.axisRight.granularity = 1f
+            barChart.data.barWidth=0.9f
             barChart.invalidate()
 
         }
     }
+
 
     suspend fun getDailyStepCounts(
         client: HealthConnectClient,
