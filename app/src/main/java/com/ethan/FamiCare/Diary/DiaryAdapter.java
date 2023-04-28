@@ -22,6 +22,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
     Context context;
     List<Diary> diaries;
     RecyclerView recyclerView;
+    private ImageView diary_image;
 
     public DiaryAdapter(Context context, List<Diary> diaries, RecyclerView recyclerView) {
         this.context = context;
@@ -49,7 +50,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 holder.diary_image.setImageBitmap(bitmap);
             } else {
-                holder.diary_image.setImageResource(android.R.color.black);
+                diary_image.setImageResource(android.R.color.black);
             }
         } else {
             holder.diary_image.setImageDrawable(null);

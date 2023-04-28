@@ -274,6 +274,7 @@ public class DiaryContentFragment extends Fragment {
 
         temp.setPhotoPath(file.getAbsolutePath());
         diaryDoa.updateDiary(temp);
+
     }
 
 
