@@ -39,12 +39,8 @@ class HealthStepsActivity : AppCompatActivity() {
         val client = HealthConnectClient.getOrCreate(this)
 
         lifecycleScope.launch {
-            val dailysteps = getDailyStepCounts(
-                client,
-                LocalDateTime.now().minusDays(1),
-                LocalDateTime.now()
-            )
-            if (dailysteps.size < 1) {
+            val dailysteps = getDailyStepCounts(client)
+            if (dailysteps.isEmpty()) {
                 Toast.makeText(
                     this@HealthStepsActivity,
                     "Don't Have Data!",
@@ -62,8 +58,8 @@ class HealthStepsActivity : AppCompatActivity() {
             dailysteps.forEach { step ->
                 val localDateTime = step.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
-                if (hour >= 0 && hour < numXAxisLabels) {
-                    stepCountsByHour[hour] = step.count.toInt()
+                if (hour in 0 until numXAxisLabels) {
+                    stepCountsByHour[hour] += step.count.toInt()
                 }
             }
 
@@ -100,7 +96,7 @@ class HealthStepsActivity : AppCompatActivity() {
 
             val xAxis = barChart.xAxis
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.setDrawGridLines(true)
+            xAxis.setDrawGridLines(false)
             xAxis.setCenterAxisLabels(false)
             xAxis.setGranularityEnabled(true)
             xAxis.labelCount = 24
@@ -131,7 +127,7 @@ class HealthStepsActivity : AppCompatActivity() {
             barChart.setFitBars(true)
             barChart.axisRight.isGranularityEnabled = true
             barChart.axisRight.granularity = 1f
-            barChart.data.barWidth=0.9f
+            barChart.data.barWidth = 0.9f
             barChart.invalidate()
 
         }
@@ -140,8 +136,8 @@ class HealthStepsActivity : AppCompatActivity() {
 
     suspend fun getDailyStepCounts(
         client: HealthConnectClient,
-        start: LocalDateTime,
-        end: LocalDateTime
+        start: LocalDateTime = LocalDateTime.now().with(LocalTime.MIN),
+        end: LocalDateTime = LocalDateTime.now().with(LocalTime.MAX)
     ): List<StepsRecord> {
         val request = client.readRecords(
             ReadRecordsRequest(
