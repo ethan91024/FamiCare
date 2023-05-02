@@ -29,6 +29,26 @@
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/heartrateButton"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:clickable="true"
+                android:drawableLeft="@drawable/baseline_monitor_heart_24"
+                android:gravity="center|left"
+                android:text="  心率"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/speedButton"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:clickable="true"
+                android:drawableLeft="@drawable/baseline_speed_24"
+                android:gravity="center|left"
+                android:text="  速度"
+                android:textSize="25sp" />
+
+            <TextView
                 android:id="@+id/hydrationButton"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
@@ -46,26 +66,6 @@
                 android:drawableLeft="@drawable/baseline_local_fire_department_24"
                 android:gravity="center|left"
                 android:text="  卡路里"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/speedButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_speed_24"
-                android:gravity="center|left"
-                android:text="  速度"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/heartrateButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_monitor_heart_24"
-                android:gravity="center|left"
-                android:text="  心率"
                 android:textSize="25sp" />
 
 

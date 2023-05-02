@@ -1,9 +1,12 @@
 package com.ethan.FamiCare.Health
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
@@ -11,106 +14,127 @@ import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.R
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.Period
-import java.time.ZoneId
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 class HealthHeartRateActivity : AppCompatActivity() {
+    val myDateTimeFormatter =
+        DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_heart_rate)
-
-        val myDateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
         val client = HealthConnectClient.getOrCreate(this)
-
+        val lineChart: LineChart = findViewById(R.id.line_chart)
         lifecycleScope.launch {
-            val HR = getHeartRate(
-                client,
-                LocalDateTime.now().minusDays(3),
-                LocalDateTime.now()
-            )
-            val total1 = HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-            val total11 = String.format("%.2f", total1.toDouble()).toDouble()
-            val first: TextView = findViewById(R.id.today_hr)
-            first.text =
-                myDateTimeFormatter.format(Instant.parse(HR[HR.size - 1].endTime.toString())) + "  " + total11.toString() + "次/秒"
-
-            val total2 = HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-            val total22 = String.format("%.2f", total2.toDouble()).toDouble()
-            val yesterday: TextView = findViewById(R.id.yesterday_hr)
-            yesterday.text =
-                myDateTimeFormatter.format(Instant.parse(HR[HR.size - 2].endTime.toString())) + "  " + total22.toString() + "次/秒"
-
-            val total3 = HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-            val total33 = String.format("%.2f", total3.toDouble()).toDouble()
-            val twodaysago: TextView = findViewById(R.id.twodaysago_hr)
-            twodaysago.text =
-                myDateTimeFormatter.format(Instant.parse(HR[HR.size - 3].endTime.toString())) + "  " + total33.toString() + "次/秒"
-
-            aggregateHeartRateIntoWeeks(
-                client,
-                LocalDateTime.now().minusDays(7),
-                LocalDateTime.now()
-            )
-
-            aggregateHeartRateIntoMonths(
-                client,
-                LocalDateTime.now().minusDays(30),
-                LocalDateTime.now()
-            )
-        }
-
-        this.findViewById<Button>(R.id.update_hr).setOnClickListener {
-            lifecycleScope.launch {
-                val HR = getHeartRate(
-                    client,
-                    LocalDateTime.now().minusDays(3),
-                    LocalDateTime.now()
-                )
-                val total1 =
-                    HR[HR.size - 1].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-                val total11 = String.format("%.2f", total1.toDouble()).toDouble()
-                val first: TextView = findViewById(R.id.today_hr)
-                first.text =
-                    myDateTimeFormatter.format(Instant.parse(HR[HR.size - 1].endTime.toString())) + "  " + total11.toString() + "次/秒"
-
-                val total2 =
-                    HR[HR.size - 2].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-                val total22 = String.format("%.2f", total2.toDouble()).toDouble()
-                val yesterday: TextView = findViewById(R.id.yesterday_hr)
-                yesterday.text =
-                    myDateTimeFormatter.format(Instant.parse(HR[HR.size - 2].endTime.toString())) + "  " + total22.toString() + "次/秒"
-
-                val total3 =
-                    HR[HR.size - 3].samples[0].beatsPerMinute.toString().replaceFirst(" ", "")
-                val total33 = String.format("%.2f", total3.toDouble()).toDouble()
-                val twodaysago: TextView = findViewById(R.id.twodaysago_hr)
-                twodaysago.text =
-                    myDateTimeFormatter.format(Instant.parse(HR[HR.size - 3].endTime.toString())) + "  " + total33.toString() + "次/秒"
-
-                aggregateHeartRateIntoWeeks(
-                    client,
-                    LocalDateTime.now().minusDays(7),
-                    LocalDateTime.now()
-                )
-
-                aggregateHeartRateIntoMonths(
-                    client,
-                    LocalDateTime.now().minusDays(30),
-                    LocalDateTime.now()
-                )
+            val HR = getHeartRate(client)
+            if (HR.isEmpty()) {
+                Toast.makeText(
+                    this@HealthHeartRateActivity,
+                    "Don't Have Data!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+            // 計算一天有多少個時間點需要顯示在 X 軸上
+            val numXAxisLabels = 24
+
+            // 初始化時間點計數器，用於計算每個時間點上的步數計數值
+            val BPMAvgByHour = MutableList(numXAxisLabels) { 0 }
+
+            // 將步數資料的時間點轉換為對應的時間點索引，並放置到對應的時間點索引中
+            HR.forEach { bpm ->
+                val localDateTime = bpm.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val hour = localDateTime.hour
+                if (hour >= 0 && hour < numXAxisLabels) {
+                    BPMAvgByHour[hour] += bpm.samples.get(0).beatsPerMinute.toInt()
+                }
+            }
+
+            // 創建Entry對象，用於指定每一個小間隔中的數據值
+            val entries: MutableList<Entry> = ArrayList()
+            for (i in 0 until numXAxisLabels) {
+                entries.add(Entry(i.toFloat(), BPMAvgByHour[i].toFloat()))
+            }
+
+            // 創建LineDataSet對象，用於設置柱狀圖的樣式和顏色
+            val dataSet = LineDataSet(entries, "心率")
+            lineChart.description.isEnabled = false
+
+            // 設置折線圖的顏色
+            dataSet.color = Color.RED
+            dataSet.setDrawCircles(false)
+            dataSet.setDrawValues(false)
+            dataSet.mode = LineDataSet.Mode.LINEAR
+            dataSet.lineWidth = 2f
+
+            // 創建LineData對象，用於將LineDataSet對象添加到柱狀圖中
+            val data = LineData(dataSet)
+
+            // 設定 Y 軸
+            val yAxisLeft: YAxis = lineChart.axisLeft
+            val yAxis = lineChart.axisRight
+            yAxisLeft.isEnabled = false
+            yAxis.axisMinimum = 0f
+            yAxis.axisMaximum = 150f
+            yAxis.setLabelCount(4, true)
+            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+            yAxis.setDrawGridLines(true)
+            yAxis.setDrawLabels(true)
+
+            // 設定 X 軸
+            val xAxis: XAxis = lineChart.xAxis
+
+            xAxis.setDrawGridLines(false)
+            xAxis.setCenterAxisLabels(false)
+            xAxis.setGranularityEnabled(true)
+            xAxis.labelCount = 24
+            xAxis.granularity = 1f
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.axisMinimum = 0f
+            xAxis.axisMaximum = 24f
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return when (value.toInt()) {
+                        0 -> "12AM"
+                        6 -> "6AM"
+                        12 -> "12PM"
+                        18 -> "6PM"
+                        24 -> "12AM"
+                        else -> ""
+                    }
+                }
+            }
+
+            // 設定圖表樣式
+            lineChart.setDrawGridBackground(false)
+            lineChart.description.isEnabled = false
+
+            val leftAxis = lineChart.getAxisLeft();
+            val rightAxis = lineChart.getAxisRight();
+            leftAxis.setAxisMinimum(0f);
+            rightAxis.setAxisMinimum(0f);
+
+            lineChart.setData(data)
+            lineChart.xAxis.setCenterAxisLabels(true)
+            lineChart.xAxis.axisMinimum = 0.5f
+            lineChart.axisRight.isGranularityEnabled = true
+            lineChart.axisRight.granularity = 1f
+            lineChart.invalidate()
         }
+
+
     }
 
     suspend fun getHeartRate(
         client: HealthConnectClient,
-        start: LocalDateTime,
-        end: LocalDateTime
+        start: LocalDateTime = LocalDateTime.now().with(LocalTime.MIN),
+        end: LocalDateTime = LocalDateTime.now().with(LocalTime.MAX)
     ): List<HeartRateRecord> {
 
         val request = client.readRecords(
@@ -138,12 +162,6 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
         for (weeklyResult in response) {
             val totalHR = weeklyResult.result[HeartRateRecord.BPM_AVG]
-            val week: TextView = findViewById(R.id.weekAvg_hr)
-            if (totalHR != null) {
-                val total = totalHR.toString().replaceFirst(" ", "")
-                val total1 = String.format("%.2f", total.toDouble().div(response.size)).toDouble()
-                week.text = total1.toString() + " 次/秒"
-            }
         }
     }
 
@@ -163,12 +181,6 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
         for (monthlyResult in response) {
             val totalHR = monthlyResult.result[HeartRateRecord.BPM_AVG]
-            val month: TextView = findViewById(R.id.monthAvg_hr)
-            if (totalHR != null) {
-                val total = totalHR.toString().replaceFirst(" ", "")
-                val total1 = String.format("%.2f", total.toDouble().div(response.size)).toDouble()
-                month.text = total1.toString() + " 次/秒"
-            }
         }
     }
 }
