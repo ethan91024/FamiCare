@@ -38,6 +38,8 @@ class HealthStepsActivity : AppCompatActivity() {
         val barChart: BarChart = findViewById(R.id.bar_chart)
         val client = HealthConnectClient.getOrCreate(this)
 
+
+
         lifecycleScope.launch {
             val dailysteps = getDailyStepCounts(client)
             if (dailysteps.isEmpty()) {
@@ -63,6 +65,14 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
+            //找最大步數
+            val maxstep = stepCountsByHour.toIntArray().max()
+            val top =(maxstep/1000+1)*1000
+            val topFloat = top.toFloat()
+
+
+
+
             // 創建BarEntry對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -73,35 +83,40 @@ class HealthStepsActivity : AppCompatActivity() {
             val dataSet = BarDataSet(entries, "步數")
             barChart.description.isEnabled = false
 
+
             // 設置柱狀圖的顏色
             dataSet.color = Color.BLUE
+
 
             // 創建BarData對象，用於將BarDataSet對象添加到柱狀圖中
             val data = BarData(dataSet)
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
+            yAxis.setDrawAxisLine(true)
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
             yAxis.axisMinimum = 0f
-            yAxis.axisMaximum = 3000f
+            yAxis.axisMaximum = topFloat
             yAxis.setDrawGridLines(true)
             yAxis.setDrawLabels(true)
-            yAxis.labelCount = 3
+            yAxis.labelCount = 5
             yAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()
                 }
             }
 
+
+
             val xAxis = barChart.xAxis
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
-            xAxis.setCenterAxisLabels(false)
+            xAxis.setCenterAxisLabels(true)
             xAxis.setGranularityEnabled(true)
             xAxis.labelCount = 24
-            xAxis.axisMinimum = 0f
-            xAxis.axisMaximum = 24f
+            xAxis.axisMinimum = -0.5f
+            xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
             xAxis.granularity = 1f
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
@@ -125,9 +140,11 @@ class HealthStepsActivity : AppCompatActivity() {
 
             barChart.setData(data)
             barChart.setFitBars(true)
+
             barChart.axisRight.isGranularityEnabled = true
             barChart.axisRight.granularity = 1f
-            barChart.data.barWidth = 0.9f
+            barChart.data.barWidth = 0.7f
+
             barChart.invalidate()
 
         }
