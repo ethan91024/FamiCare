@@ -56,6 +56,10 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
 
+            //找最大步數
+            val maxBPMAvg = BPMAvgByHour.toIntArray().max()
+            val top =(maxBPMAvg/10+1)*10
+
             // 創建Entry對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -81,7 +85,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
             val yAxis = lineChart.axisRight
             yAxisLeft.isEnabled = false
             yAxis.axisMinimum = 0f
-            yAxis.axisMaximum = 150f
+            yAxis.axisMaximum = top.toFloat()
             yAxis.setLabelCount(4, true)
             yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
             yAxis.setDrawGridLines(true)
@@ -96,8 +100,8 @@ class HealthHeartRateActivity : AppCompatActivity() {
             xAxis.labelCount = 24
             xAxis.granularity = 1f
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.axisMinimum = 0f
-            xAxis.axisMaximum = 24f
+            xAxis.axisMinimum = -0.5f
+            xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return when (value.toInt()) {
@@ -111,18 +115,17 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
 
-            // 設定圖表樣式
+            // 設定圖表樣式Z
             lineChart.setDrawGridBackground(false)
             lineChart.description.isEnabled = false
 
-            val leftAxis = lineChart.getAxisLeft();
-            val rightAxis = lineChart.getAxisRight();
-            leftAxis.setAxisMinimum(0f);
-            rightAxis.setAxisMinimum(0f);
+            val leftAxis = lineChart.axisLeft;
+            val rightAxis = lineChart.axisRight;
+            leftAxis.axisMinimum = 0f;
+            rightAxis.axisMinimum = 0f;
 
-            lineChart.setData(data)
+            lineChart.data = data
             lineChart.xAxis.setCenterAxisLabels(true)
-            lineChart.xAxis.axisMinimum = 0.5f
             lineChart.axisRight.isGranularityEnabled = true
             lineChart.axisRight.granularity = 1f
             lineChart.invalidate()
