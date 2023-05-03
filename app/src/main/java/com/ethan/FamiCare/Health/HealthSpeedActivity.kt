@@ -1,9 +1,9 @@
 package com.ethan.FamiCare.Health
 
 import android.graphics.Color
-import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Half.max
 import android.util.Half.toFloat
 import android.widget.Button
 import android.widget.TextView
@@ -60,6 +60,10 @@ class HealthSpeedActivity : AppCompatActivity() {
                 }
             }
 
+            //找最大速度
+            val maxspeed = speedsByHour.toFloatArray().max()
+            val top = maxspeed*10/10 + 1
+
             // 創建 Entry 對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -80,8 +84,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             xAxis.setCenterAxisLabels(false)
             xAxis.setGranularityEnabled(true)
             xAxis.labelCount = numXAxisLabels
-            xAxis.axisMinimum = 0f
-            xAxis.axisMaximum = numXAxisLabels.toFloat()
+            xAxis.axisMinimum = -0.5f
+            xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
             xAxis.granularity = 1f
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
@@ -101,7 +105,7 @@ class HealthSpeedActivity : AppCompatActivity() {
             // 設置Scatter Chart的Y軸
             val yAxis = ScatterChart.axisRight
             yAxis.axisMinimum = 0f
-            yAxis.axisMaximum = 8f
+            yAxis.axisMaximum = top
             yAxis.setDrawGridLines(true)
             yAxis.setDrawLabels(true)
             yAxis.labelCount = 4

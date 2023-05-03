@@ -68,10 +68,6 @@ class HealthStepsActivity : AppCompatActivity() {
             //找最大步數
             val maxstep = stepCountsByHour.toIntArray().max()
             val top =(maxstep/1000+1)*1000
-            val topFloat = top.toFloat()
-
-
-
 
             // 創建BarEntry對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<BarEntry> = ArrayList()
@@ -97,7 +93,7 @@ class HealthStepsActivity : AppCompatActivity() {
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
             yAxis.axisMinimum = 0f
-            yAxis.axisMaximum = topFloat
+            yAxis.axisMaximum = top.toFloat()
             yAxis.setDrawGridLines(true)
             yAxis.setDrawLabels(true)
             yAxis.labelCount = 5
