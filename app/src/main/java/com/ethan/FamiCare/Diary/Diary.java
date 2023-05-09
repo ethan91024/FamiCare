@@ -20,6 +20,10 @@ public class Diary {
     @ColumnInfo(name = "photo_path")
     private String photoPath;
 
+
+    @ColumnInfo(name = "isSaved")
+    private boolean isSaved = false;
+
     public Diary() {
     }
 
@@ -62,6 +66,15 @@ public class Diary {
         this.photoPath = photoPath;
     }
 
+    public boolean getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(boolean b) {
+        this.isSaved = b;
+    }
+
+
     @Override
     public String toString() {
         return "Diary{" +
@@ -69,6 +82,7 @@ public class Diary {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", photoPath='" + photoPath + '\'' +
+                ", isSaved='" + isSaved + '\'' +
                 '}';
     }
 }

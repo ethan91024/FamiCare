@@ -1,5 +1,8 @@
 package com.ethan.FamiCare;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,17 +21,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ethan.FamiCare.Diary.Diary;
+import com.ethan.FamiCare.Diary.DiaryDB;
 import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.Post.DiaryCommentsFragment;
 import com.ethan.FamiCare.Post.PostAdapter;
 import com.ethan.FamiCare.Post.Posts;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DiaryPostsFragment extends Fragment {
@@ -51,16 +63,20 @@ public class DiaryPostsFragment extends Fragment {
         }
     }
 
-    //FireBase
-    private DatabaseReference databaseReference;
-    private PostAdapter postAdapter;
+
     ArrayList<Posts> posts;
+    private PostAdapter postAdapter;
     private RecyclerView recyclerView;
+    private FloatingActionButton add_post;
 
-
+    //本地資料庫
     private List<Diary> diaries;
-    //資料庫
     private DiaryDoa diaryDoa;
+
+    //FireBase資料庫
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +85,9 @@ public class DiaryPostsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_diary_posts, container, false);
 
         // Initialize database reference
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Posts");
+        diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
+        storageReference = FirebaseStorage.getInstance().getReference("Posts");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
 
         // Initialize the RecyclerView and Adapter
         recyclerView = view.findViewById(R.id.PostRecycler);
@@ -105,6 +122,97 @@ public class DiaryPostsFragment extends Fragment {
             }
         });
 
+
+        add_post = view.findViewById(R.id.Add_post);
+        //根據今天日期新增全部貼文，先拿日期，去本地資料庫找資料，照片上傳到storage，其它到realtime
+        add_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("確定上傳嗎？")
+                        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //使用者按下確定，繼續執行點擊事件
+                                Calendar calendar = Calendar.getInstance();
+                                int year = calendar.get(Calendar.YEAR);
+                                int month = calendar.get(Calendar.MONTH);
+                                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                                int today = getSelected_date(year, month, day);//今天日期的Id
+
+                                if (diaryDoa.getDiariesById(today) != null) {
+                                    diaries = diaryDoa.getDiariesById(today);
+                                    uploadPost(diaries);
+                                } else {
+                                    Toast.makeText(getContext(), "no diary found", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //使用者按下取消，關閉視窗
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
         return view;
     }
+
+
+    //實現 uploadPhoto 方法，使用 Firebase Storage 將照片上傳到雲端並取得下載 URL，最後將整個Post傳到firebase
+    private void uploadPost(List<Diary> diaries) {
+        int cnt = 0;
+
+        for (Diary diary : diaries) {
+            if (diary.getIsSaved() != true) {
+
+                String photoPath = diary.getPhotoPath();
+                Uri uri = Uri.fromFile(new File(photoPath));
+
+                //連接firebase storage
+                StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
+
+                fileReference.putFile(uri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Posts post = new Posts(diary.getId(), diary.getTitle(), diary.getContent(), uri.toString());
+                                        String postId = databaseReference.push().getKey();
+                                        databaseReference.child(postId).setValue(post);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                diary.setIsSaved(true);
+                diaryDoa.updateDiary(diary);
+            } else {
+                cnt++;
+            }
+        }
+
+        //如果沒有新的diary被上傳
+        if (cnt == diaries.size()) {
+            Toast.makeText(getContext(), "all diaries had been uploaded", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    public int getSelected_date(int year, int month, int dayOfMonth) {
+        String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
+        return Integer.parseInt(s);
+    }
+
 }
