@@ -19,8 +19,6 @@ import com.ethan.FamiCare.sport.Sport1;
 import com.ethan.FamiCare.sport.Sport2;
 import com.ethan.FamiCare.sport.Sport3;
 import com.ethan.FamiCare.sport.Sport4;
-import com.ethan.FamiCare.sport.Sport5;
-import com.ethan.FamiCare.sport.Sport6;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,10 +104,6 @@ public class sportFragment extends Fragment {
                }
                if(position==3) {
                    Intent intent = new Intent(getActivity(), Sport4.class);
-                   startActivity(intent);
-               }
-               if (position==4) {
-                   Intent intent=new Intent(getActivity(), Sport5.class) ;
                    startActivity(intent);
                }
 

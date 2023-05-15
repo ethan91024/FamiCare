@@ -31,12 +31,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".sport.Sport6"
-            android:exported="false" />
-        <activity
-            android:name=".sport.Sport5"
-            android:exported="false" />
-        <activity
             android:name=".sport.Sport4"
             android:exported="false" />
         <activity

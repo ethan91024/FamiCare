@@ -1,7 +1,11 @@
 package com.ethan.FamiCare.sport;
 
+import static com.ethan.FamiCare.R.raw.sport1voice;
+import static com.ethan.FamiCare.R.raw.sport2voice;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -12,12 +16,13 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.ethan.FamiCare.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
 public class Sport2 extends AppCompatActivity {
 
-    private static final long Start_time=120000;
+    private static final long Start_time=60000;
 
     private ImageSwitcher imageSwitcher;
     int[] imgs={R.drawable.sport2_1,R.drawable.sport2_2,R.drawable.sport2_3};
@@ -25,12 +30,14 @@ public class Sport2 extends AppCompatActivity {
     private TextView textView_countdown;
     private Button start;
     private Button reset;
+    private FloatingActionButton fab;
 
     private CountDownTimer countDownTimer;
 
     private boolean mTimerRunning;
 
     private long mTimerLeftInMillis=Start_time;
+    private MediaPlayer player=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,7 @@ public class Sport2 extends AppCompatActivity {
         textView_countdown = findViewById(R.id.textview_countdown);
         start = findViewById(R.id.start);
         reset = findViewById(R.id.stop);
+        fab=findViewById(R.id.fab);
 
         imageSwitcher = findViewById(R.id.sport1_imgswitcher);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
@@ -84,6 +92,40 @@ public class Sport2 extends AppCompatActivity {
         });
 
         updateCountDownText();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //MediaPlayer mediaPlayer = MediaPlayer.create(Sport1.this, sport1voice);
+                //mediaPlayer.start();
+                new Thread(()->MP3player()).start();
+            }
+        });
+    }
+
+    private void MP3player() {
+        try {
+            if(player==null) {
+                player = MediaPlayer.create(Sport2.this, sport2voice);
+
+            }
+            if(player != null) {
+                if (!player.isPlaying()) {
+                    player.start();
+                    System.out.println("開始");
+                }
+            }
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    player.release();
+                    player = null;
+                    System.out.println("完成");
+                }
+            });
+        }catch (Exception e){
+            System.out.println("Wrong");
+        }
     }
 
         private void startTimer() {
@@ -129,5 +171,15 @@ public class Sport2 extends AppCompatActivity {
 
         }
 
+    protected void onStop() {
+        super.onStop();
+        if(player!=null){
+            player.stop();
+            System.out.println("stop");
+            player.release();
+            player=null;
+        }
 
     }
+
+}

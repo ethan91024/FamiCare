@@ -18,10 +18,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="請跟著以下動畫做運動"
-        android:textSize="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
         android:gravity="center"
-        android:layout_marginVertical="5dp"/>
+        android:text="一邊30秒，右腿向後蹬，保持穩定，肚子向內縮緊，左手伸直。吸氣時抬手抬腳 吐氣時向下落"
+        android:textSize="18dp" />
 
 
     <RelativeLayout
@@ -49,6 +50,15 @@
             android:layout_below="@+id/empty"
             android:gravity="center"
             android:textStyle="bold"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="37dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-2dp"
+            android:layout_toRightOf="@+id/sport1_imgswitcher"
+            android:clickable="true"
+            tools:srcCompat="@drawable/voice_recognition" />
 
     </RelativeLayout>
 
