@@ -117,9 +117,10 @@
             android:exported="false" />
         <activity
             android:name=".Health.HealthStepsActivity"
-            android:exported="false" /> <!-- 这里可以添加intent-filter -->
+            android:exported="false" />
+        <!-- 这里可以添加intent-filter -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.ethan.FamiCare.MainActivity"
             android:exported="true"
             android:label="FamiCare">
             <intent-filter>

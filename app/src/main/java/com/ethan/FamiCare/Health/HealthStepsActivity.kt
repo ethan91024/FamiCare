@@ -36,17 +36,34 @@ class HealthStepsActivity : AppCompatActivity() {
     val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
     val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
     var currentDisplayedDate = LocalDateTime.now()
+    lateinit var client: HealthConnectClient
+    lateinit var steps: List<StepsRecord>
+    lateinit var barChart: BarChart
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_steps)
-        val barChart: BarChart = findViewById(R.id.bar_chart)
-        val beforeBtn= findViewById<Button>(R.id.beforeBtn)
-        val afterBtn= findViewById<Button>(R.id.afterBtn)
-        val client = HealthConnectClient.getOrCreate(this)
-        var steps:List<StepsRecord>
 
+        client = HealthConnectClient.getOrCreate(this)
+        barChart = findViewById(R.id.bar_chart)
+        val beforeBtn = findViewById<Button>(R.id.beforeBtn)
+        val afterBtn = findViewById<Button>(R.id.afterBtn)
+
+        beforeBtn.setOnClickListener {
+            currentDisplayedDate = currentDisplayedDate.minusDays(1)
+            updateChart()
+        }
+
+        afterBtn.setOnClickListener {
+            currentDisplayedDate = currentDisplayedDate.plusDays(1)
+            updateChart()
+        }
+
+        updateChart()
+    }
+
+    private fun updateChart() {
         lifecycleScope.launch {
             steps = getDailyStepCounts(client)
             if (steps.isEmpty()) {
@@ -57,75 +74,9 @@ class HealthStepsActivity : AppCompatActivity() {
                 ).show()
             }
 
-            // 計算一天有多少個時間點需要顯示在 X 軸上
             val numXAxisLabels = 24
-
-            // 初始化時間點計數器，用於計算每個時間點上的步數計數值
             val stepCountsByHour = MutableList(numXAxisLabels) { 0 }
 
-//            barChart.onChartGestureListener = object : OnChartGestureListener {
-//                override fun onChartGestureStart(
-//                    me: MotionEvent?,
-//                    lastPerformedGesture: ChartGesture?
-//                ) {
-//                    // 處理手勢開始事件
-//                }
-//
-//                override fun onChartGestureEnd(
-//                    me: MotionEvent?,
-//                    lastPerformedGesture: ChartGesture?
-//                ) {
-//                    // 處理手勢結束事件
-//                }
-//
-//                override fun onChartLongPressed(me: MotionEvent?) {
-//                    // 處理長按事件
-//                }
-//
-//                override fun onChartDoubleTapped(me: MotionEvent?) {
-//                    // 處理雙擊事件
-//                }
-//
-//                override fun onChartSingleTapped(me: MotionEvent?) {
-//                    // 處理單擊事件
-//                }
-//
-//                override fun onChartScale(me: MotionEvent?, scaleX: Float, scaleY: Float) {
-//                    // 處理縮放事件
-//                }
-//
-//                override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) {
-//                    // 處理平移事件
-//                }
-//
-//                override fun onChartFling(
-//                    me1: MotionEvent?,
-//                    me2: MotionEvent?,
-//                    velocityX: Float,
-//                    velocityY: Float
-//                ) {if (velocityX > 0) {
-//                    // 向右滑動，顯示前一天的資料
-//                    currentDisplayedDate = currentDisplayedDate.minusDays(1)
-//                } else {
-//                    // 向左滑動，顯示後一天的資料
-//                    currentDisplayedDate = currentDisplayedDate.plusDays(1)
-//                }
-//                    barChart.invalidate()
-//                }
-//            }
-//
-
-            beforeBtn.setOnClickListener{
-                currentDisplayedDate = currentDisplayedDate.minusDays(1)
-            }
-            afterBtn.setOnClickListener{
-                currentDisplayedDate = currentDisplayedDate.plusDays(1)
-            }
-
-
-            steps = getDailyStepCounts(client)
-
-            // 將步數資料的時間點轉換為對應的時間點索引，並放置到對應的時間點索引中
             steps.forEach { step ->
                 val localDateTime = step.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
@@ -134,13 +85,9 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
-
-            //找最大步數
             val maxstep = stepCountsByHour.toIntArray().max()
-            val top = (maxstep / 1000 + 1) * 1000
+            val top = (maxstep!! / 1000 + 1) * 1000
 
-
-            // 創建BarEntry對象，用於指定每一個小間隔中的數據值
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
                 if (stepCountsByHour[i] == 0) {
@@ -150,20 +97,12 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
-            // 創建BarDataSet對象，用於設置柱狀圖的樣式和顏色
             val dataSet = BarDataSet(entries, "步數")
-            barChart.description.isEnabled = false
-
-            // 設置柱狀圖的顏色
-            dataSet.color = Color.BLUE
-
-            // 創建BarData對象，用於將BarDataSet對象添加到柱狀圖中
             val data = BarData(dataSet)
 
-            //不顯示步數=0的值
+            dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    // 當 y 值為 0 時，返回一個空字符串
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
@@ -211,11 +150,11 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
-            val leftAxis = barChart.axisLeft;
-            val rightAxis = barChart.axisRight;
-            leftAxis.axisMinimum = 0f;
-            rightAxis.axisMinimum = 0f;
-
+            val leftAxis = barChart.axisLeft
+            val rightAxis = barChart.axisRight
+            leftAxis.axisMinimum = 0f
+            rightAxis.axisMinimum = 0f
+            barChart.description.isEnabled = false
             barChart.data = data
             barChart.setFitBars(true)
             barChart.axisRight.isGranularityEnabled = true
@@ -223,7 +162,6 @@ class HealthStepsActivity : AppCompatActivity() {
             barChart.data.barWidth = 0.7f
 
             barChart.invalidate()
-
         }
     }
 
