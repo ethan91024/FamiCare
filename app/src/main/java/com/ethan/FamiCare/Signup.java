@@ -40,7 +40,7 @@ public class Signup extends AppCompatActivity {
         username=findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        cancel= findViewById(R.id.cancel);
+        //cancel= findViewById(R.id.cancel);
         signup = findViewById(R.id.signupb);
 
         auth = FirebaseAuth.getInstance();
@@ -64,7 +64,7 @@ public class Signup extends AppCompatActivity {
 
                     }
                 });
-
+/*
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +73,8 @@ public class Signup extends AppCompatActivity {
 
             }
         });
+
+ */
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
