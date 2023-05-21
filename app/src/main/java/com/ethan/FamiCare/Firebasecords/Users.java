@@ -9,6 +9,7 @@ public class Users {
     private String status;
     private String password;
     private String token;
+    private String id;
     public Users() {
 
     }
@@ -23,11 +24,20 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String username,String userEmail,  String password,String token) {
+    public Users(String username,String userEmail,  String password,String token,String id) {
         this.userEmail = userEmail;
         this.password = password;
         this.username= username;
         this.token=token;
+        this.id=id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getProfilepic() {
