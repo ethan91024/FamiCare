@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
     </queries>
@@ -30,6 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+
         <activity
             android:name=".sport.Sport4"
             android:exported="false" />
@@ -47,6 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".Meditation"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".sport.Sport1"
@@ -117,10 +119,9 @@
             android:exported="false" />
         <activity
             android:name=".Health.HealthStepsActivity"
-            android:exported="false" />
-        <!-- 这里可以添加intent-filter -->
+            android:exported="false" /> <!-- 这里可以添加intent-filter -->
         <activity
-            android:name="com.ethan.FamiCare.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="FamiCare">
             <intent-filter>
