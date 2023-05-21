@@ -27,9 +27,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarStyle="insideInset"
-                tools:layout_editor_absoluteX="159dp"
-                tools:layout_editor_absoluteY="99dp">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,10 +40,17 @@
                         android:text="日期選擇"
                         android:textSize="19dp"
                         android:textStyle="bold"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:textColor="#FFA02C"
+                        >
 
 
                     </TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
 
                     <TextView
@@ -55,7 +60,12 @@
                         android:gravity="center"
                         android:text="日期"
                         android:textSize="22dp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
                     <TextView
                         android:id="@+id/TWOD"
@@ -64,7 +74,14 @@
                         android:gravity="center"
                         android:text="日期"
                         android:textSize="22dp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
+
 
                     <TextView
                         android:id="@+id/THREED"
@@ -73,16 +90,28 @@
                         android:gravity="center"
                         android:text="日期"
                         android:textSize="22dp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
                     <TextView
                         android:id="@+id/FOURD"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="日期"
-                        android:textSize="22dp"></TextView>
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
 
                     <TextView
@@ -90,27 +119,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="日期"
-                        android:textSize="22dp"></TextView>
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
                     <TextView
                         android:id="@+id/SIXD"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="日期"
-                        android:textSize="22dp"></TextView>
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F8C46A" />
 
                     <TextView
                         android:id="@+id/SEVEND"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="日期"
-                        android:textSize="22dp"></TextView>
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:textColor="#FD7700"></TextView>
 
 
                 </LinearLayout>
@@ -119,9 +161,9 @@
         </LinearLayout>
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:background="#000000" />
+            android:background="#F8C46A" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -134,371 +176,418 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="100"
                 android:orientation="vertical"
-                android:layout_marginHorizontal="7dp"
                 >
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbarStyle="insideInset"
-                    tools:layout_editor_absoluteX="159dp"
-                    tools:layout_editor_absoluteY="99dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:text="頭痛"
-                            android:textSize="23dp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:text="頭暈"
-                            android:textSize="23dp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:text="噁心"
-                            android:textSize="23dp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:text="疲倦"
-                            android:textSize="23dp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:text="胃痛"
-                            android:textSize="23dp"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
-
-
-                    </LinearLayout>
+                    tools:layout_editor_absoluteX="150dp"
+                    tools:layout_editor_absoluteY="110dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                        <CheckBox
-                            android:id="@+id/headache"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="頭痛"
+                                android:textColor="#FFA02C"
+                                android:textSize="22dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="頭暈"
+                                android:textColor="#FFA02C"
+                                android:textSize="22dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="噁心"
+                                android:textColor="#FFA02C"
+                                android:textSize="22dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="疲倦"
+                                android:textColor="#FFA02C"
+                                android:textSize="22dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="胃痛"
+                                android:textColor="#FFA02C"
+                                android:textSize="22dp"
+                                android:textStyle="bold" />
 
 
-                           />
+                        </LinearLayout>
 
-                        <CheckBox
-                            android:id="@+id/dizzy"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+                                android:gravity="center" />
+
+                            <CheckBox
+                                android:id="@+id/dizzy"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp" />
 
 
-                        <CheckBox
-                            android:id="@+id/nausea"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-                            />
+                            <CheckBox
+                                android:id="@+id/nausea"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp" />
 
 
-                        <CheckBox
-                            android:id="@+id/tried"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
+                            <CheckBox
+                                android:id="@+id/tried"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
 
-                            />
+                                />
 
 
-                        <CheckBox
-                            android:id="@+id/stomachache"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
+                            <CheckBox
+                                android:id="@+id/stomachache"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
 
-                            />
+                                />
 
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Two"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Two"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/nausea_Two"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/tried_Two"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Two"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Three"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Three"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/nausea_Three"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/tried_Three"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Three"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Four"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Four"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/nausea_Four"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/tried_Four"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Four"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Five"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Five"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/nausea_Five"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/tried_Five"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Five"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Six"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Six"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/nausea_Six"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/tried_Six"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Six"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="#F8C46A" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="9dp"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/headache_Seven"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+                            <CheckBox
+                                android:id="@+id/dizzy_Seven"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                            <CheckBox
+                                android:id="@+id/nausea_Seven"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                            <CheckBox
+                                android:id="@+id/tried_Seven"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                            <CheckBox
+                                android:id="@+id/stomachache_Seven"
+                                android:layout_width="50dp"
+                                android:layout_height="48dp"
+
+                                />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Two"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/dizzy_Two"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-                        <CheckBox
-                            android:id="@+id/nausea_Two"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/tried_Two"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/stomachache_Two"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Three"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/dizzy_Three"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/nausea_Three"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/tried_Three"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/stomachache_Three"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Four"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/dizzy_Four"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/nausea_Four"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/tried_Four"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-                        <CheckBox
-                            android:id="@+id/stomachache_Four"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Five"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/dizzy_Five"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/nausea_Five"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/tried_Five"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/stomachache_Five"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Six"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-                        <CheckBox
-                            android:id="@+id/dizzy_Six"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-                        <CheckBox
-                            android:id="@+id/nausea_Six"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/tried_Six"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/stomachache_Six"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/headache_Seven"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-                        <CheckBox
-                            android:id="@+id/dizzy_Seven"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                        <CheckBox
-                            android:id="@+id/nausea_Seven"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                        <CheckBox
-                            android:id="@+id/tried_Seven"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-                        <CheckBox
-                            android:id="@+id/stomachache_Seven"
-                            android:layout_width="52dp"
-                            android:layout_height="48dp"
-
-                            />
-
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
                 </HorizontalScrollView>
 
             </LinearLayout>
@@ -506,14 +595,19 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
 
     <Button
         android:id="@+id/back_to_mood"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:text="返回壓力指數"
-        android:textSize="20dp" />
+        android:textSize="23dp"
+        android:textColor="#1E95E4"
+        android:textStyle="bold"
+        android:background="@drawable/background_mood"/>
 
 
 
