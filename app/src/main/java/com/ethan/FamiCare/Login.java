@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         // Required empty public constructor
     }
     TextInputLayout email, password;
-    Button login, cancel;
+    Button login, cancel,signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
     ImageView google_img;
@@ -54,7 +54,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login2);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        google_img = findViewById(R.id.google);
+        //google_img = findViewById(R.id.google);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -71,6 +71,7 @@ public class Login extends AppCompatActivity {
 
         gsc = GoogleSignIn.getClient(Login.this, gso);
 
+        /*
         google_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +79,16 @@ public class Login extends AppCompatActivity {
             }
         });
 
+         */
+
 
         //1
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.loginb);
-        cancel = findViewById(R.id.cancelb);
+        //cancel = findViewById(R.id.cancelb);
         auth = FirebaseAuth.getInstance();
-
+        signup = findViewById(R.id.signup);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,13 +113,24 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Signup.class);
+                startActivity(intent);
+
+            }
+        });
+
+        /*cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, GroupFragment.class);
                 startActivity(intent);
             }
         });
+
+         */
     }
 
 
