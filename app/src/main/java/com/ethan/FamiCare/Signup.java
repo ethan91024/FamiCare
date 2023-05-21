@@ -19,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.DecimalFormat;
+import java.util.Random;
+
 public class Signup extends AppCompatActivity {
     public Signup() {
         // Required empty public constructor
@@ -29,12 +32,17 @@ public class Signup extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
     String token;//紀錄裝置
+    int id;//加好友用的
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_signup);
+
+        DecimalFormat decimalFormat = new DecimalFormat("0000");
+        id = (int) (Math.random() * 10000);
+        decimalFormat.format(id);
 
 
         username=findViewById(R.id.username);
@@ -60,8 +68,6 @@ public class Signup extends AppCompatActivity {
                                 "add",
                                 token
                         );
-
-
                     }
                 });
 /*
@@ -83,16 +89,17 @@ public class Signup extends AppCompatActivity {
                 String u = username.getEditText().getText().toString();
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
+                String id1=String.valueOf(id);
                 if(!u.isEmpty()&&!e.isEmpty()&&!p.isEmpty()) {
                     auth.createUserWithEmailAndPassword(e,p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Users user = new Users(u, e, p,token);
+                                Users user = new Users(u, e, p,token,id1);
                                 String id = task.getResult().getUser().getUid();
                                 database.getReference().child("Users").child(id).setValue(user);
                                 Toast.makeText(Signup.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Signup.this, GroupFragment.class);
+                                Intent intent = new Intent(Signup.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Signup.this, "Sing up Failed!" + task.getException(), Toast.LENGTH_LONG).show();
@@ -106,7 +113,9 @@ public class Signup extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 }
 
 
