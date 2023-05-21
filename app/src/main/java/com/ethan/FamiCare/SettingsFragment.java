@@ -80,6 +80,7 @@ public class SettingsFragment extends Fragment {
         database=FirebaseDatabase.getInstance();
         gsc= GoogleSignIn.getClient(SettingsFragment.this.getContext(),gso);
         GoogleSignInAccount account=GoogleSignIn.getLastSignedInAccount(SettingsFragment.this.getContext());
+
         if(account!=null){
 
         }
@@ -102,20 +103,30 @@ public class SettingsFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.signOut();
-                Toast.makeText(SettingsFragment.this.getContext(), "logout success", Toast.LENGTH_SHORT).show();
+                if(auth.getCurrentUser().getUid()!=null){
+                    Signout();
+                }else {
+                    Toast.makeText(SettingsFragment.this.getContext(), "You need to login first", Toast.LENGTH_SHORT).show();
 
-                Signout();
+                }
+
 
             }
         });
+//
+//        if (auth.getCurrentUser().getUid() != null) {
+//            Button login = view.findViewById(R.id.login), signup = view.findViewById(R.id.signup);
+//            login.setVisibility(View.INVISIBLE);
+//            signup.setVisibility(View.INVISIBLE);
+//        }
         return view;
     }
     private void Signout() {
         auth.signOut();
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), GroupFragment.class);
-        startActivity(intent);
+        Toast.makeText(SettingsFragment.this.getContext(), "logout success", Toast.LENGTH_SHORT).show();
+
+
         /*
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -129,5 +140,16 @@ public class SettingsFragment extends Fragment {
             }
         });
         */
+
     }
+//    private void onStart(LayoutInflater inflater, ViewGroup container,
+//                         Bundle savedInstanceState) {
+//        super.onStart();
+//        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+//        if (auth.getCurrentUser().getUid() == null) {
+//            Button logout = view.findViewById(R.id.logout);
+//            logout.setVisibility(View.INVISIBLE);
+//
+//        }
+//    }
 }
