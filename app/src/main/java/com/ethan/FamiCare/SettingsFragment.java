@@ -9,21 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.ethan.FamiCare.Settings.AccountActivity;
+import com.ethan.FamiCare.Settings.FriendsActivity;
+import com.ethan.FamiCare.Settings.NotificationActivity;
 import com.ethan.FamiCare.databinding.FragmentSettingsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,7 +35,8 @@ public class SettingsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     FragmentSettingsBinding binding;
-    Button login, signup,logout;
+    Button login, signup, logout;
+    AppCompatTextView accountBtn, friendsBtn, notificationBtn;
     FirebaseAuth auth;
     FirebaseDatabase database;
     ImageView google_img;
@@ -41,6 +44,7 @@ public class SettingsFragment extends Fragment {
     GoogleSignInClient gsc;
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -59,10 +63,9 @@ public class SettingsFragment extends Fragment {
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        binding=FragmentSettingsBinding.inflate(getLayoutInflater());
+        binding = FragmentSettingsBinding.inflate(getLayoutInflater());
 
     }
-
 
 
     @Override
@@ -70,26 +73,32 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        logout=view.findViewById(R.id.logout);
-        login=view.findViewById(R.id.login);
-        signup=view.findViewById(R.id.signup);
-        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN )
+        logout = view.findViewById(R.id.logout);
+        login = view.findViewById(R.id.login);
+        signup = view.findViewById(R.id.signup);
+
+        //按鈕們
+        accountBtn = view.findViewById(R.id.accountBtn);
+        friendsBtn = view.findViewById(R.id.friendsBtn);
+        notificationBtn = view.findViewById(R.id.notificationBtn);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        auth=FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
-        gsc= GoogleSignIn.getClient(SettingsFragment.this.getContext(),gso);
-        GoogleSignInAccount account=GoogleSignIn.getLastSignedInAccount(SettingsFragment.this.getContext());
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        gsc = GoogleSignIn.getClient(SettingsFragment.this.getContext(), gso);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(SettingsFragment.this.getContext());
 
-        if(account!=null){
+        if (account != null) {
 
         }
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Signup.class);
                 startActivity(intent);
-
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -97,20 +106,38 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
                 startActivity(intent);
-
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(auth.getCurrentUser().getUid()!=null){
+                if (auth.getCurrentUser().getUid() != null) {
                     Signout();
-                }else {
+                } else {
                     Toast.makeText(SettingsFragment.this.getContext(), "You need to login first", Toast.LENGTH_SHORT).show();
-
                 }
+            }
+        });
 
-
+        accountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AccountActivity.class);
+                startActivity(intent);
+            }
+        });
+        friendsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+        notificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
             }
         });
 //
@@ -121,6 +148,7 @@ public class SettingsFragment extends Fragment {
 //        }
         return view;
     }
+
     private void Signout() {
         auth.signOut();
         FirebaseAuth.getInstance().signOut();

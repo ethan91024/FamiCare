@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
@@ -23,16 +24,13 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.Period
-import java.time.ZoneId
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 
 class HealthStepsActivity : AppCompatActivity() {
     val myDateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZoneId.systemDefault())
+        DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
     val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
     val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
     var currentDisplayedDate = LocalDateTime.now()
@@ -49,7 +47,21 @@ class HealthStepsActivity : AppCompatActivity() {
         barChart = findViewById(R.id.bar_chart)
         val beforeBtn = findViewById<Button>(R.id.beforeBtn)
         val afterBtn = findViewById<Button>(R.id.afterBtn)
-
+//        val dayBtn = findViewById<Button>(R.id.dayBtn)
+//        val weekBtn = findViewById<Button>(R.id.weekBtn)
+//        val monthBtn = findViewById<Button>(R.id.monthBtn)
+//
+//        dayBtn.setOnClickListener {
+//            displayDayData()
+//        }
+//
+//        weekBtn.setOnClickListener {
+//            displayWeekData()
+//        }
+//
+//        monthBtn.setOnClickListener {
+//            displayMonthData()
+//        }
         beforeBtn.setOnClickListener {
             currentDisplayedDate = currentDisplayedDate.minusDays(1)
             updateChart()
@@ -62,15 +74,46 @@ class HealthStepsActivity : AppCompatActivity() {
 
         updateChart()
     }
-
+//    private fun displayDayData() {
+//        // 設置 currentDisplayedDate 為當前日期
+//        currentDisplayedDate = LocalDateTime.now()
+//        updateChart()
+//    }
+//
+//    private fun displayWeekData() {
+//        // 設置 currentDisplayedDate 為當前日期的前一周
+//        currentDisplayedDate = LocalDateTime.now().minusWeeks(1)
+//        updateChart()
+//    }
+//
+//    private fun displayMonthData() {
+//        // 設置 currentDisplayedDate 為當前日期的前一個月
+//        currentDisplayedDate = LocalDateTime.now().minusMonths(1)
+//        updateChart()
+//    }
     private fun updateChart() {
         lifecycleScope.launch {
+//            when {
+//                // 檢查 currentDisplayedDate 是哪種類型（天、周、月），然後加載相應的資料
+//                currentDisplayedDate == LocalDateTime.now() -> {
+//                    // 顯示一天的資料
+//                    steps = getDailyStepCounts(client)
+//                }
+//                currentDisplayedDate.isAfter(LocalDateTime.now().minusWeeks(1)) -> {
+//                    // 顯示一周的資料
+//                    aggregateStepsIntoWeeks(client, currentDisplayedDate, LocalDateTime.now())
+//                }
+//                else -> {
+//                    // 顯示一個月的資料
+//                    aggregateStepsIntoMonths(client, currentDisplayedDate, LocalDateTime.now())
+//                }
+//            }
             steps = getDailyStepCounts(client)
             if (steps.isEmpty()) {
                 Toast.makeText(
-                        this@HealthStepsActivity,
-                        "Don't Have Data!",
-                        Toast.LENGTH_SHORT
+                    this@HealthStepsActivity,
+                    "Don't Have Data!",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
 
@@ -150,6 +193,9 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
 
+            val date=findViewById<TextView>(R.id.dateText)
+            date.setText(currentDisplayedDate.format(myDateTimeFormatter))
+
             val leftAxis = barChart.axisLeft
             val rightAxis = barChart.axisRight
             leftAxis.axisMinimum = 0f
@@ -166,24 +212,24 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun getDailyStepCounts(
-            client: HealthConnectClient,
-            start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
-            end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
+        client: HealthConnectClient,
+        start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
+        end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
     ): List<StepsRecord> {
 
         try {
             val request = client.readRecords(
-                    ReadRecordsRequest(
-                            StepsRecord::class,
-                            timeRangeFilter = TimeRangeFilter.between(start, end)
-                    )
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
             )
             return request.records
         } catch (exception: Exception) {
             Toast.makeText(
-                    this@HealthStepsActivity,
-                    "Don't Have Data!",
-                    Toast.LENGTH_SHORT
+                this@HealthStepsActivity,
+                "Don't Have Data!",
+                Toast.LENGTH_SHORT
             ).show()
             throw exception
         }
@@ -191,52 +237,52 @@ class HealthStepsActivity : AppCompatActivity() {
 
 
     suspend fun aggregateStepsIntoDays(
-            client: HealthConnectClient,
-            start: LocalDateTime,
-            end: LocalDateTime
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
     ): Long? {
         var totalSteps: Long? = 0
         try {
             val response =
-                    client.aggregateGroupByPeriod(
-                            AggregateGroupByPeriodRequest(
-                                    metrics = setOf(StepsRecord.COUNT_TOTAL),
-                                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                                    timeRangeSlicer = Period.ofDays(1)
-                            )
+                client.aggregateGroupByPeriod(
+                    AggregateGroupByPeriodRequest(
+                        metrics = setOf(StepsRecord.COUNT_TOTAL),
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
+                        timeRangeSlicer = Period.ofDays(1)
                     )
+                )
             for (dailyResult in response) {
                 totalSteps = dailyResult.result[StepsRecord.COUNT_TOTAL]
             }
         } catch (exception: Exception) {
             Toast.makeText(
-                    this@HealthStepsActivity,
-                    "Don't Have Data!",
-                    Toast.LENGTH_SHORT
+                this@HealthStepsActivity,
+                "Don't Have Data!",
+                Toast.LENGTH_SHORT
             ).show()
         }
         return totalSteps
     }
 
     suspend fun aggregateStepsIntoWeeks(
-            client: HealthConnectClient,
-            start: LocalDateTime,
-            end: LocalDateTime
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
     ) {
         try {
             val response =
-                    client.aggregateGroupByPeriod(
-                            AggregateGroupByPeriodRequest(
-                                    metrics = setOf(StepsRecord.COUNT_TOTAL),
-                                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                                    timeRangeSlicer = Period.ofWeeks(1)
-                            )
+                client.aggregateGroupByPeriod(
+                    AggregateGroupByPeriodRequest(
+                        metrics = setOf(StepsRecord.COUNT_TOTAL),
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
+                        timeRangeSlicer = Period.ofWeeks(1)
                     )
+                )
             val request = client.readRecords(
-                    ReadRecordsRequest(
-                            StepsRecord::class,
-                            timeRangeFilter = TimeRangeFilter.between(start, end)
-                    )
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
             )
             for (weeklyResult in response) {
                 val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
@@ -245,32 +291,32 @@ class HealthStepsActivity : AppCompatActivity() {
 
         } catch (exception: Exception) {
             Toast.makeText(
-                    this@HealthStepsActivity,
-                    "Don't Have Data!",
-                    Toast.LENGTH_SHORT
+                this@HealthStepsActivity,
+                "Don't Have Data!",
+                Toast.LENGTH_SHORT
             ).show()
         }
     }
 
     suspend fun aggregateStepsIntoMonths(
-            client: HealthConnectClient,
-            start: LocalDateTime,
-            end: LocalDateTime
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
     ) {
         try {
             val response =
-                    client.aggregateGroupByPeriod(
-                            AggregateGroupByPeriodRequest(
-                                    metrics = setOf(StepsRecord.COUNT_TOTAL),
-                                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                                    timeRangeSlicer = Period.ofMonths(1)
-                            )
+                client.aggregateGroupByPeriod(
+                    AggregateGroupByPeriodRequest(
+                        metrics = setOf(StepsRecord.COUNT_TOTAL),
+                        timeRangeFilter = TimeRangeFilter.between(start, end),
+                        timeRangeSlicer = Period.ofMonths(1)
                     )
+                )
             val request = client.readRecords(
-                    ReadRecordsRequest(
-                            StepsRecord::class,
-                            timeRangeFilter = TimeRangeFilter.between(start, end)
-                    )
+                ReadRecordsRequest(
+                    StepsRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
             )
             for (monthlyResult in response) {
                 val totalSteps = monthlyResult.result[StepsRecord.COUNT_TOTAL]
@@ -278,13 +324,12 @@ class HealthStepsActivity : AppCompatActivity() {
             }
         } catch (exception: Exception) {
             Toast.makeText(
-                    this@HealthStepsActivity,
-                    "Don't Have Data!",
-                    Toast.LENGTH_SHORT
+                this@HealthStepsActivity,
+                "Don't Have Data!",
+                Toast.LENGTH_SHORT
             ).show()
         }
     }
-
-
 }
+
 
