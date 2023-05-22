@@ -36,16 +36,23 @@
                         android:layout_height="50dp"
                         android:text="身心狀況報告"
                         android:textSize="30dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="#FFA02C"
+                        />
+
 
                     <Button
                         android:id="@+id/analize"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/background_mood"
                         android:text="進階症狀分析"
-                        android:textSize="23dp"
-                        android:textStyle="bold" />
+                        android:textColor="#1E95E4"
+                        android:textSize="28dp"
+                        android:textStyle="bold"
 
+                        />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -58,9 +65,10 @@
                             android:id="@+id/stress"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:text="壓力指數:"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
+                            android:text="壓力指數 : "
+                            android:textSize="27dp"
+                            android:textStyle="bold"
+                            android:textColor="#FD7700"/>
 
                         <TextView
                             android:id="@+id/stressnumber"
@@ -69,14 +77,16 @@
                             android:layout_toRightOf="@id/stress"
                             android:gravity="center"
                             android:text="顯示數字"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
+                            android:textSize="27dp"
+                            android:textStyle="bold"
+                            android:textColor="#FD7700"/>
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#000000" />
+                        android:layout_height="3dp"
+                        android:background="#F8C46A"
+                       />
 
 
                     <RelativeLayout
@@ -105,49 +115,73 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#000000" />
+                        android:layout_height="3dp"
+                        android:background="#F8C46A" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="9dp"
                     android:orientation="vertical">
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginHorizontal="5dp"
                         android:text="緩減建議"
-                        android:textSize="25dp"
+                        android:textColor="#FFA02C"
+                        android:textSize="27dp"
                         android:textStyle="bold" />
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:gravity="center"
-                        android:textSize="20dp"
+                        android:textSize="23dp"
                         android:id="@+id/Advice"
-                        android:contextClickable="true"/>
+                        android:contextClickable="true"
+                        android:background="@drawable/background_mood"
+                        android:textStyle="bold"
+                        android:textColor="#1E95E4"
+
+                        />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:gravity="center"
-                        android:textSize="20dp"
+                        android:textSize="23dp"
                         android:id="@+id/Breathe"
                         android:text="呼吸調整"
-                        android:contextClickable="true"/>
+                        android:textStyle="bold"
+                        android:textColor="#1E95E4"
+                        android:contextClickable="true"
+                        android:background="@drawable/background_mood"/>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:gravity="center"
-                        android:textSize="20dp"
+                        android:textSize="23dp"
                         android:id="@+id/Sport"
-                        android:contextClickable="true"/>
+                        android:contextClickable="true"
+                        android:background="@drawable/background_mood"
+                        android:textStyle="bold"
+                        android:textColor="#1E95E4"/>
 
 
-            </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

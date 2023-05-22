@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,9 +82,9 @@ public class MoodFragment extends Fragment {
 
     private TextView advice; //建議的 textview(現在先放冥想)
     private TextView breathe;
-   // private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的
+    // private Fragment advice_fm[]={new MeditationFragment(),new BreatheFragment(),new sportFragment()}; //各個緩解方式的介面，要做新的就加新的
 
-    private Fragment advice_fm[]={new sportFragment()};
+    private Fragment advice_fm[] = {new sportFragment()};
     private TextView sport;//nai
 
 
@@ -126,9 +127,9 @@ public class MoodFragment extends Fragment {
         if (synumber < 0) {
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法顯示");
-        }else{
-            synumber+=StressNumber;
-            String sn=synumber+"";
+        } else {
+            synumber += StressNumber;
+            String sn = synumber + "";
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText(sn);
 
@@ -160,14 +161,14 @@ public class MoodFragment extends Fragment {
         advice = mainview.findViewById(R.id.Advice);
         advice.setText("冥想");
         advice.setOnClickListener(new View.OnClickListener() {
-           @Override
+            @Override
             public void onClick(View view) {
 //               FragmentManager fm = getActivity().getSupportFragmentManager();
 //               fm.beginTransaction().replace(R.id.Mood_layout, new MeditationFragment()).addToBackStack(null).commit();
-               Intent intent = new Intent(getActivity(), Meditation.class);
-               startActivity(intent);
+                Intent intent = new Intent(getActivity(), Meditation.class);
+                startActivity(intent);
 
-           }
+            }
         });
         //跳轉呼吸介面
         breathe = mainview.findViewById(R.id.Breathe);
@@ -180,15 +181,29 @@ public class MoodFragment extends Fragment {
         });
 
         //nai
-        sport=mainview.findViewById(R.id.Sport);
+        sport = mainview.findViewById(R.id.Sport);
         sport.setText("運動");
         sport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm=getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout,advice_fm[0]).addToBackStack(null).commit();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.Mood_layout, advice_fm[0]).addToBackStack(null).commit();
             }
         });
+
+        //進階症狀分析美化
+        Drawable drawable = getResources().getDrawable(R.drawable.checkremove);
+        drawable.setBounds(0, 0, 220, 220);
+        analize.setCompoundDrawables(drawable, null, null, null);
+        //冥想加圖案
+        Drawable meditationD = getResources().getDrawable(R.drawable.meditation_img); // 取得圖案 Drawable 物件
+        meditationD.setBounds(30, -10, 550, 575);
+        advice.setCompoundDrawables(null,null,meditationD,null);
+
+        // 設置 Drawable 的範圍，將圖案放置在右下角
+        Drawable breatheD = getResources().getDrawable(R.drawable.breathe_img); // 取得圖案 Drawable 物件
+        breatheD.setBounds(30, 9, 550, 620);
+        breathe.setCompoundDrawables(null,null,breatheD,null);
 
 
         return mainview;
@@ -246,10 +261,10 @@ public class MoodFragment extends Fragment {
         double plusnumber = 0;
         if (run) {
             Bundle arguments = getArguments();
-            if(arguments != null) {
+            if (arguments != null) {
                 plusnumber = arguments.getDouble("symptom");
-            }else{
-                plusnumber=0;
+            } else {
+                plusnumber = 0;
             }
         } else {
             plusnumber = -1;//如果缺乏心率睡眠血氧資料，直接無法分析，回傳-1表示無法run
@@ -444,18 +459,20 @@ public class MoodFragment extends Fragment {
 
         }
     }
+
     public void onResume() {
-        Log.e(TAG,"心情---onResume");
+        Log.e(TAG, "心情---onResume");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        Log.e(TAG,"心情---onPause");
+        Log.e(TAG, "心情---onPause");
         super.onPause();
     }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG,"心情---onViewCreated");
+        Log.e(TAG, "心情---onViewCreated");
         super.onViewCreated(view, savedInstanceState);
     }
 }
