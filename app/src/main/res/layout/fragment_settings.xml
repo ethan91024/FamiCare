@@ -10,40 +10,42 @@
     android:background="@color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
         android:id="@+id/profile_image"
-        android:layout_marginStart="4dp"
+        android:layout_width="72dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="5dp"
         android:padding="5dp"
         android:src="@drawable/avatar_b"
-        app:civ_border_width="2dp"
-        android:layout_centerHorizontal="true"/>
+        app:civ_border_width="2dp" />
+
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="19dp"
+        android:layout_toEndOf="@+id/profile_image"
         android:text="username"
-        android:layout_below="@id/profile_image"
-        />
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/userid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:text="#userid"
         android:layout_below="@id/profile_image"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="-52dp"
+        android:layout_toEndOf="@+id/username"
         android:layout_toRightOf="@id/username"
-        />
-    <TextView
-        android:id="@+id/friend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:text="好友"
-        android:layout_below="@id/username"
-        />
+        android:text="#userid"
+        android:textSize="24sp" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
@@ -67,4 +69,54 @@
         android:textSize="28sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="504dp"
+        android:layout_below="@+id/username"
+        android:layout_marginTop="22dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/accountBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_description_24"
+                    android:gravity="center|left"
+                    android:text="  我的帳號"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:id="@+id/friendsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_people_alt_24"
+                    android:gravity="center|left"
+                    android:text="  好友"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/notificationBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_notifications_24"
+                    android:gravity="center|left"
+                    android:text="  提醒"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>

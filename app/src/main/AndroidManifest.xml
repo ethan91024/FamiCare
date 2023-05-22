@@ -29,8 +29,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".Settings.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.FriendsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.AccountActivity"
+            android:exported="false" />
         <activity
             android:name=".sport.Sport4"
             android:exported="false" />
@@ -140,6 +147,7 @@
         </service>
 
         <receiver android:name=".alarmReceiver" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
