@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -29,7 +30,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -85,6 +89,9 @@ public class Login extends AppCompatActivity {
         login = findViewById(R.id.loginb);
         cancel = findViewById(R.id.cancelb);
         auth = FirebaseAuth.getInstance();
+        String username="";
+        String userid="";
+        String uid=auth.getCurrentUser().getUid();
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +100,13 @@ public class Login extends AppCompatActivity {
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
 
+
                 auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             Toast.makeText(Login.this, "Login successd!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
