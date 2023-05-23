@@ -95,8 +95,6 @@ public class Login extends AppCompatActivity {
 
         String username="";
         String userid="";
-        String uid=auth.getCurrentUser().getUid();
-
 
         signup = findViewById(R.id.signup);
 
@@ -107,24 +105,27 @@ public class Login extends AppCompatActivity {
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
 
+                if(!e.isEmpty()&&!p.isEmpty()) {
+                    auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
-                auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            Toast.makeText(Login.this, "Login successd!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Login successd!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-
+                    });
+                }else{
+                    Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
