@@ -10,7 +10,7 @@
         android:id="@+id/username"
         android:layout_width="344dp"
         android:layout_height="61dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="116dp"
 
         app:boxBackgroundMode="outline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,12 +68,11 @@
         android:id="@+id/password"
         android:layout_width="344dp"
         android:layout_height="61dp"
+        android:layout_marginTop="20dp"
         app:boxBackgroundMode="outline"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.613">
+        app:layout_constraintTop_toBottomOf="@+id/email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -92,12 +91,39 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordComfirm"
+        android:layout_width="344dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="24dp"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="311dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/email_tf"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:fontFamily="@font/inter_medium"
+            android:hint="   Password Confirm"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:paddingStart="10dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/signupb"
         android:layout_width="271dp"
         android:layout_height="54dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="44dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_medium"
@@ -108,10 +134,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordComfirm"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView"
@@ -121,7 +147,7 @@
         android:layout_marginEnd="67dp"
         android:layout_marginBottom="44dp"
         android:fontFamily="@font/inter_bold"
-        android:text="   Welcome  Famicare! "
+        android:text="   Welcome  FamiCare! "
         android:textAllCaps="false"
         android:textColor="#FFD699"
         android:textSize="24sp"
