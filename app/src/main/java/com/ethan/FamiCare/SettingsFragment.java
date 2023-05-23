@@ -40,7 +40,6 @@ public class SettingsFragment extends Fragment {
 
     FragmentSettingsBinding binding;
     Button login, signup, logout;
-    TextView username,userid;
     AppCompatTextView accountBtn, friendsBtn, notificationBtn;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -67,7 +66,7 @@ public class SettingsFragment extends Fragment {
     public void onCreate(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         binding = FragmentSettingsBinding.inflate(getLayoutInflater());
 
     }
@@ -81,8 +80,6 @@ public class SettingsFragment extends Fragment {
         logout = view.findViewById(R.id.logout);
         login = view.findViewById(R.id.login);
         signup = view.findViewById(R.id.signup);
-        username=view.findViewById(R.id.username);
-        userid=view.findViewById(R.id.userid);
         //按鈕們
         accountBtn = view.findViewById(R.id.accountBtn);
         friendsBtn = view.findViewById(R.id.friendsBtn);
@@ -93,45 +90,10 @@ public class SettingsFragment extends Fragment {
                 .build();
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        String uid=auth.getCurrentUser().getUid();
         gsc = GoogleSignIn.getClient(SettingsFragment.this.getContext(), gso);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(SettingsFragment.this.getContext());
-        database.getReference().child("Users").child(uid).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String username1 = snapshot.getValue(String.class);
-                    // 在這裡將取得的 username 設置給 TextView
-                    username.setText(username1);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
 
 
-
-        });
-        database.getReference().child("Users").child(uid).child("id").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String userid1 = snapshot.getValue(String.class);
-                    // 在這裡將取得的 username 設置給 TextView
-                    userid.setText("#"+userid1);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-
-
-        });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,7 +153,8 @@ public class SettingsFragment extends Fragment {
         auth.signOut();
         FirebaseAuth.getInstance().signOut();
         Toast.makeText(SettingsFragment.this.getContext(), "logout success", Toast.LENGTH_SHORT).show();
-
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
 
         /*
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {

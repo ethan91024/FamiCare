@@ -9,42 +9,6 @@
     tools:context=".SettingsFragment"
     android:background="@color/white">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="72dp"
-        android:layout_height="66dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:src="@drawable/avatar_b"
-        app:civ_border_width="2dp" />
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="19dp"
-        android:layout_toEndOf="@+id/profile_image"
-        android:text="username"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/userid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_image"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="-52dp"
-        android:layout_toEndOf="@+id/username"
-        android:layout_toRightOf="@id/username"
-        android:text="#userid"
-        android:textSize="24sp" />
 
     <Button
         android:id="@+id/login"
@@ -73,7 +37,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="504dp"
-        android:layout_below="@+id/username"
         android:layout_marginTop="22dp">
 
         <ScrollView
