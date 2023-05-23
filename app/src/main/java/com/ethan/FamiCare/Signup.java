@@ -27,7 +27,7 @@ public class Signup extends AppCompatActivity {
         // Required empty public constructor
     }
     ActivitySignupBinding binding;
-    TextInputLayout email, password,username;
+    TextInputLayout email, password,username,passwordc;
     Button cancel, signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -48,6 +48,7 @@ public class Signup extends AppCompatActivity {
         username=findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        passwordc=findViewById(R.id.passwordComfirm);
         //cancel= findViewById(R.id.cancel);
         signup = findViewById(R.id.signupb);
 
@@ -89,24 +90,30 @@ public class Signup extends AppCompatActivity {
                 String u = username.getEditText().getText().toString();
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
+                String pc=passwordc.getEditText().getText().toString();
                 String id1=String.valueOf(id);
                 if(!u.isEmpty()&&!e.isEmpty()&&!p.isEmpty()) {
-                    auth.createUserWithEmailAndPassword(e,p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Users user = new Users(u, e, p,token,id1);
-                                String id = task.getResult().getUser().getUid();
-                                database.getReference().child("Users").child(id).setValue(user);
-                                Toast.makeText(Signup.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Signup.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(Signup.this, "Sing up Failed!" + task.getException(), Toast.LENGTH_LONG).show();
+                    if(p.equals(pc)) {
+                        auth.createUserWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Users user = new Users(u, e, p, token, id1);
+                                    String id = task.getResult().getUser().getUid();
+                                    database.getReference().child("Users").child(id).setValue(user);
+                                    Toast.makeText(Signup.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Signup.this, MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(Signup.this, "Sing up Failed!" + task.getException(), Toast.LENGTH_LONG).show();
 
+                                }
                             }
-                        }
-                    });
+                        });
+                    }else{
+
+                        Toast.makeText(Signup.this, "Wrong password!" , Toast.LENGTH_LONG).show();
+                    }
                 }else{
                     Toast.makeText(Signup.this, "Failed!" , Toast.LENGTH_LONG).show();
 
