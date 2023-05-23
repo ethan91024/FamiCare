@@ -4,7 +4,6 @@ package com.ethan.FamiCare.Health
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -22,10 +21,15 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.launch
 import java.time.*
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HealthStepsActivity : AppCompatActivity() {
@@ -37,6 +41,7 @@ class HealthStepsActivity : AppCompatActivity() {
     lateinit var client: HealthConnectClient
     lateinit var steps: List<StepsRecord>
     lateinit var barChart: BarChart
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,13 +67,33 @@ class HealthStepsActivity : AppCompatActivity() {
 //        monthBtn.setOnClickListener {
 //            displayMonthData()
 //        }
+
+        val intervalTextView: TextView = findViewById(R.id.timeTF)
+
+        barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onValueSelected(entry: Entry, highlight: Highlight) {
+                val startHour = entry.x.toInt()
+                val endHour = startHour + 1
+                val interval = String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
+                intervalTextView.text = interval
+            }
+
+            override fun onNothingSelected() {
+                // 如果沒有值被選取時的程式碼
+                intervalTextView.text = ""
+            }
+        })
+
+
         beforeBtn.setOnClickListener {
             currentDisplayedDate = currentDisplayedDate.minusDays(1)
+            intervalTextView.text = "xx:xx-xx:xx"
             updateChart()
         }
 
         afterBtn.setOnClickListener {
             currentDisplayedDate = currentDisplayedDate.plusDays(1)
+            intervalTextView.text = "xx:xx-xx:xx"
             updateChart()
         }
 
@@ -91,6 +116,8 @@ class HealthStepsActivity : AppCompatActivity() {
 //        currentDisplayedDate = LocalDateTime.now().minusMonths(1)
 //        updateChart()
 //    }
+
+
     private fun updateChart() {
         lifecycleScope.launch {
 //            when {
@@ -110,11 +137,11 @@ class HealthStepsActivity : AppCompatActivity() {
 //            }
             steps = getDailyStepCounts(client)
             if (steps.isEmpty()) {
-                Toast.makeText(
-                    this@HealthStepsActivity,
-                    "Don't Have Data!",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@HealthStepsActivity,
+//                    "Don't Have Data!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
 
             val numXAxisLabels = 24
@@ -226,11 +253,11 @@ class HealthStepsActivity : AppCompatActivity() {
             )
             return request.records
         } catch (exception: Exception) {
-            Toast.makeText(
-                this@HealthStepsActivity,
-                "Don't Have Data!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@HealthStepsActivity,
+//                "Don't Have Data!",
+//                Toast.LENGTH_SHORT
+//            ).show()
             throw exception
         }
     }
@@ -255,11 +282,11 @@ class HealthStepsActivity : AppCompatActivity() {
                 totalSteps = dailyResult.result[StepsRecord.COUNT_TOTAL]
             }
         } catch (exception: Exception) {
-            Toast.makeText(
-                this@HealthStepsActivity,
-                "Don't Have Data!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@HealthStepsActivity,
+//                "Don't Have Data!",
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
         return totalSteps
     }
@@ -290,11 +317,11 @@ class HealthStepsActivity : AppCompatActivity() {
             }
 
         } catch (exception: Exception) {
-            Toast.makeText(
-                this@HealthStepsActivity,
-                "Don't Have Data!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@HealthStepsActivity,
+//                "Don't Have Data!",
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
     }
 
@@ -323,11 +350,11 @@ class HealthStepsActivity : AppCompatActivity() {
 
             }
         } catch (exception: Exception) {
-            Toast.makeText(
-                this@HealthStepsActivity,
-                "Don't Have Data!",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this@HealthStepsActivity,
+//                "Don't Have Data!",
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
     }
 }
