@@ -98,7 +98,6 @@ public class Login extends AppCompatActivity {
 
         signup = findViewById(R.id.signup);
 
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
