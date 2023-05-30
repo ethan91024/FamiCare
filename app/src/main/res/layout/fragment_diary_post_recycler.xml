@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_corner"
     android:elevation="2dp"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#AAAAAA" />
     <!--上方頭像跟名稱 weight = 1.5-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +33,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="user"
-            android:textColor="@color/dark"
+            android:textColor="#FFA02C"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -41,7 +44,8 @@
         android:id="@+id/UserPhoto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_weight="5"
+        android:background="@color/dark" />
 
     <!--貼文內容 weight = 2-->
     <ScrollView
@@ -56,54 +60,24 @@
             android:layout_height="70dp"
             android:layout_marginLeft="5dp"
             android:text="Content"
-            android:textColor="@color/dark"
+            android:textColor="#FFA02C"
             android:textSize="20sp" />
 
     </ScrollView>
 
-    <!--添加評論 weight = 1-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginLeft="20dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/Input_comment"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="8"-->
-<!--            android:hint="Add a comment..." />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/Add_comment"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginStart="4dp"-->
-<!--            android:layout_marginLeft="4dp"-->
-<!--            android:layout_marginEnd="4dp"-->
-<!--            android:layout_marginRight="4dp"-->
-<!--            android:layout_weight="0"-->
-<!--            android:src="@drawable/send" />-->
-
-<!--    </LinearLayout>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark" />
 
     <Button
         android:id="@+id/See_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="view comments"/>
+        android:background="@color/white"
+        android:text="查看留言"
+        android:textColor="#AAAAAA"
+        android:textStyle="bold" />
 
-
-    <!--留言列表 weight = 2-->
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/comments_recycler_view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginLeft="20dp"-->
-    <!--        android:layout_weight="2"-->
-    <!--        android:visibility="visible" />-->
 
 </LinearLayout>

@@ -19,6 +19,7 @@
             android:clickable="true"
             android:gravity="left|center"
             android:text="Title"
+            android:textColor="@android:color/white"
             android:textSize="24sp" />
 
 

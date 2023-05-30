@@ -9,7 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:text="貼文"
+        android:textColor="#FFA02C"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -17,7 +19,7 @@
         android:id="@+id/PostRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/Add_post"
@@ -25,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        app:backgroundTint="#E68ED4F4"
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
-
 </FrameLayout>
