@@ -68,9 +68,9 @@ public class GroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding=FragmentGroupBinding.inflate(inflater,container,false);
-        database=FirebaseDatabase.getInstance();
-        UsersAdapter adapter=new UsersAdapter(list,getContext());
+        binding = FragmentGroupBinding.inflate(inflater, container, false);
+        database = FirebaseDatabase.getInstance();
+        UsersAdapter adapter = new UsersAdapter(list, getContext());
 
 
         binding.chatrecy.setAdapter(adapter);
@@ -85,7 +85,7 @@ public class GroupFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
-                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+                    if (!users.getUserId().equals(FirebaseAuth.getInstance().getUid())) {
                         list.add(users);
                         Log.d("TAG", "Message: " + users);
                     }

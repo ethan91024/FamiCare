@@ -52,31 +52,31 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         holder.username.setText(users.getUsername());
 
         //最後一則訊息
-        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid()+users.getUserId())
-                        .orderByChild("timestamp").limitToLast(1)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.hasChildren()){
-                                    for (DataSnapshot snapshot1:snapshot.getChildren()){
-                                        holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
-                                    }
-                                }
+        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getUserId())
+                .orderByChild("timestamp").limitToLast(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChildren()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
                             }
+                        }
+                    }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
+                    }
+                });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,GroupChatroom.class);
-                intent.putExtra("userId",users.getUserId());
-                intent.putExtra("profilePic",users.getProfilepic());
-                intent.putExtra("userName",users.getUsername());
+                Intent intent = new Intent(context, GroupChatroom.class);
+                intent.putExtra("userId", users.getUserId());
+                intent.putExtra("profilePic", users.getProfilepic());
+                intent.putExtra("userName", users.getUsername());
                 context.startActivity(intent);
 
             }

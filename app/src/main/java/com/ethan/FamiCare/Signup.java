@@ -26,8 +26,9 @@ public class Signup extends AppCompatActivity {
     public Signup() {
         // Required empty public constructor
     }
+
     ActivitySignupBinding binding;
-    TextInputLayout email, password,username,passwordc;
+    TextInputLayout email, password, username, passwordc;
     Button cancel, signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -45,15 +46,15 @@ public class Signup extends AppCompatActivity {
         decimalFormat.format(id);
 
 
-        username=findViewById(R.id.username);
+        username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        passwordc=findViewById(R.id.passwordComfirm);
+        passwordc = findViewById(R.id.passwordComfirm);
         //cancel= findViewById(R.id.cancel);
         signup = findViewById(R.id.signupb);
 
         auth = FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -90,10 +91,10 @@ public class Signup extends AppCompatActivity {
                 String u = username.getEditText().getText().toString();
                 String e = email.getEditText().getText().toString();
                 String p = password.getEditText().getText().toString();
-                String pc=passwordc.getEditText().getText().toString();
-                String id1=String.valueOf(id);
-                if(!u.isEmpty()&&!e.isEmpty()&&!p.isEmpty()) {
-                    if(p.equals(pc)) {
+                String pc = passwordc.getEditText().getText().toString();
+                String id1 = String.valueOf(id);
+                if (!u.isEmpty() && !e.isEmpty() && !p.isEmpty()) {
+                    if (p.equals(pc)) {
                         auth.createUserWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -110,12 +111,12 @@ public class Signup extends AppCompatActivity {
                                 }
                             }
                         });
-                    }else{
+                    } else {
 
-                        Toast.makeText(Signup.this, "Wrong password!" , Toast.LENGTH_LONG).show();
+                        Toast.makeText(Signup.this, "Wrong password!", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(Signup.this, "Failed!" , Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Signup.this, "Failed!", Toast.LENGTH_LONG).show();
 
                 }
             }

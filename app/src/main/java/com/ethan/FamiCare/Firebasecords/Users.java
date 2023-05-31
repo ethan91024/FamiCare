@@ -10,6 +10,7 @@ public class Users {
     private String password;
     private String token;
     private String id;
+
     public Users() {
 
     }
@@ -24,13 +25,23 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String username,String userEmail,  String password,String token,String id) {
+    public Users(String username, String userEmail, String password, String token, String id) {
         this.userEmail = userEmail;
         this.password = password;
-        this.username= username;
-        this.token=token;
-        this.id=id;
+        this.username = username;
+        this.token = token;
+        this.id = id;
     }
+
+    public Users(String profilepic, String username, String userEmail, String password, String token, String id) {
+        this.profilepic = profilepic;
+        this.userEmail = userEmail;
+        this.password = password;
+        this.username = username;
+        this.token = token;
+        this.id = id;
+    }
+
 
     public String getId() {
         return id;
