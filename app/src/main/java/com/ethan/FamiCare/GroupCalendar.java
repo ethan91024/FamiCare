@@ -123,6 +123,9 @@ public class GroupCalendar extends AppCompatActivity {
         checknoti=findViewById(R.id.checknoti);
 
        arrayList=new ArrayList<>();
+       //介面用
+       //Calendar calview=Calendar.getInstance();
+       //calendar.setDate(calview.getTimeInMillis());
 
        // recyclerView.setLayoutManager(new LinearLayoutManager(this));
        // rvAdapter=new calendarAdapter(arrayList2,this);
