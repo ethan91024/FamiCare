@@ -1,5 +1,6 @@
 package com.ethan.FamiCare;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,35 +32,7 @@ import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
-
-    public DiaryFragment() {
-        // Required empty public constructor
-    }
-
-    public static DiaryFragment newInstance(String param1, String param2) {
-        DiaryFragment fragment = new DiaryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    private int selected_date;
     //Layout 元素
     private CalendarView calender;
     private TextView date;
@@ -70,12 +43,32 @@ public class DiaryFragment extends Fragment {
     private Button cal;
     private Button look;
 
+    //變數
+    private int selected_date;
+    private String originalTitle;
+
     //資料庫
     private DiaryDoa diaryDoa;
-    private Diary diary;
-    private Diary diary2;
     private List<Diary> diaries;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Activity activity = getActivity();
+        if (activity != null) {
+            originalTitle = activity.getTitle().toString(); // 保存原來的標題
+            activity.setTitle("生活點滴"); // 設定新的標題
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.setTitle(originalTitle); // 還原原來的標題
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
