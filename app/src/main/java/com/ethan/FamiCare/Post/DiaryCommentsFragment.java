@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ethan.FamiCare.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,40 +29,21 @@ import java.util.List;
 
 public class DiaryCommentsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public DiaryCommentsFragment() {
-        // Required empty public constructor
-    }
-
-    public static DiaryCommentsFragment newInstance(String param1, String param2) {
-        DiaryCommentsFragment fragment = new DiaryCommentsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    //Layout
     private EditText input_comment;
     private ImageView add_comment;
     private RecyclerView commentRecyclerView;
 
+    //Recycler
     private List<Comment> commentList;
     private CommentAdapter commentAdapter;
+
+    //FireBase
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private String uid = auth.getCurrentUser().getUid();
+    private String uname;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +54,21 @@ public class DiaryCommentsFragment extends Fragment {
         add_comment = view.findViewById(R.id.Add_comment);
         commentRecyclerView = view.findViewById(R.id.comments_recycler_view);
 
+
+        //拿到username，設置為留言者的username
+        database.getReference().child("Users").child(uid).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    uname = snapshot.getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         //從PostAdapter拿到指定貼文的評論Id
         Bundle arguments = getArguments();
@@ -112,8 +109,8 @@ public class DiaryCommentsFragment extends Fragment {
                     if (input_comment.getText() != null) {
                         String commentText = input_comment.getText().toString();
 
-                        // 建立 Comment 對象，id是該post的id(日期) + title，userId之後會是使用者的id
-                        Comment comment = new Comment(commentId, "Unknown", commentText);
+                        // 建立 Comment 對象，id是該post的id(日期) + title，userName是使用者的userName
+                        Comment comment = new Comment(commentId, uname, commentText);
 
                         // 將 Comment 放到 firebase
                         String commentkey = commentRef.push().getKey();

@@ -35,9 +35,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = commentList.get(position);
-        //以後要連接登入的使用者
-        holder.commentUser.setText("Unknown_User");
+        holder.commentUser.setText(comment.getUserName());
         holder.commentContent.setText(comment.getContent());
+
     }
 
     @Override

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="#AAAAAA" />
+
     <!--上方頭像跟名稱 weight = 1.5-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,17 +26,30 @@
             android:padding="5dp"
             android:src="@drawable/avatar_b" />
 
-        <!--使用者名稱-->
-        <TextView
-            android:id="@+id/UserTitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="user"
-            android:textColor="#FFA02C"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <!--使用者名稱-->
+            <TextView
+                android:id="@+id/UserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="user"
+                android:textColor="#FFA02C"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/UserTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
