@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Post;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,6 +26,7 @@ import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.Post.DiaryCommentsFragment;
 import com.ethan.FamiCare.Post.PostAdapter;
 import com.ethan.FamiCare.Post.Posts;
+import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

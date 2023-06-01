@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/Diary_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DiaryFragment">
+    android:background="@color/white"
+    tools:context=".Diary.DiaryFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -112,8 +114,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         app:backgroundTint="#B85135"
-        app:srcCompat="@drawable/plus"
         app:maxImageSize="40dp"
+        app:srcCompat="@drawable/plus"
         app:tint="@android:color/white" />
 
 

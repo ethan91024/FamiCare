@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/diary_posts_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
         android:id="@+id/PostRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/Add_post"
