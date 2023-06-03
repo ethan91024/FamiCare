@@ -161,8 +161,8 @@ public class MoodFragment extends Fragment {
         });
 
         //進階症狀分析美化
-        Drawable drawable = getResources().getDrawable(R.drawable.checkremove);
-        drawable.setBounds(0, 0, 220, 220);
+        Drawable drawable = getResources().getDrawable(R.drawable.symptom);
+        drawable.setBounds(0, 0, 150, 150);
         analize.setCompoundDrawables(drawable, null, null, null);
         //冥想加圖案
         Drawable meditationD = getResources().getDrawable(R.drawable.meditation_img); // 取得圖案 Drawable 物件

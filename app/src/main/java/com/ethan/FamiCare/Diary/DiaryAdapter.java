@@ -46,12 +46,12 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         //設定日記照片
         if (diary.getPhotoPath() != null) {
             File imageFile = new File(diary.getPhotoPath());
+
             if (imageFile.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 holder.diary_image.setImageBitmap(bitmap);
-            } else {
-                diary_image.setImageResource(android.R.color.black);
             }
+
         } else {
             holder.diary_image.setImageDrawable(null);
         }

@@ -21,13 +21,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="24"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -37,12 +35,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="日期選擇"
-                        android:textSize="19dp"
-                        android:textStyle="bold"
                         android:gravity="center"
+                        android:text="日期選擇"
                         android:textColor="#FFA02C"
-                        >
+                        android:textSize="19dp"
+                        android:textStyle="bold">
 
 
                     </TextView>
@@ -59,9 +56,10 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -73,9 +71,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
                     <View
                         android:layout_width="match_parent"
@@ -89,9 +87,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
                     <View
                         android:layout_width="match_parent"
@@ -104,9 +102,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
                     <View
                         android:layout_width="match_parent"
@@ -120,9 +118,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
                     <View
                         android:layout_width="match_parent"
@@ -135,9 +133,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
                     <View
                         android:layout_width="match_parent"
@@ -150,9 +148,9 @@
                         android:layout_height="48dp"
                         android:gravity="center"
                         android:text="日期"
+                        android:textColor="#FD7700"
                         android:textSize="22dp"
-                        android:textStyle="bold"
-                        android:textColor="#FD7700"></TextView>
+                        android:textStyle="bold"></TextView>
 
 
                 </LinearLayout>
@@ -175,8 +173,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="100"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -385,6 +382,7 @@
 
 
                         </LinearLayout>
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
@@ -595,6 +593,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="3dp" />
@@ -603,12 +602,11 @@
         android:id="@+id/back_to_mood"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@drawable/background_mood"
         android:text="返回壓力指數"
-        android:textSize="23dp"
         android:textColor="#1E95E4"
-        android:textStyle="bold"
-        android:background="@drawable/background_mood"/>
-
+        android:textSize="23dp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

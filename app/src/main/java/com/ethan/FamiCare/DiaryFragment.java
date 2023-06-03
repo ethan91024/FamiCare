@@ -1,6 +1,5 @@
-package com.ethan.FamiCare.Diary;
+package com.ethan.FamiCare;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,18 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ethan.FamiCare.Diary.Diary;
+import com.ethan.FamiCare.Diary.DiaryAdapter;
+import com.ethan.FamiCare.Diary.DiaryDB;
+import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.Post.DiaryPostsFragment;
-import com.ethan.FamiCare.GroupCalendar;
-import com.ethan.FamiCare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
+    private int selected_date;
     //Layout 元素
     private CalendarView calender;
     private TextView date;
@@ -38,32 +41,10 @@ public class DiaryFragment extends Fragment {
     private Button cal;
     private Button look;
 
-    //變數
-    private int selected_date;
-    private String originalTitle;
-
     //資料庫
     private DiaryDoa diaryDoa;
     private List<Diary> diaries;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Activity activity = getActivity();
-        if (activity != null) {
-            originalTitle = activity.getTitle().toString(); // 保存原來的標題
-            activity.setTitle("生活點滴"); // 設定新的標題
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Activity activity = getActivity();
-        if (activity != null) {
-            activity.setTitle(originalTitle); // 還原原來的標題
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,8 +98,10 @@ public class DiaryFragment extends Fragment {
                         bundle.putString("title", t);
                         diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
 
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        fm.beginTransaction().add(R.id.Diary_layout, diaryContentFragment)
+                        FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                        fl.removeAllViews();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.add(R.id.container, diaryContentFragment)
                                 .addToBackStack(null)
                                 .commit();
                         return true;
@@ -159,7 +142,7 @@ public class DiaryFragment extends Fragment {
         });
 
 
-        //點擊新增，紀錄選擇的日期(20230101)，跳轉到DiaryContent，一定是創建新的日記
+        //點擊日記標題，紀錄選擇的日期(20230101)，跳轉到DiaryContent，一定是創建新的日記
         floating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,12 +153,12 @@ public class DiaryFragment extends Fragment {
                     bundle.putInt("id", selected_date);
                     diaryContentFragment.setArguments(bundle);
 
-
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().add(R.id.Diary_layout, diaryContentFragment)
+                    FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                    fl.removeAllViews();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.container, diaryContentFragment)
                             .addToBackStack(null)
                             .commit();
-
                 } else {
                     Toast.makeText(getContext(), "請選擇日期", Toast.LENGTH_SHORT).show();
                 }
@@ -187,11 +170,12 @@ public class DiaryFragment extends Fragment {
         look.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().add(R.id.Diary_layout, new DiaryPostsFragment())
+                FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
+                fl.removeAllViews();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.container, new DiaryPostsFragment())
                         .addToBackStack(null)
                         .commit();
-
             }
         });
 

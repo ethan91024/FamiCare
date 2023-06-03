@@ -49,9 +49,7 @@
                         android:text="進階症狀分析"
                         android:textColor="#1E95E4"
                         android:textSize="28dp"
-                        android:textStyle="bold"
-
-                        />
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
