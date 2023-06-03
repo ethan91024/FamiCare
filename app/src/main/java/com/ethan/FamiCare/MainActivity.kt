@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     //    var mAuth: FirebaseAuth? = null
+    val firebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +34,24 @@ class MainActivity : AppCompatActivity() {
         fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
             .commit()
         checkAvailability()
+
+
+        var  currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            // 用户已登录
+            // 在此处执行相应的操作
+            val fm = supportFragmentManager
+            fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
+                .commit()
+            checkAvailability()
+        } else {
+            // 用户未登录
+            // 在此处执行相应的操作，例如跳转到登录界面
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 //        // 檢查用戶是否已經登入
 //        val userLoggedIn: Boolean = checkUserLoggedIn()
 //
