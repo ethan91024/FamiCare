@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Posts {
     private int Id;
+    private String UserName;
     private String Title;
     private String Content;
     private String photoUrl;
-    private List<Comment> comments;
 
     public Posts() {
     }
 
-    public Posts(int id, String title, String content, String photoUrl) {
+    public Posts(int id, String userName, String title, String content, String photoUrl) {
         this.Id = id;
+        this.UserName = userName;
         this.Title = title;
         this.Content = content;
         this.photoUrl = photoUrl;
-        this.comments = comments;
     }
 
     public int getId() {
@@ -27,6 +27,14 @@ public class Posts {
 
     public void setId(int id) {
         this.Id = id;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        this.UserName = userName;
     }
 
     public String getTitle() {
@@ -51,20 +59,5 @@ public class Posts {
 
     public void setphotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public void addComment(Comment comment) {
-        if (comments == null) {
-            comments = new ArrayList<>();
-        }
-        comments.add(comment);
     }
 }

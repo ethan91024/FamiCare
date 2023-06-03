@@ -25,34 +25,6 @@ import java.util.Date;
 
 public class MoodSymptomFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public MoodSymptomFragment() {
-        // Required empty public constructor
-    }
-
-    public static MoodSymptomFragment newInstance(String param1, String param2) {
-        MoodSymptomFragment fragment = new MoodSymptomFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     private Button back;
     CheckBox ckb;
     private Button updatesy;
@@ -66,9 +38,10 @@ public class MoodSymptomFragment extends Fragment {
     private double synumber = 0;
     boolean run;
     private View mainview;
-    String Date[]=new String[7];
-    int Daylist [] = {R.id.DDAY, R.id.TWOD, R.id.THREED, R.id.FOURD, R.id.FIVED, R.id.SIXD, R.id.SEVEND};
-    boolean doublecheck =true;
+    String Date[] = new String[7];
+    int Daylist[] = {R.id.DDAY, R.id.TWOD, R.id.THREED, R.id.FOURD, R.id.FIVED, R.id.SIXD, R.id.SEVEND};
+    boolean doublecheck = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,13 +69,12 @@ public class MoodSymptomFragment extends Fragment {
 //
 //        });
 //1
-        String date[]=SetDate();
-        for(int i=0;i<date.length;i++){
-            TextView tv =(TextView) mainview.findViewById(Daylist[i]);
+        String date[] = SetDate();
+        for (int i = 0; i < date.length; i++) {
+            TextView tv = (TextView) mainview.findViewById(Daylist[i]);
             tv.setText(date[i]);
 
         }
-
 
 
 //依照設定格式取得字串
@@ -128,7 +100,7 @@ public class MoodSymptomFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putDouble("symptom", synumber);
-                Fragment  MoodFragment = new MoodFragment();
+                Fragment MoodFragment = new MoodFragment();
                 MoodFragment.setArguments(bundle);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
@@ -159,21 +131,21 @@ public class MoodSymptomFragment extends Fragment {
         return checkboxn;
     }
 
-    public String[] SetDate(){
+    public String[] SetDate() {
         //定義好時間字串的格式
-        SimpleDateFormat sdf =new SimpleDateFormat("MM/dd");
-        Date dt=new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+        Date dt = new Date();
 //透過SimpleDateFormat的format方法將Date轉為字串
-        String dts=sdf.format(dt);
+        String dts = sdf.format(dt);
         try {
             Date dt2 = sdf.parse(dts);
-            for(int i=0;i<7;i++) {
+            for (int i = 0; i < 7; i++) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dt2);
-                calendar.add(Calendar.DATE, ((i*-1)));//日期減1
+                calendar.add(Calendar.DATE, ((i * -1)));//日期減1
                 Date tdt = calendar.getTime();//取得加減過後的Date
                 String time = sdf.format(tdt);
-                Date[i]=time;
+                Date[i] = time;
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);

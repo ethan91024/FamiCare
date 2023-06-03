@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Post;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,9 +26,11 @@ import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.Post.DiaryCommentsFragment;
 import com.ethan.FamiCare.Post.PostAdapter;
 import com.ethan.FamiCare.Post.Posts;
+import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,35 +47,21 @@ import java.util.List;
 
 public class DiaryPostsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public DiaryPostsFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-
+    //Layout
     ArrayList<Posts> posts;
     private PostAdapter postAdapter;
     private RecyclerView recyclerView;
     private FloatingActionButton add_post;
 
-    //本地資料庫
+    //Local DataBase
     private List<Diary> diaries;
     private DiaryDoa diaryDoa;
 
-    //FireBase資料庫
+    //FireBase
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private String uid = auth.getCurrentUser().getUid();
+    private String uname;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
@@ -88,6 +76,19 @@ public class DiaryPostsFragment extends Fragment {
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
         storageReference = FirebaseStorage.getInstance().getReference("Posts");
         databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        database.getReference().child("Users").child(uid).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    //拿到username，給貼文的Username使用
+                    uname = snapshot.getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         // Initialize the RecyclerView and Adapter
         recyclerView = view.findViewById(R.id.PostRecycler);
@@ -182,7 +183,7 @@ public class DiaryPostsFragment extends Fragment {
                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        Posts post = new Posts(diary.getId(), diary.getTitle(), diary.getContent(), uri.toString());
+                                        Posts post = new Posts(diary.getId(), uname, diary.getTitle(), diary.getContent(), uri.toString());
                                         String postId = databaseReference.push().getKey();
                                         databaseReference.child(postId).setValue(post);
                                     }

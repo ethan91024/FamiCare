@@ -59,7 +59,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Posts post = posts.get(position);
+        holder.username.setText(post.getUserName());
         holder.usertitle.setText(post.getTitle());
         holder.usercontent.setText(post.getContent());
         Glide.with(context)
@@ -95,6 +97,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView username;
         public TextView usertitle;
         public ImageView userphoto;
         public TextView usercontent;
@@ -102,6 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            username = itemView.findViewById(R.id.UserName);
             usertitle = itemView.findViewById(R.id.UserTitle);
             userphoto = itemView.findViewById(R.id.UserPhoto);
             usercontent = itemView.findViewById(R.id.UserContent);

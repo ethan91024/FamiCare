@@ -1,5 +1,6 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Diary;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,22 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ethan.FamiCare.Diary.Diary;
-import com.ethan.FamiCare.Diary.DiaryAdapter;
-import com.ethan.FamiCare.Diary.DiaryDB;
-import com.ethan.FamiCare.Diary.DiaryDoa;
+import com.ethan.FamiCare.Post.DiaryPostsFragment;
+import com.ethan.FamiCare.GroupCalendar;
+import com.ethan.FamiCare.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -31,35 +28,6 @@ import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public DiaryFragment() {
-        // Required empty public constructor
-    }
-
-    public static DiaryFragment newInstance(String param1, String param2) {
-        DiaryFragment fragment = new DiaryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    private int selected_date;
     //Layout 元素
     private CalendarView calender;
     private TextView date;
@@ -70,12 +38,32 @@ public class DiaryFragment extends Fragment {
     private Button cal;
     private Button look;
 
+    //變數
+    private int selected_date;
+    private String originalTitle;
+
     //資料庫
     private DiaryDoa diaryDoa;
-    private Diary diary;
-    private Diary diary2;
     private List<Diary> diaries;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Activity activity = getActivity();
+        if (activity != null) {
+            originalTitle = activity.getTitle().toString(); // 保存原來的標題
+            activity.setTitle("生活點滴"); // 設定新的標題
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.setTitle(originalTitle); // 還原原來的標題
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,10 +117,8 @@ public class DiaryFragment extends Fragment {
                         bundle.putString("title", t);
                         diaryContentFragment.setArguments(bundle);//把日期送到要跳轉的Fragment
 
-                        FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
-                        fl.removeAllViews();
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.add(R.id.container, diaryContentFragment)
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        fm.beginTransaction().add(R.id.Diary_layout, diaryContentFragment)
                                 .addToBackStack(null)
                                 .commit();
                         return true;
@@ -184,12 +170,12 @@ public class DiaryFragment extends Fragment {
                     bundle.putInt("id", selected_date);
                     diaryContentFragment.setArguments(bundle);
 
-                    FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
-                    fl.removeAllViews();
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.container, diaryContentFragment)
+
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction().add(R.id.Diary_layout, diaryContentFragment)
                             .addToBackStack(null)
                             .commit();
+
                 } else {
                     Toast.makeText(getContext(), "請選擇日期", Toast.LENGTH_SHORT).show();
                 }
@@ -201,12 +187,11 @@ public class DiaryFragment extends Fragment {
         look.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.container);
-                fl.removeAllViews();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.container, new DiaryPostsFragment())
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction().add(R.id.Diary_layout, new DiaryPostsFragment())
                         .addToBackStack(null)
                         .commit();
+
             }
         });
 

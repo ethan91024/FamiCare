@@ -40,37 +40,6 @@ import java.util.Random;
 
 public class MoodFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public MoodFragment() {
-        // Required empty public constructor
-    }
-
-    public static MoodFragment newInstance(String param1, String param2) {
-        MoodFragment fragment = new MoodFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //可否分析壓力指數
@@ -198,12 +167,12 @@ public class MoodFragment extends Fragment {
         //冥想加圖案
         Drawable meditationD = getResources().getDrawable(R.drawable.meditation_img); // 取得圖案 Drawable 物件
         meditationD.setBounds(30, -10, 550, 575);
-        advice.setCompoundDrawables(null,null,meditationD,null);
+        advice.setCompoundDrawables(null, null, meditationD, null);
 
         // 設置 Drawable 的範圍，將圖案放置在右下角
         Drawable breatheD = getResources().getDrawable(R.drawable.breathe_img); // 取得圖案 Drawable 物件
         breatheD.setBounds(30, 9, 550, 620);
-        breathe.setCompoundDrawables(null,null,breatheD,null);
+        breathe.setCompoundDrawables(null, null, breatheD, null);
 
 
         return mainview;
