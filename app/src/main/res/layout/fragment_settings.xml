@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/setting"
-    tools:context=".SettingsFragment"
+    tools:context=".Settings.SettingsFragment"
     android:background="@color/white">
 
 
@@ -14,14 +14,14 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login"
+        android:text="登入"
         android:textSize="28sp"
         android:layout_alignParentBottom="true"/>
     <Button
         android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="signup"
+        android:text="註冊帳號"
         android:textSize="28sp"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/login"/>
@@ -29,7 +29,7 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="logout"
+        android:text="登出"
         android:textSize="28sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>

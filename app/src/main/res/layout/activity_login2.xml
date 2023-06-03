@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Settings.Login">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -74,7 +74,7 @@
         android:layout_marginEnd="114dp"
         android:layout_marginBottom="3dp"
         android:fontFamily="@font/inder"
-        android:text="Don’t have an account?"
+        android:text="沒有帳號?"
         android:textColor="#747272"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/signup"
@@ -92,7 +92,7 @@
         android:layout_marginEnd="137dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_medium"
-        android:text="Log in"
+        android:text="登入"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -128,7 +128,7 @@
         android:layout_marginEnd="137dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_medium"
-        android:text="Sign up"
+        android:text="註冊帳號"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"

@@ -10,11 +10,9 @@ package com.ethan.FamiCare.Firebasecords;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
-        import androidx.fragment.app.FragmentManager;
-        import androidx.fragment.app.FragmentTransaction;
         import androidx.recyclerview.widget.RecyclerView;
 
-        import com.ethan.FamiCare.GroupChatroom;
+        import com.ethan.FamiCare.Group.GroupChatroom;
         import com.ethan.FamiCare.R;
         import com.squareup.picasso.Picasso;
 

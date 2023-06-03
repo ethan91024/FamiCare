@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Group.GroupNameEditFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+    <!--編輯日記名稱  比例3-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:text="請輸入好友名稱與ID(要加#)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark"
+            />
+
+        <!--id="@+id/name_title"-->
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="好友名稱"
+            android:textStyle="bold"
+            android:textColor="@color/gray"
+            android:layout_below="@+id/title"
+
+            />
+        <EditText
+            android:id="@+id/inputid"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="好友ID"
+            android:textStyle="bold"
+            android:textColor="@color/gray"
+            android:layout_below="@+id/title"
+            android:layout_toRightOf="@+id/editText"
+            />
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:text="取消"
+            android:textStyle="bold"
+            android:layout_below="@+id/inputid"
+            />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:text="新增"
+            android:textStyle="bold"
+            android:layout_below="@+id/inputid"
+            android:layout_toRightOf="@+id/cancel"
+            />
+
+</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好友ID在帳號的使用者後面"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        />
+
+
+</RelativeLayout>

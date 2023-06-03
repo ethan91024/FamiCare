@@ -9,12 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ethan.FamiCare.GroupChatroom;
-import com.ethan.FamiCare.GroupFragment;
+import com.ethan.FamiCare.Group.GroupChatroom;
 import com.ethan.FamiCare.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

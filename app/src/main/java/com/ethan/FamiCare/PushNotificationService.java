@@ -1,18 +1,17 @@
 package com.ethan.FamiCare;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.ethan.FamiCare.Group.GroupCalendar;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -38,7 +37,7 @@ public class PushNotificationService extends FirebaseMessagingService {
     private void getFirebaseMessage(String title, String body) {
         creatNotificationChannel();
 
-        Intent intent=new Intent(this,GroupCalendar.class);
+        Intent intent=new Intent(this, GroupCalendar.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //intent.putExtra("title",title);
         //intent.putExtra("body",body);
