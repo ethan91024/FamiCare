@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -36,7 +36,7 @@ public class Breathe extends AppCompatActivity {
         cancel = findViewById(R.id.breathe_cancel);
         breathe_start = findViewById(R.id.breathe_start);
         videoView = findViewById(R.id.breath_videoview);
-        videoView.setBackgroundResource(R.drawable.breathe_pic);
+        videoView.setBackgroundResource(R.drawable.breathe_ain_img);
         MediaController mediaController = new MediaController(Breathe.this);
         mediaController.setAnchorView(videoView);
         mediaController.setVisibility(View.INVISIBLE);
@@ -86,6 +86,15 @@ public class Breathe extends AppCompatActivity {
 
             }
         });
+
+        //播放暫停增加圖案
+        Drawable startD = getResources().getDrawable(R.drawable.start_button_img);
+        startD.setBounds(-8, 0, 100, 100);
+        breathe_start.setCompoundDrawables(null, null, startD, null);
+        Drawable stopD = getResources().getDrawable(R.drawable.stop_button_img);
+        stopD.setBounds(-8, 0, 100, 100);
+        cancel.setCompoundDrawables(null, null, stopD, null);
+
 
     }
     private void startPlaying() {

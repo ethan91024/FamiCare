@@ -17,58 +17,22 @@
             android:orientation="vertical">
 
             <!--生活點滴-->
-            <LinearLayout
+
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="生活點滴"
-                    android:textColor="#FFA02C"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/cal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_mood"
-                    android:text="行事曆"
-                    android:textColor="#1E95E4"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/look"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_mood"
-                    android:text="查看他人"
-                    android:textColor="#1E95E4"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginBottom="10dp"
-                android:background="#F8C46A" />
+                android:layout_height="20dp" />
             <!--選擇日期-->
             <TextView
                 android:id="@+id/cal_fold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginHorizontal="4dp"
-                android:background="@drawable/background_mood"
+                android:background="@drawable/background_red"
                 android:gravity="center"
                 android:text="選擇日期"
-                android:textColor="#1E95E4"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <!--行事曆-->
@@ -77,13 +41,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="7dp"
+                android:background="#ECE5D7"
                 android:visibility="visible" />
 
-            <View
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:background="#F8C46A" />
+                android:layout_height="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+
+                <Button
+                    android:id="@+id/cal"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="50"
+                    android:background="#e8e0cf"
+                    android:text="行事曆"
+                    android:textColor="#b85135"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="7dp"
+                    android:layout_height="0dp" />
+
+                <Button
+                    android:id="@+id/look"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="50"
+                    android:background="#e8e0cf"
+                    android:text="查看他人"
+                    android:textColor="#b85135"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
             <!--日期-->
             <TextView
                 android:id="@+id/date"
@@ -91,15 +90,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:text="日期"
-                android:textColor="#FFA02C"
-                android:textSize="24sp"
+                android:textColor="#000000"
+                android:textSize="30dp"
                 android:textStyle="bold" />
 
             <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_diary"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:background="@drawable/background_brown" />
 
         </LinearLayout>
 
@@ -114,7 +114,7 @@
         android:layout_margin="16dp"
         app:backgroundTint="#B85135"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/plus_img"
         app:tint="@android:color/white" />
 
 
