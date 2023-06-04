@@ -31,9 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="好友名稱"
+            android:hint="好友名稱"
             android:textStyle="bold"
-            android:textColor="@color/gray"
             android:layout_below="@+id/title"
 
             />
@@ -43,9 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="好友ID"
+            android:hint="好友ID"
             android:textStyle="bold"
-            android:textColor="@color/gray"
             android:layout_below="@+id/title"
             android:layout_toRightOf="@+id/editText"
             />
