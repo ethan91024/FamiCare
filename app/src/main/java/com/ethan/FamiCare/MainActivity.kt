@@ -13,8 +13,12 @@ import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.*
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.Group.GroupFragment
 import com.ethan.FamiCare.Health.HealthFragment
+import com.ethan.FamiCare.Settings.Login
+import com.ethan.FamiCare.Settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
@@ -30,7 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         //啟動直接在群組
         val fm = supportFragmentManager
-        fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
+        fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container,
+            GroupFragment()
+        )
             .commit()
         checkAvailability()
 
@@ -40,7 +46,9 @@ class MainActivity : AppCompatActivity() {
             // 用户已登录
             // 在此处执行相应的操作
             val fm = supportFragmentManager
-            fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, GroupFragment())
+            fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container,
+                GroupFragment()
+            )
                 .commit()
             checkAvailability()
         } else {
@@ -171,10 +179,12 @@ class MainActivity : AppCompatActivity() {
         var selectedFragment: Fragment? = null
         when (item.itemId) {
             R.id.navigation_health -> selectedFragment = HealthFragment()
-            R.id.navigation_group -> selectedFragment = GroupFragment()
+            R.id.navigation_group -> selectedFragment =
+                GroupFragment()
             R.id.navigation_mood -> selectedFragment = MoodFragment()
             R.id.navigation_diary -> selectedFragment = DiaryFragment()
-            R.id.navigation_settings -> selectedFragment = SettingsFragment()
+            R.id.navigation_settings -> selectedFragment =
+                SettingsFragment()
         }
         supportFragmentManager.beginTransaction().replace(
             R.id.fragment_container,

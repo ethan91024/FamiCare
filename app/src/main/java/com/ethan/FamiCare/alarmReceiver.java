@@ -1,16 +1,13 @@
 package com.ethan.FamiCare;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+
+import com.ethan.FamiCare.Group.GroupCalendar;
 
 import java.util.ArrayList;
 
@@ -35,7 +32,7 @@ public class alarmReceiver extends BroadcastReceiver {
         //"APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4"
         NotificationHelper notificationHelper=new NotificationHelper(context);
         NotificationCompat.Builder nb=notificationHelper.notificationChannelBuild(event,time);
-        Intent intent1=new Intent(context,GroupCalendar.class);
+        Intent intent1=new Intent(context, GroupCalendar.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent1.putExtra("title",event);
         intent1.putExtra("body",time);

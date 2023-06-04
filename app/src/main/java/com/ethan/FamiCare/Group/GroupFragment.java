@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Group;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ethan.FamiCare.ChatGPT.ChatGPTActivity;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.Firebasecords.UsersAdapter;
+import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.FragmentGroupBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

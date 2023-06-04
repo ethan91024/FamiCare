@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ethan.FamiCare.FCMaddgroup;
 import com.ethan.FamiCare.Firebasecords.Users;
+import com.ethan.FamiCare.MainActivity;
+import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.DecimalFormat;
-import java.util.Random;
 
 public class Signup extends AppCompatActivity {
     public Signup() {

@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Group;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,25 +6,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ethan.FamiCare.Firebasecords.ChatAdapter;
 import com.ethan.FamiCare.Firebasecords.GroupChatAdapter;
-import com.ethan.FamiCare.Firebasecords.MessageModel;
 import com.ethan.FamiCare.Firebasecords.MessageModelGroup;
-import com.ethan.FamiCare.Firebasecords.Users;
+import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.databinding.ActivityChatroomBinding;
-import com.ethan.FamiCare.databinding.FragmentGroupChatroomBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +41,7 @@ public class GroupChatActivity extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(GroupChatActivity.this,MainActivity.class);
+                Intent intent=new Intent(GroupChatActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

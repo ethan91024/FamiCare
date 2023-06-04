@@ -10,6 +10,8 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.ethan.FamiCare.Group.GroupCalendar;
+
 public class NotificationHelper extends ContextWrapper {
 
     private static final String channelId="channeId";
@@ -44,7 +46,7 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder notificationChannelBuild(String event,String time){
-        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,new Intent(this,GroupCalendar.class),PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,new Intent(this, GroupCalendar.class),PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
        return notificationBuildFinish=new NotificationCompat.Builder(getApplicationContext(),channelId).setSmallIcon(android.R.drawable.ic_dialog_info)
                .setContentTitle("今日行程")
                .setContentText(event+"\t"+time)

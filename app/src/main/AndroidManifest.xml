@@ -53,6 +53,9 @@
             android:name=".Settings.AccountActivity"
             android:exported="false" />
         <activity
+            android:name=".Settings.Addfriend"
+            android:exported="false" />
+        <activity
             android:name=".sport.Sport4"
             android:exported="false" />
         <activity
@@ -62,7 +65,7 @@
             android:name=".sport.Sport2"
             android:exported="false" />
         <activity
-            android:name=".GroupChatActivity"
+            android:name=".Group.GroupChatActivity"
             android:exported="false" />
         <activity
             android:name=".Breathe"
@@ -75,10 +78,10 @@
             android:name=".sport.Sport1"
             android:exported="false" />
         <activity
-            android:name=".Signup"
+            android:name=".Settings.Signup"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".Settings.Login"
             android:exported="false" />
         <activity
             android:name=".Health.HealthSpeedActivity"
@@ -108,16 +111,16 @@
             android:name=".Health.HealthBloodGlucoseActivity"
             android:exported="false" />
         <activity
-            android:name=".GroupChatroom"
+            android:name=".Group.GroupChatroom"
             android:exported="false" />
         <activity
-            android:name=".GroupNameEditFragment"
+            android:name=".Group.GroupNameEditFragment"
             android:exported="false" />
         <activity
             android:name=".ChatGPT.ChatGPTActivity"
             android:exported="false" />
         <activity
-            android:name=".GroupCalendar"
+            android:name=".Group.GroupCalendar"
             android:exported="false"
             android:windowSoftInputMode="adjustPan">
             <meta-data
