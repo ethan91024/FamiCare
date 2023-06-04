@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Signup">
+    tools:context=".Settings.Signup">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username"
@@ -27,7 +27,7 @@
             android:background="@drawable/email_tf"
             android:drawableLeft="@drawable/baseline_person_24"
             android:fontFamily="@font/inter_medium"
-            android:hint="  Username"
+            android:hint="  使用者名稱"
             android:includeFontPadding="false"
             android:inputType="textPersonName"
             android:padding="5dp"
@@ -127,7 +127,7 @@
         android:layout_marginEnd="44dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_medium"
-        android:text="Register"
+        android:text="註冊"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"

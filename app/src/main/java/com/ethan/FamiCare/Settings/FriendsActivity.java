@@ -11,15 +11,8 @@ import android.view.View;
 
 import com.ethan.FamiCare.Firebasecords.FriendAdapter;
 import com.ethan.FamiCare.Firebasecords.FriendModel;
-import com.ethan.FamiCare.Firebasecords.Users;
-import com.ethan.FamiCare.Firebasecords.UsersAdapter;
-import com.ethan.FamiCare.GroupChatActivity;
 import com.ethan.FamiCare.MainActivity;
-import com.ethan.FamiCare.R;
-import com.ethan.FamiCare.SettingsFragment;
-import com.ethan.FamiCare.databinding.ActivityChatroomBinding;
 import com.ethan.FamiCare.databinding.ActivityFriendsBinding;
-import com.ethan.FamiCare.databinding.FragmentGroupBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +43,13 @@ ActivityFriendsBinding binding;
                 startActivity(intent);
             }
         });
+        binding.addfriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FriendsActivity.this, Addfriend.class);
+                startActivity(intent);
+            }
+        });
         FriendAdapter adapter=new FriendAdapter(list,this.getApplicationContext());
 
         binding.recyclerview.setAdapter(adapter);
@@ -57,7 +57,7 @@ ActivityFriendsBinding binding;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Friend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

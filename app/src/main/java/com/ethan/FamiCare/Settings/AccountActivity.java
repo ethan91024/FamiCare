@@ -95,7 +95,7 @@ public class AccountActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String useremail = snapshot.getValue(String.class);
-                        // 在這裡將取得的 username 設置給 TextView
+                        // 在這裡將取得的 email 設置給 TextView
                         email.setText(useremail);
                     }
                 }

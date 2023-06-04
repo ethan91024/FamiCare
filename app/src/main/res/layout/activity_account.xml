@@ -33,7 +33,7 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="19dp"
         android:layout_toEndOf="@+id/profile_image"
-        android:text="username"
+        android:text="使用者名稱"
         android:textColor="@color/dark"
         android:textSize="24sp" />
 
@@ -47,7 +47,7 @@
         android:layout_marginTop="-52dp"
         android:layout_toEndOf="@+id/username"
         android:layout_toRightOf="@id/username"
-        android:text="#userid"
+        android:text="#使用者ID"
         android:textColor="@color/dark"
         android:textSize="24sp" />
 

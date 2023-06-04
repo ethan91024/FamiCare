@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     android:orientation="vertical"
-    tools:context=".GroupFragment">
+    tools:context=".Group.GroupFragment">
 
     <LinearLayout
         android:id="@+id/top"
