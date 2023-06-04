@@ -22,6 +22,10 @@ public class FriendModel {
         this.profilepic = profilepic;
         this.id=id;
     }
+    public FriendModel(String username, String profilepic) {
+        this.username = username;
+        this.profilepic = profilepic;
+    }
 
     public String getUserId() {
         return userId;

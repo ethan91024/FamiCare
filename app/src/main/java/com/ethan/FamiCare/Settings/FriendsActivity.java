@@ -57,7 +57,7 @@ ActivityFriendsBinding binding;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Friend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
