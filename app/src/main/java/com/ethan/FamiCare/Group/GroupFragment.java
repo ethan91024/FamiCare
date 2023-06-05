@@ -41,6 +41,7 @@ public class GroupFragment extends Fragment {
     FragmentGroupBinding binding;
     ArrayList<Users> list = new ArrayList<>();
     FirebaseDatabase database;
+    FirebaseAuth auth;
 
     public static GroupFragment newInstance(String param1, String param2) {
         GroupFragment fragment = new GroupFragment();
@@ -71,6 +72,8 @@ public class GroupFragment extends Fragment {
 
         binding = FragmentGroupBinding.inflate(inflater, container, false);
         database = FirebaseDatabase.getInstance();
+        auth=FirebaseAuth.getInstance();
+        String uid=auth.getCurrentUser().getUid();
         UsersAdapter adapter = new UsersAdapter(list, getContext());
 
 
@@ -79,7 +82,7 @@ public class GroupFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.chatrecy.setLayoutManager(layoutManager);
 
-        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
@@ -88,7 +91,6 @@ public class GroupFragment extends Fragment {
                     users.setUserId(dataSnapshot.getKey());
                     if (!users.getUserId().equals(FirebaseAuth.getInstance().getUid())) {
                         list.add(users);
-                        Log.d("TAG", "Message: " + users);
                     }
 
                 }

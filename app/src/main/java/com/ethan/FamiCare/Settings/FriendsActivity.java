@@ -33,6 +33,7 @@ ActivityFriendsBinding binding;
         FirebaseAuth auth=FirebaseAuth.getInstance();
 
         database = FirebaseDatabase.getInstance();
+        String uid=auth.getCurrentUser().getUid();
         binding=ActivityFriendsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
@@ -57,7 +58,7 @@ ActivityFriendsBinding binding;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        database.getReference().child("Friend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

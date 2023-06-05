@@ -2,19 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/receiverAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/avatar_b"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentRight="true"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginEnd="7dp"
         android:background="@drawable/bg_sender"
         android:maxWidth="310dp"
         android:maxHeight="400dp"
-        android:minHeight="30dp">
+        android:minHeight="30dp"
+        android:layout_toLeftOf="@+id/receiverAvatar"
+        android:id="@+id/all">
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
