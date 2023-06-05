@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.Firebasecords.ChatAdapter;
 import com.ethan.FamiCare.Firebasecords.MessageModel;
+import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.FragmentGroupChatroomBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,7 +65,7 @@ public class GroupChatroom extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupChatroom.this, GroupFragment.class);
+                Intent intent = new Intent(GroupChatroom.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -73,6 +74,7 @@ public class GroupChatroom extends AppCompatActivity {
         final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, recieveId);
         binding.recyclerview.setAdapter(chatAdapter);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
         binding.recyclerview.setLayoutManager(layoutManager);
 
         final String senderRoom=senderId+recieveId;

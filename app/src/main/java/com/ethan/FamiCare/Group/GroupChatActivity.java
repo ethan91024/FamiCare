@@ -57,6 +57,7 @@ public class GroupChatActivity extends AppCompatActivity {
         binding.recyclerview.setAdapter(adapter);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
         binding.recyclerview.setLayoutManager(layoutManager);
 
         database.getReference().child("Group Chat").addValueEventListener(new ValueEventListener() {

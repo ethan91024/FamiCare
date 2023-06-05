@@ -32,7 +32,6 @@ public class Addfriend extends AppCompatActivity {
     Button add,cancel;
     TextView editText,inputid;
     String username,userid,oid;//在程式打的好友的名字與ID
-    String fname,fid,fuid;//在firebase的好友的name與ID跟uid
     String uid;//使用者的uid
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,8 @@ public class Addfriend extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                String uid = userSnapshot.getKey();
+                                String fuid = userSnapshot.getKey();
+
                                 // 在這裡處理找到的使用者 UID
                                 String id = userSnapshot.child("id").getValue(String.class);
                                 String username = userSnapshot.child("username").getValue(String.class);
@@ -79,7 +79,7 @@ public class Addfriend extends AppCompatActivity {
 
                                     // 在這裡將 uid、username 和 profileImage 加入到 "Friend" 資料庫中
                                     FriendModel friend = new FriendModel(username, profileImage, id);
-                                     database.getReference().child("Friend").child(uid).setValue(friend)
+                                     database.getReference().child("Friend").child(uid).child(fuid).setValue(friend)
                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                  @Override
                                                  public void onSuccess(Void aVoid) {
