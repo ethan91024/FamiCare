@@ -68,6 +68,8 @@ public class MoodSymptomFragment extends Fragment {
 //            }
 //
 //        });
+        //更新標題
+        getActivity().setTitle("症狀勾選");
 //1
         String date[] = SetDate();
         for (int i = 0; i < date.length; i++) {

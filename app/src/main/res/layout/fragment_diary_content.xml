@@ -39,7 +39,9 @@
                 android:layout_weight="8"
                 android:gravity="center|left"
                 android:text="日記標題"
-                android:textSize="20sp" />
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="35dp" />
 
             <!--儲存日記按鈕  比例2  id="@+id/save_diary"-->
             <Button
@@ -47,9 +49,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:background="@drawable/background_orange"
+                android:textSize="25dp"
                 android:text="儲存" />
 
         </LinearLayout>
+
+
+        <!--一條空格-->
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="7dp" />
 
         <!--編輯標題  比例4  id="@+id/Title"-->
         <EditText
@@ -57,9 +67,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
-            android:hint="命名日記標題" />
+            android:textColor="@color/white"
+            android:hint="命名日記標題"
+            android:textSize="25dp"
+            android:textColorHint="@color/white"
+            android:background="#b85135" />
 
     </LinearLayout>
+    <!--一條槓槓-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white" />
+
+
 
     <!--編輯日記內容  比例7.5-->
     <LinearLayout
@@ -74,16 +97,16 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="left|center"
+            android:textColor="@color/white"
             android:text="日記內容"
-            android:textSize="20sp" />
+            android:background="#b85135"
+            android:textSize="25sp" />
 
-        <!--一條槓槓-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#000000" />
+        <!--一條空格-->
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="3dp" />
+
 
         <!--編輯日記內容  比例9  id="@+id/Content"-->
         <MultiAutoCompleteTextView

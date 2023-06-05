@@ -68,12 +68,18 @@
             android:name=".Group.GroupChatActivity"
             android:exported="false" />
         <activity
+            android:label="呼吸舒緩"
             android:name=".Breathe"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/LabelTitle"
+             />
         <activity
             android:name=".Meditation"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:label="冥想"
+            android:exported="false"
+            android:theme="@style/LabelTitle"/>
+
         <activity
             android:name=".sport.Sport1"
             android:exported="false" />
@@ -122,11 +128,14 @@
         <activity
             android:name=".Group.GroupCalendar"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:label="行事曆"
+            android:theme="@style/LabelTitle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".PrivacyPolicyActivity"
             android:exported="true">

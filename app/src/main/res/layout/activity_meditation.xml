@@ -7,47 +7,50 @@
     tools:context=".Meditation">
 
 
+
     <LinearLayout
         android:id="@+id/Mood_Meditation_Layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="700dp"
         android:orientation="vertical">
+
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity=""
-            android:text="舒緩方式  冥想"
-            android:textSize="30dp"
-            android:textStyle="bold"></TextView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:gravity=""
             android:text="冥想可以降低壓力與焦慮。讓我們專注在這5分鐘，調整呼吸，放鬆情緒，好好感受心靈。"
-            android:textSize="20dp"></TextView>
+            android:textSize="18dp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="250dp"
+            android:background="@drawable/background_movie"
+            android:gravity="center"
             android:orientation="vertical">
 
             <VideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="190dp"
                 android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_gravity=""
+            android:background="@drawable/background_brown_rightangle"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -61,6 +64,7 @@
                     android:layout_weight="35"
                     android:gravity="center"
                     android:text=" 設定時間  :"
+                    android:textColor="#000000"
                     android:textSize="25dp"></TextView>
 
                 <EditText
@@ -70,6 +74,7 @@
                     android:layout_weight="30"
                     android:gravity="center"
                     android:text="5"
+                    android:textColor="#b85135"
                     android:textSize="25dp"></EditText>
 
                 <TextView
@@ -78,6 +83,7 @@
                     android:layout_weight="35"
                     android:gravity="center"
                     android:text="分鐘"
+                    android:textColor="#000000"
                     android:textSize="25dp"></TextView>
 
 
@@ -95,27 +101,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginHorizontal="15dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/counter"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    android:layout_gravity="center"
                     android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
                     android:gravity="center"
                     android:text="開始倒數"
                     android:textSize="20dp"></Button>
+
+                <Space
+                    android:layout_width="7dp"
+                    android:layout_height="0dp" />
 
                 <Button
                     android:id="@+id/stop_counting"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
+                    android:layout_gravity="center"
                     android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
                     android:gravity="center"
                     android:text="取消"
-                    android:textSize="20dp"></Button>
-            </LinearLayout>
+                    android:textSize="20dp">
 
+                </Button>
+            </LinearLayout>
 
         </LinearLayout>
 

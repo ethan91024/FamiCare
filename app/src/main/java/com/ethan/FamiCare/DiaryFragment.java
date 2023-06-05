@@ -1,6 +1,7 @@
 package com.ethan.FamiCare;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -52,6 +53,8 @@ public class DiaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
+    //更新標題
+        getActivity().setTitle("生活點滴");
 
         diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
 
@@ -202,6 +205,14 @@ public class DiaryFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        //增加選擇日期底圖裝飾
+        Drawable drawableR = getResources().getDrawable(R.drawable.schedulepoint_img);
+        drawableR.setBounds(90, 8, 190, 150);
+        Drawable drawableL = getResources().getDrawable(R.drawable.schedulepoint_img);
+        drawableL.setBounds(-90, 8, 10, 150);
+        cal_fold.setCompoundDrawables(drawableR, null, drawableL, null);
+
 
         return view;
     }

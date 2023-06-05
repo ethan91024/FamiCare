@@ -6,25 +6,16 @@ public class FriendModel {
     private String userId;
     private String id;
 
+
     public FriendModel() {
 
     }
 
-    public FriendModel(String username, String profilepic, String userId, String id) {
-        this.username = username;
-        this.profilepic = profilepic;
-        this.userId = userId;
-        this.id = id;
-    }
 
     public FriendModel(String username, String profilepic, String id) {
         this.username = username;
         this.profilepic = profilepic;
         this.id=id;
-    }
-    public FriendModel(String username, String profilepic) {
-        this.username = username;
-        this.profilepic = profilepic;
     }
 
     public String getUserId() {
