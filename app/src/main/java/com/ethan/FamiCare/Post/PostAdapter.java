@@ -1,43 +1,26 @@
 package com.ethan.FamiCare.Post;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
 import com.ethan.FamiCare.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.UUID;
+
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private Context context;
@@ -74,18 +57,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.seecomments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //把需要到firebase搜尋的Id字串丟到DiaryCommentsFragment
-                Bundle bundle = new Bundle();
-                bundle.putString("commentId", commentId);
-                DiaryCommentsFragment diaryCommentsFragment = new DiaryCommentsFragment();
-                diaryCommentsFragment.setArguments(bundle);
-
-                FrameLayout frameLayout = (FrameLayout) ((AppCompatActivity) context).findViewById(R.id.diary_posts_container);
-                frameLayout.removeAllViews();
-                FragmentTransaction ft = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.diary_posts_container, diaryCommentsFragment)
-                        .addToBackStack(null)
-                        .commit();
+                // 将需要在 Firebase 中搜索的 ID 字符串传递给 DiaryCommentsActivity
+                Intent intent = new Intent(context, DiaryCommentActivity.class);
+                intent.putExtra("commentId", commentId);
+                context.startActivity(intent);
             }
         });
 
@@ -111,6 +86,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             userphoto = itemView.findViewById(R.id.UserPhoto);
             usercontent = itemView.findViewById(R.id.UserContent);
             seecomments = itemView.findViewById(R.id.See_comments);
+
         }
     }
 }

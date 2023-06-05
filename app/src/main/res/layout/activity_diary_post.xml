@@ -2,17 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/diary_posts_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:id="@+id/diary_posts_container"
+    tools:context=".Post.DiaryPostActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="貼文"
-        android:textColor="#FFA02C"
+        android:textColor="#B85135"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:backgroundTint="#E68ED4F4"
+        app:backgroundTint="#B85135"
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
+
 </FrameLayout>

@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="user"
-                android:textColor="#FFA02C"
+                android:textColor="#B85135"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
             android:layout_height="70dp"
             android:layout_marginLeft="5dp"
             android:text="Content"
-            android:textColor="#FFA02C"
+            android:textColor="#B85135"
             android:textSize="20sp" />
 
     </ScrollView>

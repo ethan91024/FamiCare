@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Post.DiaryCommentsFragment">
+    tools:context=".Post.DiaryCommentActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_recycler_view"
@@ -24,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:hint="Add a comment..." />
+            android:hint="輸入留言..." />
 
         <ImageView
             android:id="@+id/Add_comment"
