@@ -2,14 +2,10 @@ package com.ethan.FamiCare;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -108,6 +103,13 @@ public class Meditation extends AppCompatActivity {
 
             }
         });
+        //播放暫停增加圖案
+        Drawable startD = getResources().getDrawable(R.drawable.start_button_img);
+        startD.setBounds(-8, 0, 100, 100);
+        count_time.setCompoundDrawables(null, null, startD, null);
+        Drawable stopD = getResources().getDrawable(R.drawable.stop_button_img);
+        stopD.setBounds(-8, 0, 100, 100);
+        stop_counting.setCompoundDrawables(null, null, stopD, null);
 
 
     }

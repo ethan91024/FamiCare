@@ -62,6 +62,8 @@ public class DiaryContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary_content, container, false);
+        //更新標題
+        getActivity().setTitle("新增日記");
 
         title = view.findViewById(R.id.Title);
         content = view.findViewById(R.id.Content);

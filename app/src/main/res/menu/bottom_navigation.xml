@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
     <item
         android:id="@+id/navigation_group"
-        android:icon="@drawable/ic_baseline_groups_24"
-        android:title="群組" />
+        android:icon="@drawable/menu_group_img"
+        android:title="群組"
+        app:itemIconSize="100dp"
+        app:itemIconTint="@color/white"
+        />
     <item
         android:id="@+id/navigation_health"
-        android:icon="@drawable/ic_baseline_monitor_heart_24"
+        android:icon="@drawable/menu_health_img"
         android:title="健康" />
 
 
     <item
         android:id="@+id/navigation_mood"
-        android:icon="@drawable/ic_baseline_mood_24"
+        android:icon="@drawable/menu_mood_img"
         android:title="心情" />
     <item
         android:id="@+id/navigation_diary"

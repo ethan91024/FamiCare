@@ -14,98 +14,119 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="700dp"
         android:orientation="vertical">
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:gravity=""
-            android:text="舒緩方式 呼吸調整"
-            android:textSize="30dp"
-            android:textStyle="bold"></TextView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="控制身體進行深呼吸，令大腦以及身體快速遠離疲憊，對神經系統也有調節作用，使身體和精神更加的輕鬆。"
-            android:textSize="20dp"></TextView>
-
-        <VideoView
-            android:id="@+id/breath_videoview"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"></VideoView>
-
+            android:textSize="18dp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="250dp"
+            android:background="@drawable/background_movie"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="35"
-                android:gravity="center"
-                android:text=" 設定時間  :"
-                android:textSize="25dp"></TextView>
-
-            <EditText
-                android:id="@+id/breathe_timer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:gravity="center"
-                android:text="5"
-                android:textSize="25dp"></EditText>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="35"
-                android:gravity="center"
-                android:text="分鐘"
-                android:textSize="25dp"></TextView>
-
-
+            <VideoView
+                android:id="@+id/breath_videoview"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_gravity="center"></VideoView>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:text="設定時間請輸入30分鐘以內"
-            android:textSize="20dp"></TextView>
-
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="160dp"
+            android:background="@drawable/background_brown_rightangle"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/breathe_start"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="開始"
-                android:textSize="25dp"></Button>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/breathe_cancel"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="50"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:gravity="center"
+                    android:text=" 設定時間  :"
+                    android:textColor="#000000"
+                    android:textSize="25dp"></TextView>
+
+                <EditText
+                    android:id="@+id/breathe_timer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="#b85135"
+                    android:textSize="25dp"></EditText>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:gravity="center"
+                    android:text="分鐘"
+                    android:textColor="#000000"
+                    android:textSize="25dp"></TextView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:gravity="center"
-                android:text="取消"
-                android:textSize="25dp"></Button>
+                android:text="設定時間請輸入30分鐘以內"
+                android:textSize="20dp"></TextView>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/breathe_start"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
+                    android:gravity="center"
+                    android:text="開始倒數"
+                    android:textSize="20dp"></Button>
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="0dp" />
+
+                <Button
+                    android:id="@+id/breathe_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textSize="20dp">
+
+                </Button>
+            </LinearLayout>
 
         </LinearLayout>
 

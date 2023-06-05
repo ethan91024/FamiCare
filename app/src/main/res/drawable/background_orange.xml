@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/white" /> <!-- 填充顏色 -->
-    <stroke
-        android:width="5dp"
-        android:color="#E68ED4F4"
-        /> <!-- 邊框寬度 -->
-  <!-- 邊框顏色 -->
-    <corners android:radius="20dp" /> <!-- 圓角半徑 -->
+    <solid android:color="#E6A842" /> <!-- 填充顏色 -->
+
+    <!-- 邊框顏色 -->
+    <corners android:radius="45dp" /> <!-- 圓角半徑 -->
     <padding
         android:left="16dp"
         android:top="16dp"

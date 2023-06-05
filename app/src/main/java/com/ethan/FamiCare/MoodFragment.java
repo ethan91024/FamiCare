@@ -40,6 +40,37 @@ import java.util.Random;
 
 public class MoodFragment extends Fragment {
 
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
+
+    public MoodFragment() {
+        // Required empty public constructor
+    }
+
+    public static MoodFragment newInstance(String param1, String param2) {
+        MoodFragment fragment = new MoodFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //可否分析壓力指數
@@ -68,6 +99,10 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
+        //更新標題
+        getActivity().setTitle("壓力分析");
+
+        // 其他Fragment代码...
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
@@ -160,19 +195,23 @@ public class MoodFragment extends Fragment {
             }
         });
 
-        //進階症狀分析美化
-        Drawable drawable = getResources().getDrawable(R.drawable.symptom);
-        drawable.setBounds(0, 0, 150, 150);
+        //進階症狀分析圖片，設置於左方
+        Drawable drawable = getResources().getDrawable(R.drawable.symptom_img);
+        drawable.setBounds(70, 4, 185, 115);
         analize.setCompoundDrawables(drawable, null, null, null);
         //冥想加圖案
-        Drawable meditationD = getResources().getDrawable(R.drawable.meditation_img); // 取得圖案 Drawable 物件
-        meditationD.setBounds(30, -10, 550, 575);
-        advice.setCompoundDrawables(null, null, meditationD, null);
+        Drawable meditationD = getResources().getDrawable(R.drawable.mood_med_img); // 取得圖案 Drawable 物件
+        meditationD.setBounds(5, 30, 510, 500);
+        advice.setCompoundDrawables(null,null,meditationD,null);
 
-        // 設置 Drawable 的範圍，將圖案放置在右下角
-        Drawable breatheD = getResources().getDrawable(R.drawable.breathe_img); // 取得圖案 Drawable 物件
-        breatheD.setBounds(30, 9, 550, 620);
-        breathe.setCompoundDrawables(null, null, breatheD, null);
+        // 設置呼吸圖片的範圍，將圖案放置在右下角
+        Drawable breatheD = getResources().getDrawable(R.drawable.mood_breathe_img); // 取得圖案 Drawable 物件
+        breatheD.setBounds(65, 35, 595, 580);
+        breathe.setCompoundDrawables(null,null,breatheD,null);
+        // 設置運動圖片的範圍，將圖案放置在右下角
+        Drawable sportD = getResources().getDrawable(R.drawable.mood_sport_img); // 取得圖案 Drawable 物件
+        sportD.setBounds(35, 10, 580, 580);
+        sport.setCompoundDrawables(null,null,sportD,null);
 
 
         return mainview;
@@ -428,6 +467,9 @@ public class MoodFragment extends Fragment {
 
         }
     }
+
+
+
 
     public void onResume() {
         Log.e(TAG, "心情---onResume");
