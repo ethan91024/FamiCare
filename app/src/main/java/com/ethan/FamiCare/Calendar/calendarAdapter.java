@@ -29,8 +29,8 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item,parent,false);
+    public calendarAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+       View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cal_recyclerview,parent,false);
         return new ViewHolder(view);
     }
 
@@ -56,7 +56,7 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
         public TextView date,email,event,time;
-        public ImageView image;
+        //public ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,7 +65,7 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
             email=itemView.findViewById(R.id.item_email);
             event=itemView.findViewById(R.id.item_event);
             time=itemView.findViewById(R.id.item_time);
-            image=itemView.findViewById(R.id.all_image);
+            //image=itemView.findViewById(R.id.all_image);
 
 
         }
