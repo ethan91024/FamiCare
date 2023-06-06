@@ -270,7 +270,7 @@ public class GroupCalendar extends AppCompatActivity {
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 // 使用 RecyclerViewSwipeDecorator 定制左滑的背景颜色、图标和标签
                 new  RecyclerViewSwipeDecorator.Builder(c,recyclerView,viewHolder,dX,dY,actionState,isCurrentlyActive)
-                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(GroupCalendar.this,R.color.red))
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(GroupCalendar.this,R.color.lightred))
                         .addActionIcon(R.drawable.baseline_delete_24)
                         .addSwipeLeftLabel("刪除")
                         .setSwipeLeftLabelColor(ContextCompat.getColor(GroupCalendar.this, R.color.white))
