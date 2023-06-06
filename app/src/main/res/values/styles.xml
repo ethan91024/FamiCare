@@ -1,24 +1,29 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#C1A988</item>
         <item name="colorPrimaryDark">#A08C70</item>
         <item name="colorAccent">#b85135</item>
         <item name="android:windowBackground">#F4F1EA</item>
+        <item name="titleCentered">true</item>
     </style>
 
 
     <style name="CalendarDateText">
         <item name="android:textColor">#b85135</item>
     </style>
-    <style name="LabelTitle" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title." parent="@android:style/TextAppearance">
         <!-- 定义标题文字大小 -->
-        <item name="android:labelTextSize">50dp</item>
+        <item name="android:labelTextSize">100sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="colorPrimary">#C1A988</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorPrimary">#D68009</item>
+        <item name="android:textColorPrimary">#E91313</item>
         <item name="android:windowBackground">#FDF6E6</item>
+        <item name="titleCentered">true</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
+
 
     </style>
     <style name="ButtonStytle" parent="Theme.AppCompat.Light.DarkActionBar">

@@ -14,15 +14,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ethan.FamiCare.ChatGPT.ChatGPTActivity;
+import com.ethan.FamiCare.FCMaddgroup;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.Firebasecords.UsersAdapter;
 import com.ethan.FamiCare.R;
+import com.ethan.FamiCare.Settings.Signup;
 import com.ethan.FamiCare.databinding.FragmentGroupBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -42,6 +47,8 @@ public class GroupFragment extends Fragment {
     ArrayList<Users> list = new ArrayList<>();
     FirebaseDatabase database;
     FirebaseAuth auth;
+
+    String token;//紀錄裝置
 
     public static GroupFragment newInstance(String param1, String param2) {
         GroupFragment fragment = new GroupFragment();
@@ -121,6 +128,25 @@ public class GroupFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        token = task.getResult();
+                        System.out.println("Token=" + token);
+                        FCMaddgroup.addgroup(
+                                getContext(),
+                                "add",
+                                token
+                        );
+                    }
+                });
+
+        getActivity().setTitle("群組");
 
 
         return binding.getRoot();

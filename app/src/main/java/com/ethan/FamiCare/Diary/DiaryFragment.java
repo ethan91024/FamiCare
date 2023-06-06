@@ -194,6 +194,13 @@ public class DiaryFragment extends Fragment {
         drawableL.setBounds(-90, 8, 10, 150);
         cal_fold.setCompoundDrawables(drawableR, null, drawableL, null);
 
+        Drawable drawable = getResources().getDrawable(R.drawable.schedule_img);
+        drawable.setBounds(-40, 0, 80, 100);
+        cal.setCompoundDrawables(null, null, drawable, null);
+
+        Drawable drawable2 = getResources().getDrawable(R.drawable.seeother);
+        drawable2.setBounds(-30, 0, 80, 100);
+        look.setCompoundDrawables(null, null, drawable2, null);
 
         return view;
     }
