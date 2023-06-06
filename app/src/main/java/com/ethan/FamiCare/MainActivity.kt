@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
 
-
+/*
         //啟動直接在群組
         val fm = supportFragmentManager
         fm.beginTransaction().addToBackStack(null).replace(R.id.fragment_container,
@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         )
             .commit()
         checkAvailability()
+
+ */
 
 
         var  currentUser = firebaseAuth.currentUser

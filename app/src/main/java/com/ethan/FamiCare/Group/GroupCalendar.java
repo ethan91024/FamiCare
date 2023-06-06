@@ -17,6 +17,7 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.applandeo.materialcalendarview.CalendarView;
 
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.applandeo.materialcalendarview.utils.SelectedDay;
 import com.ethan.FamiCare.Calendar.CalendarItem;
 import com.ethan.FamiCare.Calendar.calendarAdapter;
 import com.ethan.FamiCare.CalendarDB;
@@ -55,6 +57,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -73,7 +76,7 @@ public class GroupCalendar extends AppCompatActivity {
     private Button savecal;
     private String time_text;
     private Button noti;
-    private TextView checknoti;
+    private TextView cal_fold;
 
     //Listview呈現提醒事項
     private ListView listView;
@@ -107,6 +110,8 @@ public class GroupCalendar extends AppCompatActivity {
     ArrayList<String> getalluser;
     ArrayList<String> getalltoken;
 
+    List<EventDay> events = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,8 @@ public class GroupCalendar extends AppCompatActivity {
         caldate=findViewById(R.id.cal);//顯示日期
         savecal=findViewById(R.id.savecal);
         recyclerView=findViewById(R.id.recycler_view);
+        cal_fold=findViewById(R.id.cal_fold);
+
 
         //顯示現在使用者
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -146,11 +153,20 @@ public class GroupCalendar extends AppCompatActivity {
                     }
                 });
 
+        //增加選擇日期底圖裝飾
+        Drawable drawableR = getResources().getDrawable(R.drawable.schedulepoint_img);
+        drawableR.setBounds(90, 8, 190, 150);
+        Drawable drawableL = getResources().getDrawable(R.drawable.schedulepoint_img);
+        drawableL.setBounds(-90, 8, 10, 150);
+        cal_fold.setCompoundDrawables(drawableR, null, drawableL, null);
 
+        //isEventDayaddIcon();
+        //calendar.setEvents(events);
 
         //得到所有通知對象
         getAlluser();
 
+        //RecyclerView
         arrayList2=new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(GroupCalendar.this));
         rvAdapter=new calendarAdapter(arrayList2,GroupCalendar.this);
@@ -519,6 +535,30 @@ public class GroupCalendar extends AppCompatActivity {
         });
 
     }
+
+    public void isEventDayaddIcon(){
+        Calendar eventDate=Calendar.getInstance();
+        myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    CalendarDB calendarDB = dataSnapshot.getValue(CalendarDB.class);
+                    int year = Integer.parseInt(calendarDB.getId().toString().substring(0, 4));//ex:2023
+                    int month = Integer.parseInt(calendarDB.getId().toString().substring(4, 6)) - 1;//ex:10
+                    int day = Integer.parseInt(calendarDB.getId().toString().substring(6, 8));//ex:31
+                    eventDate.set(year, month, day);
+                    events.add(new EventDay(eventDate, R.drawable.baseline_circle_24));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 /*
     private void setAdapter() {
         adapter = new SimpleAdapter(this, arrayList, R.layout.event_item, from, to);
