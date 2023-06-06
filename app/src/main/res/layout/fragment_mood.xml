@@ -14,6 +14,25 @@
         android:layout_weight="100"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#C1A988">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="壓力分析"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+               android:textStyle="bold">
+
+            </TextView>
+        </androidx.appcompat.widget.Toolbar>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -40,12 +59,12 @@
                     <Button
                         android:id="@+id/analize"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginHorizontal="4dp"
+                        android:layout_height="50dp"
+                        android:layout_marginHorizontal="12dp"
                         android:background="@drawable/background_orange"
                         android:text="進階症狀分析"
                         android:textColor="#000000"
-                        android:textSize="28dp"
+                        android:textSize="22dp"
                         android:textStyle="bold" />
 
                     <Space
@@ -55,8 +74,8 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginHorizontal="7dp"
-                        android:layout_weight="15"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="13"
                         android:background="@drawable/background_brown"
                         android:gravity="center">
 
@@ -92,7 +111,10 @@
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="45">
+                        android:layout_weight="45"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/background_brown"
+                        >
 
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/lineChart"
@@ -142,11 +164,11 @@
                     <TextView
                         android:id="@+id/Advice"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:background="@drawable/background_brown"
+                        android:layout_height="160dp"
+                        android:background="@drawable/meditation_background"
                         android:contextClickable="true"
-                        android:gravity="center"
-                        android:text="冥想"
+                        android:gravity="left|center_vertical"
+                        android:text="  冥想"
                         android:textColor="#000000"
                         android:textSize="25dp"
                         android:textStyle="bold"
@@ -154,9 +176,6 @@
 
                         />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp" />
 
                     <Space
                         android:layout_width="match_parent"
@@ -165,11 +184,11 @@
                     <TextView
                         android:id="@+id/Breathe"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:background="@drawable/background_brown"
+                        android:layout_height="160dp"
+                        android:background="@drawable/breathe_background"
                         android:contextClickable="true"
-                        android:gravity="center"
-                        android:text="呼吸調整"
+                        android:gravity="left|center_vertical"
+                        android:text="  呼吸調整"
                         android:textColor="#000000"
                         android:textSize="25dp"
                         android:textStyle="bold" />
@@ -181,13 +200,17 @@
                     <TextView
                         android:id="@+id/Sport"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:background="@drawable/background_brown"
+                        android:layout_height="160dp"
+                        android:background="@drawable/sport_background"
                         android:contextClickable="true"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:textColor="#000000"
                         android:textSize="25dp"
                         android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp" />
 
 
                 </LinearLayout>

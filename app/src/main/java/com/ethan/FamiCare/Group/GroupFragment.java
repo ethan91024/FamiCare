@@ -122,6 +122,9 @@ public class GroupFragment extends Fragment {
             }
         });
 
+        //更新標題
+        getActivity().setTitle("群組");
+
 
         return binding.getRoot();
     }

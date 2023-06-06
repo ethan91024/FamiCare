@@ -71,14 +71,14 @@
             android:label="呼吸舒緩"
             android:name=".Breathe"
             android:exported="false"
-            android:theme="@style/LabelTitle"
+            android:theme="@style/AppTheme"
              />
         <activity
             android:name=".Meditation"
             android:configChanges="orientation|screenSize"
             android:label="冥想"
             android:exported="false"
-            android:theme="@style/LabelTitle"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".sport.Sport1"
@@ -130,7 +130,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:label="行事曆"
-            android:theme="@style/LabelTitle">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

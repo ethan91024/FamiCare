@@ -104,11 +104,11 @@ public class Meditation extends AppCompatActivity {
             }
         });
         //播放暫停增加圖案
-        Drawable startD = getResources().getDrawable(R.drawable.start_button_img);
-        startD.setBounds(-8, 0, 100, 100);
+        Drawable startD = getResources().getDrawable(R.drawable.button_star_red);
+        startD.setBounds(-20, 0, 90, 100);
         count_time.setCompoundDrawables(null, null, startD, null);
-        Drawable stopD = getResources().getDrawable(R.drawable.stop_button_img);
-        stopD.setBounds(-8, 0, 100, 100);
+        Drawable stopD = getResources().getDrawable(R.drawable.button_stop_red);
+        stopD.setBounds(-40, 0, 70, 90);
         stop_counting.setCompoundDrawables(null, null, stopD, null);
 
 
