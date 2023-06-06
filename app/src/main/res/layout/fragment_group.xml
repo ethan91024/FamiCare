@@ -4,15 +4,42 @@
     android:id="@+id/main_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="#F4F1EA"
     android:orientation="vertical"
     tools:context=".Group.GroupFragment">
+    <!--  標題  -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#C1A988">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="群組"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold">
+
+        </TextView>
+    </androidx.appcompat.widget.Toolbar>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp">
+
+    </Space>
+
 
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="145dp"
+        android:background="@drawable/background_brown"
         android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,18 +50,26 @@
                 android:layout_height="wrap_content"
                 android:text="生活圈"
                 android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/ChatGPT"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:onClick="chatgpt"
-                    android:text="ChatGPT"
-                    android:textStyle="bold" />
+            <Button
+                android:id="@+id/ChatGPT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/background_red"
+                android:onClick="chatgpt"
+                android:text="ChatGPT"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </RelativeLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp">
+
+        </Space>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -49,13 +84,17 @@
 
                 ></TextView>
 
+
             <Button
                 android:id="@+id/createGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="17dp"
                 android:layout_toLeftOf="@id/deleteGroup"
+                android:background="@drawable/background_red"
                 android:onClick="add"
                 android:text="開啟群組"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <Button
@@ -63,13 +102,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:background="@drawable/background_red"
                 android:onClick="del"
                 android:text="刪除群組"
+                android:textColor="@color/white"
                 android:textStyle="bold"
 
                 />
 
         </RelativeLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp">
+
+        </Space>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,8 +127,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:background="@drawable/background_red"
                 android:onClick="search"
                 android:text="搜尋"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <EditText
@@ -95,6 +144,11 @@
         </RelativeLayout>
 
     </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="7dp">
+
+    </Space>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatrecy"

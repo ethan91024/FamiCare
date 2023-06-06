@@ -60,6 +60,10 @@ class HealthFragment : Fragment() {
             startActivity(Intent(requireContext(), HealthBloodGlucoseActivity::class.java))
         }
 
+
+        //更新標題
+        requireActivity().title = "健康"
+
         return view
     }
 

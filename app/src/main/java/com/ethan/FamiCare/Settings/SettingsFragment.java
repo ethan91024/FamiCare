@@ -3,12 +3,14 @@ package com.ethan.FamiCare.Settings;
 import static androidx.databinding.DataBindingUtil.setContentView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -140,6 +142,8 @@ public class SettingsFragment extends Fragment {
 //            login.setVisibility(View.INVISIBLE);
 //            signup.setVisibility(View.INVISIBLE);
 //        }
+
+
         return view;
     }
 
