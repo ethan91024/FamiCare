@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 圓角，Layout佈局圓角幅度設定值 -->
+    <corners
+        android:topLeftRadius="40dp"
+        android:topRightRadius="40dp" />
+
+    <!-- 框內底部顏色 -->
+    <solid
+        android:color="#e8e0cf" />
+
+    <padding
+        android:top="10dp"
+        />
+
+
+</shape>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calender"
@@ -7,111 +7,104 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Group.GroupCalendar">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
+    <TextView
+        android:id="@+id/cal_fold"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="4dp"
+        android:background="@drawable/background_red"
+        android:gravity="center"
+        android:text="選擇日期"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/cal1"
+        android:layout_width="match_parent"
+        android:layout_height="303dp"
+        android:layout_marginHorizontal="7dp"
+        android:gravity="center"
+        app:abbreviationsBarColor="#ECE5D7"
+        app:headerColor="#ECE5D7"
+        app:headerLabelColor="@android:color/black"
+        app:pagesColor="#ECE5D7"
+        app:selectionColor="#B85135"
+        app:selectionDisabled="true"
+        app:selectionLabelColor="#ECE5D7"
+        app:todayLabelColor="#B85135" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="7dp"
-        android:layout_weight="2"
-       >
+        android:layout_height="match_parent">
 
-        <CalendarView
-            android:id="@+id/cal1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cal"
+                    android:layout_width="181dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Date"
+                    android:textColor="#C1A988"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cal1" />
+
+                <Button
+                    android:id="@+id/savecal"
+                    android:layout_width="139dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/cal_savebtn"
+                    android:drawableLeft="@drawable/baseline_add_24"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="New Event"
+                    android:textColor="#C1A988" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="292dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/savecal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+        </LinearLayout>
+
     </ScrollView>
-
-    <TextView
-        android:id="@+id/checknoti"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:paddingVertical="2dp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/caldate"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="7dp"
-            android:layout_weight="0.25"
-            android:gravity="center_vertical"
-            android:text="日期"
-            android:textSize="20dp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/addevent"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:hint="新增提醒事項"
-            android:textSize="15dp" />
-
-
-        <Button
-            android:id="@+id/addtime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="timePicker"
-            android:text="新增時間"
-            android:textSize="15dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/savecal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="儲存"
-            android:textSize="10sp" />
-
-        <Button
-            android:id="@+id/noti"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="設提醒"
-            android:textSize="10sp" />
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:focusable="true"
-        android:scrollbars="vertical" />
-
-
 </LinearLayout>
+</FrameLayout>
+

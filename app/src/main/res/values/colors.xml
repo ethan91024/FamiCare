@@ -10,8 +10,10 @@
     <color name="green">#00DB00</color>
     <color name="gray">#9D9D9D</color>
     <color name="white">#FFFFFF</color>
-    <color name="red">#b85135</color>
+
+    <color name="red">#e61919</color>
     <color name="brown">#e8e0cf</color>
     <color name="orange">#E6A842</color>
     <color name="deepbrown">#B19C80</color>
+
 </resources>
