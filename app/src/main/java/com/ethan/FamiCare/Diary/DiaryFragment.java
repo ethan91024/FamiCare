@@ -47,7 +47,7 @@ public class DiaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment你好
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
         //更新標題
         getActivity().setTitle("生活點滴");
