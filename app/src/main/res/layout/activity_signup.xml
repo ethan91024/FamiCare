@@ -149,7 +149,7 @@
         android:fontFamily="@font/inter_bold"
         android:text="   Welcome  FamiCare! "
         android:textAllCaps="false"
-        android:textColor="#FFD699"
+        android:textColor="#B19C80"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"

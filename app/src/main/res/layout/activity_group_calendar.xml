@@ -39,9 +39,9 @@
         app:headerLabelColor="@android:color/black"
         app:pagesColor="#ECE5D7"
         app:selectionColor="#B85135"
-        app:selectionDisabled="true"
         app:selectionLabelColor="#ECE5D7"
-        app:todayLabelColor="#B85135" />
+        app:todayLabelColor="#B85135"
+        app:type="one_day_picker"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -91,7 +91,6 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="292dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="2dp"
                 app:layout_constraintBottom_toTopOf="@+id/savecal"
                 app:layout_constraintEnd_toEndOf="parent"

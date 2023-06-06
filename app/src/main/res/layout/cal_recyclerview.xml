@@ -7,7 +7,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:backgroundTint="#e8e0cf"
+    android:backgroundTint="@color/white"
     app:cardCornerRadius="12dp"
     app:cardElevation="5dp">
 
@@ -34,7 +34,7 @@
             <View
                 android:layout_width="5dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/cal_btn2"
+                android:background="@drawable/cal_savebtn"
                 android:scrollbarAlwaysDrawHorizontalTrack="true" />
 
             <LinearLayout
