@@ -17,14 +17,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.R;
+import com.ethan.FamiCare.Settings.AccountActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Posts> posts;
+
+    //FireBase
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
 
     public PostAdapter(Context context, ArrayList<Posts> posts) {
@@ -50,6 +67,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         Glide.with(context)
                 .load(post.getphotoUrl())
                 .into(holder.userphoto);
+        //發文者的頭貼
+        databaseReference = database.getReference().child("Users");
+        String desiredUsername = post.getUserName();
+        Query query = databaseReference.orderByChild("username").equalTo(desiredUsername);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    Users user = userSnapshot.getValue(Users.class);
+                    if (user != null) {
+                        String profilepicUrl = (String) userSnapshot.child("profilepic").getValue();
+                        // 在這裡將取得的頭像設置給 CircleImageView
+                        Glide.with(context).load(profilepicUrl).into(holder.userpic);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
 
         //跳轉到子view對應的留言列表
@@ -72,15 +108,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public CircleImageView userpic;//頭像
 
         public TextView username;
         public TextView usertitle;
-        public ImageView userphoto;
+        public ImageView userphoto;//下方貼文照片
         public TextView usercontent;
         public Button seecomments;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            userpic = itemView.findViewById(R.id.UserPic);
             username = itemView.findViewById(R.id.UserName);
             usertitle = itemView.findViewById(R.id.UserTitle);
             userphoto = itemView.findViewById(R.id.UserPhoto);

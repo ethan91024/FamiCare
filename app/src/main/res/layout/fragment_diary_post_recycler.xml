@@ -20,6 +20,7 @@
 
         <!--使用者頭像-->
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/UserPic"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginLeft="5dp"

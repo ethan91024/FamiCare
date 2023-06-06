@@ -81,13 +81,13 @@
             android:name=".Breathe"
             android:exported="false"
             android:label="呼吸舒緩"
-            android:theme="@style/LabelTitle" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Meditation"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="冥想"
-            android:theme="@style/LabelTitle" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".sport.Sport1"
             android:exported="false" />
@@ -137,7 +137,7 @@
             android:name=".Group.GroupCalendar"
             android:exported="false"
             android:label="行事曆"
-            android:theme="@style/LabelTitle"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
