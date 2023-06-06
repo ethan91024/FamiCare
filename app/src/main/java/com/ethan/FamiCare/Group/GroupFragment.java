@@ -146,6 +146,9 @@ public class GroupFragment extends Fragment {
                     }
                 });
 
+        getActivity().setTitle("群組");
+
+
         return binding.getRoot();
     }
 

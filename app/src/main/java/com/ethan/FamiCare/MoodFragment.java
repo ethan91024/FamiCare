@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -99,9 +101,8 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
-        //更新標題
-        getActivity().setTitle("壓力分析");
-
+//        //更新標題
+//        getActivity().setTitle("壓力分析");
         // 其他Fragment代码...
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
@@ -163,7 +164,7 @@ public class MoodFragment extends Fragment {
 
         //跳轉到緩解方式介面
         advice = mainview.findViewById(R.id.Advice);
-        advice.setText("冥想");
+        advice.setText("  冥想");
         advice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +187,7 @@ public class MoodFragment extends Fragment {
 
         //nai
         sport = mainview.findViewById(R.id.Sport);
-        sport.setText("運動");
+        sport.setText("  運動");
         sport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,19 +200,32 @@ public class MoodFragment extends Fragment {
         Drawable drawable = getResources().getDrawable(R.drawable.symptom_img);
         drawable.setBounds(70, 4, 185, 115);
         analize.setCompoundDrawables(drawable, null, null, null);
-        //冥想加圖案
-        Drawable meditationD = getResources().getDrawable(R.drawable.mood_med_img); // 取得圖案 Drawable 物件
-        meditationD.setBounds(5, 30, 510, 500);
-        advice.setCompoundDrawables(null,null,meditationD,null);
-
-        // 設置呼吸圖片的範圍，將圖案放置在右下角
-        Drawable breatheD = getResources().getDrawable(R.drawable.mood_breathe_img); // 取得圖案 Drawable 物件
-        breatheD.setBounds(65, 35, 595, 580);
-        breathe.setCompoundDrawables(null,null,breatheD,null);
-        // 設置運動圖片的範圍，將圖案放置在右下角
-        Drawable sportD = getResources().getDrawable(R.drawable.mood_sport_img); // 取得圖案 Drawable 物件
-        sportD.setBounds(35, 10, 580, 580);
-        sport.setCompoundDrawables(null,null,sportD,null);
+//        //冥想加圖案
+//        Drawable meditationD = getResources().getDrawable(R.drawable.mood_med_img); // 取得圖案 Drawable 物件
+//        meditationD.setBounds(5, 15, 510, 450);
+//        Drawable scr1 = getResources().getDrawable(R.drawable.scr1_img);
+//        scr1.setBounds(10, 40, 170, 180);
+//        Drawable scr2 = getResources().getDrawable(R.drawable.scr2_img);
+//        scr2.setBounds(-100,90, 300, 250);
+//        advice.setCompoundDrawables(null,null,meditationD,null);
+//
+//        // 設置呼吸圖片的範圍，將圖案放置在右下角
+//        Drawable breatheD = getResources().getDrawable(R.drawable.mood_breathe_img); // 取得圖案 Drawable 物件
+//        breatheD.setBounds(65, 55, 595, 580);
+//        Drawable scr3 = getResources().getDrawable(R.drawable.scr1_img);
+//        scr3.setBounds(200, 0, 510, 160);
+//        Drawable scr4 = getResources().getDrawable(R.drawable.scr3_img);
+//        scr4.setBounds(-200,120, 520, 290);
+//        breathe.setCompoundDrawables(null,scr3,breatheD,scr4);
+//
+//        // 設置運動圖片的範圍，將圖案放置在右下角
+//        Drawable sportD = getResources().getDrawable(R.drawable.mood_sport_img); // 取得圖案 Drawable 物件
+//        sportD.setBounds(35, 30, 580, 580);
+//        Drawable scr5 = getResources().getDrawable(R.drawable.scr4_img);
+//        scr5.setBounds(0, 10, 190, 150);
+//        Drawable scr6 = getResources().getDrawable(R.drawable.scr4_img);
+//        scr6.setBounds(-200,90, 740, 280);
+//        sport.setCompoundDrawables(null,scr5,sportD,scr6);
 
 
         return mainview;
@@ -364,34 +378,34 @@ public class MoodFragment extends Fragment {
                 LineDataSet set1;
                 set1 = new LineDataSet(valuesY1, "heartrate");
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
-                set1.setColor(context.getResources().getColor(R.color.colorPrimary));//線的顏
-                set1.setCircleColor(context.getResources().getColor(R.color.colorPrimary));//圓點顏色
+                set1.setColor(context.getResources().getColor(R.color.red));//線的顏
+                set1.setCircleColor(context.getResources().getColor(R.color.red));//圓點顏色
                 set1.setCircleRadius(4);//原點大小
                 set1.setDrawCircleHole(false);//圓點為實心(預設空心)
-                set1.setLineWidth(1.5f);//線寬
+                set1.setLineWidth(2f);//線寬
                 set1.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set1.setValueTextSize(8);//座標點數字大小
                 dataSets.add(set1);
             } else {
                 lineChart.setNoDataText("暫時沒有數據");
-                lineChart.setNoDataTextColor(Color.BLUE);//文字顏色
+                lineChart.setNoDataTextColor(R.color.red);//文字顏色
             }
 
             if (valuesY2.size() > 0) {
                 LineDataSet set2;
                 set2 = new LineDataSet(valuesY2, "sleep");
                 set2.setMode((LineDataSet.Mode.LINEAR));///類型為折線
-                set2.setColor(context.getResources().getColor(R.color.colorTheme));//線的顏
-                set2.setCircleColor(context.getResources().getColor(R.color.colorTheme));//圓點顏色
+                set2.setColor(context.getResources().getColor(R.color.orange));//線的顏
+                set2.setCircleColor(context.getResources().getColor(R.color.orange));//圓點顏色
                 set2.setCircleRadius(4);//原點大小
                 set2.setDrawCircleHole(false);//圓點為實心(預設空心)
-                set2.setLineWidth(1.5f);//線寬
+                set2.setLineWidth(2f);//線寬
                 set2.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set2.setValueTextSize(8);//座標點數字大小
                 dataSets.add(set2);
             } else {
                 lineChart.setNoDataText("暫時沒有數據");
-                lineChart.setNoDataTextColor(Color.YELLOW);//文字顏色
+                lineChart.setNoDataTextColor(R.color.orange);//文字顏色
             }
 
             if (valuesY3.size() > 0) {
@@ -402,7 +416,7 @@ public class MoodFragment extends Fragment {
                 set3.setCircleColor(context.getResources().getColor(R.color.colorAccent));//圓點顏色
                 set3.setCircleRadius(4);//原點大小
                 set3.setDrawCircleHole(false);//圓點為實心(預設空心)
-                set3.setLineWidth(1.5f);//線寬
+                set3.setLineWidth(2f);//線寬
                 set3.setDrawValues(true);//顯示座標點對應Y軸的數字(預設顯示)
                 set3.setValueTextSize(8);//座標點數字大小
                 dataSets.add(set3);
@@ -425,8 +439,10 @@ public class MoodFragment extends Fragment {
         public void initX(ArrayList datalist) {
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//X軸標籤顯示位置(預設顯示在上方，分為上方內/外側、下方內/外側及上下同時顯示)
-            xAxis.setTextColor(Color.GRAY);//X軸標籤顏色
-            xAxis.setTextSize(12);//X軸標籤大小
+            xAxis.setTextColor(Color.BLACK);//X軸標籤顏色
+            xAxis.setTextSize(13);//X軸標籤大小
+            xAxis.setAxisLineColor(Color.BLACK);//X軸顏色
+
 
             xAxis.setLabelCount(datalist.size());//X軸標籤個數
             xAxis.setSpaceMin(0.5f);//折線起點距離左側Y軸距離
@@ -442,8 +458,9 @@ public class MoodFragment extends Fragment {
             YAxis leftAxis = lineChart.getAxisLeft();//獲取左側的軸線
 
             leftAxis.setLabelCount(4);//Y軸標籤個數
-            leftAxis.setTextColor(Color.GRAY);//Y軸標籤顏色
-            leftAxis.setTextSize(12);//Y軸標籤大小
+            leftAxis.setTextColor(Color.BLACK);//Y軸標籤顏色
+            leftAxis.setTextSize(13);//Y軸標籤大小
+            leftAxis.setAxisLineColor(Color.BLACK);//Y軸顏色
 
             leftAxis.setAxisMinimum(min - 10);//Y軸標籤最小值
             leftAxis.setAxisMaximum(max + 10);//Y軸標籤最大值

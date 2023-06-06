@@ -3,7 +3,8 @@
 
 
   <!-- 邊框顏色 -->
-    <solid android:color="#A08C70" />
+    <solid android:color="#C5AE8E" />
+  <corners android:radius="106dp" />
 
 
 
