@@ -1,32 +1,25 @@
 package com.ethan.FamiCare.Post;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import com.ethan.FamiCare.R;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ethan.FamiCare.Diary.Diary;
 import com.ethan.FamiCare.Diary.DiaryDB;
 import com.ethan.FamiCare.Diary.DiaryDoa;
-import com.ethan.FamiCare.Post.DiaryCommentsFragment;
-import com.ethan.FamiCare.Post.PostAdapter;
-import com.ethan.FamiCare.Post.Posts;
-import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DiaryPostsFragment extends Fragment {
+public class DiaryPostActivity extends AppCompatActivity {
 
     //Layout
     ArrayList<Posts> posts;
@@ -67,13 +60,11 @@ public class DiaryPostsFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_diary_posts, container, false);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_diary_post);
         // Initialize database reference
-        diaryDoa = DiaryDB.getInstance(this.getContext()).diaryDoa();
+        diaryDoa = DiaryDB.getInstance(this).diaryDoa();
         storageReference = FirebaseStorage.getInstance().getReference("Posts");
         databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
         database.getReference().child("Users").child(uid).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,12 +82,12 @@ public class DiaryPostsFragment extends Fragment {
         });
 
         // Initialize the RecyclerView and Adapter
-        recyclerView = view.findViewById(R.id.PostRecycler);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView = findViewById(R.id.PostRecycler);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), posts);
+        postAdapter = new PostAdapter(this, posts);
         recyclerView.setAdapter(postAdapter);
 
         // Attach database listener
@@ -119,17 +110,16 @@ public class DiaryPostsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DiaryPostActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-
-        add_post = view.findViewById(R.id.Add_post);
+        add_post = findViewById(R.id.Add_post);
         //根據今天日期新增全部貼文，先拿日期，去本地資料庫找資料，照片上傳到storage，其它到realtime
         add_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(DiaryPostActivity.this);
                 builder.setMessage("確定上傳嗎？")
                         .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -144,7 +134,7 @@ public class DiaryPostsFragment extends Fragment {
                                     diaries = diaryDoa.getDiariesById(today);
                                     uploadPost(diaries);
                                 } else {
-                                    Toast.makeText(getContext(), "no diary found", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DiaryPostActivity.this, "no diary found", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })
@@ -158,10 +148,7 @@ public class DiaryPostsFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        return view;
     }
-
 
     //實現 uploadPhoto 方法，使用 Firebase Storage 將照片上傳到雲端並取得下載 URL，最後將整個Post傳到firebase
     private void uploadPost(List<Diary> diaries) {
@@ -193,7 +180,7 @@ public class DiaryPostsFragment extends Fragment {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DiaryPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                 diary.setIsSaved(true);
@@ -205,15 +192,12 @@ public class DiaryPostsFragment extends Fragment {
 
         //如果沒有新的diary被上傳
         if (cnt == diaries.size()) {
-            Toast.makeText(getContext(), "all diaries had been uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DiaryPostActivity.this, "all diaries had been uploaded", Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
     public int getSelected_date(int year, int month, int dayOfMonth) {
         String s = String.format("%4d%02d%02d", year, month + 1, dayOfMonth);
         return Integer.parseInt(s);
     }
-
 }

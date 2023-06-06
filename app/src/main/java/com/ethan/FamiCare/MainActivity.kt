@@ -14,6 +14,7 @@ import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.*
 import androidx.lifecycle.lifecycleScope
+import com.ethan.FamiCare.Diary.DiaryFragment
 import com.ethan.FamiCare.Group.GroupFragment
 import com.ethan.FamiCare.Health.HealthFragment
 import com.ethan.FamiCare.Settings.Login
