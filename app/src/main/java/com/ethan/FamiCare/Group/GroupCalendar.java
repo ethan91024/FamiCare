@@ -110,6 +110,10 @@ public class GroupCalendar extends AppCompatActivity {
     ArrayList<String> getalluser;
     ArrayList<String> getalltoken;
 
+    //提醒有沒有選all
+    Boolean ischooseall=false;
+
+
     List<EventDay> events = new ArrayList<>();
 
 
@@ -190,8 +194,13 @@ public class GroupCalendar extends AppCompatActivity {
                         arrayList2.clear();
                         for (DataSnapshot ds:snapshot.getChildren()){
                             CalendarDB calendarDB=ds.getValue(CalendarDB.class);
+                            CalendarItem calendarItem;
                             if(calendarDB.getId().equals(String.valueOf(selected_date))){
-                                CalendarItem calendarItem=new CalendarItem(calendarDB.getId(),calendarDB.getUser(),calendarDB.getEvent(),calendarDB.getTime());
+                                if(calendarDB.getNotiischoose()==false ){
+                                    calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent(),calendarDB.getTime());
+                                }else {
+                                    calendarItem = new CalendarItem(calendarDB.getUser(), calendarDB.getEvent(), calendarDB.getTime(), R.drawable.baseline_circle_24);
+                                }
                                 arrayList2.add(calendarItem);
                                 rvAdapter.notifyDataSetChanged();
                                 isDataExists = true;
@@ -340,6 +349,7 @@ public class GroupCalendar extends AppCompatActivity {
                 if(checkitems[0]){
                     object.add(tokens[0]);
                     //   addListViewImage(selected_date,addevent_text,time4);
+                    ischooseall=true;
                 }else {
                     object.add(token);
                     for (int j = 1; j < checkitems.length; j++) {
@@ -510,9 +520,9 @@ public class GroupCalendar extends AppCompatActivity {
                     String email = user.getEmail();
 
                     //後面改
-                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token);
+                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token,ischooseall);
 
-
+                    ischooseall=false;
                     myRef.child("Calendar").push().setValue(calevent);
                     Toast.makeText(GroupCalendar.this, "儲存成功", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();

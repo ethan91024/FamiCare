@@ -38,14 +38,14 @@
                 android:scrollbarAlwaysDrawHorizontalTrack="true" />
 
             <LinearLayout
-                android:layout_width="153dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/item_event"
-                    android:layout_width="152dp"
+                    android:layout_width="match_parent"
                     android:layout_height="25dp"
                     android:gravity="center_vertical"
                     android:text="活動"
@@ -64,15 +64,12 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/item_id"
-                android:layout_width="58dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="日期"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="5dp"/>
 
         </LinearLayout>
 

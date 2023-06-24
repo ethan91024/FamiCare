@@ -43,66 +43,64 @@
         app:todayLabelColor="#B85135"
         app:type="one_day_picker"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cal"
+                android:layout_width="181dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Date"
+                android:textColor="#C1A988"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cal1" />
+
+            <Button
+                android:id="@+id/savecal"
+                android:layout_width="139dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/cal_savebtn"
+                android:drawableLeft="@drawable/baseline_add_24"
+                android:fontFamily="@font/inter_bold"
+                android:text="New Event"
+                android:textColor="#C1A988" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/savecal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/cal"
-                    android:layout_width="181dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="Date"
-                    android:textColor="#C1A988"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cal1" />
-
-                <Button
-                    android:id="@+id/savecal"
-                    android:layout_width="139dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/cal_savebtn"
-                    android:drawableLeft="@drawable/baseline_add_24"
-                    android:fontFamily="@font/inter_bold"
-                    android:text="New Event"
-                    android:textColor="#C1A988" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="292dp"
-                android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/savecal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cal">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-
-        </LinearLayout>
-
+        </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
 </LinearLayout>
 </FrameLayout>

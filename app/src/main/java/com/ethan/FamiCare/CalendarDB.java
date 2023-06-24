@@ -7,17 +7,20 @@ public class CalendarDB {
    private String user;
    private String token;
 
+   private Boolean notiischoose;
+
     //for firebase getting data back
     public CalendarDB() {
 
     }
 
-    public CalendarDB(String id,String event,String time,String user,String token){
+    public CalendarDB(String id,String event,String time,String user,String token,Boolean noti){
         this.id=id;
         this.event=event;
         this.time=time;
         this.user=user;
         this.token=token;
+        this.notiischoose=noti;
     }
 
     public String getId(){return id;}
@@ -29,5 +32,6 @@ public class CalendarDB {
     public String getUser(){return user;}
 
     public String getToken(){return token;}
+    public Boolean getNotiischoose(){return notiischoose;}
 
 }
