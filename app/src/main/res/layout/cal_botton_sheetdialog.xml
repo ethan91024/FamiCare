@@ -56,7 +56,7 @@
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/background_red"
             android:gravity="center_horizontal|center_vertical"
-            android:text="時  間"
+            android:text="時 間"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"

@@ -37,10 +37,11 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
     CalendarItem calendarItem=data.get(position);
-    viewHolder.date.setText(calendarItem.getDate_id());
+    //viewHolder.date.setText(calendarItem.getDate_id());
     viewHolder.email.setText(calendarItem.getEmail());
     viewHolder.event.setText(calendarItem.getEvent());
     viewHolder.time.setText(calendarItem.getTime());
+    viewHolder.imageView.setImageResource(calendarItem.getImage());
 
     }
 
@@ -55,17 +56,18 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView date,email,event,time;
+        public TextView email,event,time;
+        public ImageView imageView;
         //public ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            date=itemView.findViewById(R.id.item_id);
+           // date=itemView.findViewById(R.id.item_id);
             email=itemView.findViewById(R.id.item_email);
             event=itemView.findViewById(R.id.item_event);
             time=itemView.findViewById(R.id.item_time);
-            //image=itemView.findViewById(R.id.all_image);
+            imageView=itemView.findViewById(R.id.item_image);
 
 
         }

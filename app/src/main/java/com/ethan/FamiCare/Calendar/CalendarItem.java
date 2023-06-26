@@ -12,12 +12,18 @@ public class CalendarItem {
 
     }
 
-    public CalendarItem(String date_id,String email,String event,String time){
-        this.date_id=date_id;
+    public CalendarItem(String email,String event,String time,int image){
+        this.email=email;
+        this.event=event;
+        this.time=time;
+        this.image=image;
+    }
+    public CalendarItem(String email,String event,String time){
         this.email=email;
         this.event=event;
         this.time=time;
     }
+
 
     public String getDate_id(){
         return date_id;
@@ -49,4 +55,11 @@ public class CalendarItem {
         this.time=time;
     }
 
+    public int getImage() {
+        return image;
+    }
+
+    public  void setImage(int image1){
+        this.image=image1;
+    }
 }
