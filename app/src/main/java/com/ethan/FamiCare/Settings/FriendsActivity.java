@@ -36,7 +36,6 @@ ActivityFriendsBinding binding;
         String uid=auth.getCurrentUser().getUid();
         binding=ActivityFriendsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

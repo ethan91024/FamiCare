@@ -89,7 +89,7 @@ public class GroupFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.chatrecy.setLayoutManager(layoutManager);
 
-        database.getReference().child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Grouplist").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

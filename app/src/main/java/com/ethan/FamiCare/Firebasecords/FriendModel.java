@@ -5,17 +5,24 @@ public class FriendModel {
     private String username;
     private String userId;
     private String id;
+    private String token;
 
 
     public FriendModel() {
 
     }
 
+    public FriendModel(String profilepic, String username, String id, String token) {
+        this.profilepic = profilepic;
+        this.username = username;
+        this.id = id;
+        this.token = token;
+    }
 
     public FriendModel(String username, String profilepic, String id) {
         this.username = username;
         this.profilepic = profilepic;
-        this.id=id;
+        this.id=id;//該使用者的id
     }
 
     public String getUserId() {
