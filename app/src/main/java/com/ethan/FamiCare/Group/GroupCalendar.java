@@ -23,17 +23,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import com.applandeo.materialcalendarview.CalendarView;
 
-import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
-import com.applandeo.materialcalendarview.utils.SelectedDay;
 import com.ethan.FamiCare.Calendar.CalendarItem;
 import com.ethan.FamiCare.Calendar.calendarAdapter;
 import com.ethan.FamiCare.CalendarDB;
@@ -114,7 +111,6 @@ public class GroupCalendar extends AppCompatActivity {
     Boolean ischooseall=false;
 
 
-    List<EventDay> events = new ArrayList<>();
 
 
     @Override
@@ -176,15 +172,16 @@ public class GroupCalendar extends AppCompatActivity {
         rvAdapter=new calendarAdapter(arrayList2,GroupCalendar.this);
         recyclerView.setAdapter(rvAdapter);
 
+
         //監聽日期改變
-        calendar.setOnDayClickListener(new OnDayClickListener() {
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onDayClick(@NonNull EventDay eventDay) {
-                Calendar selectDate=eventDay.getCalendar();
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 //格式化所選日期
-                String fomatteddate=getSelected_date(selectDate);
+                String fomatteddate=getSelected_date(year,month,dayOfMonth);
                 caldate.setText(fomatteddate);
-                selected_date=changeDateToNum(selectDate);//換成數字
+                selected_date=changeDateToNum(year,month,dayOfMonth);//換成數字
+                System.out.println(selected_date);
 
                 arrayList2.clear();
                 myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
@@ -211,7 +208,6 @@ public class GroupCalendar extends AppCompatActivity {
                             rvAdapter=new calendarAdapter(arrayList2,GroupCalendar.this);
                             recyclerView.setAdapter(rvAdapter);
                         }
-
                     }
 
                     @Override
@@ -435,17 +431,16 @@ public class GroupCalendar extends AppCompatActivity {
 
 
 
-    public String getSelected_date(Calendar selectDate) {
+    public String getSelected_date(int year,int month,int day) {
+        Calendar selectDate = Calendar.getInstance();
+        selectDate.set(year, month, day);
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String fomatteddate= dateFormat.format(selectDate.getTime());
         return fomatteddate;
     }
 
-    public int changeDateToNum(Calendar selectDate){
-        int year=selectDate.get(Calendar.YEAR);
-        int month=selectDate.get(Calendar.MONTH)+1;
-        int day=selectDate.get(Calendar.DAY_OF_MONTH);
-        int dateNum=year*10000+month*100+day;
+    public int changeDateToNum(int year,int month,int day){
+        int dateNum=year*10000+(month+1)*100+day;
         return dateNum;
     }
 
@@ -531,43 +526,28 @@ public class GroupCalendar extends AppCompatActivity {
             }
         });
 
-        noti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String addevent_text = addevent.getText().toString();
-                String time4 = addtime.getText().toString();
-                String date = caldate.getText().toString();//顯示日期 ex:2023-10-31
-                String[] date1 = date.split("-");
-                int month = Integer.parseInt(date1[1]) - 1;
 
-                getDialog(addevent_text, time4, month, date1);
-            }
-        });
+            noti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String addevent_text = addevent.getText().toString();
+                    String time4 = addtime.getText().toString();
 
-    }
+                    if (addevent_text.isEmpty() || time4.equals("時  間")) {
+                        Toast.makeText(GroupCalendar.this, "請填寫事件和時間", Toast.LENGTH_SHORT).show();
+                        //finish();
+                        return;// 提前結束 onClick 方法
+                    }
+                        String date = caldate.getText().toString();//顯示日期 ex:2023-10-31
+                        String[] date1 = date.split("-");
+                        int month = Integer.parseInt(date1[1]) - 1;
 
-    public void isEventDayaddIcon(){
-        Calendar eventDate=Calendar.getInstance();
-        myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
-                    CalendarDB calendarDB = dataSnapshot.getValue(CalendarDB.class);
-                    int year = Integer.parseInt(calendarDB.getId().toString().substring(0, 4));//ex:2023
-                    int month = Integer.parseInt(calendarDB.getId().toString().substring(4, 6)) - 1;//ex:10
-                    int day = Integer.parseInt(calendarDB.getId().toString().substring(6, 8));//ex:31
-                    eventDate.set(year, month, day);
-                    events.add(new EventDay(eventDate, R.drawable.baseline_circle_24));
+                        getDialog(addevent_text, time4, month, date1);
 
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
 /*
     private void setAdapter() {
