@@ -74,11 +74,11 @@ public class Addfriend extends AppCompatActivity {
                                 // 在這裡處理找到的使用者 UID
                                 String id = userSnapshot.child("id").getValue(String.class);
                                 String username = userSnapshot.child("username").getValue(String.class);
-                                String profileImage = userSnapshot.child("profile_image").getValue(String.class);
+                                String profileImage = userSnapshot.child("profilepic").getValue(String.class);
                                 String token=userSnapshot.child("token").getValue(String.class);
                                 if (id.equals(userid)) {
 
-                                    // 在這裡將 uid、username 和 profileImage 加入到 "Friend" 資料庫中
+                                    // 在這裡將 uid、username、token 和 profileImage 加入到 "Friend" 資料庫中
                                     FriendModel friend = new FriendModel( profileImage,username, id,token);
                                      database.getReference().child("Friend").child(uid).child(fuid).setValue(friend)
                                              .addOnSuccessListener(new OnSuccessListener<Void>() {

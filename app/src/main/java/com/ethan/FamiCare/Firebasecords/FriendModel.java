@@ -25,6 +25,14 @@ public class FriendModel {
         this.id=id;//該使用者的id
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getUserId() {
         return userId;
     }
