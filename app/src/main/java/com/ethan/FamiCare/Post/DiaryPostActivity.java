@@ -1,25 +1,21 @@
 package com.ethan.FamiCare.Post;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import com.ethan.FamiCare.R;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.Diary.Diary;
 import com.ethan.FamiCare.Diary.DiaryDB;
 import com.ethan.FamiCare.Diary.DiaryDoa;
+import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -155,7 +151,7 @@ public class DiaryPostActivity extends AppCompatActivity {
         int cnt = 0;
 
         for (Diary diary : diaries) {
-            if (diary.getIsSaved() != true) {
+            if (diary.getIsSaved() != true && diary.getPhotoPath() != null) {
 
                 String photoPath = diary.getPhotoPath();
                 Uri uri = Uri.fromFile(new File(photoPath));
