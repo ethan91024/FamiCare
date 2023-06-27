@@ -31,7 +31,7 @@ public class Addfriend extends AppCompatActivity {
     FirebaseDatabase database;
     Button add,cancel;
     TextView editText,inputid;
-    String username,userid,oid;//在程式打的好友的名字與ID
+    String username,userid;//在程式打的好友的名字與ID
     String uid;//使用者的uid
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +74,12 @@ public class Addfriend extends AppCompatActivity {
                                 // 在這裡處理找到的使用者 UID
                                 String id = userSnapshot.child("id").getValue(String.class);
                                 String username = userSnapshot.child("username").getValue(String.class);
-                                String profileImage = userSnapshot.child("profile_image").getValue(String.class);
+                                String profileImage = userSnapshot.child("profilepic").getValue(String.class);
+                                String token=userSnapshot.child("token").getValue(String.class);
                                 if (id.equals(userid)) {
 
-                                    // 在這裡將 uid、username 和 profileImage 加入到 "Friend" 資料庫中
-                                    FriendModel friend = new FriendModel(username, profileImage, id);
+                                    // 在這裡將 uid、username、token 和 profileImage 加入到 "Friend" 資料庫中
+                                    FriendModel friend = new FriendModel( profileImage,username, id,token);
                                      database.getReference().child("Friend").child(uid).child(fuid).setValue(friend)
                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                  @Override
@@ -97,6 +98,22 @@ public class Addfriend extends AppCompatActivity {
 
 
                                 }
+                                FriendModel friend = new FriendModel( profileImage,username, id,token);
+                                database.getReference().child("Grouplist").child(uid).child(fuid).setValue(friend)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // 節點寫入成功
+                                                Toast.makeText(Addfriend.this, "已將好友加到聊天列表", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // 節點寫入失敗
+
+                                            }
+                                        });
                             }
                         }
 
@@ -106,6 +123,7 @@ public class Addfriend extends AppCompatActivity {
                             Toast.makeText(Addfriend.this, "Sing up Failed!", Toast.LENGTH_LONG).show();
                         }
                     });
+
                     Intent intent = new Intent(Addfriend.this, FriendsActivity.class);
                     startActivity(intent);
                 }

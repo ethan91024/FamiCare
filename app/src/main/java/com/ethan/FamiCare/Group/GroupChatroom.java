@@ -54,7 +54,6 @@ public class GroupChatroom extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
         final String senderId = auth.getUid();
         String recieveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");

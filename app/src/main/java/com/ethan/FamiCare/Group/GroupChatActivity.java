@@ -36,8 +36,6 @@ public class GroupChatActivity extends AppCompatActivity {
         binding=ActivityChatroomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();
-
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

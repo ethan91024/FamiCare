@@ -5,17 +5,33 @@ public class FriendModel {
     private String username;
     private String userId;
     private String id;
+    private String token;
 
 
     public FriendModel() {
 
     }
 
+    public FriendModel(String profilepic, String username, String id, String token) {
+        this.profilepic = profilepic;
+        this.username = username;
+        this.id = id;
+        this.token = token;
+    }
 
-    public FriendModel(String username, String profilepic, String id) {
+    public FriendModel(String username, String profilepic) {
         this.username = username;
         this.profilepic = profilepic;
-        this.id=id;
+    }
+    public FriendModel(String username) {
+        this.username = username;
+    }
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUserId() {

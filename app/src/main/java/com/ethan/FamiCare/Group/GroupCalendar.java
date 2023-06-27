@@ -59,6 +59,7 @@ import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+
 public class GroupCalendar extends AppCompatActivity {
 
     private int selected_date;
