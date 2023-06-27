@@ -29,6 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
         <activity
             android:name=".Post.DiaryCommentActivity"
             android:exported="false" />
@@ -76,6 +77,9 @@
             android:exported="false" />
         <activity
             android:name=".Group.GroupChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Group.AddNewGroup"
             android:exported="false" />
         <activity
             android:name=".Breathe"

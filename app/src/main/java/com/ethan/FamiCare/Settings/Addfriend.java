@@ -31,7 +31,7 @@ public class Addfriend extends AppCompatActivity {
     FirebaseDatabase database;
     Button add,cancel;
     TextView editText,inputid;
-    String username,userid,oid;//在程式打的好友的名字與ID
+    String username,userid;//在程式打的好友的名字與ID
     String uid;//使用者的uid
     @Override
     protected void onCreate(Bundle savedInstanceState) {

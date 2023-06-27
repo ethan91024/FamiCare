@@ -92,7 +92,6 @@
                 android:layout_marginRight="17dp"
                 android:layout_toLeftOf="@id/deleteGroup"
                 android:background="@drawable/background_red"
-                android:onClick="add"
                 android:text="開啟群組"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -103,8 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/background_red"
-                android:onClick="del"
-                android:text="刪除群組"
+                android:text="新增群組"
                 android:textColor="@color/white"
                 android:textStyle="bold"
 

@@ -19,12 +19,13 @@ public class FriendModel {
         this.token = token;
     }
 
-    public FriendModel(String username, String profilepic, String id) {
+    public FriendModel(String username, String profilepic) {
         this.username = username;
         this.profilepic = profilepic;
-        this.id=id;//該使用者的id
     }
-
+    public FriendModel(String username) {
+        this.username = username;
+    }
     public String getToken() {
         return token;
     }

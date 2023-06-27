@@ -18,7 +18,6 @@ import com.ethan.FamiCare.FCMaddgroup;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.Firebasecords.UsersAdapter;
 import com.ethan.FamiCare.R;
-import com.ethan.FamiCare.Settings.Signup;
 import com.ethan.FamiCare.databinding.FragmentGroupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -147,7 +146,13 @@ public class GroupFragment extends Fragment {
                 });
 
         getActivity().setTitle("群組");
-
+binding.deleteGroup.findViewById(R.id.deleteGroup).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), AddNewGroup.class);
+        startActivity(intent);
+    }
+});
 
         return binding.getRoot();
     }
