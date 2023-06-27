@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class Sport4 extends AppCompatActivity {
 
-    private static final long Start_time=60000;
+    private static final long Start_time=120000;
 
     private ImageSwitcher imageSwitcher;
     int[] imgs={R.drawable.sport4_3,R.drawable.sport4_1};
