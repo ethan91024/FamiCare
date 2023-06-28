@@ -1,51 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/famicare_yellow_img"
     android:orientation="vertical"
-    tools:context=".Settings.SettingsFragment">
-
-
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/background_brown"
-        android:text="登入"
-        android:textSize="28sp" />
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/login"
-        android:background="@drawable/background_brown"
-        android:text="註冊帳號"
-        android:textSize="28sp" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/background_brown"
-        android:text="登出"
-        android:textSize="28sp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="671dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="60dp">
+    tools:context=".Settings.SettingsFragment"
+    android:background="@drawable/bkg1">
+    <!--   android:background="@drawable/famicare_yellow_img"-->
 
 
         <ScrollView
@@ -60,17 +23,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                android:orientation="vertical"
+               >
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="#C1A988">
+                    android:layout_height="60dp"
+                    android:background="@drawable/toolbg2">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="設定"
@@ -79,55 +42,212 @@
                         android:textStyle="bold">
 
                     </TextView>
+
                 </androidx.appcompat.widget.Toolbar>
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                    android:layout_height="20dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:orientation="vertical"
+                android:background="@drawable/background_line_deppbrown"
+                android:layout_marginHorizontal="3dp"
+                >
 
                 <TextView
-                    android:id="@+id/accountBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/background_brown"
-                    android:clickable="true"
-                    android:drawableLeft="@drawable/baseline_description_24"
-                    android:gravity="center|left"
-                    android:text="  我的帳號"
-                    android:textSize="25sp" />
+                    android:layout_height="45dp"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:text=" 個人設定"
+                    android:textColor="#F4F1EA"
+                    android:background="@drawable/background_deepbrown_topcorn"
+                    />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp" />
 
-                <TextView
-                    android:id="@+id/friendsBtn"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/background_brown"
-                    android:clickable="true"
-                    android:drawableLeft="@drawable/baseline_people_alt_24"
-                    android:gravity="center|left"
-                    android:text="  好友"
-                    android:textSize="25sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    >
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp" />
 
-                <TextView
-                    android:id="@+id/notificationBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/background_brown"
-                    android:clickable="true"
-                    android:drawableLeft="@drawable/baseline_notifications_24"
-                    android:gravity="center|left"
-                    android:text="  提醒"
-                    android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/accountBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/background_brown"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/baseline_description_24"
+                        android:gravity="center|left"
+                        android:text="  我的帳號"
+                        android:textSize="25sp"
+                    />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/friendsBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/background_brown"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/baseline_people_alt_24"
+                        android:gravity="center|left"
+                        android:text="  好友"
+                        android:textSize="25sp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp" />
+
+                    <TextView
+                        android:id="@+id/notificationBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/background_brown"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/baseline_notifications_24"
+                        android:gravity="center|left"
+                        android:text="  提醒"
+                        android:textSize="25sp" />
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:orientation="vertical"
+                        android:id="@+id/setting_bkg"
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:background="@drawable/set_bkg2"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_line_deppbrown"
+                    android:layout_marginHorizontal="3dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:text=" 帳號設定"
+                        android:textColor="#F4F1EA"
+                        android:background="@drawable/background_deepbrown_topcorn"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="50"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            >
+
+
+                            <Button
+                                android:id="@+id/login"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:background="@drawable/background_brown"
+                                android:gravity="center|left"
+                                android:text=" 登入"
+                                android:textSize="25sp"
+
+                             />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="7dp" />
+
+                            <Button
+                                android:id="@+id/signup"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_toRightOf="@id/login"
+                                android:background="@drawable/background_brown"
+                                android:text=" 註冊帳號"
+                                android:textSize="25sp"
+                                android:gravity="center|left"/>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="7dp" />
+
+                            <Button
+                                android:id="@+id/logout"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:background="@drawable/background_brown"
+                                android:text=" 登出"
+                                android:textSize="25sp"
+                                android:gravity="center|left"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="50"
+                            android:orientation="vertical"
+                            android:id="@+id/setting_bkg2"
+                            >
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="232dp"
+                                android:background="@drawable/set_bkg"/>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/brown"/>
+            </LinearLayout>
+        </ScrollView>
+
+
+</LinearLayout>

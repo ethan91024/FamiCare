@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MoodSymptomFragment">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp"/>
+
 
     <LinearLayout
         android:id="@+id/Mood_Symptom_layout"
@@ -613,7 +617,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="7dp" />
+                android:layout_height="10dp" />
 
             <Button
                 android:id="@+id/back_to_mood"

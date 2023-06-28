@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -143,6 +142,17 @@ public class SettingsFragment extends Fragment {
 //            signup.setVisibility(View.INVISIBLE);
 //        }
 
+
+        //增加登入登出圖案
+        Drawable drawable = getResources().getDrawable(R.drawable.login_setting);
+        drawable.setBounds(0, 0, 70, 60);
+        login.setCompoundDrawables(drawable, null, null, null);
+        Drawable drawable2 = getResources().getDrawable(R.drawable.logout_setting);
+        drawable2.setBounds(0, 0, 70, 60);
+        logout.setCompoundDrawables(drawable2, null, null, null);
+        Drawable drawable3 = getResources().getDrawable(R.drawable.singup_setting);
+        drawable3.setBounds(0, 0, 70, 60);
+        signup.setCompoundDrawables(drawable3, null, null, null);
 
         return view;
     }

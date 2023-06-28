@@ -9,8 +9,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:background="#C1A988"
+        android:layout_height="60dp"
+        android:background="@drawable/toolbg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="步數詳細圖"
             android:textColor="@color/white"
             android:textSize="30dp"
@@ -195,7 +195,7 @@
         android:id="@+id/averageTF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="58dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
@@ -207,7 +207,7 @@
         android:layout_width="wrap_content"
         android:layout_height="19dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="58dp"
         android:text="xxxx"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

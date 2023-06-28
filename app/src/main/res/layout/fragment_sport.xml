@@ -13,8 +13,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#C1A988">
+        android:layout_height="60dp"
+        android:background="@drawable/toolbg">
 
         <TextView
             android:layout_width="match_parent"
