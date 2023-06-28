@@ -7,6 +7,44 @@
     android:orientation="vertical"
     tools:context=".Diary.DiaryContentActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="?attr/actionBarTheme">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="日記"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/save_diary"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/diary_content_savebt"
+                android:backgroundTint="@color/white" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/Diary_Content_layout"
         android:layout_width="wrap_content"
@@ -19,95 +57,31 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <!--命名標題  比例2.5-->
-        <LinearLayout
+        <!--編輯標題  比例1  id="@+id/Title"-->
+        <EditText
+            android:id="@+id/ContentTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:background="#ECE5D7"
+            android:hint="日記標題"
+            android:textSize="25dp" />
 
-            <!--日記標題與按鈕  比例4-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:orientation="horizontal">
+        <!--一條空格-->
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp" />
 
-                <!--日記  比例8-->
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8"
-                    android:gravity="center|left"
-                    android:text="日記"
-                    android:textColor="#000000"
-                    android:textSize="35dp"
-                    android:textStyle="bold" />
-
-                <!--儲存日記按鈕  比例2  id="@+id/save_diary"-->
-                <Button
-                    android:id="@+id/save_diary"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@drawable/background_orange"
-                    android:text="儲存"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <!--一條空格-->
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="10dp" />
-
-            <!--編輯標題  比例4  id="@+id/Title"-->
-            <EditText
-                android:id="@+id/ContentTitle"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:background="#ECE5D7"
-                android:hint="日記標題"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-
-        <!--編輯日記內容  比例7.5-->
-        <LinearLayout
+        <!--編輯日記內容  比例9  id="@+id/Content"-->
+        <MultiAutoCompleteTextView
+            android:id="@+id/ContentContent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7.5"
-            android:orientation="vertical">
+            android:layout_weight="9"
+            android:background="#ECE5D7"
+            android:gravity="top"
+            android:hint="寫些東西吧" />
 
-            <!--日記內容  比例1-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"
-                android:background="#b85135"
-                android:gravity="left|center"
-                android:textSize="25sp" />
-
-            <!--一條空格-->
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="3dp" />
-
-
-            <!--編輯日記內容  比例9  id="@+id/Content"-->
-            <MultiAutoCompleteTextView
-                android:id="@+id/ContentContent"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="9"
-                android:background="#ECE5D7"
-                android:gravity="top"
-                android:hint="寫些東西吧" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
