@@ -12,7 +12,7 @@ package com.ethan.FamiCare.Firebasecords;
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
 
-        import com.ethan.FamiCare.Group.GroupChatroom;
+        import com.ethan.FamiCare.Settings.Friends_interface;
         import com.ethan.FamiCare.R;
         import com.squareup.picasso.Picasso;
 
@@ -43,18 +43,16 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.viewHolder
 
         Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.avatar_b).into(holder.image);
         holder.username.setText(users.getUsername());
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, GroupChatroom.class);
-                intent.putExtra("userId",users.getUserId());
-                intent.putExtra("profilePic",users.getProfilepic());
-                intent.putExtra("userName",users.getUsername());
+                Intent intent = new Intent(context, Friends_interface.class);
+                intent.putExtra("userId", users.getId());
+                intent.putExtra("profilePic", users.getProfilepic());
+                intent.putExtra("userName", users.getUsername());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
-            }
+                            }
         });
     }
 
