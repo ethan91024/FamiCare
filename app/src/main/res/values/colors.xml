@@ -14,6 +14,8 @@
     <color name="red">#b85135</color>
     <color name="brown">#e8e0cf</color>
     <color name="orange">#E6A842</color>
-    <color name="deepbrown">#B19C80</color>
+    <color name="deepbrown">#A6947B</color>
+    <color name="brownred">#b85135</color>
+    <color name="bkg_color">#F4F1EA</color>
 
 </resources>

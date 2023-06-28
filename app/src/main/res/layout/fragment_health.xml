@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Health.HealthFragment">
+    tools:context=".Health.HealthFragment"
+    android:background="@drawable/bkg1">
 
     <!--資料列表  比例9-->
     <ScrollView
@@ -20,14 +21,14 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#C1A988">
+                android:layout_height="60dp"
+                android:background="@drawable/toolbg2">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="健康"
                     android:textColor="@color/white"
                     android:textSize="30dp"
@@ -36,107 +37,240 @@
                 </TextView>
             </androidx.appcompat.widget.Toolbar>
 
-
-            <TextView
-                android:id="@+id/stepsButton"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_directions_walk_24"
-                android:gravity="center|left"
-                android:text="  步數"
-                android:textSize="25sp" />
+                android:layout_height="15dp"
+                android:background="@color/brown"/>
 
-            <TextView
-                android:id="@+id/heartrateButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_monitor_heart_24"
-                android:gravity="center|left"
-                android:text="  心率"
-                android:textSize="25sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/background_line_deppbrown"
+                android:layout_marginHorizontal="5dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" 活動"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="#F4F1EA"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_deepbrown_topcorn"/>
 
-            <TextView
-                android:id="@+id/speedButton"
+                <TextView
+                    android:id="@+id/stepsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_directions_walk_24"
+                    android:gravity="center|left"
+                    android:text="  步數"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown" />
+
+                <TextView
+                    android:id="@+id/heartrateButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_monitor_heart_24"
+                    android:gravity="center|left"
+                    android:text="  心率"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <TextView
+                    android:id="@+id/speedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_speed_24"
+                    android:gravity="center|left"
+                    android:text="  速度"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <TextView
+                    android:id="@+id/caloriesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_local_fire_department_24"
+                    android:gravity="center|left"
+                    android:text="  卡路里"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/brown"/>
+
+
+            </LinearLayout>
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_speed_24"
-                android:gravity="center|left"
-                android:text="  速度"
-                android:textSize="25sp" />
+                android:layout_height="30dp"
+                android:background="@color/brown"/>
 
-            <TextView
-                android:id="@+id/hydrationButton"
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_local_drink_24"
-                android:gravity="center|left"
-                android:text="  喝水量"
-                android:textSize="25sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/background_line_deppbrown"
+                android:layout_marginHorizontal="5dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" 身體狀況"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="#F4F1EA"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_deepbrown_topcorn"/>
 
-            <TextView
-                android:id="@+id/caloriesButton"
+
+                <TextView
+                    android:id="@+id/hydrationButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_local_drink_24"
+                    android:gravity="center|left"
+                    android:text="  喝水量"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <TextView
+                    android:id="@+id/respiratoryrateButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_co2_24"
+                    android:gravity="center|left"
+                    android:text="  呼吸(無平均)"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <TextView
+                    android:id="@+id/oxygensaturationButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_bloodtype_24"
+                    android:gravity="center|left"
+                    android:text="  血氧(無平均)"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <TextView
+                    android:id="@+id/bloodglucoseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_coffee_maker_24"
+                    android:gravity="center|left"
+                    android:text="  血糖(待做)"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <TextView
+                    android:id="@+id/bloodpressureButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_warning_24"
+                    android:gravity="center|left"
+                    android:text="  血壓(待做)"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/deepbrown"
+                    android:layout_marginHorizontal="6dp"/>
+
+
+                <TextView
+                    android:id="@+id/sleepstageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
+                    android:gravity="center|left"
+                    android:text="  睡眠(待做)"
+                    android:textSize="25sp"
+                    android:layout_marginHorizontal="7dp"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/brown"/>
+
+
+            </LinearLayout>
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_local_fire_department_24"
-                android:gravity="center|left"
-                android:text="  卡路里"
-                android:textSize="25sp" />
-
-
-            <TextView
-                android:id="@+id/respiratoryrateButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_co2_24"
-                android:gravity="center|left"
-                android:text="  呼吸(無平均)"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/oxygensaturationButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_bloodtype_24"
-                android:gravity="center|left"
-                android:text="  血氧(無平均)"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/bloodglucoseButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_coffee_maker_24"
-                android:gravity="center|left"
-                android:text="  血糖(待做)"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/bloodpressureButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_warning_24"
-                android:gravity="center|left"
-                android:text="  血壓(待做)"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/sleepstageButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
-                android:gravity="center|left"
-                android:text="  睡眠(待做)"
-                android:textSize="25sp" />
+                android:layout_height="10dp"
+                android:background="@color/brown"/>
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

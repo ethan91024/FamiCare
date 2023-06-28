@@ -4,7 +4,7 @@
 
   <!-- 邊框顏色 -->
     <solid android:color="#b85135" />
-    <corners android:radius="10dp" /> <!-- 圓角半徑 -->
+    <corners android:radius="20dp" /> <!-- 圓角半徑 -->
 
 
 </shape>

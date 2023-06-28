@@ -378,8 +378,8 @@ public class MoodFragment extends Fragment {
                 LineDataSet set1;
                 set1 = new LineDataSet(valuesY1, "heartrate");
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
-                set1.setColor(context.getResources().getColor(R.color.red));//線的顏
-                set1.setCircleColor(context.getResources().getColor(R.color.red));//圓點顏色
+                set1.setColor(context.getResources().getColor(R.color.brownred));//線的顏
+                set1.setCircleColor(context.getResources().getColor(R.color.brownred));//圓點顏色
                 set1.setCircleRadius(4);//原點大小
                 set1.setDrawCircleHole(false);//圓點為實心(預設空心)
                 set1.setLineWidth(2f);//線寬
@@ -388,7 +388,7 @@ public class MoodFragment extends Fragment {
                 dataSets.add(set1);
             } else {
                 lineChart.setNoDataText("暫時沒有數據");
-                lineChart.setNoDataTextColor(R.color.red);//文字顏色
+                lineChart.setNoDataTextColor(R.color.brownred);//文字顏色
             }
 
             if (valuesY2.size() > 0) {
