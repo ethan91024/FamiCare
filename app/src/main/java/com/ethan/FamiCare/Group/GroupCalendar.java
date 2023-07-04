@@ -110,6 +110,7 @@ public class GroupCalendar extends AppCompatActivity {
 
     //提醒有沒有選all
     Boolean ischooseall=false;
+    String notitowho="無";
 
 
 
@@ -192,12 +193,24 @@ public class GroupCalendar extends AppCompatActivity {
                         arrayList2.clear();
                         for (DataSnapshot ds:snapshot.getChildren()){
                             CalendarDB calendarDB=ds.getValue(CalendarDB.class);
-                            CalendarItem calendarItem;
+                            CalendarItem calendarItem = null;
                             if(calendarDB.getId().equals(String.valueOf(selected_date))){
-                                if(calendarDB.getNotiischoose()==false ){
+                                if(calendarDB.getNotiischoose()==false && calendarDB.getNotitowho()=="null"){
                                     calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent(),calendarDB.getTime());
-                                }else {
-                                    calendarItem = new CalendarItem(calendarDB.getUser(), calendarDB.getEvent(), calendarDB.getTime(), R.drawable.baseline_circle_24);
+                                }else if(calendarDB.getNotiischoose()==true){
+                                    calendarItem = new CalendarItem(calendarDB.getUser(), calendarDB.getEvent(), calendarDB.getTime(), "全部",R.drawable.baseline_circle_24);
+                                }else{
+                                    String[] ss=calendarDB.getNotitowho().split(",");
+                                    if(ss.length>=4){
+                                        calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent(),calendarDB.getTime(),ss[0]+"\n"+ss[1]+"\n"+ss[2],R.drawable.round_more_horiz_24);
+                                    }else{
+                                        StringBuilder sb=new StringBuilder();
+                                        for (int i=0;i<ss.length;i++){
+                                            sb.append(ss[i]+"\n");
+                                        }
+                                        String who=sb.toString();
+                                        calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent(),calendarDB.getTime(),who);
+                                    }
                                 }
                                 arrayList2.add(calendarItem);
                                 rvAdapter.notifyDataSetChanged();
@@ -340,8 +353,8 @@ public class GroupCalendar extends AppCompatActivity {
         alertDialog.setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //StringBuilder sb = new StringBuilder();
-                //String delimiter = ",";
+                StringBuilder sb = new StringBuilder();//可變字串
+                String delimiter = ",";
                 ArrayList<String> object=new ArrayList<>();
                 if(checkitems[0]){
                     object.add(tokens[0]);
@@ -352,9 +365,12 @@ public class GroupCalendar extends AppCompatActivity {
                     for (int j = 1; j < checkitems.length; j++) {
                         if (checkitems[j]) {
                             object.add(tokens[j]);
+                            sb.append(users[j]+delimiter);
                         }
                     }
+                    notitowho=sb.toString();
                 }
+                System.out.println(notitowho);
                 System.out.println(object.toString());
                 setAlarm(addevent_text,time4,month,date1,object);
                 dialog.dismiss();
@@ -516,9 +532,10 @@ public class GroupCalendar extends AppCompatActivity {
                     String email = user.getEmail();
 
                     //後面改
-                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token,ischooseall);
+                    CalendarDB calevent = new CalendarDB(id_date, event, time3, email, token,ischooseall,notitowho);
 
                     ischooseall=false;
+                    notitowho="無";
                     myRef.child("Calendar").push().setValue(calevent);
                     Toast.makeText(GroupCalendar.this, "儲存成功", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();

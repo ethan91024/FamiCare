@@ -42,6 +42,7 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
     viewHolder.event.setText(calendarItem.getEvent());
     viewHolder.time.setText(calendarItem.getTime());
     viewHolder.imageView.setImageResource(calendarItem.getImage());
+    viewHolder.who.setText(calendarItem.getWho_recevice());
 
     }
 
@@ -56,7 +57,7 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView email,event,time;
+        public TextView email,event,time,who;
         public ImageView imageView;
         //public ImageView image;
 
@@ -68,6 +69,7 @@ public class calendarAdapter extends RecyclerView.Adapter<calendarAdapter.ViewHo
             event=itemView.findViewById(R.id.item_event);
             time=itemView.findViewById(R.id.item_time);
             imageView=itemView.findViewById(R.id.item_image);
+            who=itemView.findViewById(R.id.who_receive);
 
 
         }
