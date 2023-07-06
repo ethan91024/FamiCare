@@ -10,14 +10,14 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#C1A988">
+        android:layout_height="60dp"
+        android:background="@drawable/toolbg">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="呼吸緩解"
             android:textColor="@color/white"
             android:textSize="30dp"
@@ -35,7 +35,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="700dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+     >
 
 
         <Space
@@ -57,17 +58,27 @@
 
             <VideoView
                 android:id="@+id/breath_videoview"
-                android:layout_width="match_parent"
+                android:layout_width="390dp"
                 android:layout_height="190dp"
                 android:layout_gravity="center"></VideoView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="190dp"
             android:background="@drawable/background_brown_rightangle"
             android:gravity="center"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background_line_deppbrown"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="4dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,17 +88,17 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="35"
+                    android:layout_weight="30"
                     android:gravity="center"
                     android:text=" 設定時間  :"
                     android:textColor="#000000"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="22dp"></TextView>
 
                 <EditText
                     android:id="@+id/breathe_timer"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="30"
+                    android:layout_weight="20"
                     android:gravity="center"
                     android:text="5"
                     android:textColor="#b85135"
@@ -96,21 +107,27 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="35"
+                    android:layout_weight="30"
                     android:gravity="center"
                     android:text="分鐘"
                     android:textColor="#000000"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="22dp"></TextView>
 
 
             </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:gravity="center"
                 android:text="設定時間請輸入30分鐘以內"
-                android:textSize="20dp"></TextView>
+                android:textSize="15dp"></TextView>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
 
             <LinearLayout
@@ -146,6 +163,7 @@
                     android:textSize="20dp">
 
                 </Button>
+            </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

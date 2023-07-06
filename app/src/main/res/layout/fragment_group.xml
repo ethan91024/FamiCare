@@ -4,19 +4,20 @@
     android:id="@+id/main_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F1EA"
+    android:background="@drawable/bkg1"
     android:orientation="vertical"
-    tools:context=".Group.GroupFragment">
+    tools:context=".Group.GroupFragment"
+    >
     <!--  標題  -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#C1A988">
+        android:layout_height="60dp"
+        android:background="@drawable/toolbg2">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="群組"
@@ -26,97 +27,74 @@
 
         </TextView>
     </androidx.appcompat.widget.Toolbar>
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp">
-
-    </Space>
+        android:layout_height="20dp" />
 
 
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="145dp"
-        android:background="@drawable/background_brown"
+        android:layout_height="80dp"
+        android:background="@drawable/background_lightbrown_corn"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="6dp"
+        >
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:text="生活圈"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/deepbrown"
+            android:layout_marginHorizontal="6dp"/>
+
+        <Button
+            android:id="@+id/ChatGPT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="30"
+            android:background="@drawable/background_red"
+            android:onClick="chatgpt"
+            android:text="ChatGPT"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="6dp"/>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="3dp"
+        android:background="@drawable/background_line_deppbrown"
         android:orientation="vertical">
 
-
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="生活圈"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/ChatGPT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/background_red"
-                android:onClick="chatgpt"
-                android:text="ChatGPT"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="5dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/background_deepbrown_topcorn"
+            android:text="群組列表"
+            android:textColor="@color/bkg_color"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="5dp">
+            android:layout_height="20dp" />
 
-        </Space>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="群組列表"
-                android:textSize="28sp"
-                android:textStyle="bold"
-
-                ></TextView>
-
-
-            <Button
-                android:id="@+id/createGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="17dp"
-                android:layout_toLeftOf="@id/deleteGroup"
-                android:background="@drawable/background_red"
-                android:onClick="add"
-                android:text="開啟群組"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/deleteGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/background_red"
-                android:onClick="del"
-                android:text="刪除群組"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-
-                />
-
-        </RelativeLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp">
-
-        </Space>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,7 +105,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginHorizontal="5dp"
                 android:background="@drawable/background_red"
+                android:drawableRight="@android:drawable/ic_menu_search"
                 android:onClick="search"
                 android:text="搜尋"
                 android:textColor="@color/white"
@@ -137,16 +117,71 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginHorizontal="5dp"
                 android:layout_toLeftOf="@id/search"
                 android:textStyle="bold"></EditText>
 
 
         </RelativeLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+         >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/createGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/deleteGroup"
+                    android:layout_weight="45"
+                    android:background="@drawable/background_red"
+                    android:drawableRight="@android:drawable/ic_menu_myplaces"
+                    android:text="開啟群組"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <Button
+                    android:id="@+id/deleteGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="45"
+                    android:background="@drawable/background_red"
+                    android:text="新增群組"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:drawableRight="@android:drawable/ic_menu_add"/>
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="6dp" />
+        </LinearLayout>
+
+
     </LinearLayout>
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="7dp">
+        android:layout_height="6.5dp">
 
     </Space>
 
@@ -154,6 +189,8 @@
         android:id="@+id/chatrecy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top" />
+        android:layout_below="@id/top"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/background_line_deppbrown" />
 
 </LinearLayout>

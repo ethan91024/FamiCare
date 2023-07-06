@@ -30,6 +30,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".Settings.Friends_interface"
+            android:exported="false" />
+        <activity
             android:name=".Post.DiaryCommentActivity"
             android:exported="false" />
         <activity
@@ -76,6 +79,9 @@
             android:exported="false" />
         <activity
             android:name=".Group.GroupChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Group.AddNewGroup"
             android:exported="false" />
         <activity
             android:name=".Breathe"

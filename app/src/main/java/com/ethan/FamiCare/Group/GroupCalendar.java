@@ -59,6 +59,7 @@ import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+
 public class GroupCalendar extends AppCompatActivity {
 
     private int selected_date;
@@ -239,7 +240,7 @@ public class GroupCalendar extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-              // 在这里执行左滑删除的操作
+                // 在这里执行左滑删除的操作
                 int position = viewHolder.getAdapterPosition();
                 CalendarItem item=arrayList2.get(position);
                 String event=(String)item.getEvent();

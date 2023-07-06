@@ -22,7 +22,7 @@
         android:layout_marginVertical="5dp"
         android:gravity="center"
         android:text="伸展1分鐘，臀部坐到腳跟後，身體俯向前面，雙手向前延展，舒展背部"
-        android:textSize="15dp" />
+        android:textSize="17dp" />
 
 
     <RelativeLayout
@@ -30,35 +30,49 @@
         android:layout_height="wrap_content">
 
 
-        <ImageSwitcher
-            android:id="@+id/sport1_imgswitcher"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:id="@+id/fy">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="10dp">
+                <ImageSwitcher
+                    android:id="@+id/sport1_imgswitcher"
+                    android:layout_width="310dp"
+                    android:layout_height="335dp"
+                    android:layout_gravity="center">
+
+                </ImageSwitcher>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/voice_recognition"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"/>
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:id="@+id/empty"
-            android:layout_below="@+id/sport1_imgswitcher"/>
+            android:layout_below="@+id/fy"/>
 
 
         <TextView
             android:id="@+id/textview_countdown"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_below="@+id/empty"
             android:gravity="center"
             android:textStyle="bold"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="37dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-2dp"
-            android:layout_toRightOf="@+id/sport1_imgswitcher"
-            android:clickable="true"
-            tools:srcCompat="@drawable/voice_recognition" />
 
     </RelativeLayout>
 
@@ -78,16 +92,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:layout_marginHorizontal="7dp"
-            android:text="開始"
-            android:textStyle="bold"/>
+            android:text="開 始"
+            android:textStyle="bold"
+            android:background="@drawable/background_deepbrown"/>
         <Button
             android:id="@+id/stop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:layout_marginHorizontal="7dp"
-            android:text="重置"
-            android:textStyle="bold"/>
+            android:text="重 置"
+            android:textStyle="bold"
+            android:background="@drawable/background_deepbrown"/>
 
     </LinearLayout>
 

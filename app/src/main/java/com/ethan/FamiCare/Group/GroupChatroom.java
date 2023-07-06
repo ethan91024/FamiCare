@@ -4,6 +4,8 @@ package com.ethan.FamiCare.Group;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,10 +36,10 @@ public class GroupChatroom extends AppCompatActivity {
     RecyclerView recyclerView;//1
     final ArrayList<MessageModel> list =new ArrayList<>();
     FragmentGroupChatroomBinding binding;
-    DatabaseReference db;
     FirebaseAuth auth;
-    FirebaseUser user;
     FirebaseDatabase database;
+    ImageView photo,camera;
+    RelativeLayout containerLayout;
 
 
     public GroupChatroom() {
@@ -54,11 +56,14 @@ public class GroupChatroom extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
         final String senderId = auth.getUid();
         String recieveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
+
+        containerLayout = findViewById(R.id.groupchatroom);
+        camera=findViewById(R.id.camera);
+        photo=findViewById(R.id.photo);
 
         binding.username.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);

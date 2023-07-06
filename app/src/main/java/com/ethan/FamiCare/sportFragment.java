@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +72,7 @@ public class sportFragment extends Fragment {
 
     private View mainview;
     private GridView gridView;
+    private CardView card1,card2,card3,card4;
     String[] sportname={"1","2","3","4"};
     int[] images={R.drawable.sport1_1,R.drawable.sport2_1,R.drawable.sport3,R.drawable.sport4_3};
     //private Intent[] sportactivity={new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class),new Intent(getActivity(), Sport1.class)};
@@ -81,12 +84,48 @@ public class sportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview=inflater.inflate(R.layout.fragment_sport, container, false);
-        gridView=mainview.findViewById(R.id.gridview)  ;
+        //gridView=mainview.findViewById(R.id.gridview)  ;
+        card1=mainview.findViewById(R.id.card1);
+        card2=mainview.findViewById(R.id.card2);
+        card3=mainview.findViewById(R.id.card3);
+        card4=mainview.findViewById(R.id.card4);
+       // SportAdapter sportAdapter=new SportAdapter(sportname,images,getContext());
+      //  gridView.setAdapter(sportAdapter);
 
-        SportAdapter sportAdapter=new SportAdapter(sportname,images,getContext());
-        gridView.setAdapter(sportAdapter);
 
+      card1.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getActivity(), Sport1.class);
+              startActivity(intent);
+          }
+      });
 
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Sport2.class);
+                startActivity(intent);
+            }
+        });
+
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Sport3.class);
+                startActivity(intent);
+            }
+        });
+
+        card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Sport4.class);
+                startActivity(intent);
+            }
+        });
+
+        /*
        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,6 +148,8 @@ public class sportFragment extends Fragment {
 
            }
        });
+
+         */
 
 
 

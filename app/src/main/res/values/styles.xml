@@ -5,7 +5,7 @@
         <item name="colorPrimary">#C1A988</item>
         <item name="colorPrimaryDark">#A08C70</item>
         <item name="colorAccent">#b85135</item>
-        <item name="android:windowBackground">#F4F1EA</item>
+        <item name="android:windowBackground">#F4F1EA</item>   <!-- 背景顏色-->
         <item name="titleCentered">true</item>
     </style>
 

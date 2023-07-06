@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/groupchatroom"
     tools:context=".Group.GroupChatroom">
 
 
@@ -20,10 +21,21 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/linear">
-
+<ImageView
+    android:id="@+id/camera"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_weight="0"
+    android:src="@drawable/camera_foreground"/>
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:src="@drawable/photo_foreground"/>
     <EditText
         android:id="@+id/message"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
