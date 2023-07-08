@@ -1,7 +1,5 @@
 package com.ethan.FamiCare.Diary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ethan.FamiCare.R;
 
@@ -169,7 +169,7 @@ public class DiaryContentActivity extends AppCompatActivity {
     public void savePhoto(Bitmap bitmap) {
         // 创建一个照片ID
         String photoId = (date + "") + (title.getText().toString().replace("/", "_")); // "20230101" + "日记标题"
-        Toast.makeText(this, photoId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, photoId, Toast.LENGTH_SHORT).show();
 
         // 将照片保存到本地文件系统中
         File file = new File(getFilesDir(), photoId + ".jpg");
@@ -177,7 +177,7 @@ public class DiaryContentActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
 
         } catch (Exception e) {
-            Toast.makeText(this, "Upload image in local failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "圖片上傳失敗", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
         temp.setPhotoPath(file.getAbsolutePath());

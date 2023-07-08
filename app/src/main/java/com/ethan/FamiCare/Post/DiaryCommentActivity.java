@@ -1,17 +1,15 @@
 package com.ethan.FamiCare.Post;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,7 +89,7 @@ public class DiaryCommentActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DiaryCommentsActivity", "Failed to get comments", error.toException());
+//                Log.e("DiaryCommentsActivity", "Failed to get comments", error.toException());
             }
         });
 
@@ -124,7 +122,7 @@ public class DiaryCommentActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("DiaryCommentsActivity", "Failed to get comments", error.toException());
+//                            Log.e("DiaryCommentsActivity", "Failed to get comments", error.toException());
                         }
                     });
 

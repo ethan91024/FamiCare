@@ -42,7 +42,7 @@
                 android:backgroundTint="@color/white" />
 
         </RelativeLayout>
-        <!--i-->
+
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
