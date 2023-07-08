@@ -12,12 +12,6 @@ public class CalendarItem {
 
     }
 
-    public CalendarItem(String email,String event,String time,int image){
-        this.email=email;
-        this.event=event;
-        this.time=time;
-        this.image=image;
-    }
     public CalendarItem(String email,String event,String time,String who_recevice,int image){
         this.email=email;
         this.event=event;
@@ -35,6 +29,10 @@ public class CalendarItem {
         this.event=event;
         this.time=time;
         this.who_recevice=who_recevice;
+    }
+    public CalendarItem(String email,String event){
+        this.email=email;
+        this.event=event;
     }
 
 

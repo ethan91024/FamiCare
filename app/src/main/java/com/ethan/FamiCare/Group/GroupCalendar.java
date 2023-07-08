@@ -13,7 +13,6 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -53,8 +51,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -81,10 +77,9 @@ public class GroupCalendar extends AppCompatActivity {
     private RecyclerView recyclerView;
     private calendarAdapter rvAdapter;
     private ArrayList<CalendarItem> arrayList2;
-    private ArrayList<HashMap<String, String>> arrayList;
-    private SimpleAdapter adapter;
-    private String[] from = {"date", "event", "time", "email","Image"};//Image暫放
-    private int[] to = {R.id.item_id, R.id.item_event, R.id.item_time, R.id.item_email,R.id.all_image};
+
+    //放開始登入就存在資料庫的事件
+    private ArrayList<CalendarItem> arrayList;
 
     //連firebase資料庫
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://famicare-375914-default-rtdb.firebaseio.com/");
@@ -162,8 +157,6 @@ public class GroupCalendar extends AppCompatActivity {
         drawableL.setBounds(-90, 8, 10, 150);
         cal_fold.setCompoundDrawables(drawableR, null, drawableL, null);
 
-        //isEventDayaddIcon();
-        //calendar.setEvents(events);
 
         //得到所有通知對象
         getAlluser();
@@ -171,8 +164,36 @@ public class GroupCalendar extends AppCompatActivity {
         //RecyclerView
         arrayList2=new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(GroupCalendar.this));
-        rvAdapter=new calendarAdapter(arrayList2,GroupCalendar.this);
+        rvAdapter=new calendarAdapter(arrayList2,GroupCalendar.this);//適配器
         recyclerView.setAdapter(rvAdapter);
+
+        //放開始登入就存在資料庫的事件
+        myRef.child("Calendar").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String previousday=null;
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    CalendarDB calendarDB=dataSnapshot.getValue(CalendarDB.class);
+                    CalendarItem calendarItem;
+                    String day=calendarDB.getId().substring(4,8);
+                    if(!day.equals(previousday)){
+                        calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent(),day);
+                        previousday=day;
+                    }else {
+                        calendarItem=new CalendarItem(calendarDB.getUser(),calendarDB.getEvent());
+                    }
+
+                    arrayList2.add(calendarItem);
+                }
+                rvAdapter.notifyDataSetChanged(); // 刷新適配器
+                }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         //監聽日期改變
@@ -256,8 +277,10 @@ public class GroupCalendar extends AppCompatActivity {
                 // 在这里执行左滑删除的操作
                 int position = viewHolder.getAdapterPosition();
                 CalendarItem item=arrayList2.get(position);
-                String event=(String)item.getEvent();
-                String date=(String) item.getDate_id();
+                String event=item.getEvent();
+                String time=item.getTime();
+                String email=item.getEmail();
+                System.out.println(event+email);
                 arrayList2.remove(position);
                 rvAdapter.notifyDataSetChanged();
                 myRef.child("Calendar").addValueEventListener(new ValueEventListener() {
@@ -265,11 +288,16 @@ public class GroupCalendar extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             CalendarDB calendarDB = ds.getValue(CalendarDB.class);
-                            if (calendarDB.getEvent().equals(event) && calendarDB.getId().equals(date)) {
+                            if (calendarDB.getEvent().equals(event) && calendarDB.getTime().equals(time) && calendarDB.getUser().equals(email)) {
                                 String path = ds.getKey();//第一層
+                                System.out.println(path);
                                 Toast.makeText(GroupCalendar.this, path, Toast.LENGTH_SHORT).show();
                                 myRef.child("Calendar").child(path).removeValue();
-
+                            }else if(calendarDB.getEvent().equals(event) && calendarDB.getUser().equals(email)){
+                                String path = ds.getKey();//第一層
+                                System.out.println(path);
+                                Toast.makeText(GroupCalendar.this, path, Toast.LENGTH_SHORT).show();
+                                myRef.child("Calendar").child(path).removeValue();
                             }
                         }
 
@@ -434,20 +462,6 @@ public class GroupCalendar extends AppCompatActivity {
     }
 
 
-    //如果選all，listview會出現圓圈符號
-    private void addListViewImage(int selected_date,String addevent_text,String time4) {
-        for (int i=0;i<adapter.getCount();i++){
-            HashMap item= (HashMap<String, String>) arrayList.get(i);
-            if(item.get(from[0]).equals(String.valueOf(selected_date)) && item.get(from[1]).equals(addevent_text) && item.get(from[2]).equals(time4)){
-                item.put(from[4], R.drawable.baseline_co2_24);//圖片暫放
-                adapter.notifyDataSetChanged();
-                break;
-            }
-        }
-    }
-
-
-
     public String getSelected_date(int year,int month,int day) {
         Calendar selectDate = Calendar.getInstance();
         selectDate.set(year, month, day);
@@ -521,12 +535,12 @@ public class GroupCalendar extends AppCompatActivity {
                 String id_date = String.valueOf(selected_date);//日期
                 String event = addevent.getText().toString();//事件
 
-                String time1 = time_text;
-                if (event.isEmpty() || time1.isEmpty() || id_date.isEmpty()) {
+                String time1 = time_text;//addevent_text + "\t" + "時間：\t" + hourOfDay + ":" + minute;
+                if (event.isEmpty() || time1==null || id_date.isEmpty()) {
                     Toast.makeText(GroupCalendar.this, "請填寫事件和時間", Toast.LENGTH_SHORT).show();
                     //finish();
                 } else {
-                    String[] time2 = time1.split("\t");
+                    String[] time2 = time1.split("\t");//addevent_text, 時間：,  hourOfDay :minute;
                     String time3 = time2[2];
 
                     String email = user.getEmail();
@@ -550,18 +564,18 @@ public class GroupCalendar extends AppCompatActivity {
                 public void onClick(View v) {
                     String addevent_text = addevent.getText().toString();
                     String time4 = addtime.getText().toString();
-
-                    if (addevent_text.isEmpty() || time4.equals("時  間")) {
+                    System.out.println(time4);
+                    if (addevent_text.isEmpty() || time4.equals("時 間")) {
                         Toast.makeText(GroupCalendar.this, "請填寫事件和時間", Toast.LENGTH_SHORT).show();
                         //finish();
-                        return;// 提前結束 onClick 方法
-                    }
+                        // 提前結束 onClick 方法
+                    }else {
                         String date = caldate.getText().toString();//顯示日期 ex:2023-10-31
                         String[] date1 = date.split("-");
                         int month = Integer.parseInt(date1[1]) - 1;
 
                         getDialog(addevent_text, time4, month, date1);
-
+                    }
                 }
             });
         }

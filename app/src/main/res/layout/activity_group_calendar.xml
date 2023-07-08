@@ -49,13 +49,13 @@
 
             <TextView
                 android:id="@+id/cal"
-                android:layout_width="181dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_width="139dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Date"
+                android:text="日 期"
                 android:textColor="#C1A988"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,15 +64,14 @@
 
             <Button
                 android:id="@+id/savecal"
-                android:layout_width="139dp"
+                android:layout_width="197dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/cal_savebtn"
                 android:drawableLeft="@drawable/baseline_add_24"
                 android:fontFamily="@font/inter_bold"
-                android:text="New Event"
+                android:text="新 增 事 件"
                 android:textColor="#C1A988" />
 
         </LinearLayout>
