@@ -9,20 +9,21 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/toolbg"
+        android:layout_height="43dp"
+        android:background="#C1A988"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:text="步數詳細圖"
             android:textColor="@color/white"
             android:textSize="30dp"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="16dp">
 
         </TextView>
     </androidx.appcompat.widget.Toolbar>
@@ -54,8 +55,8 @@
         android:id="@+id/dayBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/background_brown"
         android:text="天"
         android:textColor="@color/deepbrown"
@@ -139,11 +140,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
 
+
     <Button
         android:id="@+id/monthBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/background_brown"
         android:text="月"
@@ -157,20 +159,16 @@
         android:id="@+id/weekBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/background_brown"
         android:text="週"
         android:textColor="@color/deepbrown"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/monthBtn"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toEndOf="@+id/dayBtn"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -195,8 +193,9 @@
         android:id="@+id/averageTF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="52dp"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toEndOf="@+id/avgTV"
@@ -205,10 +204,13 @@
     <TextView
         android:id="@+id/avgTV"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="17dp"
         android:text="xxxx"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/dayBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
