@@ -740,17 +740,15 @@ class HealthStepsActivity : AppCompatActivity() {
             xAxis.labelCount = numXAxisLabels
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    val dayIndex = value.toInt()
-                    val label: String
-                    when (dayIndex) {
-                        0 -> label = "一"
-                        1 -> label = "二"
-                        2 -> label = "三"
-                        3 -> label = "四"
-                        4 -> label = "五"
-                        5 -> label = "六"
-                        6 -> label = "日"
-                        else -> label = ""
+                    val label: String = when (value.toInt()) {
+                        0 -> "一"
+                        1 -> "二"
+                        2 -> "三"
+                        3 -> "四"
+                        4 -> "五"
+                        5 -> "六"
+                        6 -> "日"
+                        else -> ""
                     }
                     return label
                 }

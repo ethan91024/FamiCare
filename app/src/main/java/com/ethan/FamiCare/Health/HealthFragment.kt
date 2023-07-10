@@ -32,9 +32,6 @@ class HealthFragment : Fragment() {
         view.findViewById<TextView>(R.id.stepsButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthStepsActivity::class.java))
         }
-        view.findViewById<TextView>(R.id.hydrationButton).setOnClickListener {
-            startActivity(Intent(requireContext(), HealthHydrationActivity::class.java))
-        }
         view.findViewById<TextView>(R.id.caloriesButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthCaloriesActivity::class.java))
         }
@@ -47,17 +44,11 @@ class HealthFragment : Fragment() {
         view.findViewById<TextView>(R.id.heartrateButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthHeartRateActivity::class.java))
         }
-        view.findViewById<TextView>(R.id.bloodpressureButton).setOnClickListener {
-            startActivity(Intent(requireContext(), HealthBloodPressureActivity::class.java))
-        }
         view.findViewById<TextView>(R.id.sleepstageButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthSleepActivity::class.java))
         }
         view.findViewById<TextView>(R.id.respiratoryrateButton).setOnClickListener {
             startActivity(Intent(requireContext(), HealthRespiratoryRateActivity::class.java))
-        }
-        view.findViewById<TextView>(R.id.bloodglucoseButton).setOnClickListener {
-            startActivity(Intent(requireContext(), HealthBloodGlucoseActivity::class.java))
         }
 
 

@@ -5,9 +5,6 @@
     <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
     <uses-permission android:name="android.permission.health.READ_STEPS" />
     <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED" />
-    <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE" />
-    <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
-    <uses-permission android:name="android.permission.health.READ_HYDRATION" />
     <uses-permission android:name="android.permission.health.READ_OXYGEN_SATURATION" />
     <uses-permission android:name="android.permission.health.READ_SLEEP" />
     <uses-permission android:name="android.permission.health.READ_SPEED" />
@@ -116,19 +113,10 @@
             android:name=".Health.HealthOxygenSaturationActivity"
             android:exported="false" />
         <activity
-            android:name=".Health.HealthHydrationActivity"
-            android:exported="false" />
-        <activity
             android:name=".Health.HealthHeartRateActivity"
             android:exported="false" />
         <activity
             android:name=".Health.HealthCaloriesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Health.HealthBloodPressureActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Health.HealthBloodGlucoseActivity"
             android:exported="false" />
         <activity
             android:name=".Group.GroupChatroom"
