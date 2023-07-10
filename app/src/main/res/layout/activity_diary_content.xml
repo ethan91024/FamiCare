@@ -54,23 +54,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/diary_content_back"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="40dp">
 
         <!--編輯標題  比例1  id="@+id/Title"-->
         <EditText
             android:id="@+id/ContentTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_weight="1"
-            android:background="#ECE5D7"
+            android:background="@android:color/transparent"
+            android:gravity="center"
             android:hint="日記標題"
-            android:textSize="25dp" />
+            android:textColorHint="@color/gray"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000" />
 
         <!--一條空格-->
         <Space
             android:layout_width="0dp"
-            android:layout_height="10dp" />
+            android:layout_height="5dp" />
 
         <!--編輯日記內容  比例9  id="@+id/Content"-->
         <MultiAutoCompleteTextView
@@ -78,12 +88,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9"
-            android:background="#ECE5D7"
+            android:background="@drawable/line_background"
             android:gravity="top"
-            android:hint="寫些東西吧" />
-
+            android:hint="寫些東西吧"
+            android:padding="5dp"
+            android:textColorHint="@color/gray" />
 
     </LinearLayout>
-
 
 </LinearLayout>

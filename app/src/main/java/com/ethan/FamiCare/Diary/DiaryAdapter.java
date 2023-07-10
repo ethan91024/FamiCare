@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ethan.FamiCare.R;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {

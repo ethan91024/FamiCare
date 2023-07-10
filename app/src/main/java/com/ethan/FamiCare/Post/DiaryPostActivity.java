@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,6 @@ import com.ethan.FamiCare.Diary.DiaryDoa;
 import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +40,7 @@ public class DiaryPostActivity extends AppCompatActivity {
     ArrayList<Posts> posts;
     private PostAdapter postAdapter;
     private RecyclerView recyclerView;
-    private FloatingActionButton add_post;
+    private Button add_post;
 
     //Local DataBase
     private List<Diary> diaries;
@@ -106,7 +106,7 @@ public class DiaryPostActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DiaryPostActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DiaryPostActivity.this, "未找到任何貼文", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -130,7 +130,7 @@ public class DiaryPostActivity extends AppCompatActivity {
                                     diaries = diaryDoa.getDiariesById(today);
                                     uploadPost(diaries);
                                 } else {
-                                    Toast.makeText(DiaryPostActivity.this, "no diary found", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DiaryPostActivity.this, "沒有找到日記喔!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })
@@ -176,7 +176,7 @@ public class DiaryPostActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(DiaryPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DiaryPostActivity.this, "貼文上傳失敗!", Toast.LENGTH_SHORT).show();
                             }
                         });
                 diary.setIsSaved(true);
@@ -188,7 +188,7 @@ public class DiaryPostActivity extends AppCompatActivity {
 
         //如果沒有新的diary被上傳
         if (cnt == diaries.size()) {
-            Toast.makeText(DiaryPostActivity.this, "all diaries had been uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DiaryPostActivity.this, "所有日記都上傳囉", Toast.LENGTH_SHORT).show();
         }
     }
 
