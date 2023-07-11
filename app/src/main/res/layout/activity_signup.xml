@@ -4,127 +4,153 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings.Signup">
+    tools:context=".Settings.Signup"
+    android:background="@drawable/login_famicarebg">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username"
-        android:layout_width="344dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="116dp"
-
-        app:boxBackgroundMode="outline"
+    <androidx.cardview.widget.CardView
+        android:layout_width="335dp"
+        android:layout_height="414dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="32dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/signupb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="311dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/email_tf"
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:fontFamily="@font/inter_medium"
-            android:hint="  使用者名稱"
-            android:includeFontPadding="false"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:paddingStart="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="419dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email"
-        android:layout_width="344dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        app:boxBackgroundMode="outline"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="註冊"
+                android:textAllCaps="false"
+                android:textColor="#B19C80"
+                android:textSize="36sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="311dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/email_tf"
-            android:drawableLeft="@drawable/baseline_email_24"
-            android:fontFamily="@font/inter_medium"
-            android:hint="   Email"
-            android:includeFontPadding="false"
-            android:inputType="textEmailAddress"
-            android:padding="5dp"
-            android:paddingStart="10dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username"
+                android:layout_width="330dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="10dp"
+                android:hint="  使用者名稱"
+                android:layout_gravity="center"
+                app:boxBackgroundMode="outline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="313dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/email_tf"
+                    android:drawableLeft="@drawable/baseline_person_24"
+                    android:fontFamily="@font/inter_medium"
+                    android:includeFontPadding="false"
+                    android:inputType="textPersonName"
+                    android:padding="5dp"
+                    android:paddingStart="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password"
-        android:layout_width="344dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundMode="outline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email"
+                android:layout_width="330dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="20dp"
+                app:boxBackgroundMode="outline"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toTopOf="@id/username"
+                app:layout_constraintEnd_toEndOf="@id/username"
+                app:layout_constraintStart_toStartOf="@id/username"
+                app:layout_constraintTop_toBottomOf="@+id/username">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="311dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/email_tf"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:fontFamily="@font/inter_medium"
-            android:hint="   Password"
-            android:inputType="textPassword"
-            android:padding="5dp"
-            android:paddingStart="10dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="313dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/email_tf"
+                    android:drawableLeft="@drawable/baseline_email_24"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="   電子郵件"
+                    android:includeFontPadding="false"
+                    android:inputType="textEmailAddress"
+                    android:padding="5dp"
+                    android:paddingStart="10dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordComfirm"
-        android:layout_width="344dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="24dp"
-        app:boxBackgroundMode="outline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password"
+                android:layout_width="330dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="20dp"
+                app:boxBackgroundMode="outline"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="311dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/email_tf"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:fontFamily="@font/inter_medium"
-            android:hint="   Password Confirm"
-            android:inputType="textPassword"
-            android:padding="5dp"
-            android:paddingStart="10dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="313dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/email_tf"
+                    android:drawableLeft="@drawable/baseline_lock_24"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="   密碼"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:paddingStart="10dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordComfirm"
+                android:layout_width="330dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="24dp"
+                app:boxBackgroundMode="outline"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="@id/password"
+                app:layout_constraintStart_toStartOf="@id/password"
+                app:layout_constraintTop_toBottomOf="@+id/password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="313dp"
+                    android:layout_height="53dp"
+                   android:layout_gravity="center"
+                    android:background="@drawable/email_tf"
+                    android:drawableLeft="@drawable/baseline_lock_24"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="   確認密碼"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:paddingStart="10dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/signupb"
-        android:layout_width="271dp"
-        android:layout_height="54dp"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="44dp"
+        android:layout_marginBottom="52dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_medium"
         android:text="註冊"
@@ -134,27 +160,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordComfirm"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="262dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="44dp"
-        android:fontFamily="@font/inter_bold"
-        android:text="   Welcome  FamiCare! "
-        android:textAllCaps="false"
-        android:textColor="#B19C80"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
