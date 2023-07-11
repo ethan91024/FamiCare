@@ -122,9 +122,6 @@
             android:name=".Group.GroupChatroom"
             android:exported="false" />
         <activity
-            android:name=".Group.GroupNameEditFragment"
-            android:exported="false" />
-        <activity
             android:name=".ChatGPT.ChatGPTActivity"
             android:exported="false" />
         <activity
