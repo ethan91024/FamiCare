@@ -20,6 +20,18 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/linear">
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:src="@drawable/camera_foreground"/>
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:src="@drawable/photo_foreground"/>
 
         <EditText
             android:id="@+id/message"

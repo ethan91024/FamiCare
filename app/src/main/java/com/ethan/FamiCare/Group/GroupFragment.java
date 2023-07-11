@@ -109,7 +109,7 @@ public class GroupFragment extends Fragment {
             }
         });
 
-        GroupNameEditFragment groupNameEditFragment = new GroupNameEditFragment();
+
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
