@@ -28,8 +28,13 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="5dp"
         android:gravity="center"
-        android:text="左右邊各30秒，首先右耳找右肩膀，把手放在頭上，讓頭沉在肩膀方向，肩膀要下沉不要聳肩，感受左邊勃頸的伸展"
-        android:textSize="15dp" />
+        android:text="左右各30秒，首先右耳找右肩膀，把手放在頭上，讓頭沉在肩膀方向，肩膀要下沉不要聳肩，感受左邊勃頸的伸展"
+        android:textSize="15dp"
+        android:background="@drawable/cal_savebtn"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"/>
 
 
     <RelativeLayout

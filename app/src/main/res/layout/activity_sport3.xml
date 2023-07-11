@@ -22,7 +22,12 @@
         android:layout_marginVertical="5dp"
         android:gravity="center"
         android:text="伸展1分鐘，臀部坐到腳跟後，身體俯向前面，雙手向前延展，舒展背部"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        android:background="@drawable/cal_savebtn"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"/>
 
 
     <RelativeLayout
