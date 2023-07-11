@@ -22,7 +22,12 @@
         android:layout_marginVertical="5dp"
         android:gravity="center"
         android:text="一邊30秒，右腿向後蹬，保持穩定，肚子向內縮緊，左手伸直。吸氣時抬手抬腳 吐氣時向下落"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:background="@drawable/cal_savebtn"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"/>
 
 
     <RelativeLayout

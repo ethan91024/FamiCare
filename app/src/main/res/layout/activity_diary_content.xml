@@ -38,7 +38,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/camera_foreground"
+                android:background="@drawable/diary_content_savebt"
                 android:backgroundTint="@color/white" />
 
         </RelativeLayout>
