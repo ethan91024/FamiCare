@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -145,9 +150,32 @@ public class AddNewGroup extends AppCompatActivity {
             savePhoto(selectedImageUri);
 
         } else if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData();
-            savePhoto(selectedImageUri);
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap photoBitmap = (Bitmap) extras.get("data");
+                selectedImageUri = savePhotoToFile(photoBitmap);
+                savePhoto(selectedImageUri);
+            }
         }
+    }
+
+    //把照片暫存在本地端，為了轉成Uri
+    private Uri savePhotoToFile(Bitmap bitmap) {
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File photoFile = null;
+        try {
+            photoFile = File.createTempFile(
+                    "temp_photo",
+                    ".jpg",
+                    storageDir
+            );
+            FileOutputStream outputStream = new FileOutputStream(photoFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(photoFile);
     }
 
     // 照片存到資料庫
@@ -164,7 +192,7 @@ public class AddNewGroup extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         String GroupPhoto = uri.toString();
-                        database.getReference().child("Grouplist").child(uid).setValue(GroupPhoto);
+//                        database.getReference().child("Grouplist").child(uid).setValue(GroupPhoto);
                     }
                 });
             }
@@ -175,4 +203,6 @@ public class AddNewGroup extends AppCompatActivity {
             }
         });
     }
+
+
 }
