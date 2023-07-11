@@ -112,7 +112,7 @@ public class GroupFragment extends Fragment {
 
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
+        binding.Group.findViewById(R.id.Group).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(getActivity(), GroupChatActivity.class);
@@ -146,7 +146,7 @@ public class GroupFragment extends Fragment {
                 });
 
         getActivity().setTitle("群組");
-binding.deleteGroup.findViewById(R.id.deleteGroup).setOnClickListener(new View.OnClickListener() {
+binding.createGroup.findViewById(R.id.createGroup).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getActivity(), AddNewGroup.class);

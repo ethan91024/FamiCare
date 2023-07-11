@@ -50,7 +50,8 @@ public class AddNewGroup extends AppCompatActivity {
                     Toast.makeText(AddNewGroup.this, "請輸入群組名稱 " , Toast.LENGTH_SHORT).show();
                 }else {
                     String groupname=edittext.getText().toString();
-                    FriendModel friend = new FriendModel( groupname);
+                    String type="Group";
+                    FriendModel friend = new FriendModel( groupname,type);
                     database.getReference().child("Grouplist").child(uid).push().setValue(friend)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

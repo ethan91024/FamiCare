@@ -76,10 +76,11 @@ public class Addfriend extends AppCompatActivity {
                                 String username = userSnapshot.child("username").getValue(String.class);
                                 String profileImage = userSnapshot.child("profilepic").getValue(String.class);
                                 String token=userSnapshot.child("token").getValue(String.class);
+                                String type="friend";
                                 if (id.equals(userid)) {
 
                                     // 在這裡將 uid、username、token 和 profileImage 加入到 "Friend" 資料庫中
-                                    FriendModel friend = new FriendModel( profileImage,username, id,token);
+                                    FriendModel friend = new FriendModel( profileImage,username, id,token,type);
                                      database.getReference().child("Friend").child(uid).child(fuid).setValue(friend)
                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                  @Override
@@ -98,7 +99,7 @@ public class Addfriend extends AppCompatActivity {
 
 
                                 }
-                                FriendModel friend = new FriendModel( profileImage,username, id,token);
+                                FriendModel friend = new FriendModel( profileImage,username, id,token,type);
                                 database.getReference().child("Grouplist").child(uid).child(fuid).setValue(friend)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

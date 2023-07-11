@@ -56,7 +56,8 @@ public class Friends_interface extends AppCompatActivity {
                             String username = userSnapshot.child("username").getValue(String.class);
                             String profileImage = userSnapshot.child("profilepic").getValue(String.class);
                             String token = userSnapshot.child("token").getValue(String.class);
-                            FriendModel friend = new FriendModel(profileImage, username, id, token);
+                            String type="friend";
+                            FriendModel friend = new FriendModel(profileImage, username, id, token,type);
                 database.getReference().child("Grouplist").child(uid).child(fuid).setValue(friend)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

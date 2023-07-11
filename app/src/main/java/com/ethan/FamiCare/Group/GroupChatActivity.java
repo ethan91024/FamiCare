@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.ethan.FamiCare.Firebasecords.GroupChatAdapter;
 import com.ethan.FamiCare.Firebasecords.MessageModelGroup;
 import com.ethan.FamiCare.MainActivity;
-import com.ethan.FamiCare.databinding.ActivityChatroomBinding;
+import com.ethan.FamiCare.databinding.ActivityGroupChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    ActivityChatroomBinding binding;
+    ActivityGroupChatBinding binding;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
         FirebaseAuth auth=FirebaseAuth.getInstance();
 
-        binding=ActivityChatroomBinding.inflate(getLayoutInflater());
+        binding=ActivityGroupChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.backarrow.setOnClickListener(new View.OnClickListener() {

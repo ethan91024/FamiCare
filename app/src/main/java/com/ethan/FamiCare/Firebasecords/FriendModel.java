@@ -6,23 +6,40 @@ public class FriendModel {
     private String userId;
     private String id;
     private String token;
+    private String type;
 
 
     public FriendModel() {
 
     }
 
-    public FriendModel(String profilepic, String username, String id, String token) {
+    public FriendModel(String profilepic, String username, String id, String token,String type) {
         this.profilepic = profilepic;
         this.username = username;
         this.id = id;
         this.token = token;
+        this.type=type;
     }
 
-    public FriendModel(String username, String profilepic) {
+    public FriendModel(String username, String profilepic,String type) {
         this.username = username;
         this.profilepic = profilepic;
+        this.type=type;
     }
+
+    public FriendModel(String username, String type) {
+        this.username = username;
+        this.type=type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public FriendModel(String username) {
         this.username = username;
     }
