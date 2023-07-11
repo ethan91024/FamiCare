@@ -6,20 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Settings.Login">
+    tools:context=".Settings.Login"
+    android:background="@drawable/login_famicarebg">
 
     <androidx.cardview.widget.CardView
         android:layout_width="326dp"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_marginTop="80dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
         <LinearLayout
             android:layout_width="323dp"
-            android:layout_height="295dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="293dp"
             android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
             android:padding="5dp">
 
             <TextView
@@ -28,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="Login"
+                android:text="登入"
                 android:textAllCaps="false"
                 android:textColor="#B19C80"
                 android:textSize="36sp" />
@@ -43,12 +44,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.943">>
+                app:layout_constraintVertical_bias="0.943">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
-
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="311dp"
                     android:layout_marginEnd="14dp"
@@ -56,7 +56,7 @@
                     android:background="@drawable/email_tf"
                     android:drawableLeft="@drawable/baseline_email_24"
                     android:fontFamily="@font/inter_medium"
-                    android:hint="   Email"
+                    android:hint="   電子郵件"
                     android:includeFontPadding="false"
                     android:inputType="textEmailAddress"
                     android:padding="5dp"
@@ -81,7 +81,7 @@
                     android:background="@drawable/email_tf"
                     android:drawableLeft="@drawable/baseline_lock_24"
                     android:fontFamily="@font/inter_medium"
-                    android:hint="   Password"
+                    android:hint="   密碼"
                     android:inputType="textPassword"
                     android:padding="5dp"
                     android:paddingStart="10dp" />
