@@ -86,13 +86,13 @@ class HealthStepsActivity : AppCompatActivity() {
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            }else if(showingWeek14Data){
+            } else if (showingWeek14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(14)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
             updateChart()
@@ -101,13 +101,13 @@ class HealthStepsActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            }else if(showingWeek14Data){
+            } else if (showingWeek14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(14)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
             updateChart()
@@ -166,17 +166,16 @@ class HealthStepsActivity : AppCompatActivity() {
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        }else if(showingMonthData){
+        } else if (showingMonthData) {
             updateChartForMonth()
-        }else if(showingDay14Data){
+        } else if (showingDay14Data) {
             updateChartForDay14()
-        }else if(showingWeek14Data){
+        } else if (showingWeek14Data) {
             updateChartForWeek14()
-        }else {
+        } else {
             updateChartForDay()
         }
     }
-
 
     private fun updateChartForDay() {
         lifecycleScope.launch {
@@ -275,24 +274,20 @@ class HealthStepsActivity : AppCompatActivity() {
             barChart.axisRight.granularity = 1f
             barChart.data.barWidth = 0.7f
 
-            val aggregateStepsToday = aggregateStepsIntoDays(
+            val aggregateStepsToday = aggregation(
                 client,
                 currentDisplayedDate.toLocalDate().atStartOfDay(),
                 currentDisplayedDate.toLocalDate().atTime(LocalTime.MAX)
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            var number: Long = 0
-            for (i in aggregateStepsToday.indices) {
-                number += aggregateStepsToday[i]
-            }
-            average.text = number.toString()
+            average.text = aggregateStepsToday.toString()
             avgText.text = "總計:"
             barChart.invalidate()
         }
     }
 
-    private fun updateChartForWeek() {
+    fun updateChartForWeek() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
@@ -300,7 +295,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
             val endDate =
                 currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
-            val steps = aggregateStepsIntoDays(
+            val steps = aggregateStepsIntoWeeks(
                 client,
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
@@ -421,16 +416,18 @@ class HealthStepsActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateChartForMonth() {
+    fun updateChartForMonth() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一個月的資料
         lifecycleScope.launch {
             val startDate = currentDisplayedDate.withDayOfMonth(1)
-            val endDate = currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
-            val steps = aggregateStepsIntoDays(
+            val endDate =
+                currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
+            val steps = aggregateStepsIntoMonths(
                 client,
                 startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                endDate.toLocalDate().atTime(LocalTime.MAX),
+                currentDisplayedDate.month.length(false)
             )
             if (steps.isEmpty()) {
                 // 資料為空的處理邏輯
@@ -499,8 +496,9 @@ class HealthStepsActivity : AppCompatActivity() {
                     val dayIndex = value.toInt()
                     val label: String
                     when (dayIndex) {
-                        0,6,13,20,27 -> {
-                            label = (dayIndex + 1).toString()}
+                        0, 6, 13, 20, 27 -> {
+                            label = (dayIndex + 1).toString()
+                        }
                         else -> {
                             label = ""
                         }
@@ -510,7 +508,8 @@ class HealthStepsActivity : AppCompatActivity() {
             }
 
             val date = findViewById<TextView>(R.id.dateText)
-            date.text = startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
+            date.text =
+                startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
 
             val leftAxis = barChart.axisLeft
             val rightAxis = barChart.axisRight
@@ -539,7 +538,7 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     //x軸日期暫時無法
-    private fun updateChartForDay14() {
+    fun updateChartForDay14() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
@@ -547,7 +546,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate.minusDays(13)
             val endDate =
                 currentDisplayedDate
-            val steps = aggregateStepsIntoDays(
+            val steps = aggregateStepsInto14Days(
                 client,
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
@@ -616,22 +615,15 @@ class HealthStepsActivity : AppCompatActivity() {
             xAxis.labelCount = numXAxisLabels
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    val dayIndex = value.toInt()
-                    val label: String
-                    when (dayIndex) {
-                        0 -> label = "一"
-                        1 -> label = "二"
-                        2 -> label = "三"
-                        3 -> label = "四"
-                        4 -> label = "五"
-                        5 -> label = "六"
-                        6 -> label = "日"
-                        else -> label = ""
+                    val label: String = when (value.toInt()) {
+                        0 -> "1"
+                        6 -> "7"
+                        13->"14"
+                        else -> ""
                     }
                     return label
                 }
             }
-
             val date = findViewById<TextView>(R.id.dateText)
             date.text = startDate.format(myDateTimeFormatter) + " - " + endDate.format(
                 myDateTimeFormatter
@@ -663,41 +655,38 @@ class HealthStepsActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateChartForWeek14() {
+    fun updateChartForWeek14() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
             val startDate =
-                currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
-            val endDate =
-                currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
-            val steps = aggregateStepsIntoDays(
+                currentDisplayedDate.minusWeeks(13)
+            val steps = aggregateStepsInto14Weeks(
                 client,
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                startDate.toLocalDate().atStartOfDay()
             )
             if (steps.isEmpty()) {
 
             }
 
-            val numXAxisLabels = 7  // 修改為七筆資料
-            val stepCountsByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
+            val numXAxisLabels = 14  // 修改為七筆資料
+            val stepCountsBy14Weeks = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
 
             steps.forEachIndexed { index, step ->  // 使用 forEachIndexed 迴圈
                 if (step != null) {
-                    stepCountsByDay[index] = step.toInt()  // 將步數資料填入對應位置
+                    stepCountsBy14Weeks[index] = step.toInt()  // 將步數資料填入對應位置
                 }
             }
 
-            val maxstep = stepCountsByDay.toIntArray().max()
+            val maxstep = stepCountsBy14Weeks.toIntArray().max()
             val top = (maxstep / 1000 + 1) * 1000
 
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (stepCountsByDay[i] == 0) {
+                if (stepCountsBy14Weeks[i] == 0) {
                     entries.add(BarEntry(entries.size.toFloat(), 0f))
                 } else {
-                    entries.add(BarEntry(entries.size.toFloat(), stepCountsByDay[i].toFloat()))
+                    entries.add(BarEntry(entries.size.toFloat(), stepCountsBy14Weeks[i].toFloat()))
                 }
             }
 
@@ -741,13 +730,9 @@ class HealthStepsActivity : AppCompatActivity() {
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     val label: String = when (value.toInt()) {
-                        0 -> "一"
-                        1 -> "二"
-                        2 -> "三"
-                        3 -> "四"
-                        4 -> "五"
-                        5 -> "六"
-                        6 -> "日"
+                        0 -> "1"
+                        6 -> "7"
+                        13->"14"
                         else -> ""
                     }
                     return label
@@ -790,6 +775,31 @@ class HealthStepsActivity : AppCompatActivity() {
         }
     }
 
+    suspend fun aggregation(
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): Long {
+        var number: Long = 0
+        try {
+            val response = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(StepsRecord.COUNT_TOTAL),
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    timeRangeSlicer = Period.ofDays(1)
+                )
+            )
+
+            for (dailyResult in response) {
+                number+=dailyResult.result[StepsRecord.COUNT_TOTAL]?: 0L
+            }
+        } catch (exception: Exception) {
+            // Handle exception here
+        }
+
+        return number
+    }
+
     suspend fun getDailyStepCounts(//一天24筆的資料
         client: HealthConnectClient,
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
@@ -814,7 +824,7 @@ class HealthStepsActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun aggregateStepsIntoDays(
+    suspend fun aggregateStepsIntoWeeks(
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
@@ -843,71 +853,86 @@ class HealthStepsActivity : AppCompatActivity() {
         return totalStepsList
     }
 
-    suspend fun aggregateStepsIntoWeeks(
-        client: HealthConnectClient,
-        start: LocalDateTime,
-        end: LocalDateTime
-    ) {
-        try {
-            val response =
-                client.aggregateGroupByPeriod(
-                    AggregateGroupByPeriodRequest(
-                        metrics = setOf(StepsRecord.COUNT_TOTAL),
-                        timeRangeFilter = TimeRangeFilter.between(start, end),
-                        timeRangeSlicer = Period.ofWeeks(1)
-                    )
-                )
-            val request = client.readRecords(
-                ReadRecordsRequest(
-                    StepsRecord::class,
-                    timeRangeFilter = TimeRangeFilter.between(start, end)
-                )
-            )
-            for (weeklyResult in response) {
-                val totalSteps = weeklyResult.result[StepsRecord.COUNT_TOTAL]
-
-            }
-
-        } catch (exception: Exception) {
-//            Toast.makeText(
-//                this@HealthStepsActivity,
-//                "Don't Have Data!",
-//                Toast.LENGTH_SHORT
-//            ).show()
-        }
-    }
-
     suspend fun aggregateStepsIntoMonths(
         client: HealthConnectClient,
         start: LocalDateTime,
-        end: LocalDateTime
-    ) {
+        end: LocalDateTime,
+        length: Int
+    ): List<Long> {
+        val totalStepsList = MutableList(length) { 0L } // 建立一個初始值為0的length個元素的陣列
+
         try {
-            val response =
-                client.aggregateGroupByPeriod(
-                    AggregateGroupByPeriodRequest(
-                        metrics = setOf(StepsRecord.COUNT_TOTAL),
-                        timeRangeFilter = TimeRangeFilter.between(start, end),
-                        timeRangeSlicer = Period.ofMonths(1)
-                    )
-                )
-            val request = client.readRecords(
-                ReadRecordsRequest(
-                    StepsRecord::class,
-                    timeRangeFilter = TimeRangeFilter.between(start, end)
+            val response = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(StepsRecord.COUNT_TOTAL),
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    timeRangeSlicer = Period.ofDays(1)
                 )
             )
-            for (monthlyResult in response) {
-                val totalSteps = monthlyResult.result[StepsRecord.COUNT_TOTAL]
 
+            for (dailyResult in response) {
+                val localDateTime =
+                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val dayOfMonth = localDateTime.dayOfMonth
+                totalStepsList[dayOfMonth - 1] = dailyResult.result[StepsRecord.COUNT_TOTAL] ?: 0L
             }
         } catch (exception: Exception) {
-//            Toast.makeText(
-//                this@HealthStepsActivity,
-//                "Don't Have Data!",
-//                Toast.LENGTH_SHORT
-//            ).show()
+            // Handle exception here
         }
+
+        return totalStepsList
+    }
+
+    suspend fun aggregateStepsInto14Days(
+        client: HealthConnectClient,
+        start: LocalDateTime,
+        end: LocalDateTime,
+    ): List<Long> {
+        val totalStepsList = MutableList(14) { 0L }
+
+        try {
+            val response = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(StepsRecord.COUNT_TOTAL),
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    timeRangeSlicer = Period.ofDays(1)
+                )
+            )
+
+            for (dailyResult in response) {
+                val localDateTime =
+                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val dayOfMonth = localDateTime.dayOfMonth
+                totalStepsList[dayOfMonth - 1] = dailyResult.result[StepsRecord.COUNT_TOTAL] ?: 0L
+            }
+        } catch (exception: Exception) {
+            // Handle exception here
+        }
+
+        return totalStepsList
+    }
+
+    suspend fun aggregateStepsInto14Weeks(
+        client: HealthConnectClient,
+        start: LocalDateTime
+    ): List<Double> {
+        val totalStepsList = MutableList(14){0.0}
+        for (i in 0 until 14) {
+            val startDate =start.plusWeeks(i.toLong())
+            val endDate =startDate.plusWeeks(1+i.toLong())
+            val steps = aggregateStepsIntoWeeks(
+                client,
+                startDate.toLocalDate().atStartOfDay(),
+                endDate.toLocalDate().atTime(LocalTime.MAX)
+            )
+            val totalCount = steps.count { it > 0 }
+            if (totalCount > 0) {
+                totalStepsList[i] = String.format("%.2f", steps.sum().toDouble() / totalCount).toDouble()
+            } else {
+                totalStepsList[i] = 0.0
+            }
+        }
+        return totalStepsList
     }
 }
 
