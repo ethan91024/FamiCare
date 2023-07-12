@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -29,7 +30,10 @@ public class Meditation extends AppCompatActivity {
     private EditText timer;
     private Button stop_counting;
     VideoView videoView;
+    View gift_ani;
+    AnimationDrawable animationDrawable;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,10 @@ public class Meditation extends AppCompatActivity {
 //        sea_sound = MediaPlayer.create(this, R.raw.sea_sound);
         videoView = findViewById(R.id.videoView);
         videoView.setBackgroundResource(R.drawable.seasound_pic);
-
+        gift_ani=findViewById(R.id.gift_ani);
+        gift_ani.setBackgroundResource(R.drawable.gift_animation);
+        animationDrawable = (AnimationDrawable) gift_ani.getBackground();
+        animationDrawable.setOneShot(true);
 
 
 
@@ -60,38 +67,43 @@ public class Meditation extends AppCompatActivity {
             public void onClick(View view) {
 //                sea_an.setBackgroundResource(R.drawable.sea_animation);
 //                seaAnimation = (AnimationDrawable) sea_an.getBackground();
-                if(Double.parseDouble(String.valueOf(timer.getText()))<=30) {
-                    if (t == null || !t.isAlive()) {
-                        videoView.setBackground(null);
-                        t = new CountThread();
-                        t.start();
+                try {
+                    if(Integer.parseInt(String.valueOf(timer.getText()))<=30&&Integer.parseInt(String.valueOf(timer.getText()))>0) {
+                        if (t == null || !t.isAlive()) {
+                            videoView.setBackground(null);
+                            t = new CountThread(timer);
+                            timer.setEnabled(false);
+                            t.start();
 //                    if (sea_sound == null) {
 //                        sea_sound = MediaPlayer.create(Meditation.this, R.raw.sea_sound);
 //                        System.out.println("create music");
 //                    }
 //                    seaAnimation.start();
-                        startPlaying();
-                        //動畫
-                        MediaController mediaController = new MediaController(Meditation.this);
-                        mediaController.setAnchorView(videoView);
-                        mediaController.setVisibility(View.INVISIBLE);
-                        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.seaanimation);
-                        videoView.setVideoURI(uri);
-                        videoView.setMediaController(mediaController);
-                        videoView.start();
-
-                    }
-                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
+                            startPlaying();
+                            //動畫
+                            MediaController mediaController = new MediaController(Meditation.this);
+                            mediaController.setAnchorView(videoView);
+                            mediaController.setVisibility(View.INVISIBLE);
+                            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.seaanimation);
+                            videoView.setVideoURI(uri);
+                            videoView.setMediaController(mediaController);
                             videoView.start();
 
                         }
-                    });
-                }else{
-                    Toast.makeText(Meditation.this, "時間輸入錯誤", Toast.LENGTH_SHORT).show();
+                        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                videoView.start();
+
+                            }
+                        });
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(Meditation.this, "時間輸入錯誤，只限輸入整數", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
         });
         stop_counting.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +112,7 @@ public class Meditation extends AppCompatActivity {
                 if(t!=null) {
                     t.SetRunning(false);
                 }
+                timer.setEnabled(true);
 
             }
         });
@@ -110,6 +123,7 @@ public class Meditation extends AppCompatActivity {
         Drawable stopD = getResources().getDrawable(R.drawable.button_stop_red);
         stopD.setBounds(-40, 0, 70, 90);
         stop_counting.setCompoundDrawables(null, null, stopD, null);
+
 
 
     }
@@ -129,6 +143,7 @@ public class Meditation extends AppCompatActivity {
             if (sea_sound.isPlaying()) {
                 System.out.println("music_start");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,18 +153,29 @@ public class Meditation extends AppCompatActivity {
 
 
     class CountThread extends Thread { //計時器
-
+        private EditText timer;
         boolean running = true;
 
         CountThread() {
+            this.timer = timer;
+        }
 
+        public CountThread(EditText timer1) {
+            timer=timer1;
         }
 
         public void run() {
             int time_cnt = 0;
             while (running) {
-                if (++time_cnt > (60 * Double.parseDouble(String.valueOf(timer.getText())))) {
+                if (++time_cnt > (60 * Integer.parseInt(String.valueOf(timer.getText())))) {
                     SetRunning(false);
+                    animationDrawable.start();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            timer.setEnabled(true);
+                        }
+                    });
                     break;
                 }
                 System.out.println(time_cnt);

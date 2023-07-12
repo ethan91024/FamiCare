@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -20,15 +22,16 @@ public class Breathe extends AppCompatActivity {
 
 
     private Button breathe_start;
-    CountThread_Breathe t ;
+    CountThread_Breathe t;
     private EditText timer;
     private Button cancel;
     VideoView videoView;
     MediaPlayer breathe_sound = null;
+    AnimationDrawable animationDrawable;
+    View gift_ani;
 
 
-
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,40 +44,48 @@ public class Breathe extends AppCompatActivity {
         MediaController mediaController = new MediaController(Breathe.this);
         mediaController.setAnchorView(videoView);
         mediaController.setVisibility(View.INVISIBLE);
+        gift_ani = findViewById(R.id.gift_ani);
+        gift_ani.setBackgroundResource(R.drawable.gift_animation);
+        animationDrawable = (AnimationDrawable) gift_ani.getBackground();
+        animationDrawable.setOneShot(true);
 
 
         breathe_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    if (Integer.parseInt(String.valueOf(timer.getText())) <= 30 && Integer.parseInt(String.valueOf(timer.getText())) > 0) {
+                        if (t == null || !t.isAlive()) {
+                            videoView.setBackground(null);
+                            t = new  CountThread_Breathe (timer);
+                            timer.setEnabled(false);
+                            t.start();
 
-                if(Double.parseDouble(String.valueOf(timer.getText()))<=30) {
-                    if (t == null || !t.isAlive()) {
-                        videoView.setBackground(null);
-                        t = new CountThread_Breathe();
-                        t.start();
-
-                        startPlaying();
-                        //動畫
-                        MediaController mediaController = new MediaController(Breathe.this);
-                        mediaController.setAnchorView(videoView);
-                        mediaController.setVisibility(View.INVISIBLE);
-                        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.breatheanimation);
-                        videoView.setVideoURI(uri);
-                        videoView.setMediaController(mediaController);
-                        videoView.start();
-
-                    }
-                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
+                            startPlaying();
+                            //動畫
+                            MediaController mediaController = new MediaController(Breathe.this);
+                            mediaController.setAnchorView(videoView);
+                            mediaController.setVisibility(View.INVISIBLE);
+                            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.breatheanimation);
+                            videoView.setVideoURI(uri);
+                            videoView.setMediaController(mediaController);
                             videoView.start();
 
                         }
-                    });
-                }else{
-                    Toast.makeText(Breathe.this, "時間輸入錯誤", Toast.LENGTH_SHORT).show();
+                        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                videoView.start();
+
+                            }
+                        });
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(Breathe.this, "時間輸入錯誤，只限整數", Toast.LENGTH_SHORT).show();
 
                 }
+
             }
         });
 
@@ -84,7 +95,7 @@ public class Breathe extends AppCompatActivity {
                 if (t != null) {
                     t.SetRunning(false);
                 }
-
+                timer.setEnabled(true);
             }
         });
 
@@ -98,6 +109,7 @@ public class Breathe extends AppCompatActivity {
 
 
     }
+
     private void startPlaying() {
         System.out.println("創音樂");
         try {
@@ -126,6 +138,9 @@ public class Breathe extends AppCompatActivity {
         CountThread_Breathe() {
 
         }
+        public CountThread_Breathe(EditText timer1) {
+            timer=timer1;
+        }
 
         //計時器
         public void run() {
@@ -133,6 +148,13 @@ public class Breathe extends AppCompatActivity {
             while (running) {
                 if (++time_cnt > (60 * Double.parseDouble(String.valueOf(timer.getText())))) {
                     SetRunning(false);
+                    animationDrawable.start();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            timer.setEnabled(true);
+                        }
+                    });
                     break;
                 }
                 System.out.println(time_cnt);
@@ -143,7 +165,6 @@ public class Breathe extends AppCompatActivity {
                 }
             }
         }
-
 
 
         //計時器、音樂、動畫執行設定
