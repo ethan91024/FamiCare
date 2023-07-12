@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/bkg1"
     android:orientation="vertical"
-    tools:context=".Group.GroupFragment"
-    >
+    tools:context=".Group.GroupFragment">
     <!--  標題  -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/toolbg2">
+        android:background="@drawable/toolbg3">
 
         <TextView
             android:layout_width="match_parent"
@@ -37,35 +36,34 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_marginHorizontal="15dp"
         android:background="@drawable/background_lightbrown_corn"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="6dp"
-        >
+        android:orientation="horizontal">
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="6dp"
             android:layout_weight="70"
             android:text="生活圈"
-            android:textSize="28sp"
-            android:textStyle="bold"
             android:textColor="@color/deepbrown"
-            android:layout_marginHorizontal="6dp"/>
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/ChatGPT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="6dp"
             android:layout_weight="30"
             android:background="@drawable/background_red"
             android:onClick="chatgpt"
             android:text="ChatGPT"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="6dp"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -76,17 +74,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="3dp"
-        android:background="@drawable/background_line_deppbrown"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/background_line_deepbrown"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginHorizontal="5dp"
-            android:gravity="center_vertical"
             android:background="@drawable/background_deepbrown_topcorn"
-            android:text="群組列表"
+            android:gravity="center_vertical"
+            android:text=" 群組列表"
             android:textColor="@color/bkg_color"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -131,13 +128,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-         >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
+                android:layout_marginHorizontal="8dp"
                 android:orientation="horizontal">
 
 
@@ -164,10 +160,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="45"
                     android:background="@drawable/background_red"
+                    android:drawableRight="@android:drawable/ic_menu_add"
                     android:text="新增群組"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:drawableRight="@android:drawable/ic_menu_add"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -190,7 +186,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top"
-        android:layout_marginHorizontal="5dp"
-        android:background="@drawable/background_line_deppbrown" />
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/background_line_deepbrown" />
 
 </LinearLayout>

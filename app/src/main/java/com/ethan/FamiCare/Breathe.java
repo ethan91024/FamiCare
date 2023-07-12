@@ -5,15 +5,18 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -28,7 +31,8 @@ public class Breathe extends AppCompatActivity {
     VideoView videoView;
     MediaPlayer breathe_sound = null;
     AnimationDrawable animationDrawable;
-    View gift_ani;
+    ImageView imageView_gift;
+    Dialog dialog;
 
 
     @SuppressLint("MissingInflatedId")
@@ -44,10 +48,16 @@ public class Breathe extends AppCompatActivity {
         MediaController mediaController = new MediaController(Breathe.this);
         mediaController.setAnchorView(videoView);
         mediaController.setVisibility(View.INVISIBLE);
-        gift_ani = findViewById(R.id.gift_ani);
-        gift_ani.setBackgroundResource(R.drawable.gift_animation);
-        animationDrawable = (AnimationDrawable) gift_ani.getBackground();
-        animationDrawable.setOneShot(true);
+//        gift_ani = findViewById(R.id.gift_ani);
+//        gift_ani.setBackgroundResource(R.drawable.gift_animation);
+        //跳出介面
+        dialog = new Dialog(Breathe.this);
+
+
+
+
+
+
 
 
         breathe_start.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +67,7 @@ public class Breathe extends AppCompatActivity {
                     if (Integer.parseInt(String.valueOf(timer.getText())) <= 30 && Integer.parseInt(String.valueOf(timer.getText())) > 0) {
                         if (t == null || !t.isAlive()) {
                             videoView.setBackground(null);
-                            t = new  CountThread_Breathe (timer);
+                            t = new CountThread_Breathe(timer);
                             timer.setEnabled(false);
                             t.start();
 
@@ -132,26 +142,44 @@ public class Breathe extends AppCompatActivity {
         }
     }
 
-    class CountThread_Breathe extends Thread { //計時器
+    class CountThread_Breathe extends Thread { //计时器
         boolean running = true;
 
         CountThread_Breathe() {
 
         }
+
         public CountThread_Breathe(EditText timer1) {
-            timer=timer1;
+            timer = timer1;
         }
 
-        //計時器
+        //计时器
         public void run() {
             int time_cnt = 0;
             while (running) {
                 if (++time_cnt > (60 * Double.parseDouble(String.valueOf(timer.getText())))) {
                     SetRunning(false);
-                    animationDrawable.start();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            // 设置gift跳出介面
+                            dialog.setContentView(R.layout.gift_layout);
+                            imageView_gift = dialog.findViewById(R.id.gift_ani);
+                            imageView_gift.setBackgroundResource(R.drawable.gift_animation);
+                            animationDrawable = (AnimationDrawable) imageView_gift.getBackground();
+                            animationDrawable.setOneShot(true);
+                            animationDrawable.start();
+                            dialog.show();
+
+                            // 设置gift介面消失的时间
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();  // 关闭对话框
+                                }
+                            }, 4000);
+
                             timer.setEnabled(true);
                         }
                     });

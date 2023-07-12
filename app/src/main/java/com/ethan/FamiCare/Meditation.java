@@ -5,15 +5,18 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -32,6 +35,9 @@ public class Meditation extends AppCompatActivity {
     VideoView videoView;
     View gift_ani;
     AnimationDrawable animationDrawable;
+
+    ImageView imageView_gift;
+    Dialog dialog;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,10 +59,8 @@ public class Meditation extends AppCompatActivity {
 //        sea_sound = MediaPlayer.create(this, R.raw.sea_sound);
         videoView = findViewById(R.id.videoView);
         videoView.setBackgroundResource(R.drawable.seasound_pic);
-        gift_ani=findViewById(R.id.gift_ani);
-        gift_ani.setBackgroundResource(R.drawable.gift_animation);
-        animationDrawable = (AnimationDrawable) gift_ani.getBackground();
-        animationDrawable.setOneShot(true);
+//跳出介面
+        dialog = new Dialog(Meditation.this);
 
 
 
@@ -167,12 +171,29 @@ public class Meditation extends AppCompatActivity {
         public void run() {
             int time_cnt = 0;
             while (running) {
-                if (++time_cnt > (60 * Integer.parseInt(String.valueOf(timer.getText())))) {
+                if (++time_cnt > (60 * Double.parseDouble(String.valueOf(timer.getText())))) {
                     SetRunning(false);
-                    animationDrawable.start();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            // 设置gift跳出介面
+                            dialog.setContentView(R.layout.gift_layout);
+                            imageView_gift = dialog.findViewById(R.id.gift_ani);
+                            imageView_gift.setBackgroundResource(R.drawable.gift_animation);
+                            animationDrawable = (AnimationDrawable) imageView_gift.getBackground();
+                            animationDrawable.setOneShot(true);
+                            animationDrawable.start();
+                            dialog.show();
+
+                            // 设置gift介面消失的时间
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();  // 关闭对话框
+                                }
+                            }, 4000);
+
                             timer.setEnabled(true);
                         }
                     });

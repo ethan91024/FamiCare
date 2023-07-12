@@ -58,148 +58,123 @@
 
     </LinearLayout>
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:layout_gravity=""
+        android:background="@drawable/background_brown_rightangle"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity=""
-            android:background="@drawable/background_brown_rightangle"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/background_line_deepbrown"
             android:gravity="center"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="4dp"
-                android:background="@drawable/background_line_deppbrown"
-                android:gravity="center"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="30"
-                        android:gravity="center"
-                        android:text=" 設定時間  :"
-                        android:textColor="#000000"
-                        android:textSize="22dp"></TextView>
-
-                    <EditText
-                        android:id="@+id/timer"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:gravity="center"
-                        android:text="5"
-                        android:textColor="#b85135"
-                        android:textSize="25dp"></EditText>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="30"
-                        android:gravity="center"
-                        android:text="分鐘"
-                        android:textColor="#000000"
-                        android:textSize="22dp"></TextView>
-
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
-
+                android:layout_height="50dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
                     android:gravity="center"
-                    android:text="設定時間請輸入30分鐘以內"
-                    android:textSize="15dp"></TextView>
+                    android:text=" 設定時間  :"
+                    android:textColor="#000000"
+                    android:textSize="22dp"></TextView>
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp" />
+                <EditText
+                    android:id="@+id/timer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="#b85135"
+                    android:textSize="25dp"></EditText>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:text="分鐘"
+                    android:textColor="#000000"
+                    android:textSize="22dp"></TextView>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/counter"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="50"
-                        android:background="@drawable/background_deepbrown"
-                        android:gravity="center"
-                        android:text="開始倒數"
-                        android:textSize="20dp"></Button>
-
-                    <Space
-                        android:layout_width="7dp"
-                        android:layout_height="0dp" />
-
-                    <Button
-                        android:id="@+id/stop_counting"
-                        android:layout_width="0dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="50"
-                        android:background="@drawable/background_deepbrown"
-                        android:gravity="center"
-                        android:text="取消"
-                        android:textSize="20dp">
-
-                    </Button>
-                </LinearLayout>
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="5dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="設定時間請輸入30分鐘以內"
+                android:textSize="15dp"></TextView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:layout_marginHorizontal="4dp"
-                android:background="@drawable/background_line_deppbrown"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/gift_ani"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_gravity="center"/>
+                <Button
+                    android:id="@+id/counter"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
+                    android:gravity="center"
+                    android:text="開始倒數"
+                    android:textSize="20dp"></Button>
 
+                <Space
+                    android:layout_width="7dp"
+                    android:layout_height="0dp" />
+
+                <Button
+                    android:id="@+id/stop_counting"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    android:background="@drawable/background_deepbrown"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textSize="20dp">
+
+                </Button>
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
         </LinearLayout>
 
-    </ScrollView>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

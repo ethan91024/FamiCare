@@ -20,7 +20,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/toolbg">
+                android:background="@drawable/toolbg3">
 
                 <!--生活點滴-->
                 <TextView
