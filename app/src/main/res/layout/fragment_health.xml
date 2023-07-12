@@ -168,7 +168,7 @@
                     android:clickable="true"
                     android:drawableLeft="@drawable/baseline_co2_24"
                     android:gravity="center|left"
-                    android:text="  呼吸(無平均)"
+                    android:text="  呼吸"
                     android:textSize="25sp" />
 
 
@@ -186,7 +186,7 @@
                     android:clickable="true"
                     android:drawableLeft="@drawable/baseline_bloodtype_24"
                     android:gravity="center|left"
-                    android:text="  血氧(無平均)"
+                    android:text="  血氧"
                     android:textSize="25sp" />
 
                 <View
