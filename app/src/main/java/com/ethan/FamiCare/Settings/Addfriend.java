@@ -80,27 +80,27 @@ public class Addfriend extends AppCompatActivity {
                                 if (id.equals(userid)) {
 
                                     // 在這裡將 uid、username、token 和 profileImage 加入到 "Friend" 資料庫中
-                                    FriendModel friend = new FriendModel( profileImage,username, id,token,type);
-                                     database.getReference().child("Friend").child(uid).child(fuid).setValue(friend)
+                                    FriendModel friend = new FriendModel( profileImage,username, id,token,type,fuid);
+                                     database.getReference().child("Friend").child(uid).child(username).setValue(friend)
                                              .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                  @Override
                                                  public void onSuccess(Void aVoid) {
                                                      // 節點寫入成功
-                                                     Toast.makeText(Addfriend.this, "Friend added successfully", Toast.LENGTH_SHORT).show();
+                                                     Toast.makeText(Addfriend.this, "新增好友已成功", Toast.LENGTH_SHORT).show();
                                                  }
                                              })
                                              .addOnFailureListener(new OnFailureListener() {
                                                  @Override
                                                  public void onFailure(@NonNull Exception e) {
                                                      // 節點寫入失敗
-                                                     Toast.makeText(Addfriend.this, "Failed to add friend: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                     Toast.makeText(Addfriend.this, "新增好友失敗: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                  }
                                              });
 
 
                                 }
-                                FriendModel friend = new FriendModel( profileImage,username, id,token,type);
-                                database.getReference().child("Grouplist").child(uid).child(fuid).setValue(friend)
+                                FriendModel friend = new FriendModel( profileImage,username, id,token,type,fuid);
+                                database.getReference().child("Grouplist").child(uid).child(username).setValue(friend)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

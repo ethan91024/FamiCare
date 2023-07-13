@@ -18,7 +18,8 @@ import com.ethan.FamiCare.Firebasecords.GroupChatAdapter;
 import com.ethan.FamiCare.Firebasecords.MessageModelGroup;
 import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
-import com.ethan.FamiCare.databinding.ActivityChatroomBinding;
+
+import com.ethan.FamiCare.databinding.ActivityGroupChatBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +40,7 @@ import java.util.Date;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    ActivityChatroomBinding binding;
+    ActivityGroupChatBinding binding;
     ImageView photo, camera;
     FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -59,7 +60,7 @@ public class GroupChatActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("Grouplist");
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        binding = ActivityChatroomBinding.inflate(getLayoutInflater());
+        binding = ActivityGroupChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.backarrow.setOnClickListener(new View.OnClickListener() {

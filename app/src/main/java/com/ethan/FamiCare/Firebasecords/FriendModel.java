@@ -7,29 +7,41 @@ public class FriendModel {
     private String id;
     private String token;
     private String type;
+    private String fuid;
 
 
     public FriendModel() {
 
     }
 
-    public FriendModel(String profilepic, String username, String id, String token,String type) {
+    public FriendModel(String profilepic, String fuid, String id, String token,String type) {
         this.profilepic = profilepic;
-        this.username = username;
+        this.fuid=fuid;
         this.id = id;
         this.token = token;
         this.type=type;
     }
 
+    public FriendModel(String profilepic, String username, String id, String token,String type,String fuid) {
+        this.profilepic = profilepic;
+        this.username = username;
+        this.id = id;
+        this.token = token;
+        this.type=type;
+        this.fuid=fuid;
+    }
     public FriendModel(String username, String profilepic,String type) {
         this.username = username;
         this.profilepic = profilepic;
         this.type=type;
     }
 
-    public FriendModel(String username, String type) {
-        this.username = username;
-        this.type=type;
+    public String getFuid() {
+        return fuid;
+    }
+
+    public void setFuid(String fuid) {
+        this.fuid = fuid;
     }
 
     public String getType() {
