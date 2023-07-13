@@ -2,11 +2,14 @@ package com.ethan.FamiCare.Health
 
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.StepsRecord
@@ -16,6 +19,7 @@ import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -30,7 +34,6 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HealthStepsActivity : AppCompatActivity() {
@@ -44,6 +47,7 @@ class HealthStepsActivity : AppCompatActivity() {
     var showingMonthData = false
     var showingDay14Data = false
     var showingWeek14Data = false
+    var limitLine: LimitLine? = null
     lateinit var client: HealthConnectClient
     lateinit var steps: List<StepsRecord>
     lateinit var barChart: BarChart
@@ -54,8 +58,14 @@ class HealthStepsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_steps)
 
+        val locale = Locale("zh", "CN")
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+
         client = HealthConnectClient.getOrCreate(this)
         barChart = findViewById(R.id.bar_chart)
+        val calendar = findViewById<ImageView>(R.id.calendarIV)
         val beforeBtn = findViewById<Button>(R.id.beforeBtn)
         val afterBtn = findViewById<Button>(R.id.afterBtn)
         val dayBtn = findViewById<Button>(R.id.dayBtn)
@@ -82,6 +92,28 @@ class HealthStepsActivity : AppCompatActivity() {
             }
         })
 
+        calendar.setOnClickListener {
+            val onClickListener = View.OnClickListener { view ->
+                val calendar = Calendar.getInstance()
+                val year = calendar[Calendar.YEAR]
+                val month = calendar[Calendar.MONTH]
+                val day = calendar[Calendar.DAY_OF_MONTH]
+
+                val datePickerDialog = DatePickerDialog(this,
+                    DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                        val selectedDate = LocalDate.of(year, month + 1, day)
+                        val selectedDateTime = selectedDate.atStartOfDay()
+                        currentDisplayedDate = selectedDateTime
+                        intervalTextView.text = null
+                        updateChart()
+                    }, year, month, day
+                )
+
+                datePickerDialog.show()
+            }
+
+            calendar.setOnClickListener(onClickListener)
+        }
 
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
@@ -183,7 +215,11 @@ class HealthStepsActivity : AppCompatActivity() {
             if (steps.isEmpty()) {
 
             }
-
+            if (limitLine != null) {
+                val leftAxis: YAxis = barChart.axisLeft
+                leftAxis.removeLimitLine(limitLine)
+                limitLine = null
+            }
             val numXAxisLabels = 24
             val stepCountsByHour = MutableList(numXAxisLabels) { 0 }
 
@@ -283,6 +319,13 @@ class HealthStepsActivity : AppCompatActivity() {
             val avgText: TextView = findViewById(R.id.avgTV)
             average.text = aggregateStepsToday.toString()
             avgText.text = "總計:"
+
+            val limitValue = String.format("%.2f", aggregateStepsToday.toDouble() / steps.count())
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
@@ -657,7 +700,6 @@ class HealthStepsActivity : AppCompatActivity() {
 
     fun updateChartForWeek14() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
-        // 更新一星期的資料
         lifecycleScope.launch {
             val startDate =
                 currentDisplayedDate.minusWeeks(13)
@@ -665,7 +707,8 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate
             val steps = aggregateStepsInto14Weeks(
                 client,
-                startDate.toLocalDate().atStartOfDay()
+                startDate.toLocalDate().atStartOfDay(),
+                endDate.toLocalDate().atTime(LocalTime.MAX)
             )
             if (steps.isEmpty()) {
 
@@ -674,9 +717,9 @@ class HealthStepsActivity : AppCompatActivity() {
             val numXAxisLabels = 14  // 修改為七筆資料
             val stepCountsBy14Weeks = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
 
-            steps.forEachIndexed { index, step ->  // 使用 forEachIndexed 迴圈
-                if (step != null) {
-                    stepCountsBy14Weeks[index] = step.toInt()  // 將步數資料填入對應位置
+            steps.forEachIndexed { index, step ->
+                if (index < numXAxisLabels && step != null) { // 添加索引檢查
+                    stepCountsBy14Weeks[index] = step.toInt()
                 }
             }
 
@@ -686,9 +729,9 @@ class HealthStepsActivity : AppCompatActivity() {
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
                 if (stepCountsBy14Weeks[i] == 0) {
-                    entries.add(BarEntry(entries.size.toFloat(), 0f))
+                    entries.add(BarEntry(i.toFloat(), 0f))
                 } else {
-                    entries.add(BarEntry(entries.size.toFloat(), stepCountsBy14Weeks[i].toFloat()))
+                    entries.add(BarEntry(i.toFloat(), stepCountsBy14Weeks[i].toFloat()))
                 }
             }
 
@@ -915,21 +958,21 @@ class HealthStepsActivity : AppCompatActivity() {
 
     suspend fun aggregateStepsInto14Weeks(
         client: HealthConnectClient,
-        start: LocalDateTime
+        start: LocalDateTime,
+        end: LocalDateTime
     ): List<Double> {
         val totalStepsList = MutableList(14) { 0.0 }
         for (i in 0 until 14) {
             val startDate = start.plusWeeks(i.toLong())
-            val endDate = startDate.plusWeeks(1 + i.toLong())
+            val endDate = end.plusWeeks(1)
             val steps = aggregateStepsIntoWeeks(
                 client,
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                startDate,
+                endDate
             )
             val totalCount = steps.count { it > 0 }
             if (totalCount > 0) {
-                totalStepsList[i] =
-                    String.format("%.2f", steps.sum().toDouble() / totalCount).toDouble()
+                totalStepsList[i] = steps.sum().toDouble() / totalCount
             } else {
                 totalStepsList[i] = 0.0
             }
