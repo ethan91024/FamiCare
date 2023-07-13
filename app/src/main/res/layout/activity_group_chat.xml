@@ -11,29 +11,27 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_above="@+id/linear"
-        android:layout_below="@+id/toolbar" />
-
+        />
     <LinearLayout
-        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
+        android:id="@+id/linear">
         <ImageView
             android:id="@+id/camera"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="0"
-            android:src="@drawable/camera_foreground" />
-
+            android:src="@drawable/camera_foreground"/>
         <ImageView
             android:id="@+id/photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="0"
-            android:src="@drawable/photo_foreground" />
+            android:src="@drawable/photo_foreground"/>
 
         <EditText
             android:id="@+id/message"
@@ -42,46 +40,44 @@
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:ems="10"
             android:hint="Enter Message"
-            android:paddingBottom="10dp" />
-
+            android:ems="10"
+            android:paddingBottom="10dp"
+            />
         <ImageView
             android:id="@+id/fab_send"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="0"
-            android:src="@drawable/send" />
+            android:src="@drawable/send"
+            />
     </LinearLayout>
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
         android:background="#FF9900">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <ImageView
-                android:id="@+id/backarrow"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/backarrow"
                 android:src="@drawable/backarrow_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="8.476" />
-
+                app:layout_constraintVertical_bias="8.476"
+                />
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:id="@+id/profile_image"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:padding="5dp"
@@ -89,12 +85,12 @@
                 app:civ_border_width="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/backarrow"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                />
             <TextView
-                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/username"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:text="Username"
@@ -102,7 +98,16 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/profile_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/addmember"
+                android:src="@drawable/addfriend_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="8.476"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
