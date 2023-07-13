@@ -121,7 +121,7 @@ public class Addfriend extends AppCompatActivity {
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             // 發生錯誤時的處理邏輯
-                            Toast.makeText(Addfriend.this, "Sing up Failed!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Addfriend.this, "錯誤", Toast.LENGTH_LONG).show();
                         }
                     });
 

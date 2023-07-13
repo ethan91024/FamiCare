@@ -1,3 +1,4 @@
+
 package com.ethan.FamiCare.Group;
 
 import android.content.Intent;
@@ -8,18 +9,20 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.ethan.FamiCare.Firebasecords.GroupChatAdapter;
-import com.ethan.FamiCare.Firebasecords.MessageModelGroup;
+import com.ethan.FamiCare.Firebasecords.ChatAdapter;
+import com.ethan.FamiCare.Firebasecords.MessageModel;
 import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
-
 import com.ethan.FamiCare.databinding.ActivityGroupChatBinding;
+import com.ethan.FamiCare.databinding.FragmentGroupChatroomBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,30 +43,48 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GroupChatActivity extends AppCompatActivity {
-
+    ChatAdapter adapter;
+    RecyclerView recyclerView;//1
+    final ArrayList<MessageModel> list = new ArrayList<>();
     ActivityGroupChatBinding binding;
-    ImageView photo, camera;
+    FirebaseAuth auth;
     FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
+    ImageView photo, camera;
     private static final int TAKE_PHOTO_REQUEST = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
+    RelativeLayout containerLayout;
 
-    @Override
+
+    public GroupChatActivity() {
+        // Required empty public constructor
+    }
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        camera = findViewById(R.id.camera);
-        photo = findViewById(R.id.photo);
 
+        binding = ActivityGroupChatBinding.inflate(getLayoutInflater());
         database = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Grouplist");
         storageReference = FirebaseStorage.getInstance().getReference("Grouplist");
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        binding = ActivityGroupChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        final String senderId = auth.getUid();
+        String recieveId = getIntent().getStringExtra("userId");
+        String userName = getIntent().getStringExtra("userName");
+        String profilePic = getIntent().getStringExtra("profilePic");
+
+        containerLayout = findViewById(R.id.groupchatroom);
+        camera = findViewById(R.id.camera);
+        photo = findViewById(R.id.photo);
+
+        binding.username.setText(userName);
+        Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,29 +93,26 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final ArrayList<MessageModelGroup> messageModelGroups = new ArrayList<>();
-
-        final String senderId = FirebaseAuth.getInstance().getUid();
-        binding.username.setText("Group Chat");
-        final String receiveId = FirebaseAuth.getInstance().getUid();
-
-        final GroupChatAdapter adapter = new GroupChatAdapter(messageModelGroups, this);
-        binding.recyclerview.setAdapter(adapter);
-
+        final ArrayList<MessageModel> messageModels = new ArrayList<>();
+        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, recieveId);
+        binding.recyclerview.setAdapter(chatAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        database.getReference().child("Group Chat").addValueEventListener(new ValueEventListener() {
+        final String senderRoom = senderId + recieveId;
+        final String receiverRoom = recieveId + senderId;
+
+        database.getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageModelGroups.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    MessageModelGroup model = dataSnapshot.getValue(MessageModelGroup.class);
-                    messageModelGroups.add(model);
+                messageModels.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    MessageModel model = snapshot1.getValue(MessageModel.class);
+                    model.setMessageId(snapshot1.getKey());
+                    messageModels.add(model);
                 }
-                adapter.notifyDataSetChanged();
+                chatAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -101,36 +120,25 @@ public class GroupChatActivity extends AppCompatActivity {
 
             }
         });
-
         binding.fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uid = auth.getCurrentUser().getUid();
-                FirebaseDatabase.getInstance().getReference().
-                        child("Users").child(uid).child("username")
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String username = snapshot.getValue(String.class);
-                                String message = binding.message.getText().toString();
-                                MessageModelGroup model = new MessageModelGroup(username, senderId, message);
-                                model.setDatetime(new Date().getTime());
+                String message = binding.message.getText().toString();
+                final MessageModel model = new MessageModel(senderId, message);
+                model.setDatetime(new Date().getTime());
+                binding.message.setText("");
 
-                                binding.message.setText("");
-                                database.getReference().child("Group Chat").push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(GroupChatActivity.this, "Message Send.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                // 在這裡使用名字
-                            }
-
+                database.getReference().child("chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        database.getReference().child("chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                // 當資料取得失敗時要執行的程式碼
+                            public void onSuccess(Void unused) {
+
                             }
                         });
+                    }
+                });
             }
         });
 
@@ -151,9 +159,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-
     }
-
 
     // 跳转到相机或是相册
     @Override
@@ -218,5 +224,4 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
     }
-
 }
