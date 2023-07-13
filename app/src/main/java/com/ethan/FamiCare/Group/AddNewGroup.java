@@ -46,6 +46,7 @@ public class AddNewGroup extends AppCompatActivity {
     CircleImageView editprofileimage;
     ActivityAddNewGroupBinding binding;
     String uid;//使用者的uid
+    String photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,8 @@ public class AddNewGroup extends AppCompatActivity {
                     Toast.makeText(AddNewGroup.this, "請輸入群組名稱 ", Toast.LENGTH_SHORT).show();
                 } else {
                     String groupname = edittext.getText().toString();
-                    FriendModel friend = new FriendModel(groupname);
+                    String type="group";
+                    FriendModel friend = new FriendModel(groupname,photo,type);
                     database.getReference().child("Grouplist").child(uid).push().setValue(friend)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -191,7 +193,7 @@ public class AddNewGroup extends AppCompatActivity {
                 storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        String GroupPhoto = uri.toString();
+                         photo = uri.toString();
 //                        database.getReference().child("Grouplist").child(uid).setValue(GroupPhoto);
                     }
                 });

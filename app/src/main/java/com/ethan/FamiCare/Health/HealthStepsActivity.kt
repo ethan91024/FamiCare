@@ -569,10 +569,10 @@ class HealthStepsActivity : AppCompatActivity() {
 
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (stepCountsByDay14[i] == 0) {
-                    entries.add(BarEntry(entries.size.toFloat(), 0f))
-                } else {
+                if (stepCountsByDay14[i] >0) {
                     entries.add(BarEntry(entries.size.toFloat(), stepCountsByDay14[i].toFloat()))
+                } else {
+                    entries.add(BarEntry(entries.size.toFloat(), 0f))
                 }
             }
 
@@ -618,7 +618,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     val label: String = when (value.toInt()) {
                         0 -> "1"
                         6 -> "7"
-                        13->"14"
+                        13 -> "14"
                         else -> ""
                     }
                     return label
@@ -661,6 +661,8 @@ class HealthStepsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val startDate =
                 currentDisplayedDate.minusWeeks(13)
+            val endDate =
+                currentDisplayedDate
             val steps = aggregateStepsInto14Weeks(
                 client,
                 startDate.toLocalDate().atStartOfDay()
@@ -732,7 +734,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     val label: String = when (value.toInt()) {
                         0 -> "1"
                         6 -> "7"
-                        13->"14"
+                        13 -> "14"
                         else -> ""
                     }
                     return label
@@ -745,9 +747,8 @@ class HealthStepsActivity : AppCompatActivity() {
             val endOfWeek =
                 currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
 
-            date.text = startOfWeek.format(myDateTimeFormatter) + " - " + endOfWeek.format(
-                myDateTimeFormatter
-            )
+            date.text =
+                startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
 
             val leftAxis = barChart.axisLeft
             val rightAxis = barChart.axisRight
@@ -791,7 +792,7 @@ class HealthStepsActivity : AppCompatActivity() {
             )
 
             for (dailyResult in response) {
-                number+=dailyResult.result[StepsRecord.COUNT_TOTAL]?: 0L
+                number += dailyResult.result[StepsRecord.COUNT_TOTAL] ?: 0L
             }
         } catch (exception: Exception) {
             // Handle exception here
@@ -887,7 +888,7 @@ class HealthStepsActivity : AppCompatActivity() {
         client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime,
-    ): List<Long> {
+    ): MutableList<Long> {
         val totalStepsList = MutableList(14) { 0L }
 
         try {
@@ -899,12 +900,12 @@ class HealthStepsActivity : AppCompatActivity() {
                 )
             )
 
-            for (dailyResult in response) {
-                val localDateTime =
-                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
-                val dayOfMonth = localDateTime.dayOfMonth
-                totalStepsList[dayOfMonth - 1] = dailyResult.result[StepsRecord.COUNT_TOTAL] ?: 0L
+            for (i in 0 until 14) {
+                val currentDate = start.plusDays(i.toLong()).toLocalDate()
+                val dailyResult = response.find { it.startTime.toLocalDate() == currentDate }
+                totalStepsList[i] = dailyResult?.result?.get(StepsRecord.COUNT_TOTAL) ?: 0L
             }
+
         } catch (exception: Exception) {
             // Handle exception here
         }
@@ -916,10 +917,10 @@ class HealthStepsActivity : AppCompatActivity() {
         client: HealthConnectClient,
         start: LocalDateTime
     ): List<Double> {
-        val totalStepsList = MutableList(14){0.0}
+        val totalStepsList = MutableList(14) { 0.0 }
         for (i in 0 until 14) {
-            val startDate =start.plusWeeks(i.toLong())
-            val endDate =startDate.plusWeeks(1+i.toLong())
+            val startDate = start.plusWeeks(i.toLong())
+            val endDate = startDate.plusWeeks(1 + i.toLong())
             val steps = aggregateStepsIntoWeeks(
                 client,
                 startDate.toLocalDate().atStartOfDay(),
@@ -927,7 +928,8 @@ class HealthStepsActivity : AppCompatActivity() {
             )
             val totalCount = steps.count { it > 0 }
             if (totalCount > 0) {
-                totalStepsList[i] = String.format("%.2f", steps.sum().toDouble() / totalCount).toDouble()
+                totalStepsList[i] =
+                    String.format("%.2f", steps.sum().toDouble() / totalCount).toDouble()
             } else {
                 totalStepsList[i] = 0.0
             }

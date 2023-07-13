@@ -138,10 +138,10 @@
 
 
                 <Button
-                    android:id="@+id/createGroup"
+                    android:id="@+id/Group"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/deleteGroup"
+                    android:layout_toLeftOf="@id/createGroup"
                     android:layout_weight="45"
                     android:background="@drawable/background_red"
                     android:drawableRight="@android:drawable/ic_menu_myplaces"
@@ -155,7 +155,7 @@
                     android:layout_weight="3" />
 
                 <Button
-                    android:id="@+id/deleteGroup"
+                    android:id="@+id/createGroup"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="45"
