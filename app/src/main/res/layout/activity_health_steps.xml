@@ -23,11 +23,19 @@
             android:textColor="@color/white"
             android:textSize="30dp"
             android:textStyle="bold"
-            tools:layout_editor_absoluteX="16dp">
+            tools:layout_editor_absoluteX="16dp" />
 
-        </TextView>
     </androidx.appcompat.widget.Toolbar>
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="350dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dateText"
@@ -40,16 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintVertical_bias="0.062" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_chart"
-        android:layout_width="350dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="160dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/dayBtn"
@@ -126,7 +124,6 @@
         android:textColor="@color/deepbrown"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
-
 
     <Button
         android:id="@+id/monthBtn"
