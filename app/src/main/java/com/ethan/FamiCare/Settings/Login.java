@@ -107,16 +107,16 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                Toast.makeText(Login.this, "Login successd!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "登入成功!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "登入失敗!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }else{
-                    Toast.makeText(Login.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "登入失敗!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,7 +169,7 @@ public class Login extends AppCompatActivity {
                     }
             } catch (ApiException e) {
                 Log.w("TAG","Sign in fail",e);
-                Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "錯誤", Toast.LENGTH_SHORT).show();
             }
         }
         SignInCredential googleCredential = null;

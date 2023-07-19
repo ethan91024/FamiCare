@@ -81,7 +81,7 @@ public class AddNewGroup extends AppCompatActivity {
                     String groupname = edittext.getText().toString();
                     String type="group";
                     FriendModel friend = new FriendModel(groupname,photo,type);
-                    database.getReference().child("Grouplist").child(uid).push().setValue(friend)
+                    database.getReference().child("Grouplist").child(uid).child(groupname).setValue(friend)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
