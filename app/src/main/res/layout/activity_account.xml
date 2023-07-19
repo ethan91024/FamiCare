@@ -94,169 +94,273 @@
 
     </LinearLayout>
 
+
+    <!--身心狀況跟槓槓-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
+        android:text="身心狀況"
+        android:textColor="#4A4A49"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/deepbrown" />
+
+
     <!--下方個人健康狀況-->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="350dp"
+        android:layout_marginVertical="15dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/background_line_deepbrownt"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_deepbrown_topcorn"
-                    android:text=" 活動"
-                    android:textColor="#F4F1EA"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
                     android:drawableLeft="@drawable/baseline_directions_walk_24"
                     android:gravity="center|left"
                     android:text="  步數"
                     android:textColor="#4A4A49"
-                    android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/deepbrown" />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
                     android:drawableLeft="@drawable/baseline_monitor_heart_24"
                     android:gravity="center|left"
                     android:text="  心率"
                     android:textColor="#4A4A49"
-                    android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/deepbrown" />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
                     android:drawableLeft="@drawable/baseline_speed_24"
                     android:gravity="center|left"
                     android:text="  速度"
                     android:textColor="#4A4A49"
-                    android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/deepbrown" />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
                     android:drawableLeft="@drawable/baseline_local_fire_department_24"
                     android:gravity="center|left"
                     android:text="  卡路里"
                     android:textColor="#4A4A49"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:background="@color/brown" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
 
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/brown" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/background_line_deepbrownt"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_deepbrown_topcorn"
-                    android:text=" 身體狀況"
-                    android:textColor="#F4F1EA"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
                     android:drawableLeft="@drawable/baseline_co2_24"
                     android:gravity="center|left"
                     android:text="  呼吸"
-                    android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/deepbrown" />
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawableLeft="@drawable/baseline_bloodtype_24"
-                    android:gravity="center|left"
-                    android:text="  血氧"
-                    android:textSize="25sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/deepbrown" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
-                    android:gravity="center|left"
-                    android:text="  睡眠(待做)"
-                    android:textSize="25sp" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:background="@color/brown" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
-            <Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/brown" />
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_bloodtype_24"
+                    android:gravity="center|left"
+                    android:text="  血氧"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
+                    android:gravity="center|left"
+                    android:text="  睡眠"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="狀態"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+
+    <!--槓槓跟返回按鈕-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/deepbrown" />
+
+    <Button
+        android:id="@+id/turnback"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/background_line_deepbrownt"
+        android:backgroundTint="@color/deepbrown"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>

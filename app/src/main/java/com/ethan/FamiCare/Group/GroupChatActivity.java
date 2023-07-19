@@ -19,10 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.Firebasecords.ChatAdapter;
 import com.ethan.FamiCare.Firebasecords.MessageModel;
-import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivityGroupChatBinding;
-import com.ethan.FamiCare.databinding.FragmentGroupChatroomBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,8 +86,9 @@ public class GroupChatActivity extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupChatActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(GroupChatActivity.this, MainActivity.class);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
 

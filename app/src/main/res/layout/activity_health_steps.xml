@@ -23,11 +23,19 @@
             android:textColor="@color/white"
             android:textSize="30dp"
             android:textStyle="bold"
-            tools:layout_editor_absoluteX="16dp">
+            tools:layout_editor_absoluteX="16dp" />
 
-        </TextView>
     </androidx.appcompat.widget.Toolbar>
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="350dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dateText"
@@ -41,21 +49,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintVertical_bias="0.062" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_chart"
-        android:layout_width="350dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="160dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/dayBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_width="70dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="96dp"
         android:background="@drawable/background_brown"
         android:text="天"
@@ -67,31 +65,18 @@
 
     <Button
         android:id="@+id/day14Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="88dp"
+        android:layout_width="67dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/background_brown"
         android:text="14天"
         android:textColor="@color/deepbrown"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
-
-    <Button
-        android:id="@+id/week14Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="88dp"
-        android:background="@drawable/background_brown"
-        android:text="14週"
-        android:textColor="@color/deepbrown"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/day14Btn"
-        app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/afterBtn"
@@ -140,25 +125,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
 
-
     <Button
         android:id="@+id/monthBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="50dp"
         android:layout_marginTop="96dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/background_brown"
         android:text="月"
         android:textColor="@color/deepbrown"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/day14Btn"
+        app:layout_constraintStart_toEndOf="@+id/weekBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/weekBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="50dp"
         android:layout_marginTop="96dp"
         android:background="@drawable/background_brown"
         android:text="週"
@@ -166,7 +150,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/monthBtn"
-        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintHorizontal_bias="0.267"
         app:layout_constraintStart_toEndOf="@+id/dayBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -223,7 +207,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/monthBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toEndOf="@+id/weekBtn"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.818"
