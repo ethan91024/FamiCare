@@ -193,8 +193,8 @@ class HealthStepsActivity : AppCompatActivity() {
 
             }
             if (limitLine != null) {
-                val leftAxis: YAxis = barChart.axisLeft
-                leftAxis.removeLimitLine(limitLine)
+                val yAxis: YAxis = barChart.axisRight
+                yAxis.removeLimitLine(limitLine)
                 limitLine = null
             }
             val numXAxisLabels = 24
@@ -311,6 +311,11 @@ class HealthStepsActivity : AppCompatActivity() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
+            if (limitLine != null) {
+                val yAxis: YAxis = barChart.axisRight
+                yAxis.removeLimitLine(limitLine)
+                limitLine = null
+            }
             val startDate =
                 currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
             val endDate =
@@ -432,11 +437,23 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
 
     fun updateChartForMonth() {
+        if (limitLine != null) {
+            val yAxis: YAxis = barChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一個月的資料
         lifecycleScope.launch {
@@ -553,12 +570,24 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
 
     //x軸日期暫時無法
     fun updateChartForDay14() {
+        if (limitLine != null) {
+            val yAxis: YAxis = barChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
@@ -671,6 +700,13 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
