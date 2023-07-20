@@ -28,7 +28,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:background="@drawable/toolbg3">
 
                 <TextView
@@ -38,7 +38,7 @@
                     android:gravity="center"
                     android:text="設定"
                     android:textColor="@color/white"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:textStyle="bold">
 
                 </TextView>

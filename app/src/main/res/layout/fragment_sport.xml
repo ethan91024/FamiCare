@@ -14,7 +14,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:background="@drawable/toolbg3">
 
         <TextView
@@ -22,9 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="壓力分析"
+            android:text="運動舒展"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold">
 
         </TextView>

@@ -1,30 +1,18 @@
 package com.ethan.FamiCare;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.sql.SQLOutput;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ethan.FamiCare.Firebasecords.SymptomModel;
-import com.ethan.FamiCare.Settings.Addfriend;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,9 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
-public class MoodSymptomFragment extends Fragment {
-
+public class SymptomActivity extends AppCompatActivity {
     private Button back;
     CheckBox ckb;
     private Button updatesy;
@@ -50,7 +41,7 @@ public class MoodSymptomFragment extends Fragment {
     };
     private double synumber = 0;
     boolean run;
-    private View mainview;
+
     String Date[] = new String[7];
     int Daylist[] = {R.id.DDAY, R.id.TWOD, R.id.THREED, R.id.FOURD, R.id.FIVED, R.id.SIXD, R.id.SEVEND};
     boolean doublecheck = true;
@@ -66,40 +57,18 @@ public class MoodSymptomFragment extends Fragment {
     private String userid;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mainview = inflater.inflate(R.layout.fragment_mood_symptom, container, false);
-//        updatesy = mainview.findViewById(R.id.updatesy);
-//        updatesy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                    run = true;
-//                    synumber = SymptomCheckBox(mainview, run);
-//                    // one of the radio buttons is checked
-//                //勾選症狀的加分
-//                double td = synumber * 10;//去除小數點後一位
-//                int ti = (int) td;
-//                synumber = (double) ti / 10;
-//
-//                //顯示textview
-////                String sn = "" + synumber;
-////                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
-////                stressnumber.setText(sn);
-//                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//        });
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_symptom);
         //更新標題
-        getActivity().setTitle("症狀勾選");
+        this.setTitle("症狀勾選");
         //日期
         Date = SetDate();
         String date[] = new String[7];
         for (int i = 0; i < 7; i++) {
             String s[] = Date[i].split("/");
             date[i] = s[1] + "/" + s[2];
-            TextView tv = (TextView) mainview.findViewById(Daylist[i]);
+            TextView tv = (TextView) findViewById(Daylist[i]);
             tv.setText(date[i]);
 
         }
@@ -108,12 +77,12 @@ public class MoodSymptomFragment extends Fragment {
 //依照設定格式取得字串
 
 
-        back = mainview.findViewById(R.id.back_to_mood);
+        back = findViewById(R.id.back_to_mood);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 run = true;
-                synumber = SymptomCheckBox(mainview, run);
+                synumber = SymptomCheckBox( run);
                 // one of the radio buttons is checked
                 //勾選症狀的加分
                 double td = synumber * 10;//去除小數點後一位
@@ -122,15 +91,15 @@ public class MoodSymptomFragment extends Fragment {
 
                 //開始存資料
                 for (int i = 0; i < Date.length; i++) {
-                    CheckBox ckb0 = mainview.findViewById(id[i][0]);
+                    CheckBox ckb0 = findViewById(id[i][0]);
                     boolean b0 = ckb0.isChecked();
-                    CheckBox ckb1 = mainview.findViewById(id[i][1]);
+                    CheckBox ckb1 = findViewById(id[i][1]);
                     boolean b1 = ckb1.isChecked();
-                    CheckBox ckb2 = mainview.findViewById(id[i][2]);
+                    CheckBox ckb2 = findViewById(id[i][2]);
                     boolean b2 = ckb2.isChecked();
-                    CheckBox ckb3 = mainview.findViewById(id[i][3]);
+                    CheckBox ckb3 = findViewById(id[i][3]);
                     boolean b3 = ckb3.isChecked();
-                    CheckBox ckb4 = mainview.findViewById(id[i][4]);
+                    CheckBox ckb4 = findViewById(id[i][4]);
                     boolean b4 = ckb4.isChecked();
                     String rs =Date[i].replace("/","_");
                     saveSymptoms(rs, b0, b1, b2, b3, b4,synumber);
@@ -140,14 +109,14 @@ public class MoodSymptomFragment extends Fragment {
 //                String sn = "" + synumber;
 //                TextView stressnumber = (TextView) mainview.findViewById(R.id.number1);
 //                stressnumber.setText(sn);
-                Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SymptomActivity.this, "已更新症狀", Toast.LENGTH_SHORT).show();
 
                 Bundle bundle = new Bundle();
                 bundle.putDouble("symptom", synumber);
                 Fragment MoodFragment = new MoodFragment();
                 MoodFragment.setArguments(bundle);
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
+//                FragmentManager fm = getActivity().getSupportFragmentManager();
+//                fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
 
 
             }
@@ -157,7 +126,7 @@ public class MoodSymptomFragment extends Fragment {
         //firebase
         if (auth.getCurrentUser() == null) {
 
-            Toast.makeText(getContext(), "錯誤", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "錯誤", Toast.LENGTH_SHORT).show();
 
 
         } else {
@@ -180,16 +149,13 @@ public class MoodSymptomFragment extends Fragment {
             });
         }
 
-
-        return mainview;
     }
-
-    public double SymptomCheckBox(View view, boolean run) {
+    public double SymptomCheckBox( boolean run) {
         double checkboxn = 0;
         if (run) {
             for (int i = 0; i < id.length; i++) {
                 for (int j = 0; j < id[i].length; j++) {
-                    ckb = (CheckBox) view.findViewById(id[i][j]);
+                    ckb = (CheckBox) findViewById(id[i][j]);
                     if (ckb.isChecked()) {
                         checkboxn += 0.1;
                     }
@@ -205,11 +171,10 @@ public class MoodSymptomFragment extends Fragment {
 
         return checkboxn;
     }
-
     public String[] SetDate() {
         // 定义好时间字串的格式
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // 修改格式为 "yyyy/MM/dd"
-        Date dt = new Date();
+        java.util.Date dt = new Date();
         // 透過SimpleDateFormat的format方法將Date轉為字串
         String dts = sdf.format(dt);
         try {
@@ -228,18 +193,17 @@ public class MoodSymptomFragment extends Fragment {
             throw new RuntimeException(e);
         }
     }
-
-
-    public void saveSymptoms(String date, boolean headache, boolean dizzy, boolean nausea, boolean tired, boolean stomachache,double pressn) {
+    public void saveSymptoms(String date, boolean headache, boolean dizzy, boolean nausea, boolean tired, boolean stomachache, double pressn) {
         // 将 Checkbox 的状态存储到 Firebase Database
         SymptomModel smodel =new SymptomModel(headache,dizzy,nausea,tired,stomachache,pressn);
         databaseReference.child("symptom").child(userid).child(date).setValue(smodel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getContext(), "已成功更新", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SymptomActivity.this, "已成功更新", Toast.LENGTH_SHORT).show();
             }
         });
-                //.child(date).child("headache").push().setValue(headache);
+
+        //.child(date).child("headache").push().setValue(headache);
 //        databaseReference.child("symptom").push().child(userid).child(date).child("dizzy").push().setValue(dizzy);
 //        databaseReference.child("symptom").push().child(userid).child(date).child("nausea").push().setValue(nausea);
 //        databaseReference.child("symptom").push().child(userid).child(date).child("tired").push().setValue(tired);
