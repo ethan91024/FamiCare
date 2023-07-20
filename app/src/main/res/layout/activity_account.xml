@@ -147,11 +147,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_step"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -177,11 +178,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_heartRate"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -207,11 +209,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_speed"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -237,11 +240,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_calories"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -267,11 +271,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_respiratory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -298,11 +303,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_bloodOxygen"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
@@ -329,11 +335,12 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/status_sleep"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="狀態"
+                    android:text="隱藏"
                     android:textColor="#4A4A49"
                     android:textSize="20sp" />
 
