@@ -32,6 +32,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private TextView username, userid, email;
     private CircleImageView profile_image;
+    private TextView status_step, status_heartRate, status_speed, status_calories, status_respiratory, status_bloodOxygen, status_sleep;
     private Button turnback;
 
     //Firebase
@@ -55,6 +56,14 @@ public class AccountActivity extends AppCompatActivity {
         userid = findViewById(R.id.userid);
         email = findViewById(R.id.emailTextView);
         profile_image = findViewById(R.id.profile_image);
+        //點群組裡或是好友的頭像可以傳到對應的人的個人檔案，再透過個人檔案的id抓取對應的健康資料，從資料庫拿到每個狀態的當日平均，然後評估優|中|劣，放到對應textView
+        status_step = findViewById(R.id.status_step);
+        status_heartRate = findViewById(R.id.status_heartRate);
+        status_speed = findViewById(R.id.status_speed);
+        status_calories = findViewById(R.id.status_calories);
+        status_respiratory = findViewById(R.id.status_respiratory);
+        status_bloodOxygen = findViewById(R.id.status_bloodOxygen);
+        status_sleep = findViewById(R.id.status_sleep);
         turnback = findViewById(R.id.turnback);
 
 
