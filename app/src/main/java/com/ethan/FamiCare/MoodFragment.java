@@ -2,6 +2,7 @@ package com.ethan.FamiCare;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.health.connect.client.HealthConnectClient;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -47,6 +49,7 @@ public class MoodFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
 
     public MoodFragment() {
         // Required empty public constructor
@@ -90,6 +93,8 @@ public class MoodFragment extends Fragment {
     private TextView sport;//nai
 
 
+
+
     //set linechart
     LineChartData lineChartData;
     LineChart lineChart;
@@ -107,6 +112,11 @@ public class MoodFragment extends Fragment {
         ArrayList<String> HeartRateList = getHeaetRatepoints();
         ArrayList<String> SleepList = getSleeppoints();
         ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
+
+
+
+
+
         if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
             TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
             stressnumber.setText("缺少資料無法分析");
@@ -123,8 +133,8 @@ public class MoodFragment extends Fragment {
         analize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.Mood_layout, new MoodSymptomFragment()).addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), SymptomActivity.class);
+                startActivity(intent);
             }
         });
 
