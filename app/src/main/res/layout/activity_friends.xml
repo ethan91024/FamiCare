@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings.FriendsActivity">
+    tools:context=".Settings.FriendsActivity"
+    android:background="@drawable/bkg4">
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="409dp"
-        android:layout_height="50dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,15 +27,17 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="339dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="start"
+                    android:layout_marginHorizontal="10dp"
                     android:orientation="horizontal"
                     android:padding="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints">
+                    tools:ignore="MissingConstraints"
+                    android:background="@drawable/background_lightbrown_corn">
 
                     <TextView
                         android:id="@+id/textView4"
@@ -40,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="允許被加入好友"
-                        android:textColor="#000000"
+                        android:textColor="@color/deepbrown"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -48,19 +53,287 @@
                         android:id="@+id/switch1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:layout_marginEnd="20dp"/>
 
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="start"
+                    android:paddingVertical="8dp"
+                    android:paddingLeft="10dp"
+                    app:layout_constraintStart_toStartOf="@id/textView4"
+                    app:layout_constraintTop_toTopOf="@id/textView4"
+                    tools:ignore="MissingConstraints"
+                    android:text="同意與好友分享健康資訊"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/background_lightbrown_corn">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/steepshow"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="步 數"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/heart_rate"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="心 率"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/speed"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="速 度"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/calories"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="卡 路 里"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"
+                            />
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/brea"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="呼 吸"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/oxygen"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="血 氧"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@color/brown" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="@id/textView4"
+                        app:layout_constraintTop_toTopOf="@id/textView4"
+                        tools:ignore="MissingConstraints">
+
+                        <TextView
+                            android:id="@+id/sleep"
+                            android:layout_width="131dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="睡 眠"
+                            android:textColor="@color/deepbrown"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
         </FrameLayout>
     </ScrollView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="663dp"
         android:layout_below="@+id/scroll"
-        />
+        android:layout_marginTop="28dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +347,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:background="#FF9900">
+        android:background="#C1A988">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -95,7 +368,7 @@
                 android:id="@+id/username"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:text="好友列表"
+                android:text="好友設置"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
