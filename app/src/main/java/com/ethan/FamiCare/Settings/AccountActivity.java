@@ -56,7 +56,8 @@ public class AccountActivity extends AppCompatActivity {
         userid = findViewById(R.id.userid);
         email = findViewById(R.id.emailTextView);
         profile_image = findViewById(R.id.profile_image);
-        //點群組裡或是好友的頭像可以傳到對應的人的個人檔案，再透過個人檔案的id抓取對應的健康資料，從資料庫拿到每個狀態的當日平均，然後評估優|中|劣，放到對應textView
+
+        // 點群組裡或是好友的頭像可以傳到對應的人的個人檔案，再透過個人檔案的id抓取對應的健康資料，從資料庫拿到每個狀態的當日平均，然後評估 1:待加油|2:及格|3:滿分 ，放到對應textView
         status_step = findViewById(R.id.status_step);
         status_heartRate = findViewById(R.id.status_heartRate);
         status_speed = findViewById(R.id.status_speed);
@@ -141,6 +142,47 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
+        // 獲取 Status 資料表中的數據
+        DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("Status").child(uid);
+        statusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // 如果該 UserId 在 Status 資料表中存在
+                    int statusStep = snapshot.child("status_step").getValue(Integer.class);
+                    int statusHeartRate = snapshot.child("status_heartRate").getValue(Integer.class);
+                    int statusSpeed = snapshot.child("status_speed").getValue(Integer.class);
+                    int statusCalories = snapshot.child("status_calories").getValue(Integer.class);
+                    int statusRespiratory = snapshot.child("status_respiratory").getValue(Integer.class);
+                    int statusBloodOxygen = snapshot.child("status_bloodOxygen").getValue(Integer.class);
+                    int statusSleep = snapshot.child("status_sleep").getValue(Integer.class);
+
+                    // 更新對應的 TextView
+                    status_step.setText(getStatusText(statusStep));
+                    status_heartRate.setText(getStatusText(statusHeartRate));
+                    status_speed.setText(getStatusText(statusSpeed));
+                    status_calories.setText(getStatusText(statusCalories));
+                    status_respiratory.setText(getStatusText(statusRespiratory));
+                    status_bloodOxygen.setText(getStatusText(statusBloodOxygen));
+                    status_sleep.setText(getStatusText(statusSleep));
+                } else {
+                    // 如果該 UserId 在 Status 資料表中不存在，可以設置默認值或顯示 "無資料"
+                    status_step.setText("無資料");
+                    status_heartRate.setText("無資料");
+                    status_speed.setText("無資料");
+                    status_calories.setText("無資料");
+                    status_respiratory.setText("無資料");
+                    status_bloodOxygen.setText("無資料");
+                    status_sleep.setText("無資料");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // 處理錯誤情況
+            }
+        });
+
         //返回按鈕
         turnback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +251,6 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-
     private void UploadImage(Uri selectedImageUri) {
         //連接firebase storage
         StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
@@ -228,6 +269,22 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    // Helper 方法來根據數值返回對應的狀態文字
+    private String getStatusText(int status) {
+        switch (status) {
+            case 0:
+                return "無資料";
+            case 1:
+                return "待加油";
+            case 2:
+                return "及格";
+            case 3:
+                return "滿分";
+            default:
+                return "未知狀態";
+        }
     }
 
 }

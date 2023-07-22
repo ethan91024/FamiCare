@@ -81,12 +81,12 @@
                     android:textColor="#6C6C6C"
                     android:textSize="15sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/baseline_keyboard_arrow_right_24"
-                    app:tint="#808080" />
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:src="@drawable/baseline_keyboard_arrow_right_24"-->
+<!--                    app:tint="#808080" />-->
 
             </LinearLayout>
 
