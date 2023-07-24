@@ -48,7 +48,7 @@ public class MoodSymptomFragment extends Fragment {
             {R.id.headache_Six, R.id.dizzy_Six, R.id.nausea_Six, R.id.tried_Six, R.id.stomachache_Six},
             {R.id.headache_Seven, R.id.dizzy_Seven, R.id.nausea_Seven, R.id.tried_Seven, R.id.stomachache_Seven}
     };
-    private double synumber = 0;
+    private double []synumber =new double[7];
     boolean run;
     private View mainview;
     String Date[] = new String[7];
@@ -115,10 +115,10 @@ public class MoodSymptomFragment extends Fragment {
                 run = true;
                 synumber = SymptomCheckBox(mainview, run);
                 // one of the radio buttons is checked
-                //勾選症狀的加分
-                double td = synumber * 10;//去除小數點後一位
-                int ti = (int) td;
-                synumber = (double) ti / 10;
+//                //勾選症狀的加分
+//                double td = synumber * 10;//去除小數點後一位
+//                int ti = (int) td;
+//                synumber = (double) ti / 10;
 
                 //開始存資料
                 for (int i = 0; i < Date.length; i++) {
@@ -133,7 +133,7 @@ public class MoodSymptomFragment extends Fragment {
                     CheckBox ckb4 = mainview.findViewById(id[i][4]);
                     boolean b4 = ckb4.isChecked();
                     String rs =Date[i].replace("/","_");
-                    saveSymptoms(rs, b0, b1, b2, b3, b4,synumber);
+                    saveSymptoms(rs, b0, b1, b2, b3, b4,synumber[i]);
                 }
 
                 //顯示textview
@@ -142,10 +142,10 @@ public class MoodSymptomFragment extends Fragment {
 //                stressnumber.setText(sn);
                 Toast.makeText(getContext(), "已更新症狀", Toast.LENGTH_SHORT).show();
 
-                Bundle bundle = new Bundle();
-                bundle.putDouble("symptom", synumber);
+//                Bundle bundle = new Bundle();
+//                bundle.putDouble("symptom", synumber);
                 Fragment MoodFragment = new MoodFragment();
-                MoodFragment.setArguments(bundle);
+//                MoodFragment.setArguments(bundle);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.Mood_Symptom_layout, MoodFragment).addToBackStack(null).commit();
 
@@ -184,16 +184,17 @@ public class MoodSymptomFragment extends Fragment {
         return mainview;
     }
 
-    public double SymptomCheckBox(View view, boolean run) {
-        double checkboxn = 0;
+    public double []SymptomCheckBox(View view, boolean run) {
+        double []checkboxn = new double[7];
         if (run) {
             for (int i = 0; i < id.length; i++) {
                 for (int j = 0; j < id[i].length; j++) {
                     ckb = (CheckBox) view.findViewById(id[i][j]);
                     if (ckb.isChecked()) {
-                        checkboxn += 0.1;
+                        checkboxn[i] += 0.1;
                     }
                 }
+                System.out.println(checkboxn[i]);
 
             }
         }

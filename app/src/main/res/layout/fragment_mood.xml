@@ -163,6 +163,27 @@
                     <TextView
                         android:id="@+id/Advice"
                         android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:contextClickable="true"
+                        android:gravity="left|center_vertical"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        />
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:text="舒緩方式"
+                        android:textColor="#b85135"
+                        android:textSize="35dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/Menditation"
+                        android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:background="@drawable/meditation_background"
                         android:contextClickable="true"
