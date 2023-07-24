@@ -47,7 +47,7 @@ class HealthSpeedActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_health_heart_rate)
+        setContentView(R.layout.activity_health_speed)
         client = HealthConnectClient.getOrCreate(this)
         lineChart = findViewById(R.id.line_chart)
         val beforeBtn = findViewById<Button>(R.id.beforeBtn)
