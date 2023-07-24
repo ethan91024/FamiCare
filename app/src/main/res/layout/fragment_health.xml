@@ -201,7 +201,7 @@
                     android:clickable="true"
                     android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
                     android:gravity="center|left"
-                    android:text="  睡眠(待做)"
+                    android:text="  睡眠"
                     android:textSize="25sp"
                     android:textColor="#4A4A49"/>
 

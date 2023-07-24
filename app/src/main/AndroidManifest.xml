@@ -84,12 +84,12 @@
             android:name=".Group.AddNewGroup"
             android:exported="false" />
         <activity
-            android:name=".Breathe"
+            android:name=".Mood.Breathe"
             android:exported="false"
             android:label="呼吸舒緩"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Meditation"
+            android:name=".Mood.Meditation"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="冥想"

@@ -1,6 +1,5 @@
 package com.ethan.FamiCare.Health
 
-
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
@@ -35,7 +34,6 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import java.util.*
 
-
 class HealthStepsActivity : AppCompatActivity() {
     val myDateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
@@ -48,7 +46,6 @@ class HealthStepsActivity : AppCompatActivity() {
     lateinit var client: HealthConnectClient
     lateinit var steps: List<StepsRecord>
     lateinit var barChart: BarChart
-
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -188,7 +185,7 @@ class HealthStepsActivity : AppCompatActivity() {
 
     private fun updateChartForDay() {
         lifecycleScope.launch {
-            steps = getDailyStepCounts(client)
+            steps = getDailyStepCounts()
             if (steps.isEmpty()) {
 
             }
@@ -288,7 +285,6 @@ class HealthStepsActivity : AppCompatActivity() {
             barChart.data.barWidth = 0.7f
 
             val aggregateStepsToday = aggregation(
-                client,
                 currentDisplayedDate.toLocalDate().atStartOfDay(),
                 currentDisplayedDate.toLocalDate().atTime(LocalTime.MAX)
             )
@@ -321,7 +317,6 @@ class HealthStepsActivity : AppCompatActivity() {
             val endDate =
                 currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
             val steps = aggregateStepsIntoWeeks(
-                client,
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
             )
@@ -461,7 +456,6 @@ class HealthStepsActivity : AppCompatActivity() {
             val endDate =
                 currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
             val steps = aggregateStepsIntoMonths(
-                client,
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX),
                 currentDisplayedDate.month.length(false)
@@ -596,7 +590,6 @@ class HealthStepsActivity : AppCompatActivity() {
             val endDate =
                 currentDisplayedDate
             val steps = aggregateStepsInto14Days(
-                client,
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
             )
@@ -712,7 +705,6 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun aggregation(
-        client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
     ): Long {
@@ -737,7 +729,6 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun getDailyStepCounts(//一天24筆的資料
-        client: HealthConnectClient,
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
         end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
     ): List<StepsRecord> {
@@ -761,7 +752,6 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateStepsIntoWeeks(
-        client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime
     ): List<Long> {
@@ -790,7 +780,6 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateStepsIntoMonths(
-        client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime,
         length: Int
@@ -820,7 +809,6 @@ class HealthStepsActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateStepsInto14Days(
-        client: HealthConnectClient,
         start: LocalDateTime,
         end: LocalDateTime,
     ): MutableList<Long> {
