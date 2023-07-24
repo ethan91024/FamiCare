@@ -56,7 +56,7 @@ class HealthSpeedActivity : AppCompatActivity() {
         val weekBtn = findViewById<Button>(R.id.weekBtn)
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
-        val week14Btn = findViewById<Button>(R.id.week14Btn)
+//        val week14Btn = findViewById<Button>(R.id.week14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
@@ -144,15 +144,15 @@ class HealthSpeedActivity : AppCompatActivity() {
             intervalTextView.text = null
             updateChartForDay14()
         }
-        week14Btn.setOnClickListener {
-            showingDayData = false
-            showingWeekData = false
-            showingMonthData = false
-            showingDay14Data = false
-            showingWeek14Data = true
-            intervalTextView.text = null
-            updateChartForWeek14()
-        }
+//        week14Btn.setOnClickListener {
+//            showingDayData = false
+//            showingWeekData = false
+//            showingMonthData = false
+//            showingDay14Data = false
+//            showingWeek14Data = true
+//            intervalTextView.text = null
+//            updateChartForWeek14()
+//        }
 
         updateChart()
     }

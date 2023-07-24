@@ -39,14 +39,11 @@ import java.util.*
 class HealthStepsActivity : AppCompatActivity() {
     val myDateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
-    val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
-    val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
     var currentDisplayedDate: LocalDateTime = LocalDateTime.now()
     var showingDayData = true
     var showingWeekData = false
     var showingMonthData = false
     var showingDay14Data = false
-    var showingWeek14Data = false
     var limitLine: LimitLine? = null
     lateinit var client: HealthConnectClient
     lateinit var steps: List<StepsRecord>
@@ -72,7 +69,6 @@ class HealthStepsActivity : AppCompatActivity() {
         val weekBtn = findViewById<Button>(R.id.weekBtn)
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
-        val week14Btn = findViewById<Button>(R.id.week14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
 
         barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
@@ -122,8 +118,6 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
             } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            } else if (showingWeek14Data) {
-                currentDisplayedDate = currentDisplayedDate.minusWeeks(14)
             } else {
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
@@ -137,8 +131,6 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
             } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            } else if (showingWeek14Data) {
-                currentDisplayedDate = currentDisplayedDate.plusWeeks(14)
             } else {
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
@@ -150,7 +142,6 @@ class HealthStepsActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = false
             showingDay14Data = false
-            showingWeek14Data = false
             updateChartForDay()
         }
 
@@ -159,7 +150,6 @@ class HealthStepsActivity : AppCompatActivity() {
             showingWeekData = true
             showingMonthData = false
             showingDay14Data = false
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForWeek()
         }
@@ -168,7 +158,6 @@ class HealthStepsActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = true
             showingDay14Data = false
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForMonth()
         }
@@ -178,18 +167,8 @@ class HealthStepsActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = false
             showingDay14Data = true
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForDay14()
-        }
-        week14Btn.setOnClickListener {
-            showingDayData = false
-            showingWeekData = false
-            showingMonthData = false
-            showingDay14Data = false
-            showingWeek14Data = true
-            intervalTextView.text = null
-            updateChartForWeek14()
         }
 
         updateChart()
@@ -202,8 +181,6 @@ class HealthStepsActivity : AppCompatActivity() {
             updateChartForMonth()
         } else if (showingDay14Data) {
             updateChartForDay14()
-        } else if (showingWeek14Data) {
-            updateChartForWeek14()
         } else {
             updateChartForDay()
         }
@@ -216,8 +193,8 @@ class HealthStepsActivity : AppCompatActivity() {
 
             }
             if (limitLine != null) {
-                val leftAxis: YAxis = barChart.axisLeft
-                leftAxis.removeLimitLine(limitLine)
+                val yAxis: YAxis = barChart.axisRight
+                yAxis.removeLimitLine(limitLine)
                 limitLine = null
             }
             val numXAxisLabels = 24
@@ -334,6 +311,11 @@ class HealthStepsActivity : AppCompatActivity() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
+            if (limitLine != null) {
+                val yAxis: YAxis = barChart.axisRight
+                yAxis.removeLimitLine(limitLine)
+                limitLine = null
+            }
             val startDate =
                 currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
             val endDate =
@@ -455,11 +437,23 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
 
     fun updateChartForMonth() {
+        if (limitLine != null) {
+            val yAxis: YAxis = barChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一個月的資料
         lifecycleScope.launch {
@@ -576,12 +570,24 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             barChart.invalidate()
         }
     }
 
     //x軸日期暫時無法
     fun updateChartForDay14() {
+        if (limitLine != null) {
+            val yAxis: YAxis = barChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
@@ -694,127 +700,13 @@ class HealthStepsActivity : AppCompatActivity() {
                     String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
             }
             avgText.text = "平均:"
-            barChart.invalidate()
-        }
-    }
 
-    fun updateChartForWeek14() {
-        val intervalTextView: TextView = findViewById(R.id.timeTF)
-        lifecycleScope.launch {
-            val startDate =
-                currentDisplayedDate.minusWeeks(13)
-            val endDate =
-                currentDisplayedDate
-            val steps = aggregateStepsInto14Weeks(
-                client,
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
-            )
-            if (steps.isEmpty()) {
+            val limitValue = String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
 
-            }
-
-            val numXAxisLabels = 14  // 修改為七筆資料
-            val stepCountsBy14Weeks = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
-
-            steps.forEachIndexed { index, step ->
-                if (index < numXAxisLabels && step != null) { // 添加索引檢查
-                    stepCountsBy14Weeks[index] = step.toInt()
-                }
-            }
-
-            val maxstep = stepCountsBy14Weeks.toIntArray().max()
-            val top = (maxstep / 1000 + 1) * 1000
-
-            val entries: MutableList<BarEntry> = ArrayList()
-            for (i in 0 until numXAxisLabels) {
-                if (stepCountsBy14Weeks[i] == 0) {
-                    entries.add(BarEntry(i.toFloat(), 0f))
-                } else {
-                    entries.add(BarEntry(i.toFloat(), stepCountsBy14Weeks[i].toFloat()))
-                }
-            }
-
-            val dataSet = BarDataSet(entries, "步數")
-            val data = BarData(dataSet)
-
-            dataSet.color = Color.BLUE
-            dataSet.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return if (value == 0f) "" else value.toInt().toString()
-                }
-            }
-            dataSet.setDrawValues(true)
-
-            val yAxis = barChart.axisRight
-            val yAxisLeft: YAxis = barChart.axisLeft
-            yAxis.setDrawAxisLine(true)
-            dataSet.axisDependency = YAxis.AxisDependency.RIGHT
-            yAxisLeft.isEnabled = false
-            yAxis.isEnabled = true
-            yAxis.axisMinimum = 0f
-            yAxis.axisMaximum = top.toFloat()
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
-            yAxis.labelCount = 5
-            yAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return value.toInt().toString()
-                }
-            }
-
-            val xAxis = barChart.xAxis
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.setDrawGridLines(false)
-            xAxis.setCenterAxisLabels(false)
-            xAxis.isGranularityEnabled = true
-            xAxis.axisMinimum = -0.5f
-            xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
-            xAxis.granularity = 1f
-            xAxis.labelCount = numXAxisLabels
-            xAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    val label: String = when (value.toInt()) {
-                        0 -> "1"
-                        6 -> "7"
-                        13 -> "14"
-                        else -> ""
-                    }
-                    return label
-                }
-            }
-
-            val date = findViewById<TextView>(R.id.dateText)
-            val startOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-            val endOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-
-            date.text =
-                startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
-
-            val leftAxis = barChart.axisLeft
-            val rightAxis = barChart.axisRight
-            leftAxis.axisMinimum = 0f
-            rightAxis.axisMinimum = 0f
-            barChart.description.isEnabled = false
-            barChart.data = data
-            barChart.setFitBars(true)
-            barChart.axisRight.isGranularityEnabled = true
-            barChart.axisRight.granularity = 1f
-            barChart.data.barWidth = 0.7f
-
-            intervalTextView.text = ""
-
-            val average: TextView = findViewById(R.id.averageTF)
-            val avgText: TextView = findViewById(R.id.avgTV)
-            if (steps.count { it > 0 } == 0) {
-                average.text = "0.0"
-            } else {
-                average.text =
-                    String.format("%.2f", steps.sum().toDouble() / steps.count { it > 0 })
-            }
-            avgText.text = "平均:"
             barChart.invalidate()
         }
     }
@@ -953,30 +845,6 @@ class HealthStepsActivity : AppCompatActivity() {
             // Handle exception here
         }
 
-        return totalStepsList
-    }
-
-    suspend fun aggregateStepsInto14Weeks(
-        client: HealthConnectClient,
-        start: LocalDateTime,
-        end: LocalDateTime
-    ): List<Double> {
-        val totalStepsList = MutableList(14) { 0.0 }
-        for (i in 0 until 14) {
-            val startDate = start.plusWeeks(i.toLong())
-            val endDate = end.plusWeeks(1)
-            val steps = aggregateStepsIntoWeeks(
-                client,
-                startDate,
-                endDate
-            )
-            val totalCount = steps.count { it > 0 }
-            if (totalCount > 0) {
-                totalStepsList[i] = steps.sum().toDouble() / totalCount
-            } else {
-                totalStepsList[i] = 0.0
-            }
-        }
         return totalStepsList
     }
 }

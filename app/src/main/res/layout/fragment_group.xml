@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:background="@drawable/toolbg3">
 
         <TextView
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="群組"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold">
 
         </TextView>
@@ -63,7 +63,8 @@
             android:onClick="chatgpt"
             android:text="ChatGPT"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -106,9 +107,11 @@
                 android:background="@drawable/background_red"
                 android:drawableRight="@android:drawable/ic_menu_search"
                 android:onClick="search"
-                android:text="搜尋"
+                android:text=" 搜尋"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"/>
 
             <EditText
                 android:layout_width="wrap_content"
@@ -147,7 +150,8 @@
                     android:drawableRight="@android:drawable/ic_menu_myplaces"
                     android:text="開啟群組"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -163,7 +167,8 @@
                     android:drawableRight="@android:drawable/ic_menu_add"
                     android:text="新增群組"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
             </LinearLayout>
 
 
@@ -177,7 +182,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="6.5dp">
+        android:layout_height="6dp">
 
     </Space>
 

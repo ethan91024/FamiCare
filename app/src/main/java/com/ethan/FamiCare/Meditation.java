@@ -27,7 +27,7 @@ public class Meditation extends AppCompatActivity {
 
     private AnimationDrawable seaAnimation;
     CountThread t = null;
-//    int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
+    //    int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
     MediaPlayer sea_sound ;
     private Button back;
     private EditText timer;

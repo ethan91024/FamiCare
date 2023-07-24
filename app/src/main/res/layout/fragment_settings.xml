@@ -5,140 +5,136 @@
     android:id="@+id/setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bkg1"
     android:orientation="vertical"
-    tools:context=".Settings.SettingsFragment"
-    android:background="@drawable/bkg1">
+    tools:context=".Settings.SettingsFragment">
     <!--   android:background="@drawable/famicare_yellow_img"-->
 
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-               >
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                android:layout_height="45dp"
+                android:background="@drawable/toolbg3">
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/toolbg3">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="設定"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="設定"
-                        android:textColor="@color/white"
-                        android:textSize="30dp"
-                        android:textStyle="bold">
+                </TextView>
 
-                    </TextView>
+            </androidx.appcompat.widget.Toolbar>
 
-                </androidx.appcompat.widget.Toolbar>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:orientation="vertical"
-                android:background="@drawable/background_line_deepbrown"
                 android:layout_marginHorizontal="15dp"
-                >
+                android:background="@drawable/background_line_deepbrown"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
+                    android:background="@drawable/background_deepbrown_topcorn"
                     android:text=" 個人設定"
                     android:textColor="#F4F1EA"
-                    android:background="@drawable/background_deepbrown_topcorn"
-                    />
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_marginHorizontal="8dp"
-                    >
-
-
-                    <TextView
-                        android:id="@+id/accountBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="@drawable/background_brown"
-                        android:clickable="true"
-                        android:drawableLeft="@drawable/baseline_description_24"
-                        android:gravity="center|left"
-                        android:text="  我的帳號"
-                        android:textSize="25sp"
-                    />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="7dp" />
-
-                    <TextView
-                        android:id="@+id/friendsBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="@drawable/background_brown"
-                        android:clickable="true"
-                        android:drawableLeft="@drawable/baseline_people_alt_24"
-                        android:gravity="center|left"
-                        android:text="  好友"
-                        android:textSize="25sp" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="7dp" />
-
-                    <TextView
-                        android:id="@+id/notificationBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="@drawable/background_brown"
-                        android:clickable="true"
-                        android:drawableLeft="@drawable/baseline_notifications_24"
-                        android:gravity="center|left"
-                        android:text="  提醒"
-                        android:textSize="25sp" />
-
-                </LinearLayout>
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:id="@+id/setting_bkg"
+                        android:layout_marginHorizontal="8dp"
                         android:layout_weight="50"
-                        >
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/accountBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@drawable/background_brown"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/baseline_description_24"
+                            android:gravity="center|left"
+                            android:text="  我的帳號"
+                            android:textSize="25sp" />
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="7dp" />
+
+                        <TextView
+                            android:id="@+id/friendsBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@drawable/background_brown"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/baseline_people_alt_24"
+                            android:gravity="center|left"
+                            android:text="  好友"
+                            android:textSize="25sp" />
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="7dp" />
+
+                        <TextView
+                            android:id="@+id/notificationBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@drawable/background_brown"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/baseline_notifications_24"
+                            android:gravity="center|left"
+                            android:text="  提醒"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/setting_bkg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="230dp"
-                            android:background="@drawable/set_bkg2"/>
+                            android:background="@drawable/set_bkg2" />
 
                     </LinearLayout>
 
@@ -146,108 +142,106 @@
 
             </LinearLayout>
 
-                <Space
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/background_line_deepbrown"
+                android:orientation="vertical">
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="45dp"
+                    android:background="@drawable/background_deepbrown_topcorn"
+                    android:text=" 帳號設定"
+                    android:textColor="#F4F1EA"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/background_line_deepbrown"
-                    android:layout_marginHorizontal="15dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        android:text=" 帳號設定"
-                        android:textColor="#F4F1EA"
-                        android:background="@drawable/background_deepbrown_topcorn"
-                        />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        >
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="50"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_marginHorizontal="8dp"
-                            >
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_weight="50"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
 
-                            <Button
-                                android:id="@+id/login"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:background="@drawable/background_brown"
-                                android:gravity="center|left"
-                                android:text=" 登入"
-                                android:textSize="25sp"
+                        <Button
+                            android:id="@+id/login"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@drawable/background_brown"
+                            android:gravity="center|left"
+                            android:text=" 登入"
+                            android:textSize="25sp"
 
-                             />
+                            />
 
-                            <Space
-                                android:layout_width="match_parent"
-                                android:layout_height="7dp" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="7dp" />
 
-                            <Button
-                                android:id="@+id/signup"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_alignParentBottom="true"
-                                android:layout_toRightOf="@id/login"
-                                android:background="@drawable/background_brown"
-                                android:text=" 註冊帳號"
-                                android:textSize="25sp"
-                                android:gravity="center|left"/>
+                        <Button
+                            android:id="@+id/signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toRightOf="@id/login"
+                            android:background="@drawable/background_brown"
+                            android:gravity="center|left"
+                            android:text=" 註冊帳號"
+                            android:textSize="25sp" />
 
-                            <Space
-                                android:layout_width="match_parent"
-                                android:layout_height="7dp" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="7dp" />
 
-                            <Button
-                                android:id="@+id/logout"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:background="@drawable/background_brown"
-                                android:text=" 登出"
-                                android:textSize="25sp"
-                                android:gravity="center|left"/>
+                        <Button
+                            android:id="@+id/logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@drawable/background_brown"
+                            android:gravity="center|left"
+                            android:text=" 登出"
+                            android:textSize="25sp" />
 
-                        </LinearLayout>
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="50"
-                            android:orientation="vertical"
-                            android:id="@+id/setting_bkg2"
-                            >
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="232dp"
-                                android:background="@drawable/set_bkg"/>
+                    <LinearLayout
+                        android:id="@+id/setting_bkg2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="232dp"
+                            android:background="@drawable/set_bkg" />
 
-                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/brown"/>
             </LinearLayout>
-        </ScrollView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/brown" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

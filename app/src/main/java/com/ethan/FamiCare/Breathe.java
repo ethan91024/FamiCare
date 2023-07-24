@@ -50,6 +50,7 @@ public class Breathe extends AppCompatActivity {
         mediaController.setVisibility(View.INVISIBLE);
 //        gift_ani = findViewById(R.id.gift_ani);
 //        gift_ani.setBackgroundResource(R.drawable.gift_animation);
+
         //跳出介面
         dialog = new Dialog(Breathe.this);
 
