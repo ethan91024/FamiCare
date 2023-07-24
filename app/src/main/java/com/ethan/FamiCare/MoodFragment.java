@@ -636,7 +636,7 @@ public class MoodFragment extends Fragment {
 
                                     //分析症狀資料且更新緩解建議
                                     int max = Arrays.stream(smax).max().getAsInt();
-                                    if(totalheadache==max ){
+                                    if(totalheadache == max ){
                                         //跳轉運動介面
                                         advice= mainview.findViewById(R.id.Advice);
                                         advice.setText("  運動");
