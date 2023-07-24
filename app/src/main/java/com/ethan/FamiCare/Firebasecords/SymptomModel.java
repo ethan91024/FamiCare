@@ -8,13 +8,26 @@ public class SymptomModel {
     boolean stomachache;
     double symptomN;
 
-    public SymptomModel(  boolean headache,boolean dizzy,boolean nausea,boolean tired,boolean stomachache,double pn){
+
+    public SymptomModel(  boolean headache,boolean dizzy,boolean nausea,boolean tired,boolean stomachache,double symptomN){
         this.headache=headache;
         this.dizzy=dizzy;
         this.nausea =nausea;
         this.tired=tired;
         this.stomachache=stomachache;
-        this.symptomN=pn;
+        this.symptomN=symptomN;
+
+    }
+
+
+
+
+    public double getSymptomN() {
+        return symptomN;
+    }
+
+    public void setSymptomN(double symptomN) {
+        this.symptomN = symptomN;
     }
 
     public boolean isHeadache() {
@@ -45,8 +58,8 @@ public class SymptomModel {
         return symptomN;
     }
 
-    public void setPressn(double pressn) {
-        this.symptomN = pressn;
+    public void setPressn(double symptomN) {
+        this.symptomN = symptomN;
     }
 
     public boolean isTired() {

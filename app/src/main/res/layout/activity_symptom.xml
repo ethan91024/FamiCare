@@ -50,12 +50,9 @@
                                 android:layout_height="50dp"
                                 android:gravity="center"
                                 android:text="日期選擇"
-                                android:textColor="#0000"
-                                android:textSize="19dp"
-                                android:textStyle="bold">
-
-
-                            </TextView>
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                android:textStyle="bold"/>
 
 
                             <View
@@ -288,7 +285,7 @@
 
 
                                     <CheckBox
-                                        android:id="@+id/tried"
+                                        android:id="@+id/tired"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
@@ -337,7 +334,7 @@
                                         />
 
                                     <CheckBox
-                                        android:id="@+id/tried_Two"
+                                        android:id="@+id/tired_Two"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
@@ -385,7 +382,7 @@
                                         />
 
                                     <CheckBox
-                                        android:id="@+id/tried_Three"
+                                        android:id="@+id/tired_Three"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
@@ -435,7 +432,7 @@
                                         />
 
                                     <CheckBox
-                                        android:id="@+id/tried_Four"
+                                        android:id="@+id/tired_Four"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
@@ -485,7 +482,7 @@
                                         />
 
                                     <CheckBox
-                                        android:id="@+id/tried_Five"
+                                        android:id="@+id/tired_Five"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
@@ -535,9 +532,9 @@
                                         />
 
                                     <CheckBox
-                                        android:id="@+id/tried_Six"
+                                        android:id="@+id/tired_Six"
                                         android:layout_width="50dp"
-                                        android:layout_height="48dp"
+                                        android:layout_height="match_parent"
 
                                         />
 
@@ -587,7 +584,7 @@
 
 
                                     <CheckBox
-                                        android:id="@+id/tried_Seven"
+                                        android:id="@+id/tired_Seven"
                                         android:layout_width="50dp"
                                         android:layout_height="48dp"
 
