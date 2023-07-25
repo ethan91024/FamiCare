@@ -10,6 +10,8 @@ public class Users {
     private String password;
     private String token;
     private String id;
+    private String fuid;
+    private String groupuid;
 
     public Users() {
 
@@ -42,6 +44,21 @@ public class Users {
         this.id = id;
     }
 
+    public String getGroupuid() {
+        return groupuid;
+    }
+
+    public void setGroupuid(String groupuid) {
+        this.groupuid = groupuid;
+    }
+
+    public String getFuid() {
+        return fuid;
+    }
+
+    public void setFuid(String fuid) {
+        this.fuid = fuid;
+    }
 
     public String getId() {
         return id;
