@@ -4,67 +4,341 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bkg1"
+    android:orientation="vertical"
     tools:context=".Settings.Friends_interface">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="72dp"
-        android:layout_height="66dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
-        android:src="@drawable/avatar_b"
-        app:civ_border_width="2dp" />
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
+    <!--頭像跟名稱-->
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="19dp"
-        android:layout_toEndOf="@+id/profile_image"
-        android:text="好友名稱"
-        android:textColor="@color/dark"
-        android:textSize="24sp" />
-    <TextView
-        android:id="@+id/userid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_image"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="-52dp"
-        android:layout_toEndOf="@+id/username"
-        android:layout_toRightOf="@id/username"
-        android:text="#好友ID"
-        android:textColor="@color/dark"
-        android:textSize="24sp" />
-    <ImageView
-        android:id="@+id/chatimage"
-        android:layout_marginLeft="3dp"
-        android:layout_width="72dp"
-        android:layout_height="66dp"
-        android:layout_below="@+id/profile_image"
-        android:src="@drawable/chat_foreground"
-        />
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/background_line_deepbrown"
+        android:orientation="horizontal">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="5dp"
+            android:padding="5dp"
+            android:src="@drawable/avatar_b"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="使用者名稱"
+                android:textColor="@color/dark"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/userid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="#使用者ID"
+                android:textColor="@color/dark"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/chatimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/chat_foreground" />
+
+    </LinearLayout>
+
+
+    <!--身心狀況跟槓槓-->
     <TextView
-        android:id="@+id/chattext"
-        android:layout_width="72dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chatimage"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:text="聊天"
-        android:textColor="@color/dark"
-        android:textSize="20sp" />
-</RelativeLayout>
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
+        android:text="身心狀況"
+        android:textColor="#4A4A49"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/deepbrown" />
+
+
+    <!--下方個人健康狀況-->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginVertical="15dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_directions_walk_24"
+                    android:gravity="center|left"
+                    android:text="  步數"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_step"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_monitor_heart_24"
+                    android:gravity="center|left"
+                    android:text="  心率"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_heartRate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_speed_24"
+                    android:gravity="center|left"
+                    android:text="  速度"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_local_fire_department_24"
+                    android:gravity="center|left"
+                    android:text="  卡路里"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_calories"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_co2_24"
+                    android:gravity="center|left"
+                    android:text="  呼吸"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_respiratory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_bloodtype_24"
+                    android:gravity="center|left"
+                    android:text="  血氧"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_bloodOxygen"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_line_deepbrownt"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:drawableLeft="@drawable/baseline_airline_seat_individual_suite_24"
+                    android:gravity="center|left"
+                    android:text="  睡眠"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/status_sleep"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="隱藏"
+                    android:textColor="#4A4A49"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!--槓槓跟返回按鈕-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/deepbrown" />
+
+    <Button
+        android:id="@+id/turnback"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/background_line_deepbrownt"
+        android:backgroundTint="@color/deepbrown"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
 </LinearLayout>

@@ -2,24 +2,20 @@ package com.ethan.FamiCare.Settings;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ethan.FamiCare.Firebasecords.FriendAdapter;
 import com.ethan.FamiCare.Firebasecords.FriendModel;
 import com.ethan.FamiCare.Firebasecords.PermissionModel;
-import com.ethan.FamiCare.MainActivity;
-import com.ethan.FamiCare.R;
-import com.ethan.FamiCare.SymptomActivity;
 import com.ethan.FamiCare.databinding.ActivityFriendsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,46 +28,47 @@ import java.util.ArrayList;
 
 public class FriendsActivity extends AppCompatActivity {
 
-ActivityFriendsBinding binding;
+    ActivityFriendsBinding binding;
     ArrayList<FriendModel> list = new ArrayList<>();
     FirebaseDatabase database;
-    Boolean step=false;
-    Boolean heartrate=false;
-    Boolean speed=false;
-    Boolean calories=false;
-    Boolean breathe=false;
-    Boolean oxygen=false;
-    Boolean sleep=false;
+    Boolean step = false;
+    Boolean heartrate = false;
+    Boolean speed = false;
+    Boolean calories = false;
+    Boolean breathe = false;
+    Boolean oxygen = false;
+    Boolean sleep = false;
 
     String currentuser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseAuth auth=FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         database = FirebaseDatabase.getInstance();
-        String uid=auth.getCurrentUser().getUid();
-        currentuser=uid;
-        binding=ActivityFriendsBinding.inflate(getLayoutInflater());
+        String uid = auth.getCurrentUser().getUid();
+        currentuser = uid;
+        binding = ActivityFriendsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (auth.getCurrentUser()==null){
+        if (auth.getCurrentUser() == null) {
             Toast.makeText(this, "請先登入", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             database.getReference().child("Permission").child(uid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
+                    if (snapshot.exists()) {
                         System.out.println("存在");
-                        PermissionModel permissionModel=snapshot.getValue(PermissionModel.class);
-                        if(permissionModel!=null){
-                            step=permissionModel.getStep();
-                            heartrate=permissionModel.getHeartrate();
-                            speed=permissionModel.getSpeed();
-                            calories=permissionModel.getCalories();
-                            breathe=permissionModel.getBreathe();
-                            oxygen=permissionModel.getOxygen();
-                            sleep=permissionModel.getSleep();
+                        PermissionModel permissionModel = snapshot.getValue(PermissionModel.class);
+                        if (permissionModel != null) {
+                            step = permissionModel.getStep();
+                            heartrate = permissionModel.getHeartrate();
+                            speed = permissionModel.getSpeed();
+                            calories = permissionModel.getCalories();
+                            breathe = permissionModel.getBreathe();
+                            oxygen = permissionModel.getOxygen();
+                            sleep = permissionModel.getSleep();
                         }
                         binding.switch2.setChecked(step);
                         binding.switch3.setChecked(heartrate);
@@ -80,9 +77,9 @@ ActivityFriendsBinding binding;
                         binding.switch6.setChecked(breathe);
                         binding.switch7.setChecked(oxygen);
                         binding.switch8.setChecked(sleep);
-                    }else{
+                    } else {
                         System.out.println("沒有帳號");
-                        PermissionModel permissionModel=new PermissionModel(false,false,false,false,false,false,false);
+                        PermissionModel permissionModel = new PermissionModel(false, false, false, false, false, false, false);
                         database.getReference().child("Permission").child(uid).setValue(permissionModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -103,10 +100,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    step=isChecked;
+                    step = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    step=false;
+                    step = false;
                 }
                 updatePermissionData();
             }
@@ -116,10 +113,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    heartrate=isChecked;
+                    heartrate = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    heartrate=false;
+                    heartrate = false;
                 }
                 updatePermissionData();
             }
@@ -129,10 +126,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    speed=isChecked;
+                    speed = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    speed=false;
+                    speed = false;
                 }
                 updatePermissionData();
             }
@@ -142,10 +139,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    calories=isChecked;
+                    calories = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    calories=false;
+                    calories = false;
                 }
                 updatePermissionData();
             }
@@ -155,10 +152,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    breathe=isChecked;
+                    breathe = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    breathe=false;
+                    breathe = false;
                 }
                 updatePermissionData();
             }
@@ -168,10 +165,10 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    oxygen=isChecked;
+                    oxygen = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    oxygen=false;
+                    oxygen = false;
                 }
                 updatePermissionData();
             }
@@ -181,36 +178,35 @@ ActivityFriendsBinding binding;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 当开关打开时执行的代码
-                    sleep=isChecked;
+                    sleep = isChecked;
                 } else {
                     // 当开关关闭时执行的代码
-                    sleep=false;
+                    sleep = false;
                 }
                 updatePermissionData();
             }
         });
 
 
-
-
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(FriendsActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
+
+
         binding.addfriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(FriendsActivity.this, Addfriend.class);
+                Intent intent = new Intent(FriendsActivity.this, Addfriend.class);
                 startActivity(intent);
             }
         });
-        FriendAdapter adapter=new FriendAdapter(list,this.getApplicationContext());
 
+
+        FriendAdapter adapter = new FriendAdapter(list, this.getApplicationContext());
         binding.recyclerview.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         binding.recyclerview.setLayoutManager(layoutManager);
 
@@ -221,7 +217,7 @@ ActivityFriendsBinding binding;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FriendModel users = dataSnapshot.getValue(FriendModel.class);
                     users.setUserId(dataSnapshot.getKey());
-                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+                    if (!users.getUserId().equals(FirebaseAuth.getInstance().getUid())) {
                         list.add(users);
                         Log.d("TAG", "Message: " + users);
                     }
@@ -235,11 +231,12 @@ ActivityFriendsBinding binding;
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
+
     }
 
     private void updatePermissionData() {
         //權限有更改，更新到資料庫
-        PermissionModel permissionModel2=new PermissionModel(step,heartrate,speed,calories,breathe,oxygen,sleep);
+        PermissionModel permissionModel2 = new PermissionModel(step, heartrate, speed, calories, breathe, oxygen, sleep);
         database.getReference().child("Permission").child(currentuser).setValue(permissionModel2).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
