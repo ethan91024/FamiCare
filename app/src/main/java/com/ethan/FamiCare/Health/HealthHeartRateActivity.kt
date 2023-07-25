@@ -83,26 +83,22 @@ class HealthHeartRateActivity : AppCompatActivity() {
         })
 
         calendar.setOnClickListener {
-            val onClickListener = View.OnClickListener { view ->
-                val calendar = Calendar.getInstance()
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                val day = calendar[Calendar.DAY_OF_MONTH]
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
 
-                val datePickerDialog = DatePickerDialog(this,
-                    DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                        val selectedDate = LocalDate.of(year, month + 1, day)
-                        val selectedDateTime = selectedDate.atStartOfDay()
-                        currentDisplayedDate = selectedDateTime
-                        intervalTextView.text = null
-                        updateChart()
-                    }, year, month, day
-                )
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    val selectedDate = LocalDate.of(year, month + 1, day)
+                    val selectedDateTime = selectedDate.atStartOfDay()
+                    currentDisplayedDate = selectedDateTime
+                    intervalTextView.text = null
+                    updateChart()
+                }, year, month, day
+            )
 
-                datePickerDialog.show()
-            }
-
-            calendar.setOnClickListener(onClickListener)
+            datePickerDialog.show()
         }
 
         beforeBtn.setOnClickListener {
@@ -198,7 +194,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 val localDateTime = hr.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
                 if (hour in 0 until numXAxisLabels) {
-                    hrCountsByHour[hour] += hr.samples[hour].beatsPerMinute.toInt()
+                    hrCountsByHour[hour] += hr.samples[0].beatsPerMinute.toInt()
                 }
             }
 
@@ -286,10 +282,14 @@ class HealthHeartRateActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            average.text = aggregateStepsToday.toString()
-            avgText.text = "總計:"
+            if(aggregateStepsToday == null|| HR.isEmpty()){
+                average.text="0.0"
+            }else {
+                average.text = String.format("%.2f", aggregateStepsToday / HR.count())
+            }
+            avgText.text = "平均:"
 
-            val limitValue = String.format("%.2f", aggregateStepsToday.toDouble() / HR.count())
+            val limitValue = String.format("%.2f", aggregateStepsToday / HR.count())
             limitLine = LimitLine(limitValue.toFloat())
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
@@ -701,19 +701,17 @@ class HealthHeartRateActivity : AppCompatActivity() {
     suspend fun aggregation(
         start: LocalDateTime,
         end: LocalDateTime
-    ): Long {
-        var number: Long = 0
+    ): Double {
+        var number = 0.0
         try {
-            val response = client.aggregateGroupByPeriod(
-                AggregateGroupByPeriodRequest(
-                    metrics = setOf(HeartRateRecord.BPM_AVG),
-                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                    timeRangeSlicer = Period.ofDays(1)
+            val response = client.readRecords(
+                ReadRecordsRequest(
+                    HeartRateRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
                 )
             )
-
-            for (dailyResult in response) {
-                number += dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L
+            for (dailyResult in response.records) {
+                number += dailyResult.samples[0].beatsPerMinute.toDouble()
             }
         } catch (exception: Exception) {
             // Handle exception here
