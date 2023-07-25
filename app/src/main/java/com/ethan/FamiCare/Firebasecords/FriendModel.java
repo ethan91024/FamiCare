@@ -7,19 +7,12 @@ public class FriendModel {
     private String id;
     private String token;
     private String type;
+    private String groupuid;
     private String fuid;
 
 
     public FriendModel() {
 
-    }
-
-    public FriendModel(String profilepic, String fuid, String id, String token,String type) {
-        this.profilepic = profilepic;
-        this.fuid=fuid;
-        this.id = id;
-        this.token = token;
-        this.type=type;
     }
 
     public FriendModel(String profilepic, String username, String id, String token,String type,String fuid) {
@@ -34,6 +27,28 @@ public class FriendModel {
         this.username = username;
         this.profilepic = profilepic;
         this.type=type;
+    }
+    public FriendModel(String username, String profilepic,String type,String groupuid) {
+        this.username = username;
+        this.profilepic = profilepic;
+        this.type=type;
+        this.groupuid=groupuid;
+    }
+    public FriendModel(String username, String profilepic,String type,String groupuid,String fuid) {
+        this.username = username;
+        this.profilepic = profilepic;
+        this.type=type;
+        this.groupuid=groupuid;
+        this.fuid=fuid;
+    }
+
+
+    public String getGroupuid() {
+        return groupuid;
+    }
+
+    public void setGroupuid(String groupuid) {
+        this.groupuid = groupuid;
     }
 
     public String getFuid() {
