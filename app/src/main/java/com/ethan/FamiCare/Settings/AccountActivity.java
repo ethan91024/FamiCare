@@ -68,6 +68,7 @@ public class AccountActivity extends AppCompatActivity {
         turnback = findViewById(R.id.turnback);
 
 
+
         if (auth.getCurrentUser() == null) {
             username.setText("username");
             userid.setText("#userid");

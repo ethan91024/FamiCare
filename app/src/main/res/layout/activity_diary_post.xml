@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/diary_posts_container"
     android:layout_width="match_parent"
@@ -31,46 +30,23 @@
 
             <Button
                 android:id="@+id/Add_post"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:backgroundTint="@color/white"
-                android:text="上傳日記"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginVertical="15dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/upload_post"
+                android:backgroundTint="@color/white" />
 
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginLeft="16dp"-->
-    <!--        android:text="貼文"-->
-    <!--        android:textColor="#B85135"-->
-    <!--        android:textSize="28sp"-->
-    <!--        android:textStyle="bold" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/PostRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/Add_post"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_margin="16dp"-->
-<!--        app:backgroundTint="#B85135"-->
-<!--        app:srcCompat="@drawable/ic_add"-->
-<!--        app:tint="@android:color/white" />-->
+        android:layout_marginTop="55dp" />
 
 </FrameLayout>
