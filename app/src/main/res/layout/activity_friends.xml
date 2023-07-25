@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings.FriendsActivity"
-    android:background="@drawable/bkg1">
+    android:background="@drawable/bkg1"
+    tools:context=".Settings.FriendsActivity">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -29,15 +29,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="start"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_lightbrown_corn"
+                    android:gravity="start"
                     android:orientation="horizontal"
                     android:padding="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints"
-                    android:background="@drawable/background_lightbrown_corn">
+                    tools:ignore="MissingConstraints">
 
                     <TextView
                         android:id="@+id/textView4"
@@ -52,31 +52,31 @@
                         android:id="@+id/switch1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="10dp"/>
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
                     android:layout_gravity="start"
+                    android:layout_marginTop="4dp"
                     android:paddingVertical="8dp"
                     android:paddingLeft="10dp"
-                    app:layout_constraintStart_toStartOf="@id/textView4"
-                    app:layout_constraintTop_toTopOf="@id/textView4"
-                    tools:ignore="MissingConstraints"
                     android:text="同意與好友分享健康資訊"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/textView4"
+                    app:layout_constraintTop_toTopOf="@id/textView4"
+                    tools:ignore="MissingConstraints" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/background_lightbrown_corn">
+                    android:background="@drawable/background_lightbrown_corn"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -96,14 +96,14 @@
                             android:layout_weight="1"
                             android:text="步 數"
                             android:textColor="#000000"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp" />
 
                         <Switch
                             android:id="@+id/switch2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -137,10 +137,11 @@
                             android:id="@+id/switch3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -165,17 +166,17 @@
                             android:layout_weight="1"
                             android:text="速 度"
                             android:textColor="#000000"
-                            android:textSize="20sp"
-                            />
+                            android:textSize="20sp" />
 
                         <Switch
                             android:id="@+id/switch4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -206,11 +207,11 @@
                             android:id="@+id/switch5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginEnd="10dp"
-                            />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -241,10 +242,11 @@
                             android:id="@+id/switch6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -275,10 +277,11 @@
                             android:id="@+id/switch7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -310,8 +313,8 @@
                             android:id="@+id/switch8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"/>
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -328,37 +331,39 @@
         android:layout_marginTop="28dp" />
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linear">
+        android:orientation="horizontal">
 
 
     </LinearLayout>
+
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
         android:background="#C1A988">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
+                android:id="@+id/backarrow"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/backarrow"
                 android:src="@drawable/backarrow_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="8.476"
-                />
+                app:layout_constraintVertical_bias="8.476" />
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/username"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:text="好友設置"
@@ -366,17 +371,17 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/backarrow"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
+                android:id="@+id/addfriend"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/addfriend"
                 android:src="@drawable/addfriend_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="8.476"
-                />
+                app:layout_constraintVertical_bias="8.476" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </RelativeLayout>
