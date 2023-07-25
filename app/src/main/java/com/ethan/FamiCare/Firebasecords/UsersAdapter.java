@@ -107,6 +107,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("userId", users.getUserId());
                                         intent.putExtra("profilePic", users.getProfilepic());
                                         intent.putExtra("userName", users.getUsername());
+                                        intent.putExtra("groupuid",users.getFuid());
                                         context.startActivity(intent);
                                     }
                                 }

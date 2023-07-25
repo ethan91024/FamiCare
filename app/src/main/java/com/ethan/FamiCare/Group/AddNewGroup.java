@@ -79,13 +79,20 @@ public class AddNewGroup extends AppCompatActivity {
                     Toast.makeText(AddNewGroup.this, "請輸入群組名稱 ", Toast.LENGTH_SHORT).show();
                 } else {
                     String groupname = edittext.getText().toString();
+                    String newGroupKey = database.getReference().child("Group").child(uid).push().getKey();
                     String type="group";
-                    FriendModel friend = new FriendModel(groupname,photo,type);
-                    database.getReference().child("Grouplist").child(uid).child(groupname).setValue(friend)
+                    FriendModel friend = new FriendModel(groupname,photo,type,newGroupKey);
+                    database.getReference().child("Group").child(uid).child(newGroupKey).setValue(friend)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Toast.makeText(AddNewGroup.this, "群組創建成功", Toast.LENGTH_SHORT).show();
+                                    database.getReference().child("Grouplist").child(uid).child(groupname).setValue(friend)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(AddNewGroup.this, "群組創建成功", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                     Intent intent = new Intent(AddNewGroup.this, MainActivity.class);
                                     startActivity(intent);
                                 }
