@@ -227,6 +227,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -355,6 +356,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -495,6 +497,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -628,6 +631,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft

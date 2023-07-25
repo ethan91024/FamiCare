@@ -220,7 +220,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -230,6 +230,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -346,8 +347,9 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
+            dataSet.valueTextSize = 10f
 
             dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
@@ -485,8 +487,9 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
+            dataSet.valueTextSize = 10f
 
             dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
@@ -616,7 +619,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -626,6 +629,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft

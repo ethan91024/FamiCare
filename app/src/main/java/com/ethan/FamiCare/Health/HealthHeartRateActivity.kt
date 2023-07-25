@@ -224,6 +224,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -350,6 +351,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -489,6 +491,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -620,6 +623,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft

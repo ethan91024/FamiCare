@@ -169,7 +169,7 @@ class HealthSleepActivity : AppCompatActivity() {
             }
 
             val maxSleep = SleepCountsByDay.maxOrNull() ?: 0.0
-            val top = (maxSleep / 100 + 1) * 100
+            val top = (maxSleep / 10 + 1) * 10
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -180,7 +180,7 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "睡眠時長")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -190,6 +190,7 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -302,7 +303,7 @@ class HealthSleepActivity : AppCompatActivity() {
             }
 
             val maxSleep = SleepCountsByDay.maxOrNull() ?: 0.0
-            val top = (maxSleep / 100 + 1) * 100
+            val top = (maxSleep / 10 + 1) * 10
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -313,7 +314,7 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "睡眠時長")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -326,6 +327,7 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -431,7 +433,7 @@ class HealthSleepActivity : AppCompatActivity() {
             }
 
             val maxSleep = SleepCountsByDay14.maxOrNull() ?: 0.0
-            val top = (maxSleep / 100 + 1) * 100
+            val top = (maxSleep / 10 + 1) * 10
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
@@ -442,7 +444,7 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "睡眠時長")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -452,7 +454,8 @@ class HealthSleepActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
-
+            dataSet.valueTextSize = 10f
+            
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
