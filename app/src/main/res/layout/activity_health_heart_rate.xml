@@ -51,8 +51,8 @@
 
     <Button
         android:id="@+id/dayBtn"
-        android:layout_width="70dp"
-        android:layout_height="47dp"
+        android:layout_width="67dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="96dp"
         android:background="@drawable/background_brown"
@@ -202,16 +202,14 @@
 
     <ImageView
         android:id="@+id/calendarIV"
-        android:layout_width="44dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/monthBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/baseline_calendar_month_24"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/weekBtn"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.818"
-        app:srcCompat="@drawable/baseline_calendar_month_24"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import androidx.health.connect.client.units.calories
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -37,8 +38,6 @@ import kotlin.collections.ArrayList
 class HealthCaloriesActivity : AppCompatActivity() {
     val myDateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
-    val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
-    val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
     var currentDisplayedDate: LocalDateTime = LocalDateTime.now()
     var showingDayData = true
     var showingWeekData = false

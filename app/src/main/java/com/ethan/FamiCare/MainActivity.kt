@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.health.connect.client.HealthConnectClient
@@ -17,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.Diary.DiaryFragment
 import com.ethan.FamiCare.Group.GroupFragment
 import com.ethan.FamiCare.Health.HealthFragment
+import com.ethan.FamiCare.Mood.MoodFragment
 import com.ethan.FamiCare.Settings.Login
 import com.ethan.FamiCare.Settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -105,21 +105,21 @@ class MainActivity : AppCompatActivity() {
         if (HealthConnectClient.isProviderAvailable(this@MainActivity)) {
             Toast.makeText(
                 this@MainActivity,
-                "Health Connect is installed and supported!",
+                "Health Connect已被安裝且支援",
                 Toast.LENGTH_SHORT
             ).show()
             checkPermissionsAndRun()
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             Toast.makeText(
                 this@MainActivity,
-                "Health Connect is not supported!",
+                "裝置不支援Health Connect",
                 Toast.LENGTH_SHORT
             )
                 .show()
         } else {
             Toast.makeText(
                 this@MainActivity,
-                "Health Connect is not installed!",
+                "Health Connect尚未安裝",
                 Toast.LENGTH_SHORT
             )
                 .show()
@@ -192,7 +192,8 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_health -> selectedFragment = HealthFragment()
             R.id.navigation_group -> selectedFragment =
                 GroupFragment()
-            R.id.navigation_mood -> selectedFragment = MoodFragment()
+            R.id.navigation_mood -> selectedFragment =
+                MoodFragment()
             R.id.navigation_diary -> selectedFragment = DiaryFragment()
             R.id.navigation_settings -> selectedFragment =
                 SettingsFragment()

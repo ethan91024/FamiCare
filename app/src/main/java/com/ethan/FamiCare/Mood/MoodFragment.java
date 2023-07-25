@@ -1,4 +1,4 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Mood;
 
 import static android.content.ContentValues.TAG;
 
@@ -27,6 +27,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.health.connect.client.HealthConnectClient;
 
 import com.ethan.FamiCare.Firebasecords.SymptomModel;
+import com.ethan.FamiCare.R;
+import com.ethan.FamiCare.SymptomActivity;
+import com.ethan.FamiCare.sportFragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
