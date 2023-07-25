@@ -88,27 +88,22 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
         })
 
         calendar.setOnClickListener {
-            val onClickListener = View.OnClickListener { view ->
-                val calendar = Calendar.getInstance()
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                val day = calendar[Calendar.DAY_OF_MONTH]
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
 
-                val datePickerDialog = DatePickerDialog(
-                    this,
-                    DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                        val selectedDate = LocalDate.of(year, month + 1, day)
-                        val selectedDateTime = selectedDate.atStartOfDay()
-                        currentDisplayedDate = selectedDateTime
-                        intervalTextView.text = null
-                        updateChart()
-                    }, year, month, day
-                )
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    val selectedDate = LocalDate.of(year, month + 1, day)
+                    val selectedDateTime = selectedDate.atStartOfDay()
+                    currentDisplayedDate = selectedDateTime
+                    intervalTextView.text = null
+                    updateChart()
+                }, year, month, day
+            )
 
-                datePickerDialog.show()
-            }
-
-            calendar.setOnClickListener(onClickListener)
+            datePickerDialog.show()
         }
 
         beforeBtn.setOnClickListener {
@@ -198,29 +193,29 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 limitLine = null
             }
             val numXAxisLabels = 24
-            val OSCountsByHour = MutableList(numXAxisLabels) { 0 }
+            val OSCountsByHour = MutableList(numXAxisLabels) { 0.0 }
 
             OS.forEach { OS ->
                 val localDateTime = OS.time.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
                 if (hour in 0 until numXAxisLabels) {
-                    OSCountsByHour[hour] += OS.percentage.value.toInt()
+                    OSCountsByHour[hour] += OS.percentage.value
                 }
             }
 
-            val maxOS = OSCountsByHour.toIntArray().max()
+            val maxOS = OSCountsByHour.toDoubleArray().max()
             val top = (maxOS / 100 + 1) * 100
 
             val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (OSCountsByHour[i] == 0) {
+                if (OSCountsByHour[i] == 0.0) {
                     entries.add(Entry(entries.size.toFloat(), 0f))
                 } else {
                     entries.add(Entry(entries.size.toFloat(), OSCountsByHour[i].toFloat()))
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -230,6 +225,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -291,10 +287,14 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            average.text = aggregateStepsToday.toString()
-            avgText.text = "總計:"
+            if(aggregateStepsToday == null|| OS.isEmpty()){
+                average.text="0.0"
+            }else {
+                average.text = String.format("%.2f", aggregateStepsToday / OS.count())
+            }
+            avgText.text = "平均:"
 
-            val limitValue = String.format("%.2f", aggregateStepsToday.toDouble() / OS.count())
+            val limitValue = String.format("%.2f", aggregateStepsToday / OS.count())
             limitLine = LimitLine(limitValue.toFloat())
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
@@ -346,8 +346,9 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
+            dataSet.valueTextSize = 10f
 
             dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
@@ -485,8 +486,9 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
+            dataSet.valueTextSize = 10f
 
             dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
@@ -616,7 +618,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
 
-            val dataSet = LineDataSet(entries, "心率")
+            val dataSet = LineDataSet(entries, "血氧")
             val data = LineData(dataSet)
 
             dataSet.color = Color.BLUE
@@ -626,6 +628,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -703,8 +706,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
     suspend fun aggregation(
         start: LocalDateTime,
         end: LocalDateTime
-    ): Long {
-        var number: Long = 0
+    ): Double {
+        var number = 0.0
         try {
             val response = client.readRecords(
                 ReadRecordsRequest(
@@ -713,7 +716,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 )
             )
             for (dailyResult in response.records) {
-                number += dailyResult.percentage.value.toLong()
+                number += dailyResult.percentage.value
             }
         } catch (exception: Exception) {
             // Handle exception here

@@ -32,8 +32,6 @@ import kotlin.collections.ArrayList
 class HealthSpeedActivity : AppCompatActivity() {
     val myDateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
-    val startOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MIN)
-    val endOfTheDay = LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.MAX)
     var currentDisplayedDate: LocalDateTime = LocalDateTime.now()
     var showingDayData = true
     var showingWeekData = false
@@ -56,7 +54,6 @@ class HealthSpeedActivity : AppCompatActivity() {
         val weekBtn = findViewById<Button>(R.id.weekBtn)
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
-//        val week14Btn = findViewById<Button>(R.id.week14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {

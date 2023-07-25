@@ -86,26 +86,22 @@ class HealthStepsActivity : AppCompatActivity() {
         })
 
         calendar.setOnClickListener {
-            val onClickListener = View.OnClickListener { view ->
-                val calendar = Calendar.getInstance()
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                val day = calendar[Calendar.DAY_OF_MONTH]
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
 
-                val datePickerDialog = DatePickerDialog(this,
-                    DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                        val selectedDate = LocalDate.of(year, month + 1, day)
-                        val selectedDateTime = selectedDate.atStartOfDay()
-                        currentDisplayedDate = selectedDateTime
-                        intervalTextView.text = null
-                        updateChart()
-                    }, year, month, day
-                )
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    val selectedDate = LocalDate.of(year, month + 1, day)
+                    val selectedDateTime = selectedDate.atStartOfDay()
+                    currentDisplayedDate = selectedDateTime
+                    intervalTextView.text = null
+                    updateChart()
+                }, year, month, day
+            )
 
-                datePickerDialog.show()
-            }
-
-            calendar.setOnClickListener(onClickListener)
+            datePickerDialog.show()
         }
 
         beforeBtn.setOnClickListener {
@@ -227,6 +223,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -355,6 +352,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -495,6 +493,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
@@ -628,6 +627,7 @@ class HealthStepsActivity : AppCompatActivity() {
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
             val yAxisLeft: YAxis = barChart.axisLeft
