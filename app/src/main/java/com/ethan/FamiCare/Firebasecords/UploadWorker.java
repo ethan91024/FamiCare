@@ -46,7 +46,7 @@ public class UploadWorker extends Worker {// 背景執行的類別，用於定�
             DatabaseReference statusRef = database.getReference("Status").child(userId);
 
             // 假設你有取得這些數據值，這裡用 0 代表示例，0代表沒有找到資料     1:待加油|2:及格|3:滿分
-            int statusStep = 1;
+            int statusStep = 0;
             int statusHeartRate = 0;
             int statusSpeed = 0;
             int statusCalories = 0;

@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
@@ -86,7 +86,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -102,11 +103,11 @@ class HealthSpeedActivity : AppCompatActivity() {
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
             updateChart()
@@ -115,11 +116,11 @@ class HealthSpeedActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
             updateChart()
@@ -164,11 +165,11 @@ class HealthSpeedActivity : AppCompatActivity() {
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        }else if(showingMonthData){
+        } else if (showingMonthData) {
             updateChartForMonth()
-        }else if(showingDay14Data){
+        } else if (showingDay14Data) {
             updateChartForDay14()
-        }else {
+        } else {
             updateChartForDay()
         }
     }
@@ -280,9 +281,9 @@ class HealthSpeedActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if(aggregateStepsToday == null|| Speed.isEmpty()){
-                average.text="0.0"
-            }else {
+            if (aggregateStepsToday == null || Speed.isEmpty()) {
+                average.text = "0.0"
+            } else {
                 average.text = String.format("%.2f", aggregateStepsToday / Speed.count())
             }
             avgText.text = "平均:"
@@ -604,7 +605,7 @@ class HealthSpeedActivity : AppCompatActivity() {
 
             val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (SpeedCountsByDay14[i] >0) {
+                if (SpeedCountsByDay14[i] > 0) {
                     entries.add(Entry(entries.size.toFloat(), SpeedCountsByDay14[i].toFloat()))
                 } else {
                     entries.add(Entry(entries.size.toFloat(), 0f))
@@ -717,6 +718,7 @@ class HealthSpeedActivity : AppCompatActivity() {
 
         return number
     }
+
     suspend fun getDailySpeedCounts(//一天24筆的資料
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
         end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
@@ -757,7 +759,8 @@ class HealthSpeedActivity : AppCompatActivity() {
                 val localDateTime =
                     dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfWeek = localDateTime.dayOfWeek.value // 取得星期幾的數字表示
-                totalSpeedList[dayOfWeek - 1] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
+                totalSpeedList[dayOfWeek - 1] =
+                    (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
             }
 
         } catch (exception: Exception) {
@@ -787,7 +790,8 @@ class HealthSpeedActivity : AppCompatActivity() {
                 val localDateTime =
                     dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfMonth = localDateTime.dayOfMonth
-                totalSpeedList[dayOfMonth - 1] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
+                totalSpeedList[dayOfMonth - 1] =
+                    (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
             }
         } catch (exception: Exception) {
             // Handle exception here
@@ -815,7 +819,8 @@ class HealthSpeedActivity : AppCompatActivity() {
                 val currentDate = start.plusDays(i.toLong()).toLocalDate()
                 val dailyResult = response.find { it.startTime.toLocalDate() == currentDate }
                 if (dailyResult != null) {
-                    totalSpeedList[i] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
+                    totalSpeedList[i] =
+                        (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
                 }
             }
 

@@ -4,17 +4,13 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.OxygenSaturationRecord
-import androidx.health.connect.client.request.AggregateGroupByDurationRequest
-import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
@@ -93,7 +89,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -287,9 +284,9 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if(aggregateStepsToday == null|| OS.isEmpty()){
-                average.text="0.0"
-            }else {
+            if (aggregateStepsToday == null || OS.isEmpty()) {
+                average.text = "0.0"
+            } else {
                 average.text = String.format("%.2f", aggregateStepsToday / OS.count())
             }
             avgText.text = "平均:"

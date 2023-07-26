@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -91,7 +90,8 @@ class HealthStepsActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -610,7 +610,7 @@ class HealthStepsActivity : AppCompatActivity() {
 
             val entries: MutableList<BarEntry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (stepCountsByDay14[i] >0) {
+                if (stepCountsByDay14[i] > 0) {
                     entries.add(BarEntry(entries.size.toFloat(), stepCountsByDay14[i].toFloat()))
                 } else {
                     entries.add(BarEntry(entries.size.toFloat(), 0f))

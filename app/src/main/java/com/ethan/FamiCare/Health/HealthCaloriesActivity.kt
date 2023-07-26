@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -90,7 +89,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -193,7 +193,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             val CaloriesCountsByHour = MutableList(numXAxisLabels) { 0 }
 
             Calories.forEach { Calories ->
-                val localDateTime = Calories.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val localDateTime =
+                    Calories.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
                 if (hour in 0 until numXAxisLabels) {
                     CaloriesCountsByHour[hour] += Calories.energy.inKilocalories.toInt()
@@ -430,7 +431,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             }
             avgText.text = "平均:"
 
-            val limitValue = String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
+            val limitValue =
+                String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
             limitLine = LimitLine(limitValue.toFloat())
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
@@ -563,7 +565,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             }
             avgText.text = "平均:"
 
-            val limitValue = String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
+            val limitValue =
+                String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
             limitLine = LimitLine(limitValue.toFloat())
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
@@ -609,8 +612,13 @@ class HealthCaloriesActivity : AppCompatActivity() {
 
             val entries: MutableList<BarEntry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (CaloriesCountsByDay14[i] >0) {
-                    entries.add(BarEntry(entries.size.toFloat(), CaloriesCountsByDay14[i].toFloat()))
+                if (CaloriesCountsByDay14[i] > 0) {
+                    entries.add(
+                        BarEntry(
+                            entries.size.toFloat(),
+                            CaloriesCountsByDay14[i].toFloat()
+                        )
+                    )
                 } else {
                     entries.add(BarEntry(entries.size.toFloat(), 0f))
                 }
@@ -693,7 +701,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             }
             avgText.text = "平均:"
 
-            val limitValue = String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
+            val limitValue =
+                String.format("%.2f", Calories.sum().toDouble() / Calories.count { it > 0 })
             limitLine = LimitLine(limitValue.toFloat())
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
@@ -760,9 +769,11 @@ class HealthCaloriesActivity : AppCompatActivity() {
             )
 
             for (dailyResult in response) {
-                val localDateTime = dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val localDateTime =
+                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfWeek = localDateTime.dayOfWeek.value // 取得星期幾的數字表示
-                val total = dailyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL].toString().replaceFirst(" kcal","").toDouble()
+                val total = dailyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL].toString()
+                    .replaceFirst(" kcal", "").toDouble()
                 val total1 = String.format("%.2f", total).toDouble()
                 totalCaloriesList[dayOfWeek - 1] = total1
             }
