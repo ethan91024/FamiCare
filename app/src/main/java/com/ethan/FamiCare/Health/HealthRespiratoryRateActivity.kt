@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.RespiratoryRateRecord
-import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +29,6 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HealthRespiratoryRateActivity : AppCompatActivity() {
@@ -90,7 +88,8 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -106,11 +105,11 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
             updateChart()
@@ -119,11 +118,11 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
             updateChart()
@@ -168,11 +167,11 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        }else if(showingMonthData){
+        } else if (showingMonthData) {
             updateChartForMonth()
-        }else if(showingDay14Data){
+        } else if (showingDay14Data) {
             updateChartForDay14()
-        }else {
+        } else {
             updateChartForDay()
         }
     }
@@ -284,9 +283,9 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if(aggregateStepsToday == null|| RR.isEmpty()){
-                average.text="0.0"
-            }else {
+            if (aggregateStepsToday == null || RR.isEmpty()) {
+                average.text = "0.0"
+            } else {
                 average.text = String.format("%.2f", aggregateStepsToday / RR.count())
             }
             avgText.text = "平均:"
@@ -608,7 +607,7 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
 
             val entries: MutableList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (RRCountsByDay14[i] >0) {
+                if (RRCountsByDay14[i] > 0) {
                     entries.add(Entry(entries.size.toFloat(), RRCountsByDay14[i].toFloat()))
                 } else {
                     entries.add(Entry(entries.size.toFloat(), 0f))
@@ -721,6 +720,7 @@ class HealthRespiratoryRateActivity : AppCompatActivity() {
 
         return number
     }
+
     suspend fun getDailyRRCounts(//一天24筆的資料
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
         end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)

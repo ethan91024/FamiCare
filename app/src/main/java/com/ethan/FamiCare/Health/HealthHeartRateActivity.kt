@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
@@ -88,7 +87,8 @@ class HealthHeartRateActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -104,11 +104,11 @@ class HealthHeartRateActivity : AppCompatActivity() {
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
             updateChart()
@@ -117,11 +117,11 @@ class HealthHeartRateActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            }else{
+            } else {
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
             updateChart()
@@ -166,11 +166,11 @@ class HealthHeartRateActivity : AppCompatActivity() {
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        }else if(showingMonthData){
+        } else if (showingMonthData) {
             updateChartForMonth()
-        }else if(showingDay14Data){
+        } else if (showingDay14Data) {
             updateChartForDay14()
-        }else {
+        } else {
             updateChartForDay()
         }
     }
@@ -282,9 +282,9 @@ class HealthHeartRateActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if(aggregateStepsToday == null|| HR.isEmpty()){
-                average.text="0.0"
-            }else {
+            if (aggregateStepsToday == null || HR.isEmpty()) {
+                average.text = "0.0"
+            } else {
                 average.text = String.format("%.2f", aggregateStepsToday / HR.count())
             }
             avgText.text = "平均:"
@@ -606,7 +606,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
             val entries: MutableList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (HRCountsByDay14[i] >0) {
+                if (HRCountsByDay14[i] > 0) {
                     entries.add(Entry(entries.size.toFloat(), HRCountsByDay14[i].toFloat()))
                 } else {
                     entries.add(Entry(entries.size.toFloat(), 0f))
@@ -719,6 +719,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
         return number
     }
+
     suspend fun getDailyHRCounts(//一天24筆的資料
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
         end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)

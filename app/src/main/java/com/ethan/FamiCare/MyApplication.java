@@ -1,7 +1,6 @@
 package com.ethan.FamiCare;
 
 import android.app.Application;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.work.Constraints;
@@ -11,6 +10,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import com.ethan.FamiCare.Firebasecords.UploadWorker;
+import com.ethan.FamiCare.Firebasecords.UploadWorkerK;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +32,7 @@ public class MyApplication extends Application {
 
         // 創建定時任務，每天在12點和0點時執行
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-                UploadWorker.class, 12, TimeUnit.HOURS)
+                UploadWorkerK.class, 4, TimeUnit.HOURS)
                 .setConstraints(constraints) // 設定約束條件
                 .build();
 

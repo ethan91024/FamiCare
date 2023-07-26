@@ -4,16 +4,14 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
-import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.R
@@ -25,10 +23,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
@@ -70,7 +65,8 @@ class HealthSleepActivity : AppCompatActivity() {
             val month = calendar[Calendar.MONTH]
             val day = calendar[Calendar.DAY_OF_MONTH]
 
-            val datePickerDialog = DatePickerDialog(this,
+            val datePickerDialog = DatePickerDialog(
+                this,
                 DatePickerDialog.OnDateSetListener { _, year, month, day ->
                     val selectedDate = LocalDate.of(year, month + 1, day)
                     val selectedDateTime = selectedDate.atStartOfDay()
@@ -85,9 +81,9 @@ class HealthSleepActivity : AppCompatActivity() {
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
             }
             updateChart()
@@ -96,9 +92,9 @@ class HealthSleepActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            }else if(showingMonthData) {
+            } else if (showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            }else if(showingDay14Data) {
+            } else if (showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
             }
             updateChart()
@@ -129,9 +125,9 @@ class HealthSleepActivity : AppCompatActivity() {
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        }else if(showingMonthData){
+        } else if (showingMonthData) {
             updateChartForMonth()
-        }else if(showingDay14Data){
+        } else if (showingDay14Data) {
             updateChartForDay14()
         }
     }
@@ -169,7 +165,7 @@ class HealthSleepActivity : AppCompatActivity() {
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (SleepCountsByDay[i] .equals(0.0)) {
+                if (SleepCountsByDay[i].equals(0.0)) {
                     entries.add(Entry(i.toFloat(), 0f))
                 } else {
                     entries.add(Entry(i.toFloat(), SleepCountsByDay[i].toFloat()))
@@ -303,7 +299,7 @@ class HealthSleepActivity : AppCompatActivity() {
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (SleepCountsByDay[i] .equals(0.0)) {
+                if (SleepCountsByDay[i].equals(0.0)) {
                     entries.add(Entry(i.toFloat(), 0f))
                 } else {
                     entries.add(Entry(i.toFloat(), SleepCountsByDay[i].toFloat()))
@@ -433,7 +429,7 @@ class HealthSleepActivity : AppCompatActivity() {
 
             val entries: ArrayList<Entry> = ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (SleepCountsByDay14[i] .equals(0.0)) {
+                if (SleepCountsByDay14[i].equals(0.0)) {
                     entries.add(Entry(i.toFloat(), 0f))
                 } else {
                     entries.add(Entry(i.toFloat(), SleepCountsByDay14[i].toFloat()))
@@ -451,7 +447,7 @@ class HealthSleepActivity : AppCompatActivity() {
             }
             dataSet.setDrawValues(true)
             dataSet.valueTextSize = 10f
-            
+
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
