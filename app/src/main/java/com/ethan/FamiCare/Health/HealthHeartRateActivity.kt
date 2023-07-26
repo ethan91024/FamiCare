@@ -816,7 +816,9 @@ class HealthHeartRateActivity : AppCompatActivity() {
             for (i in 0 until 14) {
                 val currentDate = start.plusDays(i.toLong()).toLocalDate()
                 val dailyResult = response.find { it.startTime.toLocalDate() == currentDate }
-                totalHRList[i] = dailyResult?.result?.get(HeartRateRecord.BPM_AVG) ?: 0L
+                if (dailyResult != null) {
+                    totalHRList[i] = dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L
+                }
             }
 
         } catch (exception: Exception) {

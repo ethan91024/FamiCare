@@ -822,8 +822,10 @@ class HealthCaloriesActivity : AppCompatActivity() {
             for (i in 0 until 14) {
                 val currentDate = start.plusDays(i.toLong()).toLocalDate()
                 val dailyResult = response.find { it.startTime.toLocalDate() == currentDate }
-                totalCaloriesList[i] =
-                    (dailyResult?.result?.get(TotalCaloriesBurnedRecord.ENERGY_TOTAL)?.inKilocalories) as Double
+                if (dailyResult != null) {
+                    totalCaloriesList[i] =
+                        (dailyResult.result[TotalCaloriesBurnedRecord.ENERGY_TOTAL]?.inKilocalories) as Double
+                }
             }
 
         } catch (exception: Exception) {

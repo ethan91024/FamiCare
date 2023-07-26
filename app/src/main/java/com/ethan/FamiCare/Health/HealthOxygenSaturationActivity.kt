@@ -788,14 +788,12 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                 )
             )
 
-
             for (i in 0 until length) {
                 val localDateTime =
                     response.records[i].time.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfMonth = localDateTime.dayOfMonth
                 totalOSList[dayOfMonth - 1] = response.records[i].percentage.value.toLong()
             }
-
 
         } catch (exception: Exception) {
             // Handle exception here
