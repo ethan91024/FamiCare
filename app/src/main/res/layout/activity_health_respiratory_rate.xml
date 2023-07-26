@@ -92,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="@+id/beforeBtn"
-        app:layout_constraintTop_toBottomOf="@+id/bar_chart"
+        app:layout_constraintTop_toBottomOf="@+id/line_chart"
         app:layout_constraintVertical_bias="0.048" />
 
     <Button
@@ -111,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.683"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar_chart"
+        app:layout_constraintTop_toBottomOf="@+id/line_chart"
         app:layout_constraintVertical_bias="0.048" />
 
     <TextView
@@ -123,7 +123,7 @@
         android:text="x軸為時間/y軸為呼吸速率"
         android:textColor="@color/deepbrown"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar_chart" />
+        app:layout_constraintTop_toBottomOf="@+id/line_chart" />
 
     <Button
         android:id="@+id/monthBtn"
