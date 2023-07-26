@@ -62,7 +62,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         holder.username.setText(users.getUsername());
 
         //最後一則訊息
-        database.getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getUserId())
+        database.getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getFuid())
                 .orderByChild("timestamp").limitToLast(1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -107,7 +107,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("userId", users.getUserId());
                                         intent.putExtra("profilePic", users.getProfilepic());
                                         intent.putExtra("userName", users.getUsername());
-                                        intent.putExtra("groupuid",users.getFuid());
+                                        intent.putExtra("groupuid",users.getGroupuid());
+                                        intent.putExtra("frienduid",users.getFuid());
+                                        Toast.makeText(context, users.getGroupuid()+users.getFuid(), Toast.LENGTH_SHORT).show();
                                         context.startActivity(intent);
                                     }
                                 }
