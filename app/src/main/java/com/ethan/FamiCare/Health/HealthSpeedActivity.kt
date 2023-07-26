@@ -1,14 +1,15 @@
 package com.ethan.FamiCare.Health
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
@@ -16,6 +17,7 @@ import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.lifecycle.lifecycleScope
 import com.ethan.FamiCare.R
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
@@ -27,7 +29,6 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HealthSpeedActivity : AppCompatActivity() {
     val myDateTimeFormatter =
@@ -37,17 +38,23 @@ class HealthSpeedActivity : AppCompatActivity() {
     var showingWeekData = false
     var showingMonthData = false
     var showingDay14Data = false
-    var showingWeek14Data = false
+    var limitLine: LimitLine? = null
     lateinit var client: HealthConnectClient
-    lateinit var HR: List<SpeedRecord>
     lateinit var lineChart: LineChart
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health_speed)
+
+        val locale = Locale("zh", "CN")
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+
         client = HealthConnectClient.getOrCreate(this)
         lineChart = findViewById(R.id.line_chart)
+        val calendar = findViewById<ImageView>(R.id.calendarIV)
         val beforeBtn = findViewById<Button>(R.id.beforeBtn)
         val afterBtn = findViewById<Button>(R.id.afterBtn)
         val dayBtn = findViewById<Button>(R.id.dayBtn)
@@ -73,17 +80,33 @@ class HealthSpeedActivity : AppCompatActivity() {
             }
         })
 
+        calendar.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
+
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    val selectedDate = LocalDate.of(year, month + 1, day)
+                    val selectedDateTime = selectedDate.atStartOfDay()
+                    currentDisplayedDate = selectedDateTime
+                    intervalTextView.text = null
+                    updateChart()
+                }, year, month, day
+            )
+
+            datePickerDialog.show()
+        }
 
         beforeBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(1)
-            } else if (showingMonthData) {
+            }else if(showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.minusMonths(1)
-            } else if (showingDay14Data) {
+            }else if(showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.minusWeeks(2)
-            } else if (showingWeek14Data) {
-                currentDisplayedDate = currentDisplayedDate.minusWeeks(14)
-            } else {
+            }else{
                 currentDisplayedDate = currentDisplayedDate.minusDays(1)
             }
             updateChart()
@@ -92,13 +115,11 @@ class HealthSpeedActivity : AppCompatActivity() {
         afterBtn.setOnClickListener {
             if (showingWeekData) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(1)
-            } else if (showingMonthData) {
+            }else if(showingMonthData) {
                 currentDisplayedDate = currentDisplayedDate.plusMonths(1)
-            } else if (showingDay14Data) {
+            }else if(showingDay14Data) {
                 currentDisplayedDate = currentDisplayedDate.plusWeeks(2)
-            } else if (showingWeek14Data) {
-                currentDisplayedDate = currentDisplayedDate.plusWeeks(14)
-            } else {
+            }else{
                 currentDisplayedDate = currentDisplayedDate.plusDays(1)
             }
             updateChart()
@@ -109,7 +130,6 @@ class HealthSpeedActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = false
             showingDay14Data = false
-            showingWeek14Data = false
             updateChartForDay()
         }
 
@@ -118,7 +138,6 @@ class HealthSpeedActivity : AppCompatActivity() {
             showingWeekData = true
             showingMonthData = false
             showingDay14Data = false
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForWeek()
         }
@@ -127,7 +146,6 @@ class HealthSpeedActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = true
             showingDay14Data = false
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForMonth()
         }
@@ -137,33 +155,20 @@ class HealthSpeedActivity : AppCompatActivity() {
             showingWeekData = false
             showingMonthData = false
             showingDay14Data = true
-            showingWeek14Data = false
             intervalTextView.text = null
             updateChartForDay14()
         }
-//        week14Btn.setOnClickListener {
-//            showingDayData = false
-//            showingWeekData = false
-//            showingMonthData = false
-//            showingDay14Data = false
-//            showingWeek14Data = true
-//            intervalTextView.text = null
-//            updateChartForWeek14()
-//        }
-
         updateChart()
     }
 
     private fun updateChart() {
         if (showingWeekData) {
             updateChartForWeek()
-        } else if (showingMonthData) {
+        }else if(showingMonthData){
             updateChartForMonth()
-        } else if (showingDay14Data) {
+        }else if(showingDay14Data){
             updateChartForDay14()
-        } else if (showingWeek14Data) {
-            updateChartForWeek14()
-        } else {
+        }else {
             updateChartForDay()
         }
     }
@@ -171,76 +176,76 @@ class HealthSpeedActivity : AppCompatActivity() {
 
     private fun updateChartForDay() {
         lifecycleScope.launch {
-            HR = getDailyHR(client)
-            if (HR.isEmpty()) {
+            val Speed = getDailySpeedCounts()
+            if (Speed.isEmpty()) {
 
             }
-
+            if (limitLine != null) {
+                val yAxis: YAxis = lineChart.axisRight
+                yAxis.removeLimitLine(limitLine)
+                limitLine = null
+            }
             val numXAxisLabels = 24
-            val HRByHour = MutableList(numXAxisLabels) { 0 }
+            val SpeedCountsByHour = MutableList(numXAxisLabels) { 0.0 }
 
-            HR.forEach { hr ->
-                val localDateTime = hr.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+            Speed.forEach { Speed ->
+                val localDateTime = Speed.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val hour = localDateTime.hour
                 if (hour in 0 until numXAxisLabels) {
-                    HRByHour[hour] += hr.samples[0].speed.inKilometersPerHour.toInt()
+                    SpeedCountsByHour[hour] += Speed.samples[0].speed.inKilometersPerHour
                 }
             }
 
-            val maxBPMAvg = HRByHour.toIntArray().max()
-            val top = (maxBPMAvg / 10 + 1) * 10
+            val maxSpeed = SpeedCountsByHour.toDoubleArray().max()
+            val top = (maxSpeed / 100 + 1) * 100
 
-            val entries: MutableList<Entry> = ArrayList()
+            val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (HRByHour[i] == 0) {
+                if (SpeedCountsByHour[i] == 0.0) {
                     entries.add(Entry(entries.size.toFloat(), 0f))
                 } else {
-                    entries.add(Entry(entries.size.toFloat(), HRByHour[i].toFloat()))
+                    entries.add(Entry(entries.size.toFloat(), SpeedCountsByHour[i].toFloat()))
                 }
             }
 
-            val dataSet = LineDataSet(entries, "速度")
+            val dataSet = LineDataSet(entries, "速度(公里/小時)")
             val data = LineData(dataSet)
 
-            dataSet.color = Color.RED
+            dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
             dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
-            // 設定 Y 軸
-            val yAxisLeft: YAxis = lineChart.axisLeft
             val yAxis = lineChart.axisRight
-            yAxis.axisMinimum = 0f
-            yAxis.setLabelCount(4, true)
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
+            val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
             dataSet.axisDependency = YAxis.AxisDependency.RIGHT
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
+            yAxis.axisMinimum = 0f
             yAxis.axisMaximum = top.toFloat()
+            yAxis.setDrawGridLines(true)
+            yAxis.setDrawLabels(true)
+            yAxis.labelCount = 5
             yAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()
                 }
             }
 
-
-            // 設定 X 軸
-            val xAxis: XAxis = lineChart.xAxis
-
+            val xAxis = lineChart.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
             xAxis.setCenterAxisLabels(false)
             xAxis.isGranularityEnabled = true
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.labelCount = 24
             xAxis.axisMinimum = -0.5f
             xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
-            xAxis.labelCount = numXAxisLabels
+            xAxis.granularity = 1f
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     val hour = value.toInt()
@@ -269,123 +274,122 @@ class HealthSpeedActivity : AppCompatActivity() {
             lineChart.axisRight.isGranularityEnabled = true
             lineChart.axisRight.granularity = 1f
 
-            val aggregateHRToday = aggregateHRIntoDays(
-                client,
+            val aggregateStepsToday = aggregation(
                 currentDisplayedDate.toLocalDate().atStartOfDay(),
                 currentDisplayedDate.toLocalDate().atTime(LocalTime.MAX)
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            var number: Long = 0
-            for (i in aggregateHRToday.indices) {
-                number += aggregateHRToday[i]
+            if(aggregateStepsToday == null|| Speed.isEmpty()){
+                average.text="0.0"
+            }else {
+                average.text = String.format("%.2f", aggregateStepsToday / Speed.count())
             }
-            average.text = (number.div(aggregateHRToday.size)).toString()
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", aggregateStepsToday / Speed.count())
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             lineChart.invalidate()
         }
     }
 
-    private fun updateChartForWeek() {
+    fun updateChartForWeek() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
+            if (limitLine != null) {
+                val yAxis: YAxis = lineChart.axisRight
+                yAxis.removeLimitLine(limitLine)
+                limitLine = null
+            }
             val startDate =
                 currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
             val endDate =
                 currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
-            val HR = aggregateHRIntoDays(
-                client,
+            val Speed = aggregateSpeedIntoWeeks(
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
             )
-            if (HR.isEmpty()) {
+            if (Speed.isEmpty()) {
 
             }
 
             val numXAxisLabels = 7  // 修改為七筆資料
-            val HRByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
+            val SpeedCountsByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
 
-            HR.forEachIndexed { index, hr ->  // 使用 forEachIndexed 迴圈
-                if (hr != null) {
-                    HRByDay[index] = hr.toInt()  // 將資料填入對應位置
+            Speed.forEachIndexed { index, Speed ->  // 使用 forEachIndexed 迴圈
+                if (Speed != null) {
+                    SpeedCountsByDay[index] = Speed.toInt() // 將資料填入對應位置
                 }
             }
 
-            val maxBPMAvg = HRByDay.toIntArray().max()
-            val top = (maxBPMAvg / 10 + 1) * 10
+            val maxSpeed = SpeedCountsByDay.toIntArray().max()
+            val top = (maxSpeed / 100 + 1) * 100
 
-            val entries: MutableList<Entry> = ArrayList()
+            val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (HRByDay[i] == 0) {
+                if (SpeedCountsByDay[i] == 0) {
                     entries.add(Entry(entries.size.toFloat(), 0f))
                 } else {
-                    entries.add(Entry(entries.size.toFloat(), HRByDay[i].toFloat()))
+                    entries.add(Entry(entries.size.toFloat(), SpeedCountsByDay[i].toFloat()))
                 }
             }
 
-            // 創建LineDataSet對象，用於設置柱狀圖的樣式和顏色
-            val dataSet = LineDataSet(entries, "速度")
-            lineChart.description.isEnabled = false
+            val dataSet = LineDataSet(entries, "速度(公里/小時)")
+            val data = LineData(dataSet)
 
+            dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            // 設置折線圖的顏色
-            dataSet.color = Color.RED
-            dataSet.setDrawCircles(false)
-            dataSet.setDrawValues(false)
-            dataSet.mode = LineDataSet.Mode.LINEAR
-            dataSet.lineWidth = 2f
+            dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
-
-            // 創建LineData對象，用於將LineDataSet對象添加到柱狀圖中
-            val data = LineData(dataSet)
-
-            // 設定 Y 軸
-            val yAxisLeft: YAxis = lineChart.axisLeft
             val yAxis = lineChart.axisRight
-            yAxis.axisMinimum = 0f
-            yAxis.setLabelCount(4, true)
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
+            val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
             dataSet.axisDependency = YAxis.AxisDependency.RIGHT
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
+            yAxis.axisMinimum = 0f
             yAxis.axisMaximum = top.toFloat()
+            yAxis.setDrawGridLines(true)
+            yAxis.setDrawLabels(true)
+            yAxis.labelCount = 5
             yAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()
                 }
             }
 
-
-            // 設定 X 軸
-            val xAxis: XAxis = lineChart.xAxis
-
+            val xAxis = lineChart.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
             xAxis.setCenterAxisLabels(false)
             xAxis.isGranularityEnabled = true
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisMinimum = -0.5f
             xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
+            xAxis.granularity = 1f
             xAxis.labelCount = numXAxisLabels
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    val label: String = when (value.toInt()) {
-                        0 -> "一"
-                        1 -> "二"
-                        2 -> "三"
-                        3 -> "四"
-                        4 -> "五"
-                        5 -> "六"
-                        6 -> "日"
-                        else -> ""
+                    val dayIndex = value.toInt()
+                    val label: String
+                    when (dayIndex) {
+                        0 -> label = "一"
+                        1 -> label = "二"
+                        2 -> label = "三"
+                        3 -> label = "四"
+                        4 -> label = "五"
+                        5 -> label = "六"
+                        6 -> label = "日"
+                        else -> label = ""
                     }
                     return label
                 }
@@ -401,123 +405,117 @@ class HealthSpeedActivity : AppCompatActivity() {
                 myDateTimeFormatter
             )
 
-
-            // 設定圖表樣式
-            lineChart.setDrawGridBackground(false)
-            lineChart.description.isEnabled = false
             val leftAxis = lineChart.axisLeft
             val rightAxis = lineChart.axisRight
-            lineChart.data = data
-            lineChart.xAxis.setCenterAxisLabels(true)
-            lineChart.xAxis.axisMinimum = 0.5f
-            lineChart.axisRight.isGranularityEnabled = true
-            lineChart.axisRight.granularity = 1f
-            lineChart.invalidate()
             leftAxis.axisMinimum = 0f
             rightAxis.axisMinimum = 0f
+            lineChart.description.isEnabled = false
+            lineChart.data = data
+            lineChart.axisRight.isGranularityEnabled = true
+            lineChart.axisRight.granularity = 1f
+
 
             intervalTextView.text = ""
 
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if (HR.count { it > 0 } == 0) {
+            if (Speed.count { it > 0 } == 0) {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                    String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             lineChart.invalidate()
         }
     }
 
-    private fun updateChartForMonth() {
+    fun updateChartForMonth() {
+        if (limitLine != null) {
+            val yAxis: YAxis = lineChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一個月的資料
         lifecycleScope.launch {
             val startDate = currentDisplayedDate.withDayOfMonth(1)
             val endDate =
                 currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
-            val HR = aggregateHRIntoDays(
-                client,
+            val Speed = aggregateSpeedIntoMonths(
                 startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                endDate.toLocalDate().atTime(LocalTime.MAX),
+                currentDisplayedDate.month.length(false)
             )
-            if (HR.isEmpty()) {
-
+            if (Speed.isEmpty()) {
+                // 資料為空的處理邏輯
             }
 
             val numXAxisLabels = currentDisplayedDate.month.length(false)  // 修改為該月的天數
-            val HRByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
+            val SpeedCountsByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
 
-            HR.forEachIndexed { index, hr ->  // 使用 forEachIndexed 迴圈
-                if (hr != null) {
-                    HRByDay[index] = hr.toInt()  // 將資料填入對應位置
+            Speed.forEachIndexed { index, Speed ->  // 使用 forEachIndexed 迴圈
+                if (Speed != null) {
+                    SpeedCountsByDay[index] = Speed.toInt()  // 將步數資料填入對應位置
                 }
             }
 
-            val maxBPMAvg = HRByDay.toIntArray().max()
-            val top = (maxBPMAvg / 10 + 1) * 10
+            val maxSpeed = SpeedCountsByDay.toIntArray().max()
+            val top = (maxSpeed / 100 + 1) * 100
 
-            val entries: MutableList<Entry> = ArrayList()
+            val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (HRByDay[i] == 0) {
+                if (SpeedCountsByDay[i] == 0) {
                     entries.add(Entry(entries.size.toFloat(), 0f))
                 } else {
-                    entries.add(Entry(entries.size.toFloat(), HRByDay[i].toFloat()))
+                    entries.add(Entry(entries.size.toFloat(), SpeedCountsByDay[i].toFloat()))
                 }
             }
 
-            // 創建LineDataSet對象，用於設置柱狀圖的樣式和顏色
-            val dataSet = LineDataSet(entries, "速度")
-            lineChart.description.isEnabled = false
+            val dataSet = LineDataSet(entries, "速度(公里/小時)")
+            val data = LineData(dataSet)
 
+            dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            // 設置折線圖的顏色
-            dataSet.color = Color.RED
-            dataSet.setDrawCircles(false)
-            dataSet.setDrawValues(false)
-            dataSet.mode = LineDataSet.Mode.LINEAR
-            dataSet.lineWidth = 2f
+            dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
-
-            // 創建LineData對象，用於將LineDataSet對象添加到柱狀圖中
-            val data = LineData(dataSet)
-
-            // 設定 Y 軸
-            val yAxisLeft: YAxis = lineChart.axisLeft
             val yAxis = lineChart.axisRight
-            yAxis.axisMinimum = 0f
-            yAxis.setLabelCount(4, true)
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
+            val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
             dataSet.axisDependency = YAxis.AxisDependency.RIGHT
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
+            yAxis.axisMinimum = 0f
             yAxis.axisMaximum = top.toFloat()
+            yAxis.setDrawGridLines(true)
+            yAxis.setDrawLabels(true)
+            yAxis.labelCount = 5
             yAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()
                 }
             }
 
-
-            // 設定 X 軸
-            val xAxis: XAxis = lineChart.xAxis
-
+            val xAxis = lineChart.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
             xAxis.setCenterAxisLabels(false)
             xAxis.isGranularityEnabled = true
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisMinimum = -0.5f
             xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
+            xAxis.granularity = 1f
             xAxis.labelCount = numXAxisLabels
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
@@ -536,47 +534,47 @@ class HealthSpeedActivity : AppCompatActivity() {
             }
 
             val date = findViewById<TextView>(R.id.dateText)
-            val startOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-            val endOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+            date.text =
+                startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
 
-            date.text = startOfWeek.format(myDateTimeFormatter) + " - " + endOfWeek.format(
-                myDateTimeFormatter
-            )
-
-
-            // 設定圖表樣式
-            lineChart.setDrawGridBackground(false)
-            lineChart.description.isEnabled = false
             val leftAxis = lineChart.axisLeft
             val rightAxis = lineChart.axisRight
-            lineChart.data = data
-            lineChart.xAxis.setCenterAxisLabels(true)
-            lineChart.xAxis.axisMinimum = 0.5f
-            lineChart.axisRight.isGranularityEnabled = true
-            lineChart.axisRight.granularity = 1f
-            lineChart.invalidate()
             leftAxis.axisMinimum = 0f
             rightAxis.axisMinimum = 0f
+            lineChart.description.isEnabled = false
+            lineChart.data = data
+            lineChart.axisRight.isGranularityEnabled = true
+            lineChart.axisRight.granularity = 1f
 
             intervalTextView.text = ""
 
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if (HR.count { it > 0 } == 0) {
+            if (Speed.count { it > 0 } == 0) {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                    String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             lineChart.invalidate()
         }
     }
 
     //x軸日期暫時無法
     private fun updateChartForDay14() {
+        if (limitLine != null) {
+            val yAxis: YAxis = lineChart.axisRight
+            yAxis.removeLimitLine(limitLine)
+            limitLine = null
+        }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
@@ -584,290 +582,142 @@ class HealthSpeedActivity : AppCompatActivity() {
                 currentDisplayedDate.minusDays(13)
             val endDate =
                 currentDisplayedDate
-            val HR = aggregateHRIntoDays(
-                client,
+            val Speed = aggregateSpeedInto14Days(
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
             )
-            if (HR.isEmpty()) {
+            if (Speed.isEmpty()) {
 
             }
 
-            val numXAxisLabels = 7  // 修改為七筆資料
-            val HRByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
+            val numXAxisLabels = 14  // 修改為七筆資料
+            val SpeedCountsByDay14 = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
 
-            HR.forEachIndexed { index, hr ->  // 使用 forEachIndexed 迴圈
-                if (hr != null) {
-                    HRByDay[index] = hr.toInt()  // 將資料填入對應位置
+            Speed.forEachIndexed { index, Speed ->  // 使用 forEachIndexed 迴圈
+                if (Speed != null) {
+                    SpeedCountsByDay14[index] = Speed.toInt()  // 將步數資料填入對應位置
                 }
             }
 
-            val maxBPMAvg = HRByDay.toIntArray().max()
-            val top = (maxBPMAvg / 10 + 1) * 10
+            val maxSpeed = SpeedCountsByDay14.toIntArray().max()
+            val top = (maxSpeed / 100 + 1) * 100
 
-            val entries: MutableList<Entry> = ArrayList()
+            val entries: MutableList<Entry> = java.util.ArrayList()
             for (i in 0 until numXAxisLabels) {
-                if (HRByDay[i] == 0) {
-                    entries.add(Entry(entries.size.toFloat(), 0f))
+                if (SpeedCountsByDay14[i] >0) {
+                    entries.add(Entry(entries.size.toFloat(), SpeedCountsByDay14[i].toFloat()))
                 } else {
-                    entries.add(Entry(entries.size.toFloat(), HRByDay[i].toFloat()))
+                    entries.add(Entry(entries.size.toFloat(), 0f))
                 }
             }
 
-            // 創建LineDataSet對象，用於設置柱狀圖的樣式和顏色
-            val dataSet = LineDataSet(entries, "速度")
-            lineChart.description.isEnabled = false
+            val dataSet = LineDataSet(entries, "速度(公里/小時)")
+            val data = LineData(dataSet)
 
+            dataSet.color = Color.BLUE
             dataSet.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            // 設置折線圖的顏色
-            dataSet.color = Color.RED
-            dataSet.setDrawCircles(false)
-            dataSet.setDrawValues(false)
-            dataSet.mode = LineDataSet.Mode.LINEAR
-            dataSet.lineWidth = 2f
+            dataSet.setDrawValues(true)
+            dataSet.valueTextSize = 10f
 
-
-            // 創建LineData對象，用於將LineDataSet對象添加到柱狀圖中
-            val data = LineData(dataSet)
-
-            // 設定 Y 軸
-            val yAxisLeft: YAxis = lineChart.axisLeft
             val yAxis = lineChart.axisRight
-            yAxis.axisMinimum = 0f
-            yAxis.setLabelCount(4, true)
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
+            val yAxisLeft: YAxis = lineChart.axisLeft
             yAxis.setDrawAxisLine(true)
             dataSet.axisDependency = YAxis.AxisDependency.RIGHT
             yAxisLeft.isEnabled = false
             yAxis.isEnabled = true
+            yAxis.axisMinimum = 0f
             yAxis.axisMaximum = top.toFloat()
+            yAxis.setDrawGridLines(true)
+            yAxis.setDrawLabels(true)
+            yAxis.labelCount = 5
             yAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()
                 }
             }
 
-
-            // 設定 X 軸
-            val xAxis: XAxis = lineChart.xAxis
-
+            val xAxis = lineChart.xAxis
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
             xAxis.setCenterAxisLabels(false)
             xAxis.isGranularityEnabled = true
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisMinimum = -0.5f
             xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
+            xAxis.granularity = 1f
             xAxis.labelCount = numXAxisLabels
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     val label: String = when (value.toInt()) {
-                        0 -> "一"
-                        1 -> "二"
-                        2 -> "三"
-                        3 -> "四"
-                        4 -> "五"
-                        5 -> "六"
-                        6 -> "日"
+                        0 -> "1"
+                        6 -> "7"
+                        13 -> "14"
                         else -> ""
                     }
                     return label
                 }
             }
-
             val date = findViewById<TextView>(R.id.dateText)
-            val startOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-            val endOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-
-            date.text = startOfWeek.format(myDateTimeFormatter) + " - " + endOfWeek.format(
+            date.text = startDate.format(myDateTimeFormatter) + " - " + endDate.format(
                 myDateTimeFormatter
             )
 
-
-            // 設定圖表樣式
-            lineChart.setDrawGridBackground(false)
-            lineChart.description.isEnabled = false
             val leftAxis = lineChart.axisLeft
             val rightAxis = lineChart.axisRight
-            lineChart.data = data
-            lineChart.xAxis.setCenterAxisLabels(true)
-            lineChart.xAxis.axisMinimum = 0.5f
-            lineChart.axisRight.isGranularityEnabled = true
-            lineChart.axisRight.granularity = 1f
-            lineChart.invalidate()
             leftAxis.axisMinimum = 0f
             rightAxis.axisMinimum = 0f
+            lineChart.description.isEnabled = false
+            lineChart.data = data
+            lineChart.axisRight.isGranularityEnabled = true
+            lineChart.axisRight.granularity = 1f
 
             intervalTextView.text = ""
 
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            if (HR.count { it > 0 } == 0) {
+            if (Speed.count { it > 0 } == 0) {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                    String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
             }
             avgText.text = "平均:"
+
+            val limitValue = String.format("%.2f", Speed.sum().toDouble() / Speed.count { it > 0 })
+            limitLine = LimitLine(limitValue.toFloat())
+            limitLine!!.lineWidth = 1f // 線寬
+            limitLine!!.lineColor = Color.RED // 線的顏色
+            yAxis.addLimitLine(limitLine)
+
             lineChart.invalidate()
         }
     }
 
-    private fun updateChartForWeek14() {
-        val intervalTextView: TextView = findViewById(R.id.timeTF)
-        // 更新一星期的資料
-        lifecycleScope.launch {
-            val startDate =
-                currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
-            val endDate =
-                currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
-            val HR = aggregateHRIntoDays(
-                client,
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+    suspend fun aggregation(
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): Double {
+        var number = 0.0
+        try {
+            val response = client.readRecords(
+                ReadRecordsRequest(
+                    SpeedRecord::class,
+                    timeRangeFilter = TimeRangeFilter.between(start, end)
+                )
             )
-            if (HR.isEmpty()) {
-
+            for (dailyResult in response.records) {
+                number += dailyResult.samples[0].speed.inKilometersPerHour
             }
-
-            val numXAxisLabels = 7  // 修改為七筆資料
-            val HRByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
-
-            HR.forEachIndexed { index, hr ->  // 使用 forEachIndexed 迴圈
-                if (hr != null) {
-                    HRByDay[index] = hr.toInt()  // 資料填入對應位置
-                }
-            }
-
-            val maxBPMAvg = HRByDay.toIntArray().max()
-            val top = (maxBPMAvg / 10 + 1) * 10
-
-            val entries: MutableList<Entry> = ArrayList()
-            for (i in 0 until numXAxisLabels) {
-                if (HRByDay[i] == 0) {
-                    entries.add(Entry(entries.size.toFloat(), 0f))
-                } else {
-                    entries.add(Entry(entries.size.toFloat(), HRByDay[i].toFloat()))
-                }
-            }
-
-            // 創建LineDataSet對象，用於設置柱狀圖的樣式和顏色
-            val dataSet = LineDataSet(entries, "速度")
-            lineChart.description.isEnabled = false
-
-            dataSet.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return if (value == 0f) "" else value.toInt().toString()
-                }
-            }
-            // 設置折線圖的顏色
-            dataSet.color = Color.RED
-            dataSet.setDrawCircles(false)
-            dataSet.setDrawValues(false)
-            dataSet.mode = LineDataSet.Mode.LINEAR
-            dataSet.lineWidth = 2f
-
-
-            // 創建LineData對象，用於將LineDataSet對象添加到柱狀圖中
-            val data = LineData(dataSet)
-
-            // 設定 Y 軸
-            val yAxisLeft: YAxis = lineChart.axisLeft
-            val yAxis = lineChart.axisRight
-            yAxis.axisMinimum = 0f
-            yAxis.setLabelCount(4, true)
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            yAxis.setDrawGridLines(true)
-            yAxis.setDrawLabels(true)
-            yAxis.setDrawAxisLine(true)
-            dataSet.axisDependency = YAxis.AxisDependency.RIGHT
-            yAxisLeft.isEnabled = false
-            yAxis.isEnabled = true
-            yAxis.axisMaximum = top.toFloat()
-            yAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    return value.toInt().toString()
-                }
-            }
-
-
-            // 設定 X 軸
-            val xAxis: XAxis = lineChart.xAxis
-
-            xAxis.setDrawGridLines(false)
-            xAxis.setCenterAxisLabels(false)
-            xAxis.isGranularityEnabled = true
-            xAxis.granularity = 1f
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.axisMinimum = -0.5f
-            xAxis.axisMaximum = numXAxisLabels.toFloat() - 0.5f
-            xAxis.labelCount = numXAxisLabels
-            xAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    val label: String = when (value.toInt()) {
-                        0 -> "一"
-                        1 -> "二"
-                        2 -> "三"
-                        3 -> "四"
-                        4 -> "五"
-                        5 -> "六"
-                        6 -> "日"
-                        else -> ""
-                    }
-                    return label
-                }
-            }
-
-            val date = findViewById<TextView>(R.id.dateText)
-            val startOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-            val endOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-
-            date.text = startOfWeek.format(myDateTimeFormatter) + " - " + endOfWeek.format(
-                myDateTimeFormatter
-            )
-
-
-            // 設定圖表樣式
-            lineChart.setDrawGridBackground(false)
-            lineChart.description.isEnabled = false
-            val leftAxis = lineChart.axisLeft
-            val rightAxis = lineChart.axisRight
-            lineChart.data = data
-            lineChart.xAxis.setCenterAxisLabels(true)
-            lineChart.xAxis.axisMinimum = 0.5f
-            lineChart.axisRight.isGranularityEnabled = true
-            lineChart.axisRight.granularity = 1f
-            lineChart.invalidate()
-            leftAxis.axisMinimum = 0f
-            rightAxis.axisMinimum = 0f
-
-            intervalTextView.text = ""
-
-            val average: TextView = findViewById(R.id.averageTF)
-            val avgText: TextView = findViewById(R.id.avgTV)
-            if (HR.count { it > 0 } == 0) {
-                average.text = "0.0"
-            } else {
-                average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
-            }
-            avgText.text = "平均:"
-            lineChart.invalidate()
+        } catch (exception: Exception) {
+            // Handle exception here
         }
-    }
 
-    suspend fun getDailyHR(//一天24筆的資料
-        client: HealthConnectClient,
+        return number
+    }
+    suspend fun getDailySpeedCounts(//一天24筆的資料
         start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
         end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
     ): List<SpeedRecord> {
@@ -882,16 +732,17 @@ class HealthSpeedActivity : AppCompatActivity() {
             return request.records
         } catch (exception: Exception) {
 
+
             throw exception
         }
     }
 
-    suspend fun aggregateHRIntoDays(
-        client: HealthConnectClient,
+
+    suspend fun aggregateSpeedIntoWeeks(
         start: LocalDateTime,
         end: LocalDateTime
-    ): List<Long> {
-        val totalHRList = MutableList(7) { 0L } // 建立一個初始值為0的7個元素的陣列
+    ): List<Double> {
+        val totalSpeedList = MutableList(7) { 0.0 } // 建立一個初始值為0的7個元素的陣列
 
         try {
             val response = client.aggregateGroupByPeriod(
@@ -906,12 +757,72 @@ class HealthSpeedActivity : AppCompatActivity() {
                 val localDateTime =
                     dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfWeek = localDateTime.dayOfWeek.value // 取得星期幾的數字表示
-                totalHRList[dayOfWeek - 1] = (dailyResult.result[SpeedRecord.SPEED_AVG] ?: 0L) as Long
+                totalSpeedList[dayOfWeek - 1] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
+            }
+
+        } catch (exception: Exception) {
+            // Handle exception here
+        }
+
+        return totalSpeedList
+    }
+
+    suspend fun aggregateSpeedIntoMonths(
+        start: LocalDateTime,
+        end: LocalDateTime,
+        length: Int
+    ): List<Double> {
+        val totalSpeedList = MutableList(length) { 0.0 } // 建立一個初始值為0的length個元素的陣列
+
+        try {
+            val response = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(SpeedRecord.SPEED_AVG),
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    timeRangeSlicer = Period.ofDays(1)
+                )
+            )
+
+            for (dailyResult in response) {
+                val localDateTime =
+                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                val dayOfMonth = localDateTime.dayOfMonth
+                totalSpeedList[dayOfMonth - 1] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
             }
         } catch (exception: Exception) {
             // Handle exception here
         }
 
-        return totalHRList
+        return totalSpeedList
+    }
+
+    suspend fun aggregateSpeedInto14Days(
+        start: LocalDateTime,
+        end: LocalDateTime,
+    ): MutableList<Double> {
+        val totalSpeedList = MutableList(14) { 0.0 }
+
+        try {
+            val response = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(SpeedRecord.SPEED_AVG),
+                    timeRangeFilter = TimeRangeFilter.between(start, end),
+                    timeRangeSlicer = Period.ofDays(1)
+                )
+            )
+
+            for (i in 0 until 14) {
+                val currentDate = start.plusDays(i.toLong()).toLocalDate()
+                val dailyResult = response.find { it.startTime.toLocalDate() == currentDate }
+                if (dailyResult != null) {
+                    totalSpeedList[i] = (dailyResult.result[SpeedRecord.SPEED_AVG]?.inKilometersPerHour) as Double
+                }
+            }
+
+        } catch (exception: Exception) {
+            // Handle exception here
+        }
+
+        return totalSpeedList
     }
 }
