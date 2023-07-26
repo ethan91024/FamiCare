@@ -27,6 +27,10 @@ public class MessageModelGroup {
         this.message = message;
         this.userId = userId;
     }
+    public MessageModelGroup(String userId,String message) {
+        this.message = message;
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

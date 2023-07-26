@@ -50,7 +50,7 @@ import java.util.Date;
 public class GroupChatActivity extends AppCompatActivity {
     ChatAdapter adapter;
     RecyclerView recyclerView;//1
-    final ArrayList<MessageModel> list = new ArrayList<>();
+    final ArrayList<MessageModelGroup> list = new ArrayList<>();
     ActivityGroupChatBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -63,6 +63,7 @@ public class GroupChatActivity extends AppCompatActivity {
     RelativeLayout containerLayout;
     String uid,fuidtotal="";
     ArrayList<String> getalluser;
+    String[] fuidlist;
 
 
     public GroupChatActivity() {
@@ -85,7 +86,7 @@ public class GroupChatActivity extends AppCompatActivity {
         String recieveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
-        String groupuid=getIntent().getStringExtra("groupuid");
+        final String groupuid=getIntent().getStringExtra("groupuid");
         uid=auth.getCurrentUser().getUid();
 
         containerLayout = findViewById(R.id.groupchatroom);
@@ -93,9 +94,10 @@ public class GroupChatActivity extends AppCompatActivity {
         photo = findViewById(R.id.photo);
         addmember=findViewById(R.id.addmember);
 
+        binding.username.setText(userName);
+
         getAlluser();
 
-        binding.username.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +109,8 @@ public class GroupChatActivity extends AppCompatActivity {
         });
 
         final ArrayList<MessageModelGroup> messageModels = new ArrayList<>();
-        final GroupChatAdapter groupChatAdapter = new GroupChatAdapter(messageModels, this, recieveId);
-        binding.recyclerview.setAdapter(groupChatAdapter);
+        final GroupChatAdapter chatAdapter = new GroupChatAdapter(messageModels, this, recieveId);
+        binding.recyclerview.setAdapter(chatAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
         binding.recyclerview.setLayoutManager(layoutManager);
@@ -116,7 +118,7 @@ public class GroupChatActivity extends AppCompatActivity {
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
 
-        database.getReference().child("Group Chat").child(senderRoom).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Group chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageModels.clear();
@@ -125,7 +127,7 @@ public class GroupChatActivity extends AppCompatActivity {
                     model.setMessageId(snapshot1.getKey());
                     messageModels.add(model);
                 }
-                groupChatAdapter.notifyDataSetChanged();
+                chatAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -137,14 +139,14 @@ public class GroupChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message = binding.message.getText().toString();
-                final MessageModel model = new MessageModel(senderId, message);
+                final MessageModelGroup model = new MessageModelGroup(senderId, message);
                 model.setDatetime(new Date().getTime());
                 binding.message.setText("");
 
-                database.getReference().child("Group Chat").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                database.getReference().child("Group chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        database.getReference().child("Group Chat").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        database.getReference().child("Group chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
 
@@ -169,7 +171,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "選擇照片"), PICK_IMAGE_REQUEST);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
         addmember.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +208,7 @@ public class GroupChatActivity extends AppCompatActivity {
                                                 getallfuid.add(fuid);
                                                 String type="group";
                                                 fuidtotal=fuidtotal+fuid+",";
-                                                Toast.makeText(GroupChatActivity.this, groupuid, Toast.LENGTH_SHORT).show();
+
                                                 FriendModel friendModel=new FriendModel(userName,profilePic,type,groupuid);
                                                 database.getReference().child("Grouplist").child(fuid).child(userName).setValue(friendModel)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -253,6 +255,7 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // 跳转到相机或是相册
     @Override
@@ -338,3 +341,4 @@ public class GroupChatActivity extends AppCompatActivity {
         });
     }
 }
+

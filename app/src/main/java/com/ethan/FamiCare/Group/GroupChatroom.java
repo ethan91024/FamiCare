@@ -54,7 +54,7 @@ public class GroupChatroom extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
     RelativeLayout containerLayout;
-
+String uid;
 
     public GroupChatroom() {
         // Required empty public constructor
@@ -71,16 +71,15 @@ public class GroupChatroom extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         setContentView(binding.getRoot());
-
-        final String senderId = auth.getUid();
-        String recieveId = getIntent().getStringExtra("userId");
-        String userName = getIntent().getStringExtra("userName");
-        String profilePic = getIntent().getStringExtra("profilePic");
-
         containerLayout = findViewById(R.id.groupchatroom);
         camera = findViewById(R.id.camera);
         photo = findViewById(R.id.photo);
 
+        final String senderId = auth.getUid();
+
+        uid=auth.getCurrentUser().getUid();
+        String userName = getIntent().getStringExtra("userName");
+        String profilePic = getIntent().getStringExtra("profilePic");
         binding.username.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
@@ -92,52 +91,67 @@ public class GroupChatroom extends AppCompatActivity {
             }
         });
 
-        final ArrayList<MessageModel> messageModels = new ArrayList<>();
-        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, recieveId);
-        binding.recyclerview.setAdapter(chatAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true);
-        binding.recyclerview.setLayoutManager(layoutManager);
-
-        final String senderRoom = senderId + recieveId;
-        final String receiverRoom = recieveId + senderId;
-
-        database.getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Grouplist").child(uid).child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageModels.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    MessageModel model = snapshot1.getValue(MessageModel.class);
-                    model.setMessageId(snapshot1.getKey());
-                    messageModels.add(model);
-                }
-                chatAdapter.notifyDataSetChanged();
-            }
+                String recieveId = snapshot.child("fuid").getValue(String.class);
+                // 獲取到 "fuid" 的值後進行相應的處理
+                // 在這裡您可以使用 recieveId 變數來存儲所需的值
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                final ArrayList<MessageModel> messageModels = new ArrayList<>();
+                final ChatAdapter chatAdapter = new ChatAdapter(messageModels, GroupChatroom.this, recieveId);
+                binding.recyclerview.setAdapter(chatAdapter);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(GroupChatroom.this);
+                layoutManager.setStackFromEnd(true);
+                binding.recyclerview.setLayoutManager(layoutManager);
 
-            }
-        });
-        binding.fabSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = binding.message.getText().toString();
-                final MessageModel model = new MessageModel(senderId, message);
-                model.setDatetime(new Date().getTime());
-                binding.message.setText("");
+                final String senderRoom = senderId + recieveId;
+                final String receiverRoom = recieveId + senderId;
 
-                database.getReference().child("chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                database.getReference().child("chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        database.getReference().child("chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messageModels.clear();
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            MessageModel model = snapshot1.getValue(MessageModel.class);
+                            model.setMessageId(snapshot1.getKey());
+                            messageModels.add(model);
+                        }
+                        chatAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                binding.fabSend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String message = binding.message.getText().toString();
+                        final MessageModel model = new MessageModel(senderId, message);
+                        model.setDatetime(new Date().getTime());
+                        binding.message.setText("");
+
+                        database.getReference().child("chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                database.getReference().child("chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
 
+                                    }
+                                });
                             }
                         });
                     }
                 });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // 如果讀取資料失敗，可以在這裡處理錯誤
             }
         });
 
