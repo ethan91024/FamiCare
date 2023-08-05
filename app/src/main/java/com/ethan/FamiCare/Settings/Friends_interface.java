@@ -126,7 +126,8 @@ public class Friends_interface extends AppCompatActivity {
                                     // 在這裡處理找到的使用者 UID
                                     String token = userSnapshot.child("token").getValue(String.class);
                                     String type = "friend";
-                                    FriendModel friend = new FriendModel(profilePic, userName, friendId, token, type, fuid);
+                                    Boolean permission=false;
+                                    FriendModel friend = new FriendModel(profilePic, userName, friendId, token, type, fuid,permission);
                                     database.getReference().child("Grouplist").child(uid).child(userName).setValue(friend).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
