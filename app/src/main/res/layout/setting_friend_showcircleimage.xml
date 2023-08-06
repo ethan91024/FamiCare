@@ -20,11 +20,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="8"
+        android:layout_weight="7"
         android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
         android:text="user"
         android:textColor="@color/dark"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <Switch
+        android:id="@+id/switch9"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingEnd="20dp" />
 
 </LinearLayout>

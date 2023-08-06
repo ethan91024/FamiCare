@@ -17,6 +17,7 @@ import com.ethan.FamiCare.Firebasecords.FriendAdapter;
 import com.ethan.FamiCare.Firebasecords.FriendModel;
 import com.ethan.FamiCare.Firebasecords.PermissionModel;
 import com.ethan.FamiCare.databinding.ActivityFriendsBinding;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -241,6 +242,11 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(FriendsActivity.this, "權限更新", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(FriendsActivity.this, "權限更新失敗", Toast.LENGTH_SHORT).show();
             }
         });
     }

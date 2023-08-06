@@ -10,18 +10,21 @@ public class FriendModel {
     private String groupuid;
     private String fuid;
 
+    private Boolean permission;
+
 
     public FriendModel() {
 
     }
 
-    public FriendModel(String profilepic, String username, String id, String token,String type,String fuid) {
+    public FriendModel(String profilepic, String username, String id, String token,String type,String fuid,Boolean permission) {
         this.profilepic = profilepic;
         this.username = username;
         this.id = id;
         this.token = token;
         this.type=type;
         this.fuid=fuid;
+        this.permission=permission;
     }
     public FriendModel(String username, String profilepic,String type) {
         this.username = username;
@@ -108,5 +111,11 @@ public class FriendModel {
 
     public void setProfilepic(String profilepic) {
         this.profilepic = profilepic;
+    }
+    public Boolean getPermission() {
+        return permission;
+    }
+    public void setPermission(Boolean permission) {
+        this.permission = permission;
     }
 }
