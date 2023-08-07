@@ -71,6 +71,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.viewHolder
                                     intent.putExtra("userId", users.getId());
                                     intent.putExtra("profilePic", users.getProfilepic());
                                     intent.putExtra("userName", users.getUsername());
+                                    intent.putExtra("fuid",users.getFuid());
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(intent);
                                 }else{

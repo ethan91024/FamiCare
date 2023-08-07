@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ethan.FamiCare.Firebasecords.FriendModel;
+import com.ethan.FamiCare.Firebasecords.PermissionModel;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivityFriendsInterfaceBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +29,14 @@ public class Friends_interface extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String uid, fuid;
     String userName;
+    int perStep;
+    int perHeartRate;
+    int perSpeed;
+    int perCalories;
+    int perRespiratory;
+    int perBloodOxygen;
+    int perSleep;
+
 
 
     @Override
@@ -44,6 +53,7 @@ public class Friends_interface extends AppCompatActivity {
         binding.username.setText(userName);
         binding.userid.setText("#" + friendId);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar_b).into(binding.profileImage);
+        String fuid=getIntent().getStringExtra("fuid");
 
         // 获取 Firebase 实例
         DatabaseReference usersRef = database.getReference("Users");
@@ -72,7 +82,14 @@ public class Friends_interface extends AppCompatActivity {
                                     int statusRespiratory = snapshot.child("status_respiratory").getValue(Integer.class);
                                     int statusBloodOxygen = snapshot.child("status_bloodOxygen").getValue(Integer.class);
                                     int statusSleep = snapshot.child("status_sleep").getValue(Integer.class);
-
+                                    perStep=statusStep;
+                                    perHeartRate=statusHeartRate;
+                                    perSpeed=statusSpeed;
+                                    perCalories=statusCalories;
+                                    perRespiratory=statusRespiratory;
+                                    perBloodOxygen=statusBloodOxygen;
+                                    perSleep=statusSleep;
+                                    /*
                                     // 更新對應的 TextView
                                     binding.statusStep.setText(getStatusText(statusStep));
                                     binding.statusHeartRate.setText(getStatusText(statusHeartRate));
@@ -81,6 +98,8 @@ public class Friends_interface extends AppCompatActivity {
                                     binding.statusRespiratory.setText(getStatusText(statusRespiratory));
                                     binding.statusBloodOxygen.setText(getStatusText(statusBloodOxygen));
                                     binding.statusSleep.setText(getStatusText(statusSleep));
+
+                                     */
 
                                 } else {
                                     // 如果該 UserId 在 Status 資料表中不存在，可以設置默認值或顯示 "無資料"
@@ -101,6 +120,65 @@ public class Friends_interface extends AppCompatActivity {
                             }
                         });
                     }
+                    //去permission找權限有沒有開放，沒有就顯示未公開
+                    DatabaseReference databaseReference=database.getReference().child("Permission");
+                    databaseReference.child(fuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            PermissionModel permissionModel=snapshot.getValue(PermissionModel.class);
+                            if(permissionModel!=null){
+                                Boolean step=permissionModel.getStep();
+                                Boolean heartrate=permissionModel.getHeartrate();
+                                Boolean speed=permissionModel.getSpeed();
+                                Boolean calories=permissionModel.getCalories();
+                                Boolean breathe=permissionModel.getBreathe();
+                                Boolean oxy=permissionModel.getOxygen();
+                                Boolean sleep=permissionModel.getSleep();
+                                if(step==false){
+                                    binding.statusStep.setText("未公開");
+                                }else {
+                                    // 更新對應的 TextView
+                                    binding.statusStep.setText(getStatusText(perStep));
+                                }
+                                if(heartrate==false){
+                                    binding.statusHeartRate.setText("未公開");
+                                }else{
+                                    binding.statusHeartRate.setText(getStatusText(perHeartRate));
+                                }
+                                if(speed==false){
+                                    binding.statusSpeed.setText("未公開");
+                                }else{
+                                    binding.statusSpeed.setText(getStatusText(perSpeed));
+                                }
+                                if(calories==false){
+                                    binding.statusCalories.setText("未公開");
+                                }else{
+                                    binding.statusCalories.setText(getStatusText(perCalories));
+                                }
+                                if(breathe==false){
+                                    binding.statusRespiratory.setText("未公開");
+                                }else{
+                                    binding.statusRespiratory.setText(getStatusText(perRespiratory));
+                                }
+                                if(oxy==false){
+                                    binding.statusBloodOxygen.setText("未公開");
+                                }else{
+                                    binding.statusBloodOxygen.setText(getStatusText(perBloodOxygen));
+                                }
+                                if(sleep==false){
+                                    binding.statusSleep.setText("未公開");
+                                }else{
+                                    binding.statusSleep.setText(getStatusText(perSleep));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 } else {
                     // 没有找到匹配的用户
                 }
