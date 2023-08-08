@@ -93,7 +93,7 @@ public class Friends_interface extends AppCompatActivity {
                                     // 更新對應的 TextView
                                     binding.statusStep.setText(getStatusText(statusStep));
                                     binding.statusHeartRate.setText(getStatusText(statusHeartRate));
-                                    binding.statusSpeed.setText(getStatusText(statusSpeed));
+                                    binding.statusSpeed.setText(statusSpeed);
                                     binding.statusCalories.setText(getStatusText(statusCalories));
                                     binding.statusRespiratory.setText(getStatusText(statusRespiratory));
                                     binding.statusBloodOxygen.setText(getStatusText(statusBloodOxygen));

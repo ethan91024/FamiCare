@@ -68,7 +68,6 @@ public class AccountActivity extends AppCompatActivity {
         turnback = findViewById(R.id.turnback);
 
 
-
         if (auth.getCurrentUser() == null) {
             username.setText("username");
             userid.setText("#userid");
@@ -161,7 +160,7 @@ public class AccountActivity extends AppCompatActivity {
                     // 更新對應的 TextView
                     status_step.setText(getStatusText(statusStep));
                     status_heartRate.setText(getStatusText(statusHeartRate));
-                    status_speed.setText(getStatusText(statusSpeed));
+                    status_speed.setText(statusSpeed + "");
                     status_calories.setText(getStatusText(statusCalories));
                     status_respiratory.setText(getStatusText(statusRespiratory));
                     status_bloodOxygen.setText(getStatusText(statusBloodOxygen));
@@ -278,7 +277,7 @@ public class AccountActivity extends AppCompatActivity {
             case 0:
                 return "無資料";
             case 1:
-                return "待加油";
+                return "須注意";
             case 2:
                 return "及格";
             case 3:
