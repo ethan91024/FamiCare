@@ -94,7 +94,7 @@ class UploadWorkerK(
                 startDate.toLocalDate().atStartOfDay(),
                 endDate.toLocalDate().atTime(LocalTime.MAX)
             )
-            val totalSleep = sleeps.sum()
+            val totalSleep = sleeps.average()
 
             // 上傳 StatusModel 到 Firebase
             uploadStatusToFirebase(
@@ -131,6 +131,58 @@ class UploadWorkerK(
         if (userId != null) {
             val database = FirebaseDatabase.getInstance()
             val statusRef = database.getReference("Status").child(userId)
+            val status_step: Int
+            val status_heartRate: Int
+            val status_speed: Double
+            val status_calories: Int
+            val status_respiratory: Int
+            val status_bloodOxygen: Int
+            val status_sleep: Int
+
+            if (totalSteps >= 10000) {
+                status_step = 3
+            } else if (totalSteps >= 5000 && totalSteps < 10000) {
+                status_step = 2
+            } else if (totalSteps < 5000) {
+                status_step = 1
+            }
+
+            if (avgHeartRate >= 60 && avgHeartRate < 85) {
+                status_heartRate = 3
+            } else if (avgHeartRate >= 85) {
+                status_heartRate = 1
+            }
+
+            status_speed = maxSpeed
+
+            if (totalCalories >= 300) {
+                status_calories = 3
+            } else if (totalCalories >= 150 && totalCalories < 300) {
+                status_calories = 2
+            } else if (totalCalories < 150) {
+                status_calories = 1
+            }
+
+            if (avgRespiratoryRate >= 12 && avgRespiratoryRate < 20) {
+                status_respiratory = 3
+            } else if (avgRespiratoryRate >= 20 || avgRespiratoryRate < 12) {
+                status_respiratory = 1
+            }
+
+            if (avgOxygenSaturation >= 95) {
+                status_bloodOxygen = 3
+            } else if (avgOxygenSaturation >= 90 && avgOxygenSaturation <= 94) {
+                status_bloodOxygen = 2
+            } else if (avgOxygenSaturation < 90) {
+                status_bloodOxygen = 1
+            }
+
+            if (totalSleep >= 7 && totalSleep <= 9) {
+                status_sleep = 3
+            } else if (totalSleep < 7 || totalSleep > 9) {
+                status_sleep = 1
+            }
+
 
             try {
                 // 使用 updateChildren 方法進行更新或新增資料
