@@ -22,9 +22,14 @@ class UploadWorkerK(
 ) : Worker(context, workerParams) {
 
     lateinit var client: HealthConnectClient
+    val appContext: Context = context.applicationContext // 將 context 存儲為 appContext
+
     var currentDisplayedDate: LocalDateTime = LocalDateTime.now()
 
+
     override fun doWork(): Result {
+        client = HealthConnectClient.getOrCreate(appContext)
+
         // 使用 runBlocking 來調用使用協程的方法
         runBlocking {
 
@@ -33,26 +38,6 @@ class UploadWorkerK(
 
             // 建立 StatusModel 物件
             val statusModel = StatusModel()
-
-
-            // 獲取步數數據
-//        val steps = statusModel.getStepCount()[0]
-//
-//        // 獲取心跳數據
-//        val heartRates = statusModel.getDailyHRCounts()
-//
-//        // 獲取速度數據
-//        val speeds = statusModel.getDailySpeedCounts()
-//
-//        // 獲取卡路里數據
-//        val calories = statusModel.getDailyCaloriesCounts()
-//
-//        // 獲取呼吸數據
-//        val respiratoryRates = statusModel.getDailyRRCounts()
-//
-//        // 獲取血氧數據
-//        val oxygenSaturations = statusModel.getDailyOSCounts()
-
 
             // 計算各個 List 的總和
             val totalSteps = calTotalSteps(
@@ -145,12 +130,16 @@ class UploadWorkerK(
                 status_step = 2
             } else if (totalSteps < 5000) {
                 status_step = 1
+            } else {
+                status_step = 0
             }
 
             if (avgHeartRate >= 60 && avgHeartRate < 85) {
                 status_heartRate = 3
             } else if (avgHeartRate >= 85) {
                 status_heartRate = 1
+            } else {
+                status_heartRate = 0
             }
 
             status_speed = maxSpeed
@@ -161,12 +150,16 @@ class UploadWorkerK(
                 status_calories = 2
             } else if (totalCalories < 150) {
                 status_calories = 1
+            } else {
+                status_calories = 0
             }
 
             if (avgRespiratoryRate >= 12 && avgRespiratoryRate < 20) {
                 status_respiratory = 3
             } else if (avgRespiratoryRate >= 20 || avgRespiratoryRate < 12) {
                 status_respiratory = 1
+            } else {
+                status_respiratory = 0
             }
 
             if (avgOxygenSaturation >= 95) {
@@ -175,25 +168,29 @@ class UploadWorkerK(
                 status_bloodOxygen = 2
             } else if (avgOxygenSaturation < 90) {
                 status_bloodOxygen = 1
+            } else {
+                status_bloodOxygen = 0
             }
 
             if (totalSleep >= 7 && totalSleep <= 9) {
                 status_sleep = 3
             } else if (totalSleep < 7 || totalSleep > 9) {
                 status_sleep = 1
+            } else {
+                status_sleep = 0
             }
 
 
             try {
                 // 使用 updateChildren 方法進行更新或新增資料
                 val statusData = HashMap<String, Any>()
-                statusData["status_step"] = totalSteps
-                statusData["status_heartRate"] = avgHeartRate
-                statusData["status_speed"] = maxSpeed
-                statusData["status_calories"] = totalCalories
-                statusData["status_respiratory"] = avgRespiratoryRate
-                statusData["status_bloodOxygen"] = avgOxygenSaturation
-                statusData["status_sleep"] = totalSleep
+                statusData["status_step"] = status_step
+                statusData["status_heartRate"] = status_heartRate
+                statusData["status_speed"] = status_speed
+                statusData["status_calories"] = status_calories
+                statusData["status_respiratory"] = status_respiratory
+                statusData["status_bloodOxygen"] = status_bloodOxygen
+                statusData["status_sleep"] = status_sleep
 
                 statusRef.updateChildren(statusData)
             } catch (e: Exception) {
