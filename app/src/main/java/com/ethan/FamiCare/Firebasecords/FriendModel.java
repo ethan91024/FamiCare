@@ -70,8 +70,8 @@ public class FriendModel {
         this.type = type;
     }
 
-    public FriendModel(String username) {
-        this.username = username;
+    public FriendModel(String uid) {
+        this.userId = uid;
     }
     public String getToken() {
         return token;

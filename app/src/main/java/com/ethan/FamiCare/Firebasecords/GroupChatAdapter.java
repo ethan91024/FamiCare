@@ -36,6 +36,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //監測發送者訊息顏色， 若為發送者訊息框為綠色，否則灰色
         if(viewType==Sender_View_Type)
         {
             View view=LayoutInflater.from(context).inflate(R.layout.group_sender,parent,false);

@@ -97,6 +97,15 @@ public class AddNewGroup extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+                    FriendModel friendModel2 = new FriendModel(uid);
+                    database.getReference().child("Group").child(uid).child(newGroupKey)
+                            .child("Alluseruid").child("useruid"+1).setValue(friendModel2)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(AddNewGroup.this, "成功", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });
