@@ -39,6 +39,11 @@ class HealthHeartRateActivity : AppCompatActivity() {
     var showingMonthData = false
     var showingDay14Data = false
     var limitLine: LimitLine? = null
+    var midLine:LimitLine?=null
+    private var currentImageIndex = 1
+    private lateinit var goodface: ImageView
+    private lateinit var wellface: ImageView
+    private lateinit var badface: ImageView
     lateinit var client: HealthConnectClient
     lateinit var HR: List<HeartRateRecord>
     lateinit var lineChart: LineChart
@@ -52,6 +57,10 @@ class HealthHeartRateActivity : AppCompatActivity() {
         Locale.setDefault(locale)
         val config = Configuration()
         config.locale = locale
+
+        goodface = findViewById(R.id.goodface)
+        wellface = findViewById(R.id.wellface)
+        badface = findViewById(R.id.badface)
 
         client = HealthConnectClient.getOrCreate(this)
         lineChart = findViewById(R.id.line_chart)
@@ -175,17 +184,24 @@ class HealthHeartRateActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun showImage(index: Int) {
+        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
+        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
+        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+    }
     private fun updateChartForDay() {
         lifecycleScope.launch {
             HR = getDailyHRCounts()
             if (HR.isEmpty()) {
 
             }
-            if (limitLine != null) {
+            if (limitLine != null||midLine!=null) {
                 val yAxis: YAxis = lineChart.axisRight
                 yAxis.removeLimitLine(limitLine)
                 limitLine = null
+                val xAxis: XAxis = lineChart.xAxis
+                xAxis.removeLimitLine(midLine)
+                midLine = null
             }
             val numXAxisLabels = 24
             val hrCountsByHour = MutableList(numXAxisLabels) { 0 }
@@ -295,6 +311,13 @@ class HealthHeartRateActivity : AppCompatActivity() {
             limitLine!!.lineColor = Color.RED // 線的顏色
             yAxis.addLimitLine(limitLine)
 
+            currentImageIndex = when {
+                limitValue.toFloat() >= 10000 -> 1
+                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                else -> 3
+            }
+            showImage(currentImageIndex)
+
             lineChart.invalidate()
         }
     }
@@ -303,10 +326,13 @@ class HealthHeartRateActivity : AppCompatActivity() {
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
         lifecycleScope.launch {
-            if (limitLine != null) {
+            if (limitLine != null||midLine!=null) {
                 val yAxis: YAxis = lineChart.axisRight
                 yAxis.removeLimitLine(limitLine)
                 limitLine = null
+                val xAxis: XAxis = lineChart.xAxis
+                xAxis.removeLimitLine(midLine)
+                midLine = null
             }
             val startDate =
                 currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
@@ -435,15 +461,25 @@ class HealthHeartRateActivity : AppCompatActivity() {
             limitLine!!.lineColor = Color.RED // 線的顏色
             yAxis.addLimitLine(limitLine)
 
+            currentImageIndex = when {
+                limitValue.toFloat() >= 10000 -> 1
+                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                else -> 3
+            }
+            showImage(currentImageIndex)
+
             lineChart.invalidate()
         }
     }
 
     fun updateChartForMonth() {
-        if (limitLine != null) {
+        if (limitLine != null||midLine!=null) {
             val yAxis: YAxis = lineChart.axisRight
             yAxis.removeLimitLine(limitLine)
             limitLine = null
+            val xAxis: XAxis = lineChart.xAxis
+            xAxis.removeLimitLine(midLine)
+            midLine = null
         }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一個月的資料
@@ -566,16 +602,26 @@ class HealthHeartRateActivity : AppCompatActivity() {
             limitLine!!.lineColor = Color.RED // 線的顏色
             yAxis.addLimitLine(limitLine)
 
+            currentImageIndex = when {
+                limitValue.toFloat() >= 10000 -> 1
+                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                else -> 3
+            }
+            showImage(currentImageIndex)
+
             lineChart.invalidate()
         }
     }
 
     //x軸日期暫時無法
     private fun updateChartForDay14() {
-        if (limitLine != null) {
+        if (limitLine != null||midLine!=null) {
             val yAxis: YAxis = lineChart.axisRight
             yAxis.removeLimitLine(limitLine)
             limitLine = null
+            val xAxis: XAxis = lineChart.xAxis
+            xAxis.removeLimitLine(midLine)
+            midLine = null
         }
         val intervalTextView: TextView = findViewById(R.id.timeTF)
         // 更新一星期的資料
@@ -662,6 +708,16 @@ class HealthHeartRateActivity : AppCompatActivity() {
                     return label
                 }
             }
+            val seventhDayX = 6f
+            val eighthDayX = 7f
+            val middleX = (seventhDayX + eighthDayX) / 2
+
+            midLine = LimitLine(middleX)
+            midLine!!.lineWidth = 2f
+            midLine!!.lineColor = Color.LTGRAY
+
+            xAxis.addLimitLine(midLine)
+
             val date = findViewById<TextView>(R.id.dateText)
             date.text = startDate.format(myDateTimeFormatter) + " - " + endDate.format(
                 myDateTimeFormatter
@@ -693,6 +749,13 @@ class HealthHeartRateActivity : AppCompatActivity() {
             limitLine!!.lineWidth = 1f // 線寬
             limitLine!!.lineColor = Color.RED // 線的顏色
             yAxis.addLimitLine(limitLine)
+
+            currentImageIndex = when {
+                limitValue.toFloat() >= 10000 -> 1
+                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                else -> 3
+            }
+            showImage(currentImageIndex)
 
             lineChart.invalidate()
         }
