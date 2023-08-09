@@ -32,7 +32,7 @@ import java.util.*
 
 class HealthHeartRateActivity : AppCompatActivity() {
     val myDateTimeFormatter =
-        DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
+            DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZoneId.systemDefault())
     var currentDisplayedDate: LocalDateTime = LocalDateTime.now()
     var showingDayData = true
     var showingWeekData = false
@@ -79,7 +79,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                     val startHour = entry.x.toInt()
                     val endHour = startHour + 1
                     val interval =
-                        String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
+                            String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
                     intervalTextView.text = interval
                 }
             }
@@ -97,14 +97,14 @@ class HealthHeartRateActivity : AppCompatActivity() {
             val day = calendar[Calendar.DAY_OF_MONTH]
 
             val datePickerDialog = DatePickerDialog(
-                this,
-                DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                    val selectedDate = LocalDate.of(year, month + 1, day)
-                    val selectedDateTime = selectedDate.atStartOfDay()
-                    currentDisplayedDate = selectedDateTime
-                    intervalTextView.text = null
-                    updateChart()
-                }, year, month, day
+                    this,
+                    DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                        val selectedDate = LocalDate.of(year, month + 1, day)
+                        val selectedDateTime = selectedDate.atStartOfDay()
+                        currentDisplayedDate = selectedDateTime
+                        intervalTextView.text = null
+                        updateChart()
+                    }, year, month, day
             )
 
             datePickerDialog.show()
@@ -293,8 +293,8 @@ class HealthHeartRateActivity : AppCompatActivity() {
             lineChart.axisRight.granularity = 1f
 
             val aggregateStepsToday = aggregation(
-                currentDisplayedDate.toLocalDate().atStartOfDay(),
-                currentDisplayedDate.toLocalDate().atTime(LocalTime.MAX)
+                    currentDisplayedDate.toLocalDate().atStartOfDay(),
+                    currentDisplayedDate.toLocalDate().atTime(LocalTime.MAX)
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
@@ -335,12 +335,12 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 midLine = null
             }
             val startDate =
-                currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
+                    currentDisplayedDate.minusDays(currentDisplayedDate.dayOfWeek.value.toLong() - 1)
             val endDate =
-                currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
+                    currentDisplayedDate.plusDays(7 - currentDisplayedDate.dayOfWeek.value.toLong())
             val HR = aggregateHRIntoWeeks(
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                    startDate.toLocalDate().atStartOfDay(),
+                    endDate.toLocalDate().atTime(LocalTime.MAX)
             )
             if (HR.isEmpty()) {
 
@@ -425,12 +425,12 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
             val date = findViewById<TextView>(R.id.dateText)
             val startOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                    currentDisplayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
             val endOfWeek =
-                currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                    currentDisplayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
 
             date.text = startOfWeek.format(myDateTimeFormatter) + " - " + endOfWeek.format(
-                myDateTimeFormatter
+                    myDateTimeFormatter
             )
 
             val leftAxis = lineChart.axisLeft
@@ -451,7 +451,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                        String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
             }
             avgText.text = "平均:"
 
@@ -486,11 +486,11 @@ class HealthHeartRateActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val startDate = currentDisplayedDate.withDayOfMonth(1)
             val endDate =
-                currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
+                    currentDisplayedDate.withDayOfMonth(currentDisplayedDate.month.length(false))
             val HR = aggregateHRIntoMonths(
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX),
-                currentDisplayedDate.month.length(false)
+                    startDate.toLocalDate().atStartOfDay(),
+                    endDate.toLocalDate().atTime(LocalTime.MAX),
+                    currentDisplayedDate.month.length(false)
             )
             if (HR.isEmpty()) {
                 // 資料為空的處理邏輯
@@ -573,7 +573,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
             val date = findViewById<TextView>(R.id.dateText)
             date.text =
-                startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
+                    startDate.format(myDateTimeFormatter) + " - " + endDate.format(myDateTimeFormatter)
 
             val leftAxis = lineChart.axisLeft
             val rightAxis = lineChart.axisRight
@@ -592,7 +592,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                        String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
             }
             avgText.text = "平均:"
 
@@ -627,12 +627,12 @@ class HealthHeartRateActivity : AppCompatActivity() {
         // 更新一星期的資料
         lifecycleScope.launch {
             val startDate =
-                currentDisplayedDate.minusDays(13)
+                    currentDisplayedDate.minusDays(13)
             val endDate =
-                currentDisplayedDate
+                    currentDisplayedDate
             val HR = aggregateHRInto14Days(
-                startDate.toLocalDate().atStartOfDay(),
-                endDate.toLocalDate().atTime(LocalTime.MAX)
+                    startDate.toLocalDate().atStartOfDay(),
+                    endDate.toLocalDate().atTime(LocalTime.MAX)
             )
             if (HR.isEmpty()) {
 
@@ -720,7 +720,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
             val date = findViewById<TextView>(R.id.dateText)
             date.text = startDate.format(myDateTimeFormatter) + " - " + endDate.format(
-                myDateTimeFormatter
+                    myDateTimeFormatter
             )
 
             val leftAxis = lineChart.axisLeft
@@ -740,7 +740,7 @@ class HealthHeartRateActivity : AppCompatActivity() {
                 average.text = "0.0"
             } else {
                 average.text =
-                    String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
+                        String.format("%.2f", HR.sum().toDouble() / HR.count { it > 0 })
             }
             avgText.text = "平均:"
 
@@ -762,16 +762,16 @@ class HealthHeartRateActivity : AppCompatActivity() {
     }
 
     suspend fun aggregation(
-        start: LocalDateTime,
-        end: LocalDateTime
+            start: LocalDateTime,
+            end: LocalDateTime
     ): Double {
         var number = 0.0
         try {
             val response = client.readRecords(
-                ReadRecordsRequest(
-                    HeartRateRecord::class,
-                    timeRangeFilter = TimeRangeFilter.between(start, end)
-                )
+                    ReadRecordsRequest(
+                            HeartRateRecord::class,
+                            timeRangeFilter = TimeRangeFilter.between(start, end)
+                    )
             )
             for (dailyResult in response.records) {
                 number += dailyResult.samples[0].beatsPerMinute.toDouble()
@@ -784,16 +784,16 @@ class HealthHeartRateActivity : AppCompatActivity() {
     }
 
     suspend fun getDailyHRCounts(//一天24筆的資料
-        start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
-        end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
+            start: LocalDateTime = currentDisplayedDate.with(LocalTime.MIN),
+            end: LocalDateTime = currentDisplayedDate.with(LocalTime.MAX)
     ): List<HeartRateRecord> {
 
         try {
             val request = client.readRecords(
-                ReadRecordsRequest(
-                    HeartRateRecord::class,
-                    timeRangeFilter = TimeRangeFilter.between(start, end)
-                )
+                    ReadRecordsRequest(
+                            HeartRateRecord::class,
+                            timeRangeFilter = TimeRangeFilter.between(start, end)
+                    )
             )
             return request.records
         } catch (exception: Exception) {
@@ -805,23 +805,23 @@ class HealthHeartRateActivity : AppCompatActivity() {
 
 
     suspend fun aggregateHRIntoWeeks(
-        start: LocalDateTime,
-        end: LocalDateTime
+            start: LocalDateTime,
+            end: LocalDateTime
     ): List<Long> {
         val totalHRList = MutableList(7) { 0L } // 建立一個初始值為0的7個元素的陣列
 
         try {
             val response = client.aggregateGroupByPeriod(
-                AggregateGroupByPeriodRequest(
-                    metrics = setOf(HeartRateRecord.BPM_AVG),
-                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                    timeRangeSlicer = Period.ofDays(1)
-                )
+                    AggregateGroupByPeriodRequest(
+                            metrics = setOf(HeartRateRecord.BPM_AVG),
+                            timeRangeFilter = TimeRangeFilter.between(start, end),
+                            timeRangeSlicer = Period.ofDays(1)
+                    )
             )
 
             for (dailyResult in response) {
                 val localDateTime =
-                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                        dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfWeek = localDateTime.dayOfWeek.value // 取得星期幾的數字表示
                 totalHRList[dayOfWeek - 1] = dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L
             }
@@ -834,24 +834,24 @@ class HealthHeartRateActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateHRIntoMonths(
-        start: LocalDateTime,
-        end: LocalDateTime,
-        length: Int
+            start: LocalDateTime,
+            end: LocalDateTime,
+            length: Int
     ): List<Long> {
         val totalHRList = MutableList(length) { 0L } // 建立一個初始值為0的length個元素的陣列
 
         try {
             val response = client.aggregateGroupByPeriod(
-                AggregateGroupByPeriodRequest(
-                    metrics = setOf(HeartRateRecord.BPM_AVG),
-                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                    timeRangeSlicer = Period.ofDays(1)
-                )
+                    AggregateGroupByPeriodRequest(
+                            metrics = setOf(HeartRateRecord.BPM_AVG),
+                            timeRangeFilter = TimeRangeFilter.between(start, end),
+                            timeRangeSlicer = Period.ofDays(1)
+                    )
             )
 
             for (dailyResult in response) {
                 val localDateTime =
-                    dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                        dailyResult.startTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
                 val dayOfMonth = localDateTime.dayOfMonth
                 totalHRList[dayOfMonth - 1] = dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L
             }
@@ -863,18 +863,18 @@ class HealthHeartRateActivity : AppCompatActivity() {
     }
 
     suspend fun aggregateHRInto14Days(
-        start: LocalDateTime,
-        end: LocalDateTime,
+            start: LocalDateTime,
+            end: LocalDateTime,
     ): MutableList<Long> {
         val totalHRList = MutableList(14) { 0L }
 
         try {
             val response = client.aggregateGroupByPeriod(
-                AggregateGroupByPeriodRequest(
-                    metrics = setOf(HeartRateRecord.BPM_AVG),
-                    timeRangeFilter = TimeRangeFilter.between(start, end),
-                    timeRangeSlicer = Period.ofDays(1)
-                )
+                    AggregateGroupByPeriodRequest(
+                            metrics = setOf(HeartRateRecord.BPM_AVG),
+                            timeRangeFilter = TimeRangeFilter.between(start, end),
+                            timeRangeSlicer = Period.ofDays(1)
+                    )
             )
 
             for (i in 0 until 14) {

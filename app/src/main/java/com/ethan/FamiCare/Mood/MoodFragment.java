@@ -2,14 +2,13 @@ package com.ethan.FamiCare.Mood;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.app.ActivityManager;
+import static kotlinx.coroutines.BuildersKt.runBlocking;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +21,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.health.connect.client.HealthConnectClient;
 
-import com.ethan.FamiCare.Firebasecords.SymptomModel;
+import com.ethan.FamiCare.Health.HealthHeartRateActivity;
 import com.ethan.FamiCare.R;
-import com.ethan.FamiCare.SymptomActivity;
 import com.ethan.FamiCare.sportFragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -50,15 +48,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
+import java.sql.SQLOutput;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import kotlin.Result;
+import kotlin.coroutines.ContinuationInterceptor;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Dispatchers;
+import kotlinx.coroutines.GlobalScope;
+import kotlin.coroutines.EmptyCoroutineContext;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+
 
 public class MoodFragment extends Fragment {
 
@@ -67,11 +83,13 @@ public class MoodFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
-
+    private HealthHeartRateActivity HealthHeartRateActivity;
 
     public MoodFragment() {
         // Required empty public constructor
+
     }
+
 
     public static MoodFragment newInstance(String param1, String param2) {
         MoodFragment fragment = new MoodFragment();
@@ -97,9 +115,9 @@ public class MoodFragment extends Fragment {
     private double StressNumber = 0;
     private CheckBox ckb;
     private boolean run = true; //可否分析壓力指數
-    private int HeartRrte = 0;
-    private int Sleep = 0;
-    private int BloodOxygen = 0;
+    private Long HeartRrte = 0l;
+    private double Sleep = 0;
+    private Long BloodOxygen = 0l;
     private View mainview;
     private Button analize;
 
@@ -114,23 +132,29 @@ public class MoodFragment extends Fragment {
     private double stressN;
 
 
-
     //firebase使用者
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private String uid = auth.getCurrentUser().getUid();
     private String userid;
-    private int totalheadache=0, totaldizzy=0, totalnausea=0, totaltired=0, totalstomachache=0;
+    private int totalheadache = 0, totaldizzy = 0, totalnausea = 0, totaltired = 0, totalstomachache = 0;
     private TextView advice;
+    // 獲取當天日期
+    LocalDate currentDate = LocalDate.now();
 
-
-
+    // 獲取年、月、日
+    int year = currentDate.getYear();
+    int month = currentDate.getMonthValue();
+    int day = currentDate.getDayOfMonth();
+    String cdday = year + "_" + month + "_" + day;
 
 
     //set linechart
     LineChartData lineChartData;
     LineChart lineChart;
     ArrayList<String> HeartRrtexData = new ArrayList<>();
+    ArrayList<String> HRpoint = new ArrayList<>();
+
 //1
 
     @Override
@@ -141,28 +165,7 @@ public class MoodFragment extends Fragment {
 //        //更新標題
 //        getActivity().setTitle("壓力分析");
         // 其他Fragment代码...
-        ArrayList<String> HeartRateList = getHeaetRatepoints();
-        ArrayList<String> SleepList = getSleeppoints();
-        ArrayList<String> BloodOxygenList = getBloodOxygenpoints();
 
-
-
-
-
-
-
-        if (HeartRateList.size() < 1 || SleepList.size() < 1 || BloodOxygenList.size() < 1) {//有缺少其中一項資料，顯示無法分析
-            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-            stressnumber.setText("缺少資料無法分析");
-            run = false;
-        } else {
-            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
-            String getstressn = getStressNumber(HeartRateList, SleepList, BloodOxygenList);
-            stressnumber.setText(getstressn);
-            stressN=Double.parseDouble(getstressn);
-
-
-        }
 
         //跳到MoodSymptom
         analize = mainview.findViewById(R.id.analize);
@@ -180,7 +183,6 @@ public class MoodFragment extends Fragment {
         //firebase
 
 
-
         //載入心律、睡眠等資料
         lineChart = mainview.findViewById(R.id.lineChart);
         lineChartData = new LineChartData(lineChart, this.getContext());
@@ -190,17 +192,59 @@ public class MoodFragment extends Fragment {
         lineChartData.initX(HeartRrtexData);
         lineChartData.initY(0F, 10F);
 
+        //新增
+        loadDataFromFirebase(new OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(ArrayList<String> heartRatePoints, ArrayList<String> sleepPoints, ArrayList<String> bloodOxygenPoints) {
+                ArrayList<Entry> heartRateEntries = points(heartRatePoints);
+                ArrayList<Entry> sleepEntries = points(sleepPoints);
+                ArrayList<Entry> bloodOxygenEntries = points(bloodOxygenPoints);
 
-        ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
-        ArrayList<Entry> HeartRatepoints = points(EntryHeartRatepoints);
+                // 初始化圖表資料
+                lineChartData.initDataSet(heartRateEntries, sleepEntries, bloodOxygenEntries);
 
-        ArrayList<String> EntrySleeppoints = getSleeppoints();//從getSleeppoints取得隨機值
-        ArrayList<Entry> Sleeppoints = points(EntrySleeppoints);
+                if (heartRatePoints.size() < 1 || sleepPoints.size() < 1 || bloodOxygenPoints.size() < 1) {
+                    // 無資料，顯示無法分析
+                    TextView stressnumber = mainview.findViewById(R.id.stressnumber);
+                    stressnumber.setText("缺少資料無法分析");
+                    run = false;
+                } else {
+                    // 進行壓力指數計算等操作
+                    TextView stressnumber = mainview.findViewById(R.id.stressnumber);
+                    String getstressn = getStressNumber(heartRatePoints, sleepPoints, bloodOxygenPoints);
+                    stressnumber.setText(getstressn);
+                    stressN = Double.parseDouble(getstressn);
+                }
+            }
+        });
 
-        ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
-        ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
 
-        lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
+//先收
+//
+//        ArrayList<String> EntryHeartRatepoints = getHeaetRatepoints(); //從getHeaetRatepoints()取得隨機值
+//        ArrayList<Entry> HeartRatepoints = points(EntryHeartRatepoints);
+//
+//        ArrayList<String> EntrySleeppoints = getSleeppoints();//從getSleeppoints取得隨機值
+//        ArrayList<Entry> Sleeppoints = points(EntrySleeppoints);
+//
+//        ArrayList<String> EntryBloodOxygenpoints = getBloodOxygenpoints();//從getBloodOxygenpoints取得隨機值
+//        ArrayList<Entry> BloodOxygenpoints = points(EntryBloodOxygenpoints);
+//
+//        lineChartData.initDataSet(HeartRatepoints, Sleeppoints, BloodOxygenpoints);
+//
+//
+//        if (EntryHeartRatepoints.size() < 1 || EntrySleeppoints.size() < 1 || EntryBloodOxygenpoints.size() < 1) {//有缺少其中一項資料，顯示無法分析
+//            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+//            stressnumber.setText("缺少資料無法分析");
+//            run = false;
+//        } else {
+//            TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
+//            String getstressn = getStressNumber(EntryHeartRatepoints, EntrySleeppoints, EntryBloodOxygenpoints);
+//            stressnumber.setText(getstressn);
+//            stressN = Double.parseDouble(getstressn);
+//
+//
+//        }
 
         //跳轉到冥想
         menditation = mainview.findViewById(R.id.Menditation);
@@ -267,60 +311,90 @@ public class MoodFragment extends Fragment {
 //        scr6.setBounds(-200,90, 740, 280);
 //        sport.setCompoundDrawables(null,scr5,sportD,scr6);
 
-        //緩減建議
+        //呼叫健康
+        // 获取Activity实例
+//        HealthHeartRateActivity kotlinActivity = (HealthHeartRateActivity) getActivity();
 
+        LocalDate start = LocalDate.now(); // 获取当前日期
+        LocalDateTime startDateTime = start.atStartOfDay(); // 获取当天的开始时间（凌晨）
+        LocalDate end = start.minusDays(7); // 从当前日期往前推7天
+        LocalDateTime endDateTime = end.atTime(LocalTime.MAX); // 获取当天的最后时间（23:59:59.999999999）
 
 
         return mainview;
     }
 
-    public String getStressNumber(ArrayList<String> HeartRateList, ArrayList<String> SleepList, ArrayList<String> BloodOxygenList) {//計算壓力指數
-        int HeartRateStressN = 0; //心率的壓力指數
-        int SleepStressN = 0; //睡眠的壓力指數
-        int BloodCxygenN = 0;//血氧的壓力指數
-        double[] daily = new double[7];
-        double WeekStressN = 0;
 
-        for (int i = 0; i < daily.length; i++) {
-            String hearts = HeartRateList.get(i);
-            String sleeps = SleepList.get(i);
-            String bloods = BloodOxygenList.get(i);
-            HeartRrte = Integer.parseInt(hearts);
-            Sleep = Integer.parseInt(sleeps);
-            BloodOxygen = Integer.parseInt(bloods);
-            //心率
-            if (HeartRrte > 79 && HeartRrte < 89) {
-                HeartRateStressN = 6;
-            } else if (HeartRrte > 89) {
-                HeartRateStressN = 8;
+    public String getStressNumber(ArrayList<String> HeartRateList, ArrayList<String> SleepList, ArrayList<String> BloodOxygenList) {
+        try {
+            //計算壓力指數
+
+            int HeartRateStressN = 0; //心率的壓力指數
+            int SleepStressN = 0; //睡眠的壓力指數
+            int totalsleep = 0;
+            int BloodCxygenN = 0;//血氧的壓力指數
+            double[] daily = new double[7];
+            double WeekStressN = 0;
+
+            for (int i = 0; i < daily.length; i++) {
+                String hearts = HeartRateList.get(i);
+                String sleeps = SleepList.get(i);
+                String bloods = BloodOxygenList.get(i);
+                HeartRrte = Long.parseLong(hearts);
+                Sleep = Double.parseDouble(sleeps);
+                BloodOxygen = Long.parseLong(bloods);
+                //心率
+                if (HeartRrte > 79l && HeartRrte < 100l) {
+                    HeartRateStressN = 6;
+                } else if (HeartRrte > 100) {
+                    HeartRateStressN = 8;
+                } else if (HeartRrte > 50l && HeartRrte < 80l) {
+                    HeartRateStressN = 4;
+                } else {
+
+                }
+                //血氧
+                if (BloodOxygen < 98l && BloodOxygen > 95l) {
+                    BloodCxygenN = 4;
+                } else if (BloodOxygen <= 95l) {
+                    BloodCxygenN = 7;
+                } else {
+                    BloodCxygenN = 9;
+                }
+                //睡眠
+                totalsleep += Sleep;
+
+                //壓力數日平均
+                daily[i] = (HeartRateStressN + BloodCxygenN) / 2;
+                WeekStressN += daily[i];
             }
-            //血氧
-            if (BloodOxygen < 98 && BloodOxygen > 95) {
-                BloodCxygenN = 7;
-            } else if (BloodOxygen <= 95) {
-                BloodCxygenN = 8;
-            }
-            //睡眠
-            if (Sleep < 8 && Sleep > 6) {
-                SleepStressN = 4;
-            } else if (Sleep < 6 && Sleep > 4) {
+            if (totalsleep >= 56 && totalsleep <= 70) {
+                SleepStressN = 3;
+            } else if (totalsleep >= 35 && totalsleep < 56) {
                 SleepStressN = 6;
-            } else if (Sleep < 4) {
+            } else if (totalsleep < 35 && totalsleep >= 28) {
                 SleepStressN = 8;
+            } else if (totalsleep < 28) {
+                SleepStressN = 10;
+            } else if (totalsleep > 96) {
+                SleepStressN = 5;
             }
-            //壓力數日平均
-            daily[i] = (HeartRateStressN + BloodCxygenN + SleepStressN) / 3;
-            WeekStressN += daily[i];
+            int n1 = (int) WeekStressN / 7, n2 = (int) (WeekStressN / 7) + 1;//四捨五入
+            WeekStressN += SleepStressN;
+
+            if (WeekStressN / 7 > (n1 + n2) / 2) {
+                StressNumber = n1 + 0.5;
+            } else {
+                StressNumber = n1;
+            }
+            String sn = StressNumber + "";
+            return sn;
+        } catch (Exception exception) {
+            String sn = StressNumber + "";
+            return sn;
         }
-        int n1 = (int) WeekStressN / 7, n2 = (int) (WeekStressN / 7) + 1;//四捨五入
-        if (WeekStressN / 7 > (n1 + n2) / 2) {
-            StressNumber = n1 + 0.5;
-        } else {
-            StressNumber = n1;
-        }
-        String sn = StressNumber + "";
-        return sn;
     }
+
     //症狀checkbox 加分計算
 //    public double SymptomCheckBox(boolean run) {
 //        double plusnumber = 0;
@@ -336,25 +410,140 @@ public class MoodFragment extends Fragment {
 //        }
 //        return plusnumber;
 //    }
-
-
-    private ArrayList<String> getHeaetRatepoints() {//製造心率假資料，名子不要改會亂掉
-        ArrayList<String> points = new ArrayList<>();
-        Random r = new Random(111);
-        for (int i = 0; i < 7; i++) {
-            int num = 60 + r.nextInt(100 - 60 + 1);
-            String s = "" + num;
-            //Float f=Float.parseFloat(s);
-            //HeartRrtexData.add("第" + i + "天");
-            //HeartRrteyData.add(new Entry(i+1,f));
-            //points.add(new Entry(i, f))
-            points.add(s);
-
-
-        }
-
-        return points;
+    public interface OnDataLoadedListener {
+        void onDataLoaded(ArrayList<String> heartRatePoints, ArrayList<String> sleepPoints, ArrayList<String> bloodOxygenPoints);
     }
+
+    private void loadDataFromFirebase(OnDataLoadedListener listener) {
+        ArrayList<String> heartRatePoints = new ArrayList<>();
+        ArrayList<String> sleepPoints = new ArrayList<>();
+        ArrayList<String> bloodOxygenPoints = new ArrayList<>();
+        Long[] HRList = new Long[7];
+        Long[] OXYList = new Long[7];
+        double[] SleepList = new double[7];
+
+        //firebase 讀資料
+        if (auth.getCurrentUser() == null) {
+            // ...
+        } else {
+            // ...
+
+            // 讀取心律資料
+            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_heartRate").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (int i = 0; i < 7; i++) {
+                            HRList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                            heartRatePoints.add(HRList[i] + "");
+                        }
+
+                        System.out.println("HHR" + Arrays.toString(HRList));
+                        System.out.println("hp" + heartRatePoints);
+
+                    } else {
+                        Log.d("TAG", "No data found for the date: " + "錯誤");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                }
+            });
+
+            // 讀取睡眠資料
+            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_sleep").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        for (int i = 0; i < 7; i++) {
+                            SleepList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                            sleepPoints.add(SleepList[i] + "");
+                        }
+
+                        System.out.println("SLL" + Arrays.toString(SleepList));
+                        System.out.println("SLP" + sleepPoints);
+
+                    } else {
+                        Log.d("TAG", "No data found for the date: " + "錯誤");
+                    }
+
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                }
+            });
+
+            // 讀取血氧資料
+            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealths_bloodOxygen").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+                        for (int i = 0; i < 7; i++) {
+                            OXYList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                            bloodOxygenPoints.add(OXYList[i] + "");
+                        }
+
+                        System.out.println("OXYL" + Arrays.toString(OXYList));
+                        System.out.println("OXYP" + bloodOxygenPoints);
+
+                    } else {
+                        Log.d("TAG", "No data found for the date: " + "錯誤");
+                    }
+
+
+                    listener.onDataLoaded(heartRatePoints, sleepPoints, bloodOxygenPoints);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                }
+            });
+        }
+    }
+
+
+//    private void getHeaetRatepoints(OnHeartRatePointsLoadedListener listener) {
+//        ArrayList<String> point = new ArrayList<>();
+//        Long[] HRList = new Long[7];
+//
+//        //firebase 讀資料
+//        if (auth.getCurrentUser() == null) {
+//            // ...
+//        } else {
+//            // ...
+//
+//            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_heartRate").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    if (dataSnapshot.exists()) {
+//                        for (int i = 0; i < 7; i++) {
+//                            HRList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+//                            point.add(HRList[i] + "");
+//                        }
+//
+//                        System.out.println("HHR" + Arrays.toString(HRList));
+//
+//                    } else {
+//                        Log.d("TAG", "No data found for the date: " + "錯誤");
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+//                }
+//            });
+//        }
+//        System.out.println("point");
+//    }
 
     private ArrayList<String> getSleeppoints() {//製造睡眠假資料，名子不要改
         ArrayList<String> points = new ArrayList<>();
@@ -505,7 +694,7 @@ public class MoodFragment extends Fragment {
             leftAxis.setTextSize(13);//Y軸標籤大小
             leftAxis.setAxisLineColor(Color.BLACK);//Y軸顏色
 
-            leftAxis.setAxisMinimum(min - 10);//Y軸標籤最小值
+            leftAxis.setAxisMinimum(0);//Y軸標籤最小值
             leftAxis.setAxisMaximum(max + 10);//Y軸標籤最大值
 
             leftAxis.setValueFormatter(new MyYAxisValueFormatter());
@@ -527,6 +716,7 @@ public class MoodFragment extends Fragment {
 
         }
     }
+
     //日期設定
     public String[] SetDate() {
         // 定义好时间字串的格式
@@ -551,7 +741,7 @@ public class MoodFragment extends Fragment {
         }
     }
 
-    public void saveSymptoms(String date,double stressn) {
+    public void saveSymptoms(String date, double stressn) {
         // 将 Checkbox 的状态存储到 Firebase Database
 //        SymptomModel stressmodel = new SymptomModel(stressn);
 
@@ -568,10 +758,12 @@ public class MoodFragment extends Fragment {
 //        databaseReference.child("symptom").push().child(userid).child(date).child("tired").push().setValue(tired);
 //        databaseReference.child("symptom").push().child(userid).child(date).child("stomachache").push().setValue(stomachache);
     }
+
     public static int dpToPx(Context context, int dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
     }
+
     private void refreshData() {
         // 例如，如果你要更新TextView的文本，可以这样做：
         //日期
@@ -584,7 +776,7 @@ public class MoodFragment extends Fragment {
             rs[i] = Date[i].replace("/", "_");//把/換成_
 //            System.out.println(rs[i]);
         }
-        dday= Date[0].replace("/", "_");//把/換成_
+        dday = Date[0].replace("/", "_");//把/換成_
 
 
         final double[] synumbern = {0};
@@ -595,8 +787,8 @@ public class MoodFragment extends Fragment {
                 if (snapshot.exists()) {
                     String userid1 = snapshot.getValue(String.class);
                     userid = userid1;
-                    System.out.println("UserID:"+userid);
-                    saveSymptoms(dday,stressN);
+                    System.out.println("UserID:" + userid);
+                    saveSymptoms(dday, stressN);
 
                     // 讀取 firebase 資料並計算 synumbern[0]
                     for (int i = 0; i < rs.length; i++) {
@@ -630,18 +822,18 @@ public class MoodFragment extends Fragment {
 //                                    Log.d("TAG", "Pressn: " + Rpressn);
 
                                     //計算症狀次數
-                                    if(Rheadache==true) totalheadache+=1;
-                                    if(Rdizzy==true) totaldizzy+=1;
-                                    if(Rnausea==true) totalnausea+=1;
-                                    if(Rtired==true) totaltired+=1;
-                                    if(Rstomachache==true) totalstomachache+=1;
-                                    int []smax={totalheadache,totaldizzy,totalnausea,totaltired,totalstomachache};
+                                    if (Rheadache == true) totalheadache += 1;
+                                    if (Rdizzy == true) totaldizzy += 1;
+                                    if (Rnausea == true) totalnausea += 1;
+                                    if (Rtired == true) totaltired += 1;
+                                    if (Rstomachache == true) totalstomachache += 1;
+                                    int[] smax = {totalheadache, totaldizzy, totalnausea, totaltired, totalstomachache};
 
                                     //分析症狀資料且更新緩解建議
                                     int max = Arrays.stream(smax).max().getAsInt();
-                                    if(totalheadache == max ){
+                                    if (totalheadache == max) {
                                         //跳轉運動介面
-                                        advice= mainview.findViewById(R.id.Advice);
+                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  運動");
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
@@ -661,9 +853,9 @@ public class MoodFragment extends Fragment {
                                         });
 
                                     }
-                                    if(totalstomachache==max||totaltired==max){
+                                    if (totalstomachache == max || totaltired == max) {
                                         //跳轉到冥想
-                                        advice= mainview.findViewById(R.id.Advice);
+                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  冥想");
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
@@ -683,9 +875,9 @@ public class MoodFragment extends Fragment {
                                             }
                                         });
                                     }
-                                    if(totaldizzy==max||totalnausea==max){
+                                    if (totaldizzy == max || totalnausea == max) {
                                         //跳轉呼吸介面
-                                        advice= mainview.findViewById(R.id.Advice);
+                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  呼吸");
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
@@ -707,7 +899,6 @@ public class MoodFragment extends Fragment {
                                     }
 
 
-
                                 } else {
                                     Log.d("TAG", "No data found for the date: " + rdate);
                                 }
@@ -719,9 +910,9 @@ public class MoodFragment extends Fragment {
                                     TextView stressnumber = (TextView) mainview.findViewById(R.id.stressnumber);
                                     double d = stressN;
                                     d += synumbern[0];
-                                    double td = d* 10;
+                                    double td = d * 10;
                                     int ti = (int) td;
-                                    d= (double) ti / 10;
+                                    d = (double) ti / 10;
                                     stressnumber.setText(d + "");
                                     System.out.println("stressnumber:" + d);
                                 }
@@ -742,7 +933,6 @@ public class MoodFragment extends Fragment {
             }
         });
     }
-
 
 
     public void onResume() {

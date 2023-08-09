@@ -103,7 +103,34 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="15dp" />
+                        android:layout_height="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="壓力指數大於5，正常壓力狀態，5~8，些微壓力狀態"
+                        android:textColor="#535352"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="壓力指數大於8，表示承受過多壓力狀態"
+                        android:textColor="#535352"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
 
 
                     <RelativeLayout
@@ -123,6 +150,10 @@
                     </RelativeLayout>
 
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -131,10 +162,9 @@
                         android:text="*心率和血氧*10才是真正的數值，此為量化結果"
                         android:textSize="16dp" />
 
-
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="15dp" />
+                        android:layout_height="10dp" />
 
                 </LinearLayout>
 
@@ -168,11 +198,12 @@
                         android:gravity="left|center_vertical"
                         android:textColor="#000000"
                         android:textSize="25dp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
+
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="15dp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="55dp"

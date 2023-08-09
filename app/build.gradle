@@ -97,11 +97,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database:20.2.2'
     implementation 'com.google.firebase:firebase-firestore:24.7.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
+
 
 }
