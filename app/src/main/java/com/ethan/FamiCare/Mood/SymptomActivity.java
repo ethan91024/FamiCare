@@ -1,9 +1,7 @@
-package com.ethan.FamiCare;
+package com.ethan.FamiCare.Mood;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ethan.FamiCare.Firebasecords.SymptomModel;
+import com.ethan.FamiCare.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -212,10 +211,7 @@ public class SymptomActivity extends AppCompatActivity {
 //                System.out.println("ck" + checkboxn[i]);
             }
         }
-//        for (int i : id) {
-//            ckb = (CheckBox) view.findViewById(i);
-//            ckb.setChecked(false);
-//        }
+
 
 
         return checkboxn;
@@ -254,12 +250,6 @@ public class SymptomActivity extends AppCompatActivity {
 //                Toast.makeText(SymptomActivity.this, "已成功更新", Toast.LENGTH_SHORT).show();
             }
         });
-
-        //.child(date).child("headache").push().setValue(headache);
-//        databaseReference.child("symptom").push().child(userid).child(date).child("dizzy").push().setValue(dizzy);
-//        databaseReference.child("symptom").push().child(userid).child(date).child("nausea").push().setValue(nausea);
-//        databaseReference.child("symptom").push().child(userid).child(date).child("tired").push().setValue(tired);
-//        databaseReference.child("symptom").push().child(userid).child(date).child("stomachache").push().setValue(stomachache);
     }
 
 

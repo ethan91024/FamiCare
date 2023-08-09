@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SymptomActivity">
+    tools:context=".Mood.SymptomActivity">
 
     <LinearLayout
         android:id="@+id/Symptom_layout"

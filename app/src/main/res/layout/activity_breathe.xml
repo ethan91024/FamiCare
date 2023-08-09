@@ -39,10 +39,12 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:text="控制身體進行深呼吸，令大腦以及身體快速遠離疲憊，使身體和精神更加的輕鬆。"
-        android:textSize="15dp"
-        android:layout_marginHorizontal="5dp"></TextView>
+        android:textSize="16dp"
+        android:layout_marginHorizontal="5dp"
+        android:textColor="#535352"
+        android:textStyle="bold"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"

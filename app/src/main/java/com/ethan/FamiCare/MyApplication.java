@@ -9,6 +9,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.ethan.FamiCare.Firebasecords.AnalyzeHealth;
 import com.ethan.FamiCare.Firebasecords.UploadWorker;
 import com.ethan.FamiCare.Firebasecords.UploadWorkerK;
 
@@ -22,6 +23,7 @@ public class MyApplication extends Application {
         setupWorkManager();
 
         triggerUploadWorker(); // 立即觸發一次上傳
+        triggerAmalyze();
     }
 
     private void setupWorkManager() {
@@ -44,5 +46,11 @@ public class MyApplication extends Application {
         OneTimeWorkRequest uploadRequest = new OneTimeWorkRequest.Builder(UploadWorker.class).build();
         WorkManager.getInstance(getApplicationContext()).enqueue(uploadRequest);
         Toast.makeText(this, "健康資料上傳成功", Toast.LENGTH_SHORT).show();
+    }
+
+    private void triggerAmalyze() {
+        OneTimeWorkRequest uploadRequest = new OneTimeWorkRequest.Builder(AnalyzeHealth.class).build();
+        WorkManager.getInstance(getApplicationContext()).enqueue(uploadRequest);
+        Toast.makeText(this, "壓力分析上傳成功", Toast.LENGTH_SHORT).show();
     }
 }

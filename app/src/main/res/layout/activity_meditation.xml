@@ -37,11 +37,13 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_marginHorizontal="5dp"
         android:gravity=""
         android:text="冥想可以降低壓力與焦慮。讓我們專注在這5分鐘，調整呼吸，放鬆情緒，好好感受心靈。"
-        android:textSize="15dp"></TextView>
+        android:textSize="16dp"
+        android:textColor="#535352"
+        android:textStyle="bold"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
