@@ -126,12 +126,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
             public boolean onLongClick(View v) {
                 AlertDialog.Builder alertDialog =
                         new AlertDialog.Builder(context);
-                alertDialog.setMessage("是否要刪除群組");
+                alertDialog.setMessage("是否要刪除群組\n(將會刪除所有聊天紀錄)");
                 alertDialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nodeName = holder.username.getText().toString();
-                        database.getReference().child(uid).child(nodeName).removeValue(new DatabaseReference.CompletionListener() {
+                        database.getReference().child("Grouplist").child(uid).child(nodeName).removeValue(new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                         Toast.makeText(context, "資料已成功刪除", Toast.LENGTH_SHORT).show();

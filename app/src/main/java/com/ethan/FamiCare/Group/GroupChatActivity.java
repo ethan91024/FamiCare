@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GroupChatActivity extends AppCompatActivity {
-    ChatAdapter adapter;
+    GroupChatAdapter adapter;
     RecyclerView recyclerView;//1
     final ArrayList<MessageModelGroup> list = new ArrayList<>();
     ActivityGroupChatBinding binding;
@@ -56,15 +56,15 @@ public class GroupChatActivity extends AppCompatActivity {
     FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    ImageView photo, camera,addmember;
+    ImageView photo, camera, addmember;
     private static final int TAKE_PHOTO_REQUEST = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
     RelativeLayout containerLayout;
-    String uid,fuidtotal="";
+    String uid, fuidtotal = "";
     ArrayList<String> getalluser;
     String[] fuidlist;
-
+    long cnt=0;
 
     public GroupChatActivity() {
         // Required empty public constructor
@@ -86,13 +86,14 @@ public class GroupChatActivity extends AppCompatActivity {
         String recieveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
-        final String groupuid=getIntent().getStringExtra("groupuid");
-        uid=auth.getCurrentUser().getUid();
+        final String groupuid = getIntent().getStringExtra("groupuid");
+        uid = auth.getCurrentUser().getUid();
 
         containerLayout = findViewById(R.id.groupchatroom);
         camera = findViewById(R.id.camera);
         photo = findViewById(R.id.photo);
-        addmember=findViewById(R.id.addmember);
+        addmember = findViewById(R.id.addmember);
+        fuidtotal = uid;
 
         binding.username.setText(userName);
 
@@ -174,12 +175,12 @@ public class GroupChatActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-        addmember.setOnClickListener(new View.OnClickListener() {
+        addmember.setOnClickListener(new View.OnClickListener() {//加好友到群組
             @Override
             public void onClick(View v) {
                 String[] users = getalluser.toArray(new String[getalluser.size()]);
                 ArrayList<String> getallfuid = new ArrayList<>();
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(GroupChatActivity.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(GroupChatActivity.this);
                 alertDialog.setTitle("選擇要加進群組的好友");
                 boolean[] checkedItems = new boolean[users.length];
                 alertDialog.setMultiChoiceItems(users, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
@@ -196,27 +197,27 @@ public class GroupChatActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // 在用户点击确定按钮后，处理用户的选择
                         // 遍历 checkedItems 数组，查找选中的用户，并执行相应的操作
-                        for (int i = 0; i < users.length; i++) {
-                            if (checkedItems[i]) {
-                                // 在这里执行添加成员到聊天组的操作
-                                database.getReference().child("Friend").child(uid).child(users[i])
+                        for (int l = 0; l < users.length; l++) {
+                            if (checkedItems[l]) {
+                                database.getReference().child("Friend").child(uid).child(users[l])
                                         .addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                String fuid=snapshot.child("fuid").getValue(String.class);
-                                                String name=snapshot.child("username").getValue(String.class);
-                                                getallfuid.add(fuid);
-                                                String type="group";
-                                                fuidtotal=fuidtotal+fuid+",";
 
-                                                FriendModel friendModel=new FriendModel(userName,profilePic,type,groupuid);
+                                                String fuid = snapshot.child("fuid").getValue(String.class);
+                                                String name = snapshot.child("username").getValue(String.class);
+                                                getallfuid.add(fuid);
+                                                String type = "group";
+                                                fuidtotal += "," + fuid;
+                                                FriendModel friendModel = new FriendModel(userName, profilePic, type, groupuid);
                                                 database.getReference().child("Grouplist").child(fuid).child(userName).setValue(friendModel)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
 
                                                                 // 節點寫入成功
-                                                                Toast.makeText(GroupChatActivity.this, "已將"+name+"加入群組", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(GroupChatActivity.this, "已將" + name + "加入群組", Toast.LENGTH_SHORT).show();
+
                                                             }
                                                         })
                                                         .addOnFailureListener(new OnFailureListener() {
@@ -226,28 +227,60 @@ public class GroupChatActivity extends AppCompatActivity {
                                                                 Toast.makeText(GroupChatActivity.this, "加入失敗" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
-                                                FriendModel friendModel2=new FriendModel(userName,profilePic,type,groupuid,fuidtotal);
-                                                database.getReference().child("Grouplist").child(uid).child(userName).setValue(friendModel2)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-
-                                                            }
-                                                        });
 
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {
 
                                             }
                                         });
-
                             }
                         }
-                    }
-                });
+                            database.getReference().child("Group").child(uid).child(groupuid).child("Alluseruid")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                           cnt=snapshot.getChildrenCount();
+                                            for (int i = 0; i < users.length; i++) {
+                                                if (checkedItems[i]) {
+                                                    // 在这里执行添加成员到聊天组的操作
+                                                    database.getReference().child("Friend").child(uid).child(users[i])
+                                                            .addValueEventListener(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    String fuid = snapshot.child("fuid").getValue(String.class);
+                                                                    FriendModel friendModel3 = new FriendModel(fuid);
+                                                                    Toast.makeText(GroupChatActivity.this, cnt+"", Toast.LENGTH_SHORT).show();
+                                                                    database.getReference().child("Group").child(uid).child(groupuid)
+                                                                            .child("Alluseruid").child("useruid" + (++cnt)).setValue(friendModel3)
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void unused) {
+                                                                                    Toast.makeText(GroupChatActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
+                                                                                }
+                                                                            });
+                                                                }
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+
+                                                }
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                        }
+
+                });
                 // 添加取消按钮
                 alertDialog.setNegativeButton("取消", null);
 
@@ -320,8 +353,9 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getAlluser() {
-        getalluser=new ArrayList<>();
+        getalluser = new ArrayList<>();
 
         database.getReference().child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
