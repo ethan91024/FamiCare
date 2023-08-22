@@ -80,6 +80,7 @@ public class GroupChatActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("Grouplist");
         auth = FirebaseAuth.getInstance();
 
+
         setContentView(binding.getRoot());
 
         final String senderId = auth.getUid();
@@ -94,6 +95,7 @@ public class GroupChatActivity extends AppCompatActivity {
         photo = findViewById(R.id.photo);
         addmember = findViewById(R.id.addmember);
         fuidtotal = uid;
+
 
         binding.username.setText(userName);
 
@@ -116,10 +118,9 @@ public class GroupChatActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        final String senderRoom = senderId + recieveId;
-        final String receiverRoom = recieveId + senderId;
+        final String chatroom = groupuid;
 
-        database.getReference().child("Group chats").child(senderRoom).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Group chats").child(chatroom).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageModels.clear();
@@ -144,15 +145,10 @@ public class GroupChatActivity extends AppCompatActivity {
                 model.setDatetime(new Date().getTime());
                 binding.message.setText("");
 
-                database.getReference().child("Group chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                database.getReference().child("Group chats").child(chatroom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        database.getReference().child("Group chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
 
-                            }
-                        });
                     }
                 });
             }

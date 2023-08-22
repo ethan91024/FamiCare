@@ -7,15 +7,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ethan.FamiCare.Firebasecords.FriendAdapter;
 import com.ethan.FamiCare.Firebasecords.FriendModel;
 import com.ethan.FamiCare.Firebasecords.PermissionModel;
+import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivityFriendsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +44,7 @@ public class FriendsActivity extends AppCompatActivity {
     Boolean sleep = false;
 
     String currentuser;
+    RelativeLayout friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class FriendsActivity extends AppCompatActivity {
         String uid = auth.getCurrentUser().getUid();
         currentuser = uid;
         binding = ActivityFriendsBinding.inflate(getLayoutInflater());
+        friend=findViewById(R.id.friend);
         setContentView(binding.getRoot());
 
         if (auth.getCurrentUser() == null) {
@@ -192,7 +197,10 @@ public class FriendsActivity extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                int id=friend.getId();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(id,new SettingsFragment());
+                transaction.commit();
             }
         });
 

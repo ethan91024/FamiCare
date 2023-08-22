@@ -94,7 +94,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("userId", users.getUserId());
                                         intent.putExtra("profilePic", users.getProfilepic());
                                         intent.putExtra("userName", users.getUsername());
-                                        Toast.makeText(context, uid + holder.username.getText().toString() + type + "", Toast.LENGTH_SHORT).show();
                                         context.startActivity(intent);
                                     } else if (type.equals("friend")) {
                                         intent = new Intent(context, GroupChatroom.class);
@@ -109,7 +108,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("userName", users.getUsername());
                                         intent.putExtra("groupuid",users.getGroupuid());
                                         intent.putExtra("frienduid",users.getFuid());
-                                        Toast.makeText(context, users.getGroupuid()+users.getFuid(), Toast.LENGTH_SHORT).show();
                                         context.startActivity(intent);
                                     }
                                 }

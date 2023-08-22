@@ -54,7 +54,7 @@ public class GroupChatroom extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
     RelativeLayout containerLayout;
-String uid;
+    String uid;
 
     public GroupChatroom() {
         // Required empty public constructor
