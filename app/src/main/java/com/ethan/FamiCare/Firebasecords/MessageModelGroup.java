@@ -7,6 +7,7 @@ public class MessageModelGroup {
     private String userId;
     private String messageId;
     private String username;
+    private String profileimage;
 
     //for firebase getting data back
     public MessageModelGroup() {
@@ -16,11 +17,12 @@ public class MessageModelGroup {
 
 
 
-    public MessageModelGroup(String username,String userId,String message, Long datetime) {
+    public MessageModelGroup(String username,String userId,String message, Long datetime,String profileimage) {
         this.username=username;
         this.message = message;
         this.datetime = datetime;
         this.userId = userId;
+        this.profileimage=profileimage;
     }
     public MessageModelGroup(String username,String userId,String message) {
         this.username=username;
@@ -30,6 +32,14 @@ public class MessageModelGroup {
     public MessageModelGroup(String userId,String message) {
         this.message = message;
         this.userId = userId;
+    }
+
+    public String getProfileimage() {
+        return profileimage;
+    }
+
+    public void setProfileimage(String profileimage) {
+        this.profileimage = profileimage;
     }
 
     public String getUsername() {
