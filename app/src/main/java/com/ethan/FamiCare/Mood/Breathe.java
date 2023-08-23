@@ -18,8 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
+import android.os.Looper;
+
 
 import com.ethan.FamiCare.R;
 
@@ -35,7 +38,8 @@ public class Breathe extends AppCompatActivity {
     AnimationDrawable animationDrawable;
     ImageView imageView_gift;
     Dialog dialog;
-
+    private ProgressBar progressBar;
+    Handler handler_play;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -55,12 +59,10 @@ public class Breathe extends AppCompatActivity {
 
         //跳出介面
         dialog = new Dialog(Breathe.this);
+//影片進度條
+        progressBar = findViewById(R.id.progressBar);
 
-
-
-
-
-
+        handler_play = new Handler(Looper.getMainLooper());
 
 
         breathe_start.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +85,28 @@ public class Breathe extends AppCompatActivity {
                             videoView.setVideoURI(uri);
                             videoView.setMediaController(mediaController);
                             videoView.start();
+
+                            //影片時間條
+
+                            progressBar.setMax(Integer.parseInt(String.valueOf(timer.getText())) * 60);
+
+                            final int totalTime = Integer.parseInt(String.valueOf(timer.getText())) * 60; // 总倒计时时间，单位：秒
+                            final int interval = 1000; // 倒计时间隔，单位：毫秒
+
+
+                            handler_play.postDelayed(new Runnable() {
+                                int progress = 0;
+
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(progress);
+                                    progress++;
+                                    if (progress <= totalTime) {
+                                        handler_play.postDelayed(this, interval);
+                                    }
+                                }
+                            }, interval);
+
 
                         }
                         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -214,6 +238,11 @@ public class Breathe extends AppCompatActivity {
                 breathe_sound = null;
 
             }
+            if(handler_play !=null){
+                handler_play.removeCallbacksAndMessages(null);
+                progressBar.setProgress(0);
+            }
+
         }
     }
 

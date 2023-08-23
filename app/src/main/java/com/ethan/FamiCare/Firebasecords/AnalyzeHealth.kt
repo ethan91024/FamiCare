@@ -83,7 +83,7 @@ class AnalyzeHealth(
             val HeartRateList = aggregateHRIntoWeeks(
                     startDate, endDate
             )
-            println("HR" + HeartRateList)
+//            println("HR" + HeartRateList)
 
             val OSList = aggregateOSIntoWeeks(
                     startDate, endDate
@@ -165,13 +165,11 @@ class AnalyzeHealth(
             if (localDateTime >= start && localDateTime <= end) {
                 val dayOfWeek = ChronoUnit.DAYS.between(start, localDateTime).toInt() // 取得當天和 start 間的天數差
                 totalHRList[dayOfWeek] = dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L
-                println("hrl" + dailyResult.result[HeartRateRecord.BPM_AVG] ?: 0L)
             }
         }
 
         } catch (exception: Exception) {
             // Handle exception here
-            println("catch")
         }
 
         return totalHRList

@@ -12,12 +12,14 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -30,7 +32,7 @@ public class Meditation extends AppCompatActivity {
     private AnimationDrawable seaAnimation;
     CountThread t = null;
     //    int pic[] = {R.drawable.sea, R.drawable.sea2, R.drawable.sea3};
-    MediaPlayer sea_sound ;
+    MediaPlayer sea_sound;
     private Button back;
     private EditText timer;
     private Button stop_counting;
@@ -40,6 +42,10 @@ public class Meditation extends AppCompatActivity {
 
     ImageView imageView_gift;
     Dialog dialog;
+
+    private ProgressBar progressBar;
+    Handler handler_play;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -57,14 +63,17 @@ public class Meditation extends AppCompatActivity {
 
 
         timer = findViewById(R.id.timer);
-        stop_counting=findViewById(R.id.stop_counting);
+        stop_counting = findViewById(R.id.stop_counting);
 //        sea_sound = MediaPlayer.create(this, R.raw.sea_sound);
         videoView = findViewById(R.id.videoView);
         videoView.setBackgroundResource(R.drawable.seasound_pic);
 //跳出介面
         dialog = new Dialog(Meditation.this);
 
+        //影片進度條
+        progressBar = findViewById(R.id.progressBar);
 
+        handler_play = new Handler(Looper.getMainLooper());
 
 
         count_time.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +83,7 @@ public class Meditation extends AppCompatActivity {
 //                sea_an.setBackgroundResource(R.drawable.sea_animation);
 //                seaAnimation = (AnimationDrawable) sea_an.getBackground();
                 try {
-                    if(Integer.parseInt(String.valueOf(timer.getText()))<=30&&Integer.parseInt(String.valueOf(timer.getText()))>0) {
+                    if (Integer.parseInt(String.valueOf(timer.getText())) <= 30 && Integer.parseInt(String.valueOf(timer.getText())) > 0) {
                         if (t == null || !t.isAlive()) {
                             videoView.setBackground(null);
                             t = new CountThread(timer);
@@ -95,6 +104,27 @@ public class Meditation extends AppCompatActivity {
                             videoView.setMediaController(mediaController);
                             videoView.start();
 
+                            //影片時間條
+                            progressBar.setMax(Integer.parseInt(String.valueOf(timer.getText())) * 60);
+
+                            final int totalTime = Integer.parseInt(String.valueOf(timer.getText())) * 60; // 总倒计时时间，单位：秒
+                            final int interval = 1000; // 倒计时间隔，单位：毫秒
+
+
+                            handler_play.postDelayed(new Runnable() {
+                                int progress = 0;
+
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(progress);
+                                    progress++;
+                                    if (progress <= totalTime) {
+                                        handler_play.postDelayed(this, interval);
+                                    }
+                                }
+                            }, interval);
+
+
                         }
                         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                             @Override
@@ -105,7 +135,7 @@ public class Meditation extends AppCompatActivity {
                         });
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(Meditation.this, "時間輸入錯誤，只限輸入整數", Toast.LENGTH_SHORT).show();
 
                 }
@@ -115,7 +145,7 @@ public class Meditation extends AppCompatActivity {
         stop_counting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(t!=null) {
+                if (t != null) {
                     t.SetRunning(false);
                 }
                 timer.setEnabled(true);
@@ -131,8 +161,8 @@ public class Meditation extends AppCompatActivity {
         stop_counting.setCompoundDrawables(null, null, stopD, null);
 
 
-
     }
+
     private void startPlaying() {
         try {
             if (sea_sound == null) {
@@ -156,8 +186,6 @@ public class Meditation extends AppCompatActivity {
     }
 
 
-
-
     class CountThread extends Thread { //計時器
         private EditText timer;
         boolean running = true;
@@ -167,7 +195,7 @@ public class Meditation extends AppCompatActivity {
         }
 
         public CountThread(EditText timer1) {
-            timer=timer1;
+            timer = timer1;
         }
 
         public void run() {
@@ -213,7 +241,7 @@ public class Meditation extends AppCompatActivity {
 
         public void SetRunning(boolean run) {
             running = run;
-//            seaAnimation.stop();
+
             if (videoView != null) {
                 videoView.stopPlayback();
             }
@@ -225,6 +253,10 @@ public class Meditation extends AppCompatActivity {
                 sea_sound.release();
                 sea_sound = null;
 
+            }
+            if (handler_play != null) {
+                handler_play.removeCallbacksAndMessages(null);
+                progressBar.setProgress(0);
             }
         }
 
@@ -244,6 +276,7 @@ public class Meditation extends AppCompatActivity {
         Log.e(TAG, "冥想---onPause");
         super.onPause();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

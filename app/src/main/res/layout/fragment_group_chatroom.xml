@@ -63,7 +63,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF9900">
+        android:background="@color/red">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -77,7 +77,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="8.476" />
+                app:layout_constraintVertical_bias="8.476"
+                />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
