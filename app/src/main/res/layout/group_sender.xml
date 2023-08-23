@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"  xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/receiverAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/avatar_b"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="8dp"
-        android:layout_alignParentRight="true"/>
+        android:src="@drawable/avatar_b"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/receiverAvatar"
         android:background="@drawable/bg_sender"
         android:maxWidth="310dp"
         android:maxHeight="400dp"
-        android:minHeight="30dp"
-        android:layout_toLeftOf="@+id/receiverAvatar"
-        android:id="@+id/all">
+        android:minHeight="30dp">
+
         <androidx.constraintlayout.widget.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/guideline"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp"
-            ></androidx.constraintlayout.widget.Guideline>
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp"></androidx.constraintlayout.widget.Guideline>
+
+        <TextView
             android:id="@+id/sendername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
@@ -43,12 +47,12 @@
             app:layout_constraintBottom_toTopOf="@id/sendertext"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.8"
-            />
+            app:layout_constraintVertical_bias="0.8" />
+
         <TextView
+            android:id="@+id/sendertext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sendertext"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
@@ -57,23 +61,26 @@
             android:maxWidth="270dp"
             android:minWidth="50dp"
             android:text="Textview"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/sendertime"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="0.8"
+
             />
+
         <TextView
+            android:id="@+id/sendertime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sendertime"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="3dp"
             android:text="12:56pm"
+            android:textColor="@color/white"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            />
+            app:layout_constraintEnd_toStartOf="@+id/guideline" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

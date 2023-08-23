@@ -30,7 +30,7 @@
         android:id="@+id/Mood_Breathe_layoutA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical" ></LinearLayout>
 
 
     <Space
@@ -58,6 +58,15 @@
             android:layout_width="390dp"
             android:layout_height="190dp"
             android:layout_gravity="center"></VideoView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="390dp"
+            android:layout_height="5dp"
+            android:progress="0"
+            />
+
     </LinearLayout>
 
 
@@ -173,9 +182,19 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="10dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:text="完成呼吸緩解後會有小驚喜!!"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textColor="#535352"
+                />
 
-
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
         </LinearLayout>
 

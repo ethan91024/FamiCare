@@ -41,8 +41,8 @@
         android:layout_marginHorizontal="5dp"
         android:gravity=""
         android:text="冥想可以降低壓力與焦慮。讓我們專注在這5分鐘，調整呼吸，放鬆情緒，好好感受心靈。"
-        android:textSize="16dp"
         android:textColor="#535352"
+        android:textSize="16dp"
         android:textStyle="bold"></TextView>
 
     <LinearLayout
@@ -58,6 +58,13 @@
             android:layout_height="190dp"
             android:layout_gravity="center" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="390dp"
+            android:layout_height="5dp"
+            android:progress="0" />
+
     </LinearLayout>
 
     <Space
@@ -67,7 +74,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_gravity=""
         android:background="@drawable/background_brown_rightangle"
         android:gravity="center"
@@ -178,7 +185,19 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="完成冥想後會有小驚喜!!"
+            android:textColor="#535352"
+            android:textSize="20dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
     </LinearLayout>
 

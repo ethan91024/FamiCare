@@ -12,6 +12,16 @@
         android:layout_gravity="center"
         android:gravity="center">
 
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:background="@drawable/background_line_deepbrownd"
+            android:layout_marginHorizontal="10dp">
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="72dp"
@@ -30,23 +40,39 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_toRightOf="@+id/profile_image"
-            android:hint="群組名稱" />
+            android:hint="群組名稱"
+            android:layout_marginRight="10dp"
+            android:textColorHint="@color/colorClick"
+            android:textColorHighlight="@color/colorClick"/>
 
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/cancel"
-            android:text="新增" />
+            android:background="@drawable/background_red"
+            android:text="新增"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentEnd="true"
-            android:text="取消" />
+            android:background="@drawable/background_red"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />/>
+        </RelativeLayout>
 
     </RelativeLayout>
 </LinearLayout>

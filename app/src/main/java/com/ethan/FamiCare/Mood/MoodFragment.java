@@ -284,32 +284,7 @@ public class MoodFragment extends Fragment {
         Drawable drawable = getResources().getDrawable(R.drawable.symptom_img);
         drawable.setBounds(70, 4, 185, 115);
         analize.setCompoundDrawables(drawable, null, null, null);
-//        //冥想加圖案
-//        Drawable meditationD = getResources().getDrawable(R.drawable.mood_med_img); // 取得圖案 Drawable 物件
-//        meditationD.setBounds(5, 15, 510, 450);
-//        Drawable scr1 = getResources().getDrawable(R.drawable.scr1_img);
-//        scr1.setBounds(10, 40, 170, 180);
-//        Drawable scr2 = getResources().getDrawable(R.drawable.scr2_img);
-//        scr2.setBounds(-100,90, 300, 250);
-//        advice.setCompoundDrawables(null,null,meditationD,null);
-//
-//        // 設置呼吸圖片的範圍，將圖案放置在右下角
-//        Drawable breatheD = getResources().getDrawable(R.drawable.mood_breathe_img); // 取得圖案 Drawable 物件
-//        breatheD.setBounds(65, 55, 595, 580);
-//        Drawable scr3 = getResources().getDrawable(R.drawable.scr1_img);
-//        scr3.setBounds(200, 0, 510, 160);
-//        Drawable scr4 = getResources().getDrawable(R.drawable.scr3_img);
-//        scr4.setBounds(-200,120, 520, 290);
-//        breathe.setCompoundDrawables(null,scr3,breatheD,scr4);
-//
-//        // 設置運動圖片的範圍，將圖案放置在右下角
-//        Drawable sportD = getResources().getDrawable(R.drawable.mood_sport_img); // 取得圖案 Drawable 物件
-//        sportD.setBounds(35, 30, 580, 580);
-//        Drawable scr5 = getResources().getDrawable(R.drawable.scr4_img);
-//        scr5.setBounds(0, 10, 190, 150);
-//        Drawable scr6 = getResources().getDrawable(R.drawable.scr4_img);
-//        scr6.setBounds(-200,90, 740, 280);
-//        sport.setCompoundDrawables(null,scr5,sportD,scr6);
+
 
         //呼叫健康
         // 获取Activity实例
@@ -421,91 +396,96 @@ public class MoodFragment extends Fragment {
         Long[] HRList = new Long[7];
         Long[] OXYList = new Long[7];
         double[] SleepList = new double[7];
+        try {
 
-        //firebase 讀資料
-        if (auth.getCurrentUser() == null) {
-            // ...
-        } else {
-            // ...
 
-            // 讀取心律資料
-            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_heartRate").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (int i = 0; i < 7; i++) {
-                            HRList[i] = dataSnapshot.child(i + "").getValue(Long.class);
-                            heartRatePoints.add(HRList[i] + "");
+            //firebase 讀資料
+            if (auth.getCurrentUser() == null) {
+                // ...
+            } else {
+                // ...
+
+                // 讀取心律資料
+                databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_heartRate").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (int i = 0; i < 7; i++) {
+                                HRList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                                heartRatePoints.add(HRList[i] + "");
+                            }
+
+                            System.out.println("HHR" + Arrays.toString(HRList));
+                            System.out.println("hp" + heartRatePoints);
+
+                        } else {
+                            Log.d("TAG", "No data found for the date: " + "錯誤");
                         }
-
-                        System.out.println("HHR" + Arrays.toString(HRList));
-                        System.out.println("hp" + heartRatePoints);
-
-                    } else {
-                        Log.d("TAG", "No data found for the date: " + "錯誤");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
-                }
-            });
-
-            // 讀取睡眠資料
-            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_sleep").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    if (dataSnapshot.exists()) {
-                        for (int i = 0; i < 7; i++) {
-                            SleepList[i] = dataSnapshot.child(i + "").getValue(Long.class);
-                            sleepPoints.add(SleepList[i] + "");
-                        }
-
-                        System.out.println("SLL" + Arrays.toString(SleepList));
-                        System.out.println("SLP" + sleepPoints);
-
-                    } else {
-                        Log.d("TAG", "No data found for the date: " + "錯誤");
                     }
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                    }
+                });
 
+                // 讀取睡眠資料
+                databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealth_sleep").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
-                }
-            });
+                        if (dataSnapshot.exists()) {
+                            for (int i = 0; i < 7; i++) {
+                                SleepList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                                sleepPoints.add(SleepList[i] + "");
+                            }
 
-            // 讀取血氧資料
-            databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealths_bloodOxygen").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            System.out.println("SLL" + Arrays.toString(SleepList));
+                            System.out.println("SLP" + sleepPoints);
 
-                    if (dataSnapshot.exists()) {
-                        for (int i = 0; i < 7; i++) {
-                            OXYList[i] = dataSnapshot.child(i + "").getValue(Long.class);
-                            bloodOxygenPoints.add(OXYList[i] + "");
+                        } else {
+                            Log.d("TAG", "No data found for the date: " + "錯誤");
                         }
 
-                        System.out.println("OXYL" + Arrays.toString(OXYList));
-                        System.out.println("OXYP" + bloodOxygenPoints);
-
-                    } else {
-                        Log.d("TAG", "No data found for the date: " + "錯誤");
                     }
 
 
-                    listener.onDataLoaded(heartRatePoints, sleepPoints, bloodOxygenPoints);
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                    }
+                });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("TAG", "Error getting symptom data.", databaseError.toException());
-                }
-            });
+                // 讀取血氧資料
+                databaseReference.child("AnalyzeHealth").child(uid).child(cdday).child("AnalyzeHealths_bloodOxygen").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()) {
+                            for (int i = 0; i < 7; i++) {
+                                OXYList[i] = dataSnapshot.child(i + "").getValue(Long.class);
+                                bloodOxygenPoints.add(OXYList[i] + "");
+                            }
+
+                            System.out.println("OXYL" + Arrays.toString(OXYList));
+                            System.out.println("OXYP" + bloodOxygenPoints);
+
+                        } else {
+                            Log.d("TAG", "No data found for the date: " + "錯誤");
+                        }
+
+
+                        listener.onDataLoaded(heartRatePoints, sleepPoints, bloodOxygenPoints);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("TAG", "Error getting symptom data.", databaseError.toException());
+                    }
+                });
+            }
+        } catch (Exception exception) {
+            Log.d("TAG", "No data found for the date: " + "錯誤");
         }
     }
 
@@ -608,7 +588,7 @@ public class MoodFragment extends Fragment {
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             if (valuesY1.size() > 0) {
                 LineDataSet set1;
-                set1 = new LineDataSet(valuesY1, "heartrate");
+                set1 = new LineDataSet(valuesY1, "心率");
                 set1.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set1.setColor(context.getResources().getColor(R.color.brownred));//線的顏
                 set1.setCircleColor(context.getResources().getColor(R.color.brownred));//圓點顏色
@@ -625,7 +605,7 @@ public class MoodFragment extends Fragment {
 
             if (valuesY2.size() > 0) {
                 LineDataSet set2;
-                set2 = new LineDataSet(valuesY2, "sleep");
+                set2 = new LineDataSet(valuesY2, "睡眠");
                 set2.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set2.setColor(context.getResources().getColor(R.color.orange));//線的顏
                 set2.setCircleColor(context.getResources().getColor(R.color.orange));//圓點顏色
@@ -642,7 +622,7 @@ public class MoodFragment extends Fragment {
 
             if (valuesY3.size() > 0) {
                 LineDataSet set3;
-                set3 = new LineDataSet(valuesY3, "blood");
+                set3 = new LineDataSet(valuesY3, "血氧");
                 set3.setMode((LineDataSet.Mode.LINEAR));///類型為折線
                 set3.setColor(context.getResources().getColor(R.color.colorAccent));//線的顏
                 set3.setCircleColor(context.getResources().getColor(R.color.colorAccent));//圓點顏色
@@ -787,7 +767,6 @@ public class MoodFragment extends Fragment {
                 if (snapshot.exists()) {
                     String userid1 = snapshot.getValue(String.class);
                     userid = userid1;
-                    System.out.println("UserID:" + userid);
                     saveSymptoms(dday, stressN);
 
                     // 讀取 firebase 資料並計算 synumbern[0]
@@ -852,8 +831,7 @@ public class MoodFragment extends Fragment {
                                             }
                                         });
 
-                                    }
-                                    if (totalstomachache == max || totaltired == max) {
+                                    } else if (totalstomachache == max || totalnausea == max) {
                                         //跳轉到冥想
                                         advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  冥想");
@@ -874,11 +852,10 @@ public class MoodFragment extends Fragment {
 
                                             }
                                         });
-                                    }
-                                    if (totaldizzy == max || totalnausea == max) {
+                                    } else if (totaldizzy == max || totaltired == max) {
                                         //跳轉呼吸介面
                                         advice = mainview.findViewById(R.id.Advice);
-                                        advice.setText("  呼吸");
+                                        advice.setText("  呼吸緩解");
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
                                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -893,6 +870,28 @@ public class MoodFragment extends Fragment {
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(getActivity(), Breathe.class);
                                                 startActivity(intent);
+                                            }
+                                        });
+
+                                    } else {
+                                        //跳轉到冥想
+                                        advice = mainview.findViewById(R.id.Advice);
+                                        advice.setText("  冥想");
+                                        int heightInDp = 160; // 设置高度为 100 dp
+                                        int heightInPx = dpToPx(getContext(), heightInDp);
+                                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.MATCH_PARENT, // 宽度设置为 MATCH_PARENT 或具体数值
+                                                heightInPx // 设置高度为 dp 转换后的像素值
+                                        );
+                                        advice.setLayoutParams(layoutParams);
+                                        Drawable drawable = getResources().getDrawable(R.drawable.meditation_background);
+                                        advice.setBackground(drawable);
+                                        advice.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent(getActivity(), Meditation.class);
+                                                startActivity(intent);
+
                                             }
                                         });
 
