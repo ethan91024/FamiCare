@@ -12,12 +12,13 @@ public class Users {
     private String id;
     private String fuid;
     private String groupuid;
+    private String type;
 
     public Users() {
 
     }
 
-    public Users(String profilepic, String userEmail, String message, String userId, String username, String status, String password) {
+    public Users(String profilepic, String userEmail, String message, String userId, String username, String status, String password,String type) {
         this.profilepic = profilepic;
         this.userEmail = userEmail;
         this.message = message;
@@ -25,6 +26,7 @@ public class Users {
         this.username = username;
         this.status = status;
         this.password = password;
+        this.type=type;
     }
 
     public Users(String username, String userEmail, String password, String token, String id) {
@@ -42,6 +44,14 @@ public class Users {
         this.username = username;
         this.token = token;
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getGroupuid() {

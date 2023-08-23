@@ -110,15 +110,6 @@ public class GroupFragment extends Fragment {
         });
 
 
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-
-        binding.Group.findViewById(R.id.Group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getActivity(), GroupChatActivity.class);
-                startActivity(intent1);
-            }
-        });
 
         binding.ChatGPT.findViewById(R.id.ChatGPT).setOnClickListener(new View.OnClickListener() {
             @Override

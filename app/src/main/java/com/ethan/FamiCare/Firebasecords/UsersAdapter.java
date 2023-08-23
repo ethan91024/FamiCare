@@ -52,7 +52,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
 
 
         Users users = list.get(position);
-        String groupname,uid;
+        String uid;
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         FirebaseAuth auth=FirebaseAuth.getInstance();
 
@@ -61,16 +61,64 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.avatar_b).into(holder.image);
         holder.username.setText(users.getUsername());
 
+
         //最後一則訊息
-        database.getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getFuid())
-                .orderByChild("timestamp").limitToLast(1)
+        database.getReference().child("Grouplist").child(uid).child(holder.username.getText().toString())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChildren()) {
-                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
-                            }
+                        String type = snapshot.child("type").getValue(String.class);
+                        if (type.equals("friend")) {
+                            database.getReference().child("chats")
+                                    .child(FirebaseAuth.getInstance().getUid() + users.getFuid())
+                                    .orderByChild("timestamp").limitToLast(1)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.hasChildren()) {
+                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                    holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                        }
+                        else if(type.equals("group")){
+                            database.getReference().child("Grouplist").child(uid).child(users.getUsername())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            database.getReference().child("Group chats")
+                                                    .child(snapshot.child("groupuid").getValue(String.class))
+                                                    .orderByChild("timestamp").limitToLast(1)
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.hasChildren()) {
+                                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                                    holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
                         }
                     }
 
@@ -101,6 +149,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("profilePic", users.getProfilepic());
                                         intent.putExtra("userName", users.getUsername());
                                         context.startActivity(intent);
+
                                     } else if (type.equals("group")) {
                                         intent = new Intent(context, GroupChatActivity.class);
                                         intent.putExtra("userId", users.getUserId());
