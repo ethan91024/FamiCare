@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ethan.FamiCare.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatAdapter extends RecyclerView.Adapter{
     ArrayList<MessageModel> messageModels;
@@ -61,8 +64,10 @@ public class ChatAdapter extends RecyclerView.Adapter{
         MessageModel messageModel=messageModels.get(position);
         if(holder.getClass()==SenderViewHolder.class){
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
+            ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
         }else{
             ((RecieverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
+            ((RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModel.getDatetime()));
         }
     }
 
@@ -89,4 +94,11 @@ public class ChatAdapter extends RecyclerView.Adapter{
             senderTime=itemView.findViewById(R.id.sendertime);
         }
     }
+    private String getFormattedTime(long timestamp) {
+        // 使用SimpleDateFormat或其他日期时间格式化工具将时间戳转换为格式化的时间字符串
+        // 这里只是一个示例，你可以根据需要进行调整
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date(timestamp));
+    }
+
 }

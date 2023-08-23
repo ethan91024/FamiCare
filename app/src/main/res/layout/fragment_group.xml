@@ -32,45 +32,6 @@
         android:layout_height="20dp" />
 
 
-    <LinearLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/background_lightbrown_corn"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="6dp"
-            android:layout_weight="70"
-            android:text="生活圈"
-            android:textColor="@color/deepbrown"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/ChatGPT"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="6dp"
-            android:layout_weight="30"
-            android:background="@drawable/background_red"
-            android:onClick="chatgpt"
-            android:text="ChatGPT"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="15sp"/>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,14 +102,14 @@
 
 
                 <Button
-                    android:id="@+id/Group"
+                    android:id="@+id/ChatGPT"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/createGroup"
                     android:layout_weight="45"
                     android:background="@drawable/background_red"
                     android:drawableRight="@android:drawable/ic_menu_myplaces"
-                    android:text="開啟群組"
+                    android:text="CHATGPT"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="20sp"/>

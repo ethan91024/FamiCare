@@ -246,20 +246,18 @@ public class GroupChatActivity extends AppCompatActivity {
                                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                                     String fuid = snapshot.child("fuid").getValue(String.class);
                                                                     FriendModel friendModel3 = new FriendModel(fuid);
-                                                                    Toast.makeText(GroupChatActivity.this, cnt+"", Toast.LENGTH_SHORT).show();
                                                                     database.getReference().child("Group").child(uid).child(groupuid)
                                                                             .child("Alluseruid").child("useruid" + (++cnt)).setValue(friendModel3)
                                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                 @Override
                                                                                 public void onSuccess(Void unused) {
-                                                                                    Toast.makeText(GroupChatActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
                                                                                 }
                                                                             });
                                                                 }
                                                                 @Override
                                                                 public void onCancelled(@NonNull DatabaseError error) {
-
+                                                                    Toast.makeText(GroupChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
 
@@ -270,7 +268,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-
+                                            Toast.makeText(GroupChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 

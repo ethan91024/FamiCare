@@ -7,7 +7,7 @@
     android:layout_marginTop="4dp"
     >
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/receiverAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"

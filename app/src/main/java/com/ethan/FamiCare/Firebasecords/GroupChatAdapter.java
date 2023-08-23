@@ -79,7 +79,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
                     ((RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
                     String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
                     Picasso.get()
-                            .load(profilePicUrl)
+                            .load(profilePicUrl).placeholder(R.drawable.avatar_b)
                             .into(((RecieverViewHolder) holder).imageView);
 
                 }
