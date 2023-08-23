@@ -58,16 +58,6 @@ class HealthFragment : Fragment() {
         return view
     }
 
-    //suspend fun readData(client: HealthConnectClient) {
-    //    val today = ZonedDateTime.now()
-    //    val startOfDay = today.truncatedTo(ChronoUnit.DAYS)
-    //    val timeRangeFilter = TimeRangeFilter.between(
-    //        startOfDay.toLocalDateTime(),
-    //        today.toLocalDateTime()
-    //    )
-    //}
-
-
     companion object {
         private const val ARG_PARAM1 = "param1"
         private const val ARG_PARAM2 = "param2"

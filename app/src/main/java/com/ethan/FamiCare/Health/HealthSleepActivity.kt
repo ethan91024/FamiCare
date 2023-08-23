@@ -23,6 +23,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.coroutines.launch
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -67,6 +69,18 @@ class HealthSleepActivity : AppCompatActivity() {
         val weekBtn = findViewById<Button>(R.id.weekBtn)
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
+        val clickedTV: TextView=findViewById(R.id.clickedTV)
+
+        lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onValueSelected(entry: Entry, highlight: Highlight) {
+                val selectedValue = entry?.y
+                clickedTV.text = selectedValue.toString()
+            }
+
+            override fun onNothingSelected() {
+                clickedTV.text = ""
+            }
+        })
 
         calendar.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -142,9 +156,27 @@ class HealthSleepActivity : AppCompatActivity() {
     }
 
     private fun showImage(index: Int) {
-        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
-        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
-        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+        val tv: TextView=findViewById(R.id.encourageTV)
+        goodface.visibility = if (index == 1) {
+            tv.text=listOf("睡得真飽！", "精神滿滿!", "元氣充沛！").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        wellface.visibility = if (index == 2) {
+            tv.text=listOf("有正常的睡眠!", "再睡五分鐘!", "再睡一下不會遲到拉!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        badface.visibility = if (index == 3) {
+            tv.text=listOf("不要熬夜了!", "睡太少對身體不好!", "早點上床睡覺!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
     }
     fun updateChartForWeek() {
         // 更新一星期的資料
@@ -200,7 +232,7 @@ class HealthSleepActivity : AppCompatActivity() {
                     return String.format("%.1f", value)
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -283,8 +315,8 @@ class HealthSleepActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 6 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -347,7 +379,7 @@ class HealthSleepActivity : AppCompatActivity() {
                     return String.format("%.1f", value)
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -422,8 +454,8 @@ class HealthSleepActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 6 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -487,7 +519,7 @@ class HealthSleepActivity : AppCompatActivity() {
                     return String.format("%.1f", value)
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -568,8 +600,8 @@ class HealthSleepActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 6 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)

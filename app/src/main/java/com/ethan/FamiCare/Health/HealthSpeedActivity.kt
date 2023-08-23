@@ -71,6 +71,7 @@ class HealthSpeedActivity : AppCompatActivity() {
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
+        val clickedTV: TextView=findViewById(R.id.clickedTV)
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry, highlight: Highlight) {
@@ -81,11 +82,13 @@ class HealthSpeedActivity : AppCompatActivity() {
                         String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
                     intervalTextView.text = interval
                 }
+                val selectedValue = entry?.y
+                clickedTV.text = selectedValue.toString()
             }
 
             override fun onNothingSelected() {
-                // 如果沒有值被選取時的程式碼
                 intervalTextView.text = ""
+                clickedTV.text = ""
             }
         })
 
@@ -184,9 +187,27 @@ class HealthSpeedActivity : AppCompatActivity() {
     }
 
     private fun showImage(index: Int) {
-        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
-        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
-        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+        val tv: TextView=findViewById(R.id.encourageTV)
+        goodface.visibility = if (index == 1) {
+            tv.text=listOf("快如閃電！", "注意安全!", "有點太快了！").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        wellface.visibility = if (index == 2) {
+            tv.text=listOf("表現不錯，繼續保持!", "保持一定的速度!", "再努力一點!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        badface.visibility = if (index == 3) {
+            tv.text=listOf("慢慢享受人生", "動的有點慢", "多欣賞周遭美景").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
     }
     private fun updateChartForDay() {
         lifecycleScope.launch {
@@ -234,7 +255,7 @@ class HealthSpeedActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -311,8 +332,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 5 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -375,7 +396,7 @@ class HealthSpeedActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -461,8 +482,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 5 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -525,7 +546,7 @@ class HealthSpeedActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -602,8 +623,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 5 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -667,7 +688,7 @@ class HealthSpeedActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -750,8 +771,8 @@ class HealthSpeedActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 8 -> 1
+                limitValue.toFloat() >= 5 && limitValue.toFloat() < 8 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)

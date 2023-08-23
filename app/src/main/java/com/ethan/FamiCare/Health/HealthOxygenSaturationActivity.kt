@@ -74,6 +74,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
+        val clickedTV: TextView=findViewById(R.id.clickedTV)
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry, highlight: Highlight) {
@@ -84,11 +85,13 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                         String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
                     intervalTextView.text = interval
                 }
+                val selectedValue = entry?.y
+                clickedTV.text = selectedValue.toString()
             }
 
             override fun onNothingSelected() {
-                // 如果沒有值被選取時的程式碼
                 intervalTextView.text = ""
+                clickedTV.text = ""
             }
         })
 
@@ -187,9 +190,27 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
     }
 
     private fun showImage(index: Int) {
-        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
-        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
-        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+        val tv: TextView=findViewById(R.id.encourageTV)
+        wellface.visibility = if (index == 1) {
+            tv.text=listOf("血氧飽和度較高!", "血氧指數異常升高!", "高血氧飽和度!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        goodface.visibility = if (index == 2) {
+            tv.text=listOf("血氧飽和度正常", "血氧指數穩定", "正常的血氧飽和度").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        wellface.visibility = if (index == 3) {
+            tv.text=listOf("血氧飽和度較低!", "血氧指數異常降低!", "低血氧飽和度!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
     }
     private fun updateChartForDay() {
         lifecycleScope.launch {
@@ -238,7 +259,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -315,8 +336,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 95 -> 1
+                limitValue.toFloat() >= 90 && limitValue.toFloat() < 95 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -380,7 +401,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -465,8 +486,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 95 -> 1
+                limitValue.toFloat() >= 90 && limitValue.toFloat() < 95 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -530,7 +551,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
 
             val yAxis = lineChart.axisRight
             val yAxisLeft: YAxis = lineChart.axisLeft
@@ -606,8 +627,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 95 -> 1
+                limitValue.toFloat() >= 90 && limitValue.toFloat() < 95 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -671,7 +692,7 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = lineChart.axisRight
@@ -754,8 +775,8 @@ class HealthOxygenSaturationActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 95 -> 1
+                limitValue.toFloat() >= 90 && limitValue.toFloat() < 95 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
