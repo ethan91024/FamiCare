@@ -40,107 +40,68 @@
                 android:textColor="#B19C80"
                 android:textSize="36sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
                 android:id="@+id/username"
-                android:layout_width="330dp"
-                android:layout_height="61dp"
-                android:layout_marginTop="10dp"
-                android:hint="  使用者名稱"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
                 android:layout_gravity="center"
-                app:boxBackgroundMode="outline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:ems="15"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 使用者名稱"
+                android:inputType="textPersonName"
+                android:paddingLeft="8dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="313dp"
-                    android:layout_height="53dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_person_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:includeFontPadding="false"
-                    android:inputType="textPersonName"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+
+            <EditText
                 android:id="@+id/email"
-                android:layout_width="330dp"
-                android:layout_height="61dp"
-                android:layout_marginTop="20dp"
-                app:boxBackgroundMode="outline"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
                 android:layout_gravity="center"
-                app:layout_constraintBottom_toTopOf="@id/username"
-                app:layout_constraintEnd_toEndOf="@id/username"
-                app:layout_constraintStart_toStartOf="@id/username"
-                app:layout_constraintTop_toBottomOf="@+id/username">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:ems="30"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 電子郵件"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="8dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="313dp"
-                    android:layout_height="53dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_email_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:hint="   電子郵件"
-                    android:includeFontPadding="false"
-                    android:inputType="textEmailAddress"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
                 android:id="@+id/password"
-                android:layout_width="330dp"
-                android:layout_height="61dp"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                app:boxBackgroundMode="outline"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email">
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:ems="20"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 密碼"
+                android:inputType="textPassword"
+                android:paddingLeft="8dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="313dp"
-                    android:layout_height="53dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:hint="   密碼"
-                    android:inputType="textPassword"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
                 android:id="@+id/passwordComfirm"
-                android:layout_width="330dp"
-                android:layout_height="61dp"
-                android:layout_marginTop="24dp"
-                app:boxBackgroundMode="outline"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
                 android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="@id/password"
-                app:layout_constraintStart_toStartOf="@id/password"
-                app:layout_constraintTop_toBottomOf="@+id/password">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:ems="20"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 確認密碼"
+                android:inputType="textPassword"
+                android:paddingLeft="8dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="313dp"
-                    android:layout_height="53dp"
-                   android:layout_gravity="center"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:hint="   確認密碼"
-                    android:inputType="textPassword"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ public class Signup extends AppCompatActivity {
     }
 
     ActivitySignupBinding binding;
-    TextInputLayout email, password, username, passwordc;
+    EditText email, password, username, passwordc;
     Button cancel, signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -90,10 +91,10 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String u = username.getEditText().getText().toString();
-                String e = email.getEditText().getText().toString();
-                String p = password.getEditText().getText().toString();
-                String pc = passwordc.getEditText().getText().toString();
+                String u = username.getText().toString();
+                String e = email.getText().toString();
+                String p = password.getText().toString();
+                String pc = passwordc.getText().toString();
                 String id1 = String.valueOf(id);
                 if (!u.isEmpty() && !e.isEmpty() && !p.isEmpty()) {
                     if (p.equals(pc)) {

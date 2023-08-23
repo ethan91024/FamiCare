@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class Login extends AppCompatActivity {
     public Login() {
         // Required empty public constructor
     }
-    TextInputLayout email, password;
+    EditText email, password;
     Button login, cancel,signup;
     FirebaseAuth auth;
     FirebaseDatabase database;
@@ -83,8 +84,8 @@ public class Login extends AppCompatActivity {
 
 
         //1
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        email = findViewById(R.id.EmailAddress2);
+        password = findViewById(R.id.Password);
         login = findViewById(R.id.loginb);
         //cancel = findViewById(R.id.cancelb);
         auth = FirebaseAuth.getInstance();
@@ -97,8 +98,8 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String e = email.getEditText().getText().toString();
-                String p = password.getEditText().getText().toString();
+                String e = email.getText().toString();
+                String p = password.getText().toString();
 
                 if(!e.isEmpty()&&!p.isEmpty()) {
                     auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

@@ -34,60 +34,34 @@
                 android:textColor="#B19C80"
                 android:textSize="36sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginTop="10dp"
-                app:boxBackgroundMode="outline"
-                app:layout_constraintBottom_toTopOf="@+id/password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.943">
+            <EditText
+                android:id="@+id/EmailAddress2"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:ems="30"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 電子郵件"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="8dp"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="311dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="24dp"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_email_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:hint="   電子郵件"
-                    android:includeFontPadding="false"
-                    android:inputType="textEmailAddress"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginTop="10dp"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="53dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="311dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="24dp"
-                    android:background="@drawable/email_tf"
-                    android:drawableLeft="@drawable/baseline_lock_24"
-                    android:fontFamily="@font/inter_medium"
-                    android:hint="   密碼"
-                    android:inputType="textPassword"
-                    android:padding="5dp"
-                    android:paddingStart="10dp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            <EditText
+                android:id="@+id/Password"
+                android:layout_width="303dp"
+                android:layout_height="53dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/email_tf"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:ems="20"
+                android:fontFamily="@font/inter_medium"
+                android:hint=" 密碼"
+                android:inputType="textPassword"
+                android:paddingLeft="8dp" />
 
             <Button
                 android:id="@+id/loginb"
