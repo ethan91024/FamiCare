@@ -326,7 +326,7 @@
                     app:layout_constraintStart_toStartOf="@id/textView4"
                     app:layout_constraintTop_toTopOf="@id/textView4"
                     tools:ignore="MissingConstraints"
-                    android:text="好友查看權限"
+                    android:text="親友查看權限"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
                 <TextView

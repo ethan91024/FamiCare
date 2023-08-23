@@ -45,7 +45,7 @@ public class MyApplication extends Application {
     private void triggerUploadWorker() {
         OneTimeWorkRequest uploadRequest = new OneTimeWorkRequest.Builder(UploadWorker.class).build();
         WorkManager.getInstance(getApplicationContext()).enqueue(uploadRequest);
-        Toast.makeText(this, "健康資料上傳成功", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "健康資料上傳成功", Toast.LENGTH_SHORT).show();
     }
 
     private void triggerAmalyze() {
