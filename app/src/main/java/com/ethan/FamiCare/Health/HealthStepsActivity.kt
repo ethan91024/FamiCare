@@ -75,6 +75,7 @@ class HealthStepsActivity : AppCompatActivity() {
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
+        val clickedTV: TextView=findViewById(R.id.clickedTV)
 
         barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry, highlight: Highlight) {
@@ -85,11 +86,13 @@ class HealthStepsActivity : AppCompatActivity() {
                         String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
                     intervalTextView.text = interval
                 }
+                val selectedValue = entry?.y
+                clickedTV.text = selectedValue.toString()
             }
 
             override fun onNothingSelected() {
-                // 如果沒有值被選取時的程式碼
                 intervalTextView.text = ""
+                clickedTV.text = ""
             }
         })
 
@@ -188,10 +191,29 @@ class HealthStepsActivity : AppCompatActivity() {
         }
     }
     private fun showImage(index: Int) {
-        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
-        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
-        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+        val tv: TextView=findViewById(R.id.encourageTV)
+        goodface.visibility = if (index == 1) {
+            tv.text=listOf("表現非常優秀！", "做的非常好!", "表現很出色！").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        wellface.visibility = if (index == 2) {
+            tv.text=listOf("表現不錯，繼續保持!", "再多走一點路!", "再努力一點!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        badface.visibility = if (index == 3) {
+            tv.text=listOf("要再多加油", "動的有點少", "結果不如預期").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
     }
+
     private fun updateChartForDay() {
         lifecycleScope.launch {
             steps = getDailyStepCounts()
@@ -238,7 +260,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -377,7 +399,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -495,15 +517,15 @@ class HealthStepsActivity : AppCompatActivity() {
                 currentDisplayedDate.month.length(false)
             )
             if (steps.isEmpty()) {
-                // 資料為空的處理邏輯
+                // 資料為空的處理
             }
 
-            val numXAxisLabels = currentDisplayedDate.month.length(false)  // 修改為該月的天數
-            val stepCountsByDay = MutableList(numXAxisLabels) { 0 }  // 修改變數名稱
+            val numXAxisLabels = currentDisplayedDate.month.length(false)
+            val stepCountsByDay = MutableList(numXAxisLabels) { 0 }
 
-            steps.forEachIndexed { index, step ->  // 使用 forEachIndexed 迴圈
+            steps.forEachIndexed { index, step ->
                 if (step != null) {
-                    stepCountsByDay[index] = step.toInt()  // 將步數資料填入對應位置
+                    stepCountsByDay[index] = step.toInt()
                 }
             }
 
@@ -528,7 +550,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -672,7 +694,7 @@ class HealthStepsActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight

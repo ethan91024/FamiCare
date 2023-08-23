@@ -74,6 +74,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
         val monthBtn = findViewById<Button>(R.id.monthBtn)
         val day14Btn = findViewById<Button>(R.id.day14Btn)
         val intervalTextView: TextView = findViewById(R.id.timeTF)
+        val clickedTV: TextView=findViewById(R.id.clickedTV)
 
         barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(entry: Entry, highlight: Highlight) {
@@ -84,11 +85,13 @@ class HealthCaloriesActivity : AppCompatActivity() {
                         String.format(Locale.getDefault(), "%02d:00-%02d:00", startHour, endHour)
                     intervalTextView.text = interval
                 }
+                val selectedValue = entry?.y
+                clickedTV.text = selectedValue.toString()
             }
 
             override fun onNothingSelected() {
-                // 如果沒有值被選取時的程式碼
                 intervalTextView.text = ""
+                clickedTV.text = ""
             }
         })
 
@@ -188,9 +191,27 @@ class HealthCaloriesActivity : AppCompatActivity() {
     }
 
     private fun showImage(index: Int) {
-        goodface.visibility = if (index == 1) ImageView.VISIBLE else ImageView.GONE
-        wellface.visibility = if (index == 2) ImageView.VISIBLE else ImageView.GONE
-        badface.visibility = if (index == 3) ImageView.VISIBLE else ImageView.GONE
+        val tv: TextView=findViewById(R.id.encourageTV)
+        goodface.visibility = if (index == 1) {
+            tv.text=listOf("表現良好!", "要記得補充水分!", "消耗了一堆卡路里!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        wellface.visibility = if (index == 2) {
+            tv.text=listOf("表現不錯!", "繼續保持!", "再接再厲!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
+
+        badface.visibility = if (index == 3) {
+            tv.text=listOf("起來活動活動!", "記得多運動!", "出門跑個步吧!").random()
+            ImageView.VISIBLE
+        } else {
+            ImageView.GONE
+        }
     }
     private fun updateChartForDay() {
         lifecycleScope.launch {
@@ -239,7 +260,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -304,7 +325,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
             )
             val average: TextView = findViewById(R.id.averageTF)
             val avgText: TextView = findViewById(R.id.avgTV)
-            average.text = aggregateCaloriesToday.toString()
+            average.text = String.format("%.2f", aggregateCaloriesToday)
             avgText.text = "總計:"
 
             val limitValue = String.format("%.2f", aggregateCaloriesToday / Calories.count())
@@ -314,8 +335,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 2200 -> 1
+                limitValue.toFloat() >= 1600 && limitValue.toFloat() < 2200 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -378,7 +399,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -466,8 +487,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 2200 -> 1
+                limitValue.toFloat() >= 1600 && limitValue.toFloat() < 2200 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -530,7 +551,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -610,8 +631,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 2200 -> 1
+                limitValue.toFloat() >= 1600 && limitValue.toFloat() < 2200 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
@@ -680,7 +701,7 @@ class HealthCaloriesActivity : AppCompatActivity() {
                     return if (value == 0f) "" else value.toInt().toString()
                 }
             }
-            dataSet.setDrawValues(true)
+            dataSet.setDrawValues(false)
             dataSet.valueTextSize = 10f
 
             val yAxis = barChart.axisRight
@@ -766,8 +787,8 @@ class HealthCaloriesActivity : AppCompatActivity() {
             yAxis.addLimitLine(limitLine)
 
             currentImageIndex = when {
-                limitValue.toFloat() >= 10000 -> 1
-                limitValue.toFloat() >= 5000 && limitValue.toFloat() < 10000 -> 2
+                limitValue.toFloat() >= 2200 -> 1
+                limitValue.toFloat() >= 1600 && limitValue.toFloat() < 2200 -> 2
                 else -> 3
             }
             showImage(currentImageIndex)
