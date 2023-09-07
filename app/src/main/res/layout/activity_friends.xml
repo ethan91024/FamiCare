@@ -45,7 +45,7 @@
                         android:layout_width="131dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="允許被加入好友"
+                        android:text="允許被加入親友"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
@@ -68,7 +68,7 @@
                     app:layout_constraintStart_toStartOf="@id/textView4"
                     app:layout_constraintTop_toTopOf="@id/textView4"
                     tools:ignore="MissingConstraints"
-                    android:text="同意與好友分享健康資訊"
+                    android:text="同意與親友分享健康資訊"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -338,7 +338,7 @@
                     app:layout_constraintStart_toStartOf="@id/textView4"
                     app:layout_constraintTop_toTopOf="@id/textView4"
                     tools:ignore="MissingConstraints"
-                    android:text="限制好友查看你的健康資訊，打開可以開放好友查看"
+                    android:text="限制親友查看你的健康資訊，打開可以開放親友查看"
                     android:textSize="10sp"
                     android:textStyle="bold"/>
 
@@ -388,7 +388,7 @@
                 android:id="@+id/username"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:text="好友設置"
+                android:text="親友設置"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

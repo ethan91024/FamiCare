@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Group.GroupNameEditFragment">
+    tools:context=".Settings.Addfriend">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:hint="好友名稱(要分大小寫)"
+            android:hint="親友名稱(要分大小寫)"
             android:textSize="15sp"
             android:textStyle="bold"
 
@@ -31,7 +31,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:hint="好友ID(不要加#)"
+            android:hint="親友ID(不要加#)"
             android:textStyle="bold"
             android:textSize="15sp"
             android:layout_toRightOf="@+id/editText"

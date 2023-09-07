@@ -104,7 +104,7 @@
                             android:clickable="true"
                             android:drawableLeft="@drawable/baseline_people_alt_24"
                             android:gravity="center|left"
-                            android:text="  好友"
+                            android:text="  親友"
                             android:textSize="25sp" />
 
                         <Space

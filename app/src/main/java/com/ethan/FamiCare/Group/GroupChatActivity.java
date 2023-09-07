@@ -25,6 +25,7 @@ import com.ethan.FamiCare.Firebasecords.GroupChatAdapter;
 import com.ethan.FamiCare.Firebasecords.MessageModel;
 import com.ethan.FamiCare.Firebasecords.MessageModelGroup;
 import com.ethan.FamiCare.Firebasecords.Users;
+import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivityGroupChatBinding;
 import com.ethan.FamiCare.databinding.FragmentGroupChatroomBinding;
@@ -56,7 +57,7 @@ public class GroupChatActivity extends AppCompatActivity {
     FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    ImageView photo, camera, addmember;
+    ImageView photo, camera, addmember,member;
     private static final int TAKE_PHOTO_REQUEST = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
@@ -94,6 +95,7 @@ public class GroupChatActivity extends AppCompatActivity {
         camera = findViewById(R.id.camera);
         photo = findViewById(R.id.photo);
         addmember = findViewById(R.id.addmember);
+        member=findViewById(R.id.member);
         fuidtotal = uid;
 
 
@@ -105,9 +107,8 @@ public class GroupChatActivity extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(GroupChatroom.this, MainActivity.class);
-//                startActivity(intent);
-                onBackPressed();
+                Intent intent = new Intent(GroupChatActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -169,6 +170,13 @@ public class GroupChatActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
+        member.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupChatActivity.this, TotalMemberActivity.class);
+               startActivity(intent);
             }
         });
         addmember.setOnClickListener(new View.OnClickListener() {//加好友到群組

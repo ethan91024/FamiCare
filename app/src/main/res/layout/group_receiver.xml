@@ -29,7 +29,6 @@
         android:layout_toRightOf="@+id/receiverAvatar"
         android:inputType="textLongMessage|textMultiLine"
         android:maxWidth="270dp"
-
         android:minWidth="50dp"
         android:text="username"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +46,7 @@
         android:maxWidth="310dp"
         android:maxHeight="400dp"
         android:minHeight="30dp"
+        android:minWidth="30dp"
     android:layout_below="@+id/receicername"
     >
 
