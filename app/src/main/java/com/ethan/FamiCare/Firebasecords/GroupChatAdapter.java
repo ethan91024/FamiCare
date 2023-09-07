@@ -30,7 +30,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
     ArrayList<MessageModelGroup> messageModelGroups;
     Context context;
     String recId;
-    FirebaseAuth auth;
     FirebaseDatabase database;
 
     int Sender_View_Type=1;
@@ -52,11 +51,23 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //監測發送者訊息顏色， 若為發送者訊息框為綠色，否則灰色
-
-        View view = LayoutInflater.from(context).inflate(R.layout.group_receiver, parent, false);
-        return new RecieverViewHolder(view);
+        if(viewType==Sender_View_Type)
+        {
+            View view=LayoutInflater.from(context).inflate(R.layout.group_sender,parent,false);
+            return new GroupChatAdapter.SenderViewHolder(view);
+        }else
+        {
+            View view=LayoutInflater.from(context).inflate(R.layout.group_receiver,parent,false);
+            return new GroupChatAdapter.RecieverViewHolder(view);
+        }
     }
-
+    public int getItemViewType(int position) {
+        if(messageModelGroups.get(position).getUserId().equals(FirebaseAuth.getInstance().getUid())){
+            return Sender_View_Type;
+        }else {
+            return Receiver_View_Type;
+        }
+    }
 
 
     @Override
@@ -64,9 +75,26 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
         database=FirebaseDatabase.getInstance();
         MessageModelGroup messageModelGroup=messageModelGroups.get(position);
         if(holder.getClass()==SenderViewHolder.class){
-            ((SenderViewHolder)holder).sendername.setText(database.getReference().child("Users").child(messageModelGroup.getUserId()).child("username").getKey());
-            ((SenderViewHolder)holder).senderMsg.setText(messageModelGroup.getMessage());
-            ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+            String uid=messageModelGroup.getUserId();
+            database.getReference().child("Users")
+                    .child(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ((SenderViewHolder)holder).sendername.setText(snapshot.child("username").getValue(String.class));
+                            ((SenderViewHolder)holder).senderMsg.setText(messageModelGroup.getMessage());
+                            ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+                            String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
+                            Picasso.get()
+                                    .load(profilePicUrl).placeholder(R.drawable.avatar_b)
+                                    .into(((SenderViewHolder) holder).imageView);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }else{
             String uid=messageModelGroup.getUserId();
             database.getReference().child("Users")
@@ -81,7 +109,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
                     Picasso.get()
                             .load(profilePicUrl).placeholder(R.drawable.avatar_b)
                             .into(((RecieverViewHolder) holder).imageView);
-
                 }
 
                 @Override
@@ -118,13 +145,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
             sendername=itemView.findViewById(R.id.sendername);
             senderMsg=itemView.findViewById(R.id.sendertext);
             senderTime=itemView.findViewById(R.id.sendertime);
-            imageView=itemView.findViewById(R.id.profile_image);
+            imageView=itemView.findViewById(R.id.receiverAvatar);
         }
     }
     private String getFormattedTime(long timestamp) {
         // 使用SimpleDateFormat或其他日期时间格式化工具将时间戳转换为格式化的时间字符串
         // 这里只是一个示例，你可以根据需要进行调整
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
         return sdf.format(new Date(timestamp));
     }
 }

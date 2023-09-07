@@ -4,13 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ethan.FamiCare.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
     ArrayList<MessageModel> messageModels;
     Context context;
     String recId;
+    FirebaseDatabase database;
 
     int Sender_View_Type=1;
     int Receiver_View_Type=2;
@@ -62,12 +70,53 @@ public class ChatAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MessageModel messageModel=messageModels.get(position);
-        if(holder.getClass()==SenderViewHolder.class){
-            ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
-            ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
+        database= FirebaseDatabase.getInstance();
+        if(holder.getClass()== ChatAdapter.SenderViewHolder.class){
+            String uid=messageModel.getUserId();
+            database.getReference().child("Users")
+                    .child(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ((ChatAdapter.SenderViewHolder)holder).sendername.setText(snapshot.child("username").getValue(String.class));
+                            ((ChatAdapter.SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
+                            ((ChatAdapter.SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
+                            Picasso.get()
+                                    .load(profilePicUrl).placeholder(R.drawable.avatar_b)
+                                    .into(((ChatAdapter.SenderViewHolder) holder).imageView);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }else{
-            ((RecieverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
-            ((RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModel.getDatetime()));
+            String uid=messageModel.getUserId();
+            database.getReference().child("Users")
+                    .child(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ((ChatAdapter.RecieverViewHolder)holder).username.setText(snapshot
+                                    .child("username")
+                                    .getValue(String.class));
+                            ((ChatAdapter.RecieverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
+                            ((ChatAdapter.RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
+                            Picasso.get()
+                                    .load(profilePicUrl)
+                                    .placeholder(R.drawable.avatar_b)
+                                    .into(((ChatAdapter.RecieverViewHolder) holder).imageView);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
         }
     }
 
@@ -77,27 +126,32 @@ public class ChatAdapter extends RecyclerView.Adapter{
     }
 
     public class RecieverViewHolder extends RecyclerView.ViewHolder{
-        TextView receiverMsg,receiverTime;
+        TextView username,receiverMsg,receiverTime;
 
+        ImageView imageView;
         public RecieverViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            username=itemView.findViewById(R.id.receicernames);
             receiverMsg=itemView.findViewById(R.id.receicertext);
             receiverTime=itemView.findViewById(R.id.receicertime);
+            imageView=itemView.findViewById(R.id.receiverAvatar);
         }
     }
     public class SenderViewHolder extends RecieverViewHolder{
-        TextView senderMsg,senderTime;
+        TextView sendername,senderMsg,senderTime;
+        ImageView imageView;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
+            sendername=itemView.findViewById(R.id.sendername);
             senderMsg=itemView.findViewById(R.id.sendertext);
             senderTime=itemView.findViewById(R.id.sendertime);
+            imageView=itemView.findViewById(R.id.receiverAvatar);
         }
     }
     private String getFormattedTime(long timestamp) {
         // 使用SimpleDateFormat或其他日期时间格式化工具将时间戳转换为格式化的时间字符串
         // 这里只是一个示例，你可以根据需要进行调整
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
         return sdf.format(new Date(timestamp));
     }
 

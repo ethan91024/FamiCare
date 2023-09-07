@@ -6,22 +6,42 @@ public class MessageModel {
     private Long datetime;
     private String userId;
     private String messageId;
+    private String username;
+    private String profile;
 
     //for firebase getting data back
     public MessageModel() {
 
     }
 
-    public MessageModel(String userId,String message, Long datetime) {
+    public MessageModel(String username,String userId,String message, Long datetime,String profile) {
+        this.username=username;
         this.message = message;
         this.datetime = datetime;
         this.userId = userId;
+        this.profile=profile;
     }
 
 
     public MessageModel(String userId,String message) {
         this.message = message;
         this.userId = userId;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {

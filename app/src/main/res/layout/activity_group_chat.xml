@@ -113,6 +113,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="8.476" />
+            <ImageView
+                android:id="@+id/member"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/member_foreground"
+                app:layout_constraintRight_toLeftOf="@+id/addmember"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="8.476" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>

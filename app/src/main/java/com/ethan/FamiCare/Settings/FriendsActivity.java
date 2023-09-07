@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ethan.FamiCare.Firebasecords.FriendAdapter;
 import com.ethan.FamiCare.Firebasecords.FriendModel;
 import com.ethan.FamiCare.Firebasecords.PermissionModel;
+import com.ethan.FamiCare.MainActivity;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.databinding.ActivityFriendsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -197,10 +198,8 @@ public class FriendsActivity extends AppCompatActivity {
         binding.backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id=friend.getId();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(id,new SettingsFragment());
-                transaction.commit();
+                Intent intent = new Intent(FriendsActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
