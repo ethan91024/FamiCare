@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.ethan.FamiCare.Calendar.CalendarItem;
 import com.ethan.FamiCare.Calendar.calendarAdapter;
 import com.ethan.FamiCare.CalendarDB;
+import com.ethan.FamiCare.Firebasecords.FriendModel;
 import com.ethan.FamiCare.Firebasecords.Users;
 import com.ethan.FamiCare.R;
 import com.ethan.FamiCare.SharedPreUtils;
@@ -106,6 +107,7 @@ public class GroupCalendar extends AppCompatActivity {
     //提醒有沒有選all
     Boolean ischooseall=false;
     String notitowho="無";
+    String uid="";
 
 
 
@@ -128,7 +130,7 @@ public class GroupCalendar extends AppCompatActivity {
             Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
             finish();
         }
-
+        uid=user.getUid();
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -339,11 +341,11 @@ public class GroupCalendar extends AppCompatActivity {
         getalluser.add(0,"All");
         getalltoken.add(0,"APA91bEg-xO9Rlyb72AGxpt3wNoyKAYsA-9-fdbWKSNxyaG8qxz2syGfiwWVXoHLwZ2EIygaygZXGF19Ge1lL9h40NDhimvwoYJXJc37P2X3gWZDn7O0cA4");
 
-        myRef.child("Users").addValueEventListener(new ValueEventListener() {
+        myRef.child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    Users user1 = snapshot1.getValue(Users.class);
+                    FriendModel user1 = snapshot1.getValue(FriendModel.class);
                     getalluser.add(user1.getUsername());
                     getalltoken.add(user1.getToken());
                     // System.out.println("Added user: " + user1.getUsername());
