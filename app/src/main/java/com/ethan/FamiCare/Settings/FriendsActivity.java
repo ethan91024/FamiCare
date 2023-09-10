@@ -218,7 +218,8 @@ public class FriendsActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         binding.recyclerview.setLayoutManager(layoutManager);
 
-        database.getReference().child("Friend").child(uid).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Friend").child(uid)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

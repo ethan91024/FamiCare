@@ -80,15 +80,14 @@ public class GroupFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
         String uid=auth.getCurrentUser().getUid();
+
         UsersAdapter adapter = new UsersAdapter(list, getContext());
-
-
         binding.chatrecy.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.chatrecy.setLayoutManager(layoutManager);
 
-        database.getReference().child("Grouplist").child(uid).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Grouplist").child(uid)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();

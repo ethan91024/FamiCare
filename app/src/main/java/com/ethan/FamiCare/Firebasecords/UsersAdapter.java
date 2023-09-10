@@ -49,8 +49,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-
-
         Users users = list.get(position);
         String uid;
         FirebaseDatabase database=FirebaseDatabase.getInstance();
@@ -149,7 +147,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         intent.putExtra("profilePic", users.getProfilepic());
                                         intent.putExtra("userName", users.getUsername());
                                         context.startActivity(intent);
-
                                     } else if (type.equals("group")) {
                                         intent = new Intent(context, GroupChatActivity.class);
                                         intent.putExtra("userId", users.getUserId());
