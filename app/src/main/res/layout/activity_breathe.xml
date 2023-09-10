@@ -112,7 +112,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="20"
                         android:gravity="center"
-                        android:text="5"
                         android:textColor="#b85135"
                         android:textSize="25dp"></EditText>
 

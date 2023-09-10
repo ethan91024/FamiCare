@@ -2,8 +2,6 @@ package com.ethan.FamiCare.Mood;
 
 import static android.content.ContentValues.TAG;
 
-import static kotlinx.coroutines.BuildersKt.runBlocking;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,11 +15,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -48,9 +44,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
 
-import java.sql.SQLOutput;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,19 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
-import kotlin.Result;
-import kotlin.coroutines.ContinuationInterceptor;
-import kotlinx.coroutines.CoroutineScope;
-import kotlinx.coroutines.Dispatchers;
-import kotlinx.coroutines.GlobalScope;
-import kotlin.coroutines.EmptyCoroutineContext;
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
 
 
 public class MoodFragment extends Fragment {
@@ -139,6 +121,7 @@ public class MoodFragment extends Fragment {
     private String userid;
     private int totalheadache = 0, totaldizzy = 0, totalnausea = 0, totaltired = 0, totalstomachache = 0;
     private TextView advice;
+    private TextView advice2;
     // 獲取當天日期
     LocalDate currentDate = LocalDate.now();
 
@@ -147,6 +130,7 @@ public class MoodFragment extends Fragment {
     int month = currentDate.getMonthValue();
     int day = currentDate.getDayOfMonth();
     String cdday = year + "_" + month + "_" + day;
+    TextView minuet1;
 
 
     //set linechart
@@ -154,6 +138,7 @@ public class MoodFragment extends Fragment {
     LineChart lineChart;
     ArrayList<String> HeartRrtexData = new ArrayList<>();
     ArrayList<String> HRpoint = new ArrayList<>();
+    LinearLayout l1;
 
 //1
 
@@ -162,9 +147,7 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mainview = inflater.inflate(R.layout.fragment_mood, container, false);
-//        //更新標題
-//        getActivity().setTitle("壓力分析");
-        // 其他Fragment代码...
+
 
 
         //跳到MoodSymptom
@@ -177,7 +160,8 @@ public class MoodFragment extends Fragment {
             }
         });
 
-        //勾選症狀的加分
+        //分鐘
+        minuet1= mainview.findViewById(R.id.Minute1);
 
 
         //firebase
@@ -215,6 +199,7 @@ public class MoodFragment extends Fragment {
                     stressnumber.setText(getstressn);
                     stressN = Double.parseDouble(getstressn);
                 }
+
             }
         });
 
@@ -370,21 +355,6 @@ public class MoodFragment extends Fragment {
         }
     }
 
-    //症狀checkbox 加分計算
-//    public double SymptomCheckBox(boolean run) {
-//        double plusnumber = 0;
-//        if (run) {
-//            Bundle arguments = getArguments();
-//            if (arguments != null) {
-//                plusnumber = arguments.getDouble("symptom");
-//            } else {
-//                plusnumber = 0;
-//            }
-//        } else {
-//            plusnumber = -1;//如果缺乏心率睡眠血氧資料，直接無法分析，回傳-1表示無法run
-//        }
-//        return plusnumber;
-//    }
     public interface OnDataLoadedListener {
         void onDataLoaded(ArrayList<String> heartRatePoints, ArrayList<String> sleepPoints, ArrayList<String> bloodOxygenPoints);
     }
@@ -760,6 +730,8 @@ public class MoodFragment extends Fragment {
 
 
         final double[] synumbern = {0};
+        //分辨第一個advice是哪個緩解方式，讓第二個advice不要重複
+        final int[] AdviceN = {0};
 
         databaseReference.child("Users").child(uid).child("id").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -810,10 +782,11 @@ public class MoodFragment extends Fragment {
 
                                     //分析症狀資料且更新緩解建議
                                     int max = Arrays.stream(smax).max().getAsInt();
+                                    advice = mainview.findViewById(R.id.Advice1);
                                     if (totalheadache == max) {
                                         //跳轉運動介面
-                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  運動");
+                                        AdviceN[0] =3;
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
                                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -833,8 +806,8 @@ public class MoodFragment extends Fragment {
 
                                     } else if (totalstomachache == max || totalnausea == max) {
                                         //跳轉到冥想
-                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  冥想");
+                                        AdviceN[0] =1;
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
                                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -854,8 +827,8 @@ public class MoodFragment extends Fragment {
                                         });
                                     } else if (totaldizzy == max || totaltired == max) {
                                         //跳轉呼吸介面
-                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  呼吸緩解");
+                                        AdviceN[0] =2;
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
                                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -875,8 +848,8 @@ public class MoodFragment extends Fragment {
 
                                     } else {
                                         //跳轉到冥想
-                                        advice = mainview.findViewById(R.id.Advice);
                                         advice.setText("  冥想");
+                                        AdviceN[0] =1;
                                         int heightInDp = 160; // 设置高度为 100 dp
                                         int heightInPx = dpToPx(getContext(), heightInDp);
                                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -914,6 +887,65 @@ public class MoodFragment extends Fragment {
                                     d = (double) ti / 10;
                                     stressnumber.setText(d + "");
                                     System.out.println("stressnumber:" + d);
+
+                                    //第二個advice
+                                    l1= mainview.findViewById(R.id.l1);
+                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT, // 宽度设置为 MATCH_PARENT，表示与父容器相同
+                                            0 // 设置高度为 200 像素，您可以根据需要调整高度
+                                    );
+                                    int heightInPx = dpToPx(getContext(), 200);
+                                    LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT, // 宽度设置为 MATCH_PARENT，表示与父容器相同
+                                            heightInPx // 设置高度为 160 dp，您可以根据需要调整高度
+                                    );
+                                    l1.setLayoutParams(layoutParams);
+
+                                    if(d>5){
+                                        TextView m1t =mainview.findViewById(R.id.Minute1);
+                                        m1t.setText("10");
+                                        l1.setLayoutParams(layoutParams2);
+                                        TextView advice2 =mainview.findViewById(R.id.Advice2);
+                                        if(AdviceN[0]==1 ||AdviceN[0]==3 ){
+                                            advice2.setText("  呼吸緩解");
+                                            int heightInDp = 160; // 设置高度为 100 dp
+                                            int heightInPx2 = dpToPx(getContext(), heightInDp);
+                                            LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(
+                                                    LinearLayout.LayoutParams.MATCH_PARENT, // 宽度设置为 MATCH_PARENT 或具体数值
+                                                    heightInPx2 // 设置高度为 dp 转换后的像素值
+                                            );
+                                            advice2.setLayoutParams(lp);
+                                            Drawable drawable = getResources().getDrawable(R.drawable.breathe_background);
+                                            advice2.setBackground(drawable);
+                                            advice2.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent intent = new Intent(getActivity(), Breathe.class);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                        }else if(AdviceN[0]==2){
+                                            advice2.setText("  冥想");
+                                            int heightInDp = 160; // 设置高度为 100 dp
+                                            int heightInPx2 = dpToPx(getContext(), heightInDp);
+                                            LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(
+                                                    LinearLayout.LayoutParams.MATCH_PARENT, // 宽度设置为 MATCH_PARENT 或具体数值
+                                                    heightInPx2 // 设置高度为 dp 转换后的像素值
+                                            );
+                                            advice2.setLayoutParams(layoutParams3);
+                                            Drawable drawable = getResources().getDrawable(R.drawable.meditation_background);
+                                            advice2.setBackground(drawable);
+                                            advice2.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Intent intent = new Intent(getActivity(), Meditation.class);
+                                                    startActivity(intent);
+
+                                                }
+                                            });
+
+                                        }
+                                    }
                                 }
                             }
 
@@ -931,6 +963,7 @@ public class MoodFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
     }
 
 

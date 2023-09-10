@@ -185,43 +185,122 @@
                         android:textColor="#b85135"
                         android:textSize="28dp"
                         android:textStyle="bold" />
+
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="5dp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+
+                                android:layout_width="180dp"
+                                android:layout_height="40dp"
+                                android:text="建議施作時間 :"
+                                android:textColor="#535352"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/Minute1"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:text=" 5 "
+                                android:textColor="#b85135"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:text="分鐘"
+                                android:textColor="#b85135"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp" />
+
+
                         <TextView
-                            android:layout_width="180dp"
-                            android:layout_height="30dp"
-                            android:text="建議施作時間 :"
-                            android:textColor="#535352"
-                            android:textSize="25dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="40dp"
-                            android:text=" 5 分鐘"
-                            android:textColor="#b85135"
+                            android:id="@+id/Advice1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:contextClickable="true"
+                            android:gravity="left|center_vertical"
+                            android:textColor="#000000"
                             android:textSize="25dp"
                             android:textStyle="bold" />
 
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp" />
                     </LinearLayout>
 
-                    <Space
+                    <LinearLayout
+                        android:id="@+id/l1"
                         android:layout_width="match_parent"
-                        android:layout_height="15dp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/Advice"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:contextClickable="true"
-                        android:gravity="left|center_vertical"
-                        android:textColor="#000000"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="180dp"
+                                android:layout_height="40dp"
+                                android:text="建議施作時間 :"
+                                android:textColor="#535352"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/Minute2"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:text=" 5 "
+                                android:textColor="#b85135"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:text="分鐘"
+                                android:textColor="#b85135"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp" />
+
+
+                        <TextView
+                            android:id="@+id/Advice2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:contextClickable="true"
+                            android:gravity="left|center_vertical"
+                            android:textColor="#000000"
+                            android:textSize="25dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
@@ -234,6 +313,7 @@
                         android:textColor="#b85135"
                         android:textSize="35dp"
                         android:textStyle="bold" />
+
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
