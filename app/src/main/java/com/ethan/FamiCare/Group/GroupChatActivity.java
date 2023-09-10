@@ -175,8 +175,22 @@ public class GroupChatActivity extends AppCompatActivity {
         member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GroupChatActivity.this, TotalMemberActivity.class);
-               startActivity(intent);
+                database.getReference().child("Grouplist").child(uid).child(userName)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                       Intent intent ;
+                                       intent = new Intent(GroupChatActivity.this, TotalMemberActivity.class);
+                                       intent.putExtra("groupuid",snapshot.child("groupuid").getValue(String.class));
+                                       startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
             }
         });
         addmember.setOnClickListener(new View.OnClickListener() {//加好友到群組

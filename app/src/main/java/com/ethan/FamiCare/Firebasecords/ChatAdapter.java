@@ -79,8 +79,15 @@ public class ChatAdapter extends RecyclerView.Adapter{
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             ((ChatAdapter.SenderViewHolder)holder).sendername.setText(snapshot.child("username").getValue(String.class));
-                            ((ChatAdapter.SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
-                            ((ChatAdapter.SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            if(messageModel.getMessage().contains("firebasestorage")){
+                                Picasso.get().load(messageModel.getMessage())
+                                        .into(((ChatAdapter.SenderViewHolder) holder).photo);
+                                ((ChatAdapter.SenderViewHolder) holder).senderMsg.setText(" ");
+                            }else {
+                                ((ChatAdapter.SenderViewHolder) holder).senderMsg.setText(messageModel.getMessage());
+                                ((ChatAdapter.SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            }
+
                             String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
                             Picasso.get()
                                     .load(profilePicUrl).placeholder(R.drawable.avatar_b)
@@ -128,24 +135,26 @@ public class ChatAdapter extends RecyclerView.Adapter{
     public class RecieverViewHolder extends RecyclerView.ViewHolder{
         TextView username,receiverMsg,receiverTime;
 
-        ImageView imageView;
+        ImageView imageView,photo;
         public RecieverViewHolder(@NonNull View itemView) {
             super(itemView);
             username=itemView.findViewById(R.id.receicernames);
             receiverMsg=itemView.findViewById(R.id.receicertext);
             receiverTime=itemView.findViewById(R.id.receicertime);
             imageView=itemView.findViewById(R.id.receiverAvatar);
+            photo=itemView.findViewById(R.id.senderimageview);
         }
     }
     public class SenderViewHolder extends RecieverViewHolder{
         TextView sendername,senderMsg,senderTime;
-        ImageView imageView;
+        ImageView imageView,photo;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
             sendername=itemView.findViewById(R.id.sendername);
             senderMsg=itemView.findViewById(R.id.sendertext);
             senderTime=itemView.findViewById(R.id.sendertime);
             imageView=itemView.findViewById(R.id.receiverAvatar);
+            photo=itemView.findViewById(R.id.senderimageview);
         }
     }
     private String getFormattedTime(long timestamp) {
