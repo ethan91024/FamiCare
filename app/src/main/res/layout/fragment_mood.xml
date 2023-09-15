@@ -108,7 +108,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:text="壓力指數大於5，正常壓力狀態，5~8，些微壓力狀態"
+                        android:text="壓力指數小於5，正常壓力狀態 ; 5~8，些微壓力狀態"
                         android:textColor="#535352"
                         android:textSize="13dp"
                         android:textStyle="bold" />
