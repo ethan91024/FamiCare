@@ -1,7 +1,6 @@
 package com.ethan.FamiCare;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.work.Constraints;
 import androidx.work.NetworkType;
@@ -51,6 +50,6 @@ public class MyApplication extends Application {
     private void triggerAmalyze() {
         OneTimeWorkRequest uploadRequest = new OneTimeWorkRequest.Builder(AnalyzeHealth.class).build();
         WorkManager.getInstance(getApplicationContext()).enqueue(uploadRequest);
-        Toast.makeText(this, "壓力分析上傳成功", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "壓力分析上傳成功", Toast.LENGTH_SHORT).show();
     }
 }
