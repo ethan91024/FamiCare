@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,9 +45,9 @@
         android:background="@drawable/bg_reciver"
         android:layout_toRightOf="@+id/receiverAvatar"
         android:maxWidth="310dp"
-        android:maxHeight="400dp"
+        android:maxHeight="250dp"
         android:minHeight="30dp"
-        android:minWidth="30dp"
+        android:minWidth="80dp"
         android:layout_below="@+id/receicernames"
         >
 
@@ -57,14 +58,26 @@
             android:layout_margin="8dp"
             android:inputType="textLongMessage|textMultiLine"
             android:maxWidth="270dp"
-            android:minWidth="50dp"
             android:text="Textview"
             app:layout_constraintBottom_toTopOf="@+id/receicertime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/recieverimageview"
             app:layout_constraintVertical_bias="1.0"
             />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recieverimageview"
+            android:maxWidth="300dp"
+            android:maxHeight="410dp"
+            android:minHeight="30dp"
+            android:minWidth="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="MissingConstraints"
+            android:scaleType="fitStart"/>
+
 
         <TextView
             android:layout_width="wrap_content"

@@ -75,7 +75,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.hasChildren()) {
                                                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                    holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                    if(snapshot1.child("message").getValue().toString().contains("firebasestorage")){
+                                                        holder.lastmessage.setText("已傳送圖片");
+                                                    }else {
+                                                        holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                    }
                                                 }
                                             }
                                         }
@@ -99,7 +103,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                             if (snapshot.hasChildren()) {
                                                                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                                    holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                                    if(snapshot1.child("message").getValue().toString().contains("firebasestorage")){
+                                                                        holder.lastmessage.setText("已傳送圖片");
+                                                                    }else {
+                                                                        holder.lastmessage.setText(snapshot1.child("message").getValue().toString());
+                                                                    }
                                                                 }
                                                             }
                                                         }

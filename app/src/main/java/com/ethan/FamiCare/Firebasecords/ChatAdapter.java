@@ -1,6 +1,7 @@
 package com.ethan.FamiCare.Firebasecords;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,10 @@ public class ChatAdapter extends RecyclerView.Adapter{
                                 Picasso.get().load(messageModel.getMessage())
                                         .into(((ChatAdapter.SenderViewHolder) holder).photo);
                                 ((ChatAdapter.SenderViewHolder) holder).senderMsg.setText(" ");
+                                ((ChatAdapter.SenderViewHolder)holder).senderTime.setText(null);
                             }else {
+                                Picasso.get().load((Uri) null)
+                                    .into(((ChatAdapter.SenderViewHolder) holder).photo);
                                 ((ChatAdapter.SenderViewHolder) holder).senderMsg.setText(messageModel.getMessage());
                                 ((ChatAdapter.SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModel.getDatetime()));
                             }
@@ -109,8 +113,17 @@ public class ChatAdapter extends RecyclerView.Adapter{
                             ((ChatAdapter.RecieverViewHolder)holder).username.setText(snapshot
                                     .child("username")
                                     .getValue(String.class));
-                            ((ChatAdapter.RecieverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
-                            ((ChatAdapter.RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            if(messageModel.getMessage().contains("firebasestorage")){
+                                Picasso.get().load(messageModel.getMessage())
+                                        .into(((ChatAdapter.RecieverViewHolder) holder).photo);
+                                ((RecieverViewHolder) holder).receiverMsg.setText(" ");
+                                ((RecieverViewHolder)holder).receiverTime.setText(null);
+                            }else {
+                                Picasso.get().load((Uri) null)
+                                        .into(((RecieverViewHolder) holder).photo);
+                                ((RecieverViewHolder) holder).receiverMsg.setText(messageModel.getMessage());
+                                ((RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModel.getDatetime()));
+                            }
                             String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
                             Picasso.get()
                                     .load(profilePicUrl)
@@ -142,7 +155,7 @@ public class ChatAdapter extends RecyclerView.Adapter{
             receiverMsg=itemView.findViewById(R.id.receicertext);
             receiverTime=itemView.findViewById(R.id.receicertime);
             imageView=itemView.findViewById(R.id.receiverAvatar);
-            photo=itemView.findViewById(R.id.senderimageview);
+            photo=itemView.findViewById(R.id.recieverimageview);
         }
     }
     public class SenderViewHolder extends RecieverViewHolder{

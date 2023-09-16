@@ -38,7 +38,7 @@
     android:layout_below="@id/sendername"
     android:layout_toLeftOf="@id/receiverAvatar"
     android:maxWidth="310dp"
-    android:maxHeight="10000dp"
+    android:maxHeight="250dp"
     android:minHeight="30dp"
     android:minWidth="30dp">
     <androidx.constraintlayout.widget.Guideline
@@ -71,15 +71,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/senderimageview"
-        app:layout_constraintBottom_toTopOf="@id/sendertime"
         tools:ignore="MissingConstraints"
-        android:maxWidth="10000dp"
-        android:maxHeight="10000dp"
+        android:maxWidth="300dp"
+        android:maxHeight="200dp"
         android:minHeight="30dp"
-        android:minWidth="30dp"/>
+        android:minWidth="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitStart"/>
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/sendertime"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
