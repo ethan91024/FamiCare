@@ -1,6 +1,7 @@
 package com.ethan.FamiCare.Firebasecords;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         database=FirebaseDatabase.getInstance();
         MessageModelGroup messageModelGroup=messageModelGroups.get(position);
-        if(holder.getClass()==SenderViewHolder.class){
+        if(holder.getClass()==GroupChatAdapter.SenderViewHolder.class){
             String uid=messageModelGroup.getUserId();
             database.getReference().child("Users")
                     .child(uid)
@@ -82,12 +83,21 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             ((SenderViewHolder)holder).sendername.setText(snapshot.child("username").getValue(String.class));
-                            ((SenderViewHolder)holder).senderMsg.setText(messageModelGroup.getMessage());
-                            ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+                            if(messageModelGroup.getMessage().contains("firebasestorage")){
+                                Picasso.get().load(messageModelGroup.getMessage())
+                                        .into(((GroupChatAdapter.SenderViewHolder) holder).photo);
+                                ((SenderViewHolder) holder).senderMsg.setText(" ");
+                                ((SenderViewHolder)holder).senderTime.setText(null);
+                            }else {
+                                Picasso.get().load((Uri) null)
+                                        .into(((SenderViewHolder) holder).photo);
+                                ((SenderViewHolder) holder).senderMsg.setText(messageModelGroup.getMessage());
+                                ((SenderViewHolder)holder).senderTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+                            }
                             String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
                             Picasso.get()
                                     .load(profilePicUrl).placeholder(R.drawable.avatar_b)
-                                    .into(((SenderViewHolder) holder).imageView);
+                                    .into(((GroupChatAdapter.SenderViewHolder) holder).imageView);
                         }
 
                         @Override
@@ -103,8 +113,17 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ((RecieverViewHolder)holder).username.setText(snapshot.child("username").getValue(String.class));
-                    ((RecieverViewHolder)holder).receiverMsg.setText(messageModelGroup.getMessage());
-                    ((RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+                    if(messageModelGroup.getMessage().contains("firebasestorage")){
+                        Picasso.get().load(messageModelGroup.getMessage())
+                                .into(((GroupChatAdapter.RecieverViewHolder) holder).photo);
+                        ((GroupChatAdapter.RecieverViewHolder) holder).receiverMsg.setText(" ");
+                        ((RecieverViewHolder)holder).receiverTime.setText(null);
+                    }else {
+                        Picasso.get().load((Uri) null)
+                                .into(((GroupChatAdapter.RecieverViewHolder) holder).photo);
+                        ((GroupChatAdapter.RecieverViewHolder) holder).receiverMsg.setText(messageModelGroup.getMessage());
+                        ((GroupChatAdapter.RecieverViewHolder)holder).receiverTime.setText(getFormattedTime(messageModelGroup.getDatetime()));
+                    }
                     String profilePicUrl = snapshot.child("profilepic").getValue(String.class);
                     Picasso.get()
                             .load(profilePicUrl).placeholder(R.drawable.avatar_b)
@@ -128,24 +147,26 @@ public class GroupChatAdapter extends RecyclerView.Adapter{
     public class RecieverViewHolder extends RecyclerView.ViewHolder{
         TextView username,receiverMsg,receiverTime;
 
-        ImageView imageView;
+        ImageView imageView,photo;
         public RecieverViewHolder(@NonNull View itemView) {
             super(itemView);
             username=itemView.findViewById(R.id.receicername);
             receiverMsg=itemView.findViewById(R.id.receicertext);
             receiverTime=itemView.findViewById(R.id.receicertime);
             imageView=itemView.findViewById(R.id.receiverAvatar);
+            photo=itemView.findViewById(R.id.recieverimageviewg);
         }
     }
     public class SenderViewHolder extends RecieverViewHolder{
         TextView sendername,senderMsg,senderTime;
-        ImageView imageView;
+        ImageView imageView,photo;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
             sendername=itemView.findViewById(R.id.sendername);
             senderMsg=itemView.findViewById(R.id.sendertext);
             senderTime=itemView.findViewById(R.id.sendertime);
             imageView=itemView.findViewById(R.id.receiverAvatar);
+            photo=itemView.findViewById(R.id.senderimageviewg);
         }
     }
     private String getFormattedTime(long timestamp) {

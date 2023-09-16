@@ -139,7 +139,7 @@ public class GroupChatroom extends AppCompatActivity {
                                 database.getReference().child("chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-
+                                        layoutManager.setStackFromEnd(true);
                                     }
                                 });
                             }

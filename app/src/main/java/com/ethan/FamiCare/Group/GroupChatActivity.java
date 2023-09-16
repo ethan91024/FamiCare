@@ -149,7 +149,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 database.getReference().child("Group chats").child(chatroom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-
+                        layoutManager.setStackFromEnd(true);
                     }
                 });
             }
@@ -348,6 +348,9 @@ public class GroupChatActivity extends AppCompatActivity {
     public void savePhoto(Uri uri) {
         StorageReference storageRef = storageReference.child(System.currentTimeMillis() + ".jpg");
 
+        final String groupuid = getIntent().getStringExtra("groupuid");
+        String userName = getIntent().getStringExtra("userName");
+
         UploadTask uploadTask = storageRef.putFile(uri);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -357,8 +360,60 @@ public class GroupChatActivity extends AppCompatActivity {
                 storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        String GroupPhoto = uri.toString();
-//                        database.getReference().child("Grouplist").child(uid).setValue(GroupPhoto);
+                        database.getReference().child("Grouplist").child(uid).child(userName)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String GroupPhoto = uri.toString();
+                                String recieveId = snapshot.child("fuid").getValue(String.class);
+                                // 獲取到 "fuid" 的值後進行相應的處理
+                                // 在這裡您可以使用 recieveId 變數來存儲所需的值
+
+                                final ArrayList<MessageModelGroup> messageModels = new ArrayList<>();
+                                final GroupChatAdapter chatAdapter = new GroupChatAdapter(messageModels, GroupChatActivity.this, recieveId);
+                                binding.recyclerview.setAdapter(chatAdapter);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(GroupChatActivity.this);
+                                layoutManager.setStackFromEnd(true);
+                                binding.recyclerview.setLayoutManager(layoutManager);
+
+                                final String chatroom = groupuid;
+
+                                database.getReference().child("Group chats").child(chatroom).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        messageModels.clear();
+                                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                            MessageModelGroup model = snapshot1.getValue(MessageModelGroup.class);
+                                            model.setMessageId(snapshot1.getKey());
+                                            messageModels.add(model);
+                                            model.setDatetime(new Date().getTime());
+                                        }
+                                        chatAdapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                final MessageModel models = new MessageModel(uid, GroupPhoto);
+                                binding.message.setText("");
+                                database.getReference().child("Group chats").child(chatroom).push().setValue(models)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
                     }
                 });
             }

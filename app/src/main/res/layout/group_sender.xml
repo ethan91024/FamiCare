@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -38,7 +39,7 @@
         android:layout_toLeftOf="@id/receiverAvatar"
         android:background="@drawable/bg_sender"
         android:maxWidth="310dp"
-        android:maxHeight="400dp"
+        android:maxHeight="250dp"
         android:minHeight="30dp"
         android:minWidth="30dp">
 
@@ -71,7 +72,17 @@
             app:layout_constraintVertical_bias="0.8"
             app:layout_constraintTop_toTopOf="parent"
             />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/senderimageviewg"
+            android:maxWidth="300dp"
+            android:maxHeight="410dp"
+            android:minHeight="30dp"
+            android:minWidth="30dp"
+            android:scaleType="fitStart"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
         <TextView
             android:id="@+id/sendertime"
             android:layout_width="wrap_content"
