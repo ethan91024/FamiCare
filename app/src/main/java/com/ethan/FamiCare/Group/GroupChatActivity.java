@@ -95,7 +95,7 @@ public class GroupChatActivity extends AppCompatActivity {
         camera = findViewById(R.id.camera);
         photo = findViewById(R.id.photo);
         addmember = findViewById(R.id.addmember);
-        member=findViewById(R.id.member);
+//        member=findViewById(R.id.member);
         fuidtotal = uid;
 
 
@@ -172,27 +172,27 @@ public class GroupChatActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-        member.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                database.getReference().child("Grouplist").child(uid).child(userName)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                       Intent intent ;
-                                       intent = new Intent(GroupChatActivity.this, TotalMemberActivity.class);
-                                       intent.putExtra("groupuid",snapshot.child("groupuid").getValue(String.class));
-                                       startActivity(intent);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-
-            }
-        });
+//        member.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                database.getReference().child("Grouplist").child(uid).child(userName)
+//                                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                       Intent intent ;
+//                                       intent = new Intent(GroupChatActivity.this, TotalMemberActivity.class);
+//                                       intent.putExtra("groupuid",snapshot.child("groupuid").getValue(String.class));
+//                                       startActivity(intent);
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                    }
+//                                });
+//
+//            }
+//        });
         addmember.setOnClickListener(new View.OnClickListener() {//加好友到群組
             @Override
             public void onClick(View v) {
