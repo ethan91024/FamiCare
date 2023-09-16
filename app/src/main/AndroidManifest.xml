@@ -29,21 +29,27 @@
         tools:targetApi="31">
         <activity
             android:name=".Group.TotalMemberActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Mood.SymptomActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.Friends_interface"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Post.DiaryCommentActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Post.DiaryPostActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Diary.DiaryContentActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <meta-data
@@ -52,6 +58,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:label="FamiCare">
             <intent-filter>
@@ -62,77 +69,100 @@
         </activity>
         <activity
             android:name=".Settings.NotificationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.FriendsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.AccountActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.Addfriend"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".sport.Sport4"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".sport.Sport3"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".sport.Sport2"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Group.GroupChatActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Group.AddNewGroup"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Mood.Breathe"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="呼吸舒緩"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Mood.Meditation"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="冥想"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".sport.Sport1"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.Signup"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Settings.Login"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthSpeedActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthSleepActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthRespiratoryRateActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthOxygenSaturationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthHeartRateActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthCaloriesActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Group.GroupChatroom"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ChatGPT.ChatGPTActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Group.GroupCalendar"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:label="行事曆"
             android:theme="@style/AppTheme"
@@ -143,6 +173,7 @@
         </activity>
         <activity
             android:name=".PrivacyPolicyActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
@@ -154,9 +185,11 @@
         </activity>
         <activity
             android:name=".Health.HealthConnect"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Health.HealthStepsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <service
